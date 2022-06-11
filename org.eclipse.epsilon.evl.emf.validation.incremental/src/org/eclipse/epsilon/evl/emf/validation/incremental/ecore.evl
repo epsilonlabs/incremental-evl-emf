@@ -1,0 +1,15 @@
+context EClass {
+
+	constraint NotC1 {
+		check: self.name <> "C1"
+	}
+
+	constraint NotC2 {
+		check: self.name <> "C2"
+	}
+	
+	constraint NotC3 {
+		check: self.name <> "C3"
+	}
+	
+}

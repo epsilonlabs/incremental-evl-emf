@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Validation
+Bundle-SymbolicName: org.eclipse.epsilon.evl.emf.validation.incremental;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.eclipse.sirius.sample.basicfamily.validation
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipse.emf.validation;bundle-version="1.8.0",
+ org.eclipse.equinox.registry,
+ org.eclipse.ui,
+ org.eclipse.epsilon.evl.engine;bundle-version="2.4.0",
+ org.eclipse.epsilon.emc.emf;bundle-version="2.4.0"
