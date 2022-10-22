@@ -16,6 +16,7 @@ import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 public class IncrementalEvlModule extends EvlModule {
 	
 	protected ConstraintPropertyAccessRecorder propertyAccessRecorder = new ConstraintPropertyAccessRecorder();
+	protected IncrementalEvlTrace trace = new IncrementalEvlTrace();
 	
 	@Override
 	public ModuleElement adapt(AST cst, ModuleElement parentAst) {
@@ -23,8 +24,7 @@ public class IncrementalEvlModule extends EvlModule {
 		if (moduleElement instanceof Constraint) {
 			return new Constraint() {
 				public Optional<UnsatisfiedConstraint> execute(IEolContext context_, Object self) throws EolRuntimeException {
-					propertyAccessRecorder.setConstraint(this);
-					propertyAccessRecorder.setSelf(self);
+					propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
 					return super.execute(context_, self);
 				};
 			};
@@ -34,12 +34,12 @@ public class IncrementalEvlModule extends EvlModule {
 	
 	@Override
 	public Set<UnsatisfiedConstraint> execute() throws EolRuntimeException {
-		System.out.println("Executing");
+		propertyAccessRecorder.startRecording();
 		getContext().getExecutorFactory().addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
 		Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();
 		
 		for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
-			System.out.println(propertyAccess);
+			trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);
 		}
 		
 		return unsatisfiedConstraints;
@@ -47,6 +47,10 @@ public class IncrementalEvlModule extends EvlModule {
 	
 	public ConstraintPropertyAccessRecorder getPropertyAccessRecorder() {
 		return propertyAccessRecorder;
+	}
+	
+	public IncrementalEvlTrace getTrace() {
+		return trace;
 	}
 	
 }

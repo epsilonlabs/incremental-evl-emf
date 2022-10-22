@@ -1,31 +1,18 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccess;
-import org.eclipse.epsilon.evl.dom.Constraint;
 
 public class ConstraintPropertyAccess extends PropertyAccess {
 	
-	protected Constraint constraint;
-	protected Object self;
+	protected ConstraintExecution execution = null;
 	
-	public ConstraintPropertyAccess(Object modelElement, String propertyName, Constraint constraint, Object element) {
+	public ConstraintPropertyAccess(Object modelElement, String propertyName, ConstraintExecution execution) {
 		super(modelElement, propertyName);
+		this.execution = execution;
 	}
 	
-	public Object getSelf() {
-		return self;
-	}
-	
-	public void setSelf(Object self) {
-		this.self = self;
-	}
-	
-	public void setConstraint(Constraint constraint) {
-		this.constraint = constraint;
-	}
-	
-	public Constraint getConstraint() {
-		return constraint;
+	public ConstraintExecution getExecution() {
+		return execution;
 	}
 	
 }

@@ -1,5 +1,7 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -11,6 +13,7 @@ import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 	
 	protected IncrementalEvlValidator validator = null;
+	protected List<Notification> notifications = new ArrayList<>();
 	
 	public IncrementalEvlValidatorAdapter(IncrementalEvlValidator validator) {
 		this.validator = validator;
@@ -30,9 +33,9 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 	}
 	
 	@Override
-	public void notifyChanged(Notification msg) {
-		System.out.println(msg);
-		super.notifyChanged(msg);
+	public void notifyChanged(Notification notification) {
+		super.notifyChanged(notification);
+		notifications.add(notification);
 	}
 	
 	public IncrementalEvlValidator getValidator() {
