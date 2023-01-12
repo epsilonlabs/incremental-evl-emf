@@ -39,6 +39,9 @@ public abstract class IncrementalEvlValidator implements EValidator {
 		// been batch validated
 		if (adapter != null) {
 			System.out.println("Already has adapter: " + eObject);
+			if (adapter.mustRevalidate(resourceSet)) {
+				adapter.revalidate(resourceSet);
+			}
 		}
 		// otherwise, we need to add the adapter and trigger batch validation
 		else {

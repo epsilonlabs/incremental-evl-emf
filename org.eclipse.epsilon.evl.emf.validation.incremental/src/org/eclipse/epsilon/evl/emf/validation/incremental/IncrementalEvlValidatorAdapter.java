@@ -19,6 +19,11 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 		this.validator = validator;
 	}
 	
+	public void revalidate(ResourceSet resourceSet) throws Exception {
+		notifications.clear();
+		System.out.println("Revalidating " + resourceSet);
+	}
+	
 	public void validate(ResourceSet resourceSet) throws Exception {
 		
 		IncrementalEvlModule module = new IncrementalEvlModule();
@@ -40,6 +45,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 	
 	public IncrementalEvlValidator getValidator() {
 		return validator;
+	}
+	
+	public boolean mustRevalidate(ResourceSet resourceSet) {
+		return !notifications.isEmpty();
 	}
 	
 }
