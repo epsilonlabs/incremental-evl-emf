@@ -20,6 +20,8 @@ public static final IncrementalEcoreValidator INSTANCE = new IncrementalEcoreVal
 	
 	public static void main(String[] args) {
 		
+		System.out.print("GO!!!\n\n\n");
+		
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new ResourceFactoryImpl());
 		Resource resource = resourceSet.createResource(URI.createURI("foo.ecore"));
