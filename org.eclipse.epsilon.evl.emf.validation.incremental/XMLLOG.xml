@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-02-03T17:38:27.353861Z</date>
+  <millis>1675445907353</millis>
+  <nanos>861000</nanos>
+  <sequence>0</sequence>
+  <logger>org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator</logger>
+  <level>FINEST</level>
+  <class>org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>working</message>
+</record>
+</log>
