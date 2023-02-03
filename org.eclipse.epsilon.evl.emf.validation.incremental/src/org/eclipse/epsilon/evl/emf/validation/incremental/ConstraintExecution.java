@@ -3,7 +3,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 import org.eclipse.epsilon.evl.dom.Constraint;
 
 public class ConstraintExecution {
-	
+		
 	protected Constraint constraint;
 	protected Object self;
 	
@@ -22,11 +22,13 @@ public class ConstraintExecution {
 	}
 	
 	public void setConstraint(Constraint constraint) {
+		//TODO constraint test set here
 		this.constraint = constraint;
 	}
 	
 	public Constraint getConstraint() {
 		return constraint;
 	}
+	
 	
 }

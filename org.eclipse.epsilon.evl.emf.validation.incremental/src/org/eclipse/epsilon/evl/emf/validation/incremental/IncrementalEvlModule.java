@@ -22,8 +22,14 @@ public class IncrementalEvlModule extends EvlModule {
 	public ModuleElement adapt(AST cst, ModuleElement parentAst) {
 		ModuleElement moduleElement = super.adapt(cst, parentAst);
 		if (moduleElement instanceof Constraint) {
+			
+			
 			return new Constraint() {
 				public Optional<UnsatisfiedConstraint> execute(IEolContext context_, Object self) throws EolRuntimeException {
+					
+					// We could check here if the last execution -- return the result of the last test
+					
+					// else run the test					
 					propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
 					return super.execute(context_, self);
 				};
@@ -36,7 +42,8 @@ public class IncrementalEvlModule extends EvlModule {
 	public Set<UnsatisfiedConstraint> execute() throws EolRuntimeException {
 		propertyAccessRecorder.startRecording();
 		getContext().getExecutorFactory().addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
-		Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();
+		
+		Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();  // persist this in the instance?	
 		
 		for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
 			trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);

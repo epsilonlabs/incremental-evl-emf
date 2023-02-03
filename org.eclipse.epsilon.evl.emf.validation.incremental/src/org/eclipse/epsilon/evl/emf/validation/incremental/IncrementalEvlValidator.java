@@ -12,11 +12,22 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 public abstract class IncrementalEvlValidator implements EValidator {
 	
+	private static final boolean REPORT = false;
+	
 	protected abstract URI getConstraints();
 	
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		System.out.println("\n [!] IncrementalEvlValidator.validate() called\n");
 		try {
+			if(REPORT) {
+				System.out.println("\n\n--- IncrementalEvlValidator.validate()");
+				System.out.println("eClass: " + eClass);
+				System.out.println("eObject: " + eObject);		
+				System.out.println("diagnostic: "+ diagnostics); // return for the constraint check
+				System.out.println("Context (Map): "+ context);
+				System.out.println("---\n");
+			}
 			return validateImpl(eClass, eObject, diagnostics, context);
 		}
 		catch (Exception e) {
@@ -26,7 +37,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 	}
 	
 	public boolean validateImpl(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) throws Exception {
-		
+		System.out.println("\n [!] IncrementalEvlValidator.validateImpl() called\n");
 		// Get hold of the resource set of the eObject
 		// We only want to validate each resource set once in batch mode
 		// and then listen for changes to update validation results incrementally
@@ -38,17 +49,19 @@ public abstract class IncrementalEvlValidator implements EValidator {
 		// If it has such an adapter it means that the resource set has already
 		// been batch validated
 		if (adapter != null) {
-			System.out.println("Already has adapter: " + eObject);
+			System.out.println("\n [!] Already has adapter : hashCode:" + adapter.hashCode());
+			
 			if (adapter.mustRevalidate(resourceSet)) {
 				adapter.revalidate(resourceSet);
 			}
+			
 		}
 		// otherwise, we need to add the adapter and trigger batch validation
 		else {
 			adapter = new IncrementalEvlValidatorAdapter(this);
 			resourceSet.eAdapters().add(adapter);
 			adapter.validate(resourceSet);
-			System.out.println("Added adapter: " + eObject);
+			System.out.println("\n [!] Added adapter : hashCode" + adapter.hashCode());
 		}
 		
 		return false;
