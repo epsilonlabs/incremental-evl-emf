@@ -16,61 +16,20 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 
 import java.io.IOException;
 // Logging
-import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.LogManager;
 import java.util.Date;
 import java.util.logging.*;
 
 public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 
-	private static Logger LOGGER = Logger.getLogger(IncrementalEcoreValidator.class.getName());
-	static {
-		ConsoleHandler consoleHandler = new ConsoleHandler();
-		try {
-			// Something in XML for parsing
-			FileHandler xmlFileHandler = new FileHandler("XMLLOG.xml");
-			LOGGER.addHandler(xmlFileHandler);
-			
-			// A copy of the console output
-			FileHandler textFileHandler = new FileHandler("TEXTLOG.txt");
-			textFileHandler.setFormatter(new SimpleFormatter() {
-				private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
-
-				@Override
-				public String formatMessage(LogRecord record) {
-					return String.format(format, new Date(record.getMillis()), record.getLevel().getLocalizedName(),
-							record.getMessage());
-				}
-			});
-			LOGGER.addHandler(textFileHandler);
-			
-		} catch (SecurityException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		consoleHandler.setFormatter(new SimpleFormatter() {
-			private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
-
-			@Override
-			public String formatMessage(LogRecord record) {
-				return String.format(format, new Date(record.getMillis()), record.getLevel().getLocalizedName(),
-						record.getMessage());
-			}
-		});
-		
-		LOGGER.setUseParentHandlers(false);
-		LOGGER.addHandler(consoleHandler);
-		LOGGER.setLevel(Level.FINEST);
-		
-	}
+	private static MyLog MYLOG = MyLog.getMyLog();
+	public static Logger MYLOGGER = MYLOG.getMyLogger();
 
 	public static final IncrementalEcoreValidator INSTANCE = new IncrementalEcoreValidator();
 
 	public static void main(String[] args) {
-		LOGGER.log(Level.FINEST, "working");
+		MYLOGGER.log(Level.FINEST, "working");
 
 		System.out.print("GO!!!\n\n\n");
 
