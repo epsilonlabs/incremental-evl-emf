@@ -13,9 +13,6 @@ public class IncrementalEvlTrace {
 
     public void addPropertyAccess(ConstraintPropertyAccess propertyAccess) {
         propertyAccesses.add(propertyAccess);
-        //System.out.println("\nLogging ConstraintPropertyAccess to trace: ");
-        //System.out.println("Constraint:" + propertyAccess.getExecution().getConstraint());
-        //System.out.println("Model Element:" + propertyAccess.getModelElement() + " . " + propertyAccess.getPropertyName());
 
         MYLOGGER.log(MyLog.STATE, "\nLogging ConstraintPropertyAccess to trace: " +
                 "\nConstraint: " + propertyAccess.getExecution().getConstraint() +

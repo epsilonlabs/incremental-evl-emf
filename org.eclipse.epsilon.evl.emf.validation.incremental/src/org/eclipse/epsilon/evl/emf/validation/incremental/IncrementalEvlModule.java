@@ -52,25 +52,22 @@ public class IncrementalEvlModule extends EvlModule {
         // OK this gets tricky here as we seem to determine what things are and create new instances and return them
         if (moduleElement instanceof Constraint) {
             Constraint tempContraint = (Constraint) moduleElement;
-            //System.out.println("what this? hashcode : " + tempContraint);
+
             MYLOGGER.log(MyLog.EXPLORE,"what this? hashcode : " + tempContraint);
 
             return new Constraint() {
                 public Optional<UnsatisfiedConstraint> execute(IEolContext context_, Object self) throws EolRuntimeException {
 
                     // A context and a self, what is a self?
-                    //System.out.println("self is a : " + self.getClass());
                     MYLOGGER.log(MyLog.EXPLORE,"self is a : " + self.getClass());
 
                     EClass model = (EClass) self;
-                    //System.out.println("self is a model element >> HashCode : " + model.hashCode());
                     MYLOGGER.log(MyLog.EXPLORE,"self is a model element >> HashCode : " + model.hashCode());
 
                     // Is model element in the notification list?
                     if (null != notifications){
                         for (Notification n: notifications) {
                             EStructuralFeature feature = (EStructuralFeature) n.getFeature();
-                            //System.out.println(" !!! - I GOT THAT THING YOU SENT ME - !!! HashCode: " + feature.getName() );
                             MYLOGGER.log(MyLog.EXPLORE," !!! - I GOT THAT THING YOU SENT ME - !!! HashCode: " + feature.getName() );
                         }
                     }

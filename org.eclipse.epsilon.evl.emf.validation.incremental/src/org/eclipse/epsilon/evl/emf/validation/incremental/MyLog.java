@@ -6,15 +6,17 @@ import java.util.logging.*;
 
 public class MyLog {
 
-    
+    private Level reportLevel = Level.FINEST;
+    private static Level consoleLevel = Level.FINE;
+    private static String PREFIXLOGFILENAME = "myLog_";
     
     private static MyLog myLog = null;
     private static Logger myLogger = null;
     
-    private static String PREFIXLOGFILENAME = "myLog_";
+    public static Level NOTIFICATION = Level.FINE;
     public static Level STATE = Level.FINEST;
     public static Level FLOW = Level.FINER;
-    public static Level EXPLORE = Level.FINE;
+    public static Level EXPLORE = Level.FINER;
 
     private MyLog(){
             myLogger = Logger.getLogger("MyLog");
@@ -22,7 +24,7 @@ public class MyLog {
             myLogger.addHandler(getConsoleHandler());
             myLogger.addHandler(getTEXTFileHandler());
             myLogger.addHandler(getXMLFileHandler());
-            myLogger.setLevel(Level.FINEST);
+            myLogger.setLevel(reportLevel);
     }
 
     public static MyLog getMyLog() {
@@ -38,15 +40,18 @@ public class MyLog {
 
     private static ConsoleHandler getConsoleHandler () {
         ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setFormatter(new SimpleFormatter() {
-            private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
 
+        consoleHandler.setLevel(consoleLevel);
+        consoleHandler.setFormatter(new SimpleFormatter() {
+            //private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+            private static final String format = "[%1$tF %1$tT] %3$s %n";
             @Override
             public String formatMessage(LogRecord record) {
                 return String.format(format, new Date(record.getMillis()), record.getLevel().getLocalizedName(),
                         record.getMessage());
             }
         });
+
         return consoleHandler;
     }
 
@@ -68,7 +73,7 @@ public class MyLog {
             // A copy of the console output
             textFileHandler = new FileHandler(PREFIXLOGFILENAME+"TEXTLOG.txt");
             textFileHandler.setFormatter(new SimpleFormatter() {
-                private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+                private static final String format = "[%1$tF %1$tT] %3$s %n";
 
                 @Override
                 public String formatMessage(LogRecord record) {

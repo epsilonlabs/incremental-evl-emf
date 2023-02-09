@@ -18,6 +18,7 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 
 
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
+    private static boolean REPORT = false;
 
     private boolean validationHasRun = false; //Track that we have run one Validation
     private IncrementalEvlTrace lastTrace = null;
@@ -31,8 +32,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void revalidate(ResourceSet resourceSet) throws Exception {
-        //System.out.println("\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
-        MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
+        MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
 
         validate(resourceSet);
 
@@ -41,20 +41,20 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {
-        //System.out.print("\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
-        MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
+        MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
 
         // Model (root element)
         InMemoryEmfModel model = new InMemoryEmfModel(resourceSet.getResources().get(0));
         model.setConcurrent(true);
-        //System.out.println("Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
-        MYLOGGER.log(MyLog.STATE,"Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
+        MYLOGGER.log(MyLog.STATE, "Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
 
         // All Model elements
-        System.out.println("Model elements :");
-        Collection<EObject> elements = model.allContents();
-        for (EObject e : elements) {
-            System.out.println("hashCode: " + e.hashCode() + " object: " + e.toString());
+        if (REPORT) {
+            System.out.println("Model elements :");
+            Collection<EObject> elements = model.allContents();
+            for (EObject e : elements) {
+                System.out.println("hashCode: " + e.hashCode() + " object: " + e.toString());
+            }
         }
 
 
@@ -70,27 +70,29 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         module.getContext().getModelRepository().addModel(model);
 
 
-        System.out.println("\nConstraints to Execute : ");
-        List<Constraint> constraintsToExecute = module.getConstraints();
-        int i = 0;
-        for (Constraint c : constraintsToExecute) {
-            i++;
-            System.out.println(i + ", " + c.getName());
+        if (REPORT) {
+            System.out.println("\nConstraints to Execute : ");
+            List<Constraint> constraintsToExecute = module.getConstraints();
+            int i = 0;
+            for (Constraint c : constraintsToExecute) {
+                i++;
+                System.out.println(i + ", " + c.getName());
+            }
         }
 
 
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
-        //System.out.println("\n [!] ...Executing validation...\n");
-        MYLOGGER.log(MyLog.FLOW,"\n [!] ...Executing validation...\n");
+
+        MYLOGGER.log(MyLog.FLOW, "\n [!] ...Executing validation...\n");
         unsatisfiedConstraints = module.execute();
 
         validationHasRun = true; // Confirm at least one validation hasRun
         lastTrace = module.getTrace();
-        //System.out.println("\n [!] Review trace (constraintPropertyAccess Objects) in EvlModule:\n" + lastTrace.propertyAccesses.toString());
-        MYLOGGER.log(MyLog.STATE,"\n [!] Review trace (constraintPropertyAccess Objects) in EvlModule:\n" + lastTrace.propertyAccesses.toString());
 
-        if (null != lastTrace) {
-            i = 0;
+        MYLOGGER.log(MyLog.STATE, "\n [!] Review trace (constraintPropertyAccess Objects) in EvlModule:\n" + lastTrace.propertyAccesses.toString());
+
+        if (null != lastTrace && REPORT) {
+            int i = 0;
             for (ConstraintPropertyAccess cpa : lastTrace.propertyAccesses) {
                 i++;
                 System.out.println("\nConstrain Property Access: " + i);
@@ -119,10 +121,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature(); // unpack the feature from the notification
 
-        //System.out.println("\n [!] notifyChanged(Notification notification) : " + notification.getFeature().hashCode() + " " + notification.getOldValue() + " to " + notification.getNewValue() + "\n");
-        MYLOGGER.log(MyLog.STATE,"\n [!] notifyChanged(Notification notification) : " + notification.getFeature().hashCode() + " " + notification.getOldValue() + " to " + notification.getNewValue() + "\n");
-        System.out.println("notification for feature name: " + feature.getName());
-        System.out.println("");`
+        MYLOGGER.log(MyLog.NOTIFICATION, "\n [!] notifyChanged(Notification notification) : " +
+                notification.getFeature().hashCode() + " " +
+                "\n notification for feature name: " + feature.getName() +
+                notification.getOldValue() + " to " + notification.getNewValue());
     }
 
     public IncrementalEvlValidator getValidator() {
