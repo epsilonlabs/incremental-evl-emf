@@ -10,6 +10,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
+
 public abstract class IncrementalEvlValidator implements EValidator {
 	
 	private static final boolean REPORT = false;
@@ -18,7 +20,9 @@ public abstract class IncrementalEvlValidator implements EValidator {
 	
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		System.out.println("\n [!] IncrementalEvlValidator.validate() called\n");
+		//System.out.println("\n [!] IncrementalEvlValidator.validate() called\n");
+		MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidator.validate() called\n");
+
 		try {
 			if(REPORT) {
 				System.out.println("\n\n--- IncrementalEvlValidator.validate()");
@@ -37,7 +41,8 @@ public abstract class IncrementalEvlValidator implements EValidator {
 	}
 	
 	public boolean validateImpl(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) throws Exception {
-		System.out.println("\n [!] IncrementalEvlValidator.validateImpl() called\n");
+		//System.out.println("\n [!] IncrementalEvlValidator.validateImpl() called\n");
+		MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidator.validateImpl() called\n");
 		// Get hold of the resource set of the eObject
 		// We only want to validate each resource set once in batch mode
 		// and then listen for changes to update validation results incrementally
@@ -49,8 +54,9 @@ public abstract class IncrementalEvlValidator implements EValidator {
 		// If it has such an adapter it means that the resource set has already
 		// been batch validated
 		if (adapter != null) {
-			System.out.println("\n [!] Already has adapter : hashCode:" + adapter.hashCode());
-			
+			//System.out.println("\n [!] Already has adapter : hashCode:" + adapter.hashCode());
+			MYLOGGER.log(MyLog.FLOW,"\n [!] Already has adapter : hashCode:" + adapter.hashCode());
+
 			if (adapter.mustRevalidate(resourceSet)) {
 				adapter.revalidate(resourceSet);
 			}
@@ -61,7 +67,8 @@ public abstract class IncrementalEvlValidator implements EValidator {
 			adapter = new IncrementalEvlValidatorAdapter(this);
 			resourceSet.eAdapters().add(adapter);
 			adapter.validate(resourceSet);
-			System.out.println("\n [!] Added adapter : hashCode" + adapter.hashCode());
+			//System.out.println("\n [!] Added adapter : hashCode" + adapter.hashCode());
+			MYLOGGER.log(MyLog.FLOW,"\n [!] Added adapter : hashCode" + adapter.hashCode());
 		}
 		
 		return false;

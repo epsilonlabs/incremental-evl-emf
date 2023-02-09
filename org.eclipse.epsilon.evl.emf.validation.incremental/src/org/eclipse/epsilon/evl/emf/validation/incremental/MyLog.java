@@ -12,7 +12,8 @@ public class MyLog {
     private static Logger myLogger = null;
     
     private static String PREFIXLOGFILENAME = "myLog_";
-    public static Level METHOD = Level.FINER;
+    public static Level STATE = Level.FINEST;
+    public static Level FLOW = Level.FINER;
     public static Level EXPLORE = Level.FINE;
 
     private MyLog(){

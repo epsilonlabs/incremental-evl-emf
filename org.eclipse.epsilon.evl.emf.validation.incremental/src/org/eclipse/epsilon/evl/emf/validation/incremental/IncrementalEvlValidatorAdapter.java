@@ -14,6 +14,8 @@ import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 
+import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
+
 
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
@@ -29,8 +31,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void revalidate(ResourceSet resourceSet) throws Exception {
-        System.out.println("\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
-
+        //System.out.println("\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
+        MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
 
         validate(resourceSet);
 
@@ -39,12 +41,14 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {
-        System.out.print("\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
+        //System.out.print("\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
+        MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
 
         // Model (root element)
         InMemoryEmfModel model = new InMemoryEmfModel(resourceSet.getResources().get(0));
         model.setConcurrent(true);
-        System.out.println("Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
+        //System.out.println("Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
+        MYLOGGER.log(MyLog.STATE,"Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
 
         // All Model elements
         System.out.println("Model elements :");
@@ -76,12 +80,15 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
 
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
-        System.out.println("\n [!] ...Executing validation...\n");
+        //System.out.println("\n [!] ...Executing validation...\n");
+        MYLOGGER.log(MyLog.FLOW,"\n [!] ...Executing validation...\n");
         unsatisfiedConstraints = module.execute();
 
         validationHasRun = true; // Confirm at least one validation hasRun
         lastTrace = module.getTrace();
-        System.out.println("\n [!] Review trace (constraintPropertyAccess Objects) in EvlModule:\n" + lastTrace.propertyAccesses.toString());
+        //System.out.println("\n [!] Review trace (constraintPropertyAccess Objects) in EvlModule:\n" + lastTrace.propertyAccesses.toString());
+        MYLOGGER.log(MyLog.STATE,"\n [!] Review trace (constraintPropertyAccess Objects) in EvlModule:\n" + lastTrace.propertyAccesses.toString());
+
         if (null != lastTrace) {
             i = 0;
             for (ConstraintPropertyAccess cpa : lastTrace.propertyAccesses) {
@@ -112,9 +119,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature(); // unpack the feature from the notification
 
-        System.out.println("\n [!] notifyChanged(Notification notification) : " + notification.getFeature().hashCode() + " " + notification.getOldValue() + " to " + notification.getNewValue() + "\n");
+        //System.out.println("\n [!] notifyChanged(Notification notification) : " + notification.getFeature().hashCode() + " " + notification.getOldValue() + " to " + notification.getNewValue() + "\n");
+        MYLOGGER.log(MyLog.STATE,"\n [!] notifyChanged(Notification notification) : " + notification.getFeature().hashCode() + " " + notification.getOldValue() + " to " + notification.getNewValue() + "\n");
         System.out.println("notification for feature name: " + feature.getName());
-        System.out.println("");
+        System.out.println("");`
     }
 
     public IncrementalEvlValidator getValidator() {

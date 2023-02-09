@@ -28,14 +28,14 @@ public class IncrementalEvlModule extends EvlModule {
 
     public IncrementalEvlModule() {
         //System.out.println(" [i] IncrementalEclModel constructor");
-        MYLOGGER.log(MyLog.METHOD, " [i] IncrementalEclModel constructor");
+        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor");
 
 
     }
 
     public IncrementalEvlModule(List<Notification> notifications, Set<UnsatisfiedConstraint> unsatisfiedConstraints, IncrementalEvlTrace lastTrace) {
         //System.out.println(" [i] IncrementalEclModel constructor with settings");
-        MYLOGGER.log(MyLog.METHOD, " [i] IncrementalEclModel constructor with settings");
+        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor with settings");
         this.notifications = notifications;
         this.unsatisfiedConstraints = unsatisfiedConstraints;
         this.lastTrace = trace;
