@@ -6,11 +6,17 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.epsilon.common.module.IModule;
 import org.eclipse.epsilon.common.module.ModuleElement;
 import org.eclipse.epsilon.common.parse.AST;
+import org.eclipse.epsilon.eol.dom.ModelDeclaration;
+import org.eclipse.epsilon.eol.dom.PropertyCallExpression;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.execute.context.IEolContext;
+import org.eclipse.epsilon.eol.execute.context.SingleFrame;
 import org.eclipse.epsilon.eol.execute.introspection.recording.IPropertyAccess;
 import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessExecutionListener;
 import org.eclipse.epsilon.evl.EvlModule;
@@ -20,17 +26,16 @@ import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
 
 public class IncrementalEvlModule extends EvlModule {
+    private static boolean REPORT = false;
 
     //private Logger MYLOGGER = MyLog.getMyLogger();
-    public List<Notification> notifications;
-    private Set<UnsatisfiedConstraint> unsatisfiedConstraints;
-    private IncrementalEvlTrace lastTrace;
+    protected List<Notification> notifications;
+    protected Set<UnsatisfiedConstraint> unsatisfiedConstraints;
+    protected IncrementalEvlTrace lastTrace;
 
     public IncrementalEvlModule() {
         //System.out.println(" [i] IncrementalEclModel constructor");
         MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor");
-
-
     }
 
     public IncrementalEvlModule(List<Notification> notifications, Set<UnsatisfiedConstraint> unsatisfiedConstraints, IncrementalEvlTrace lastTrace) {
@@ -38,7 +43,7 @@ public class IncrementalEvlModule extends EvlModule {
         MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor with settings");
         this.notifications = notifications;
         this.unsatisfiedConstraints = unsatisfiedConstraints;
-        this.lastTrace = trace;
+        this.lastTrace = lastTrace;
     }
 
     protected ConstraintPropertyAccessRecorder propertyAccessRecorder = new ConstraintPropertyAccessRecorder();
@@ -49,35 +54,28 @@ public class IncrementalEvlModule extends EvlModule {
 
         ModuleElement moduleElement = super.adapt(cst, parentAst);
 
-        // OK this gets tricky here as we seem to determine what things are and create new instances and return them
         if (moduleElement instanceof Constraint) {
-            Constraint tempContraint = (Constraint) moduleElement;
-
-            MYLOGGER.log(MyLog.EXPLORE,"what this? hashcode : " + tempContraint);
-
             return new Constraint() {
                 public Optional<UnsatisfiedConstraint> execute(IEolContext context_, Object self) throws EolRuntimeException {
-
-                    // A context and a self, what is a self?
-                    MYLOGGER.log(MyLog.EXPLORE,"self is a : " + self.getClass());
-
-                    EClass model = (EClass) self;
-                    MYLOGGER.log(MyLog.EXPLORE,"self is a model element >> HashCode : " + model.hashCode());
-
-                    // Is model element in the notification list?
-                    if (null != notifications){
-                        for (Notification n: notifications) {
-                            EStructuralFeature feature = (EStructuralFeature) n.getFeature();
-                            MYLOGGER.log(MyLog.EXPLORE," !!! - I GOT THAT THING YOU SENT ME - !!! HashCode: " + feature.getName() );
-                        }
-                    }
-
+                    // this -- is the constraint
+                    // self -- is the model element under test
+                    // lastTrace -- is the last execution trace of the constraints
 
                     // We could check here if the last execution -- return the result of the last test
-                    // Is there a notification? Is it on the last Trace? Is it listed as an unsatisfied constrain?
-                    // else run the test			1
+                    // Is there a notification? Is it on the last Trace? Is it listed as an unsatisfied constraint?
+                    // else run the test
+
+
+                    // Set up the recorder and execute the constraint test to get a result
+
+
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
-                    return super.execute(context_, self);
+                    Optional<UnsatisfiedConstraint> Result = super.execute(context_, self);
+
+                    MYLOGGER.log(MyLog.EXPLORE, " [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
+                    System.out.println(" [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
+                    //System.out.println("model: " + ((EClass) self).hashCode() + " | constraint: " + this.hashCode() + " | Result: " + Result);
+                    return Result;
                 }
 
 
@@ -88,15 +86,23 @@ public class IncrementalEvlModule extends EvlModule {
 
     @Override
     public Set<UnsatisfiedConstraint> execute() throws EolRuntimeException {
+
+        // RUN or fake RUN here?
+        System.out.println("\nEXECUTING CONSTRAINTS");
+
+
         propertyAccessRecorder.startRecording();
         getContext().getExecutorFactory().addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
 
+        // Jumps to >> public ModuleElement adapt(AST cst, ModuleElement parentAst)
         Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();  // persist this in the instance?
 
         for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
             trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);
         }
+        trace.setUnsatisfiedConstraints(unsatisfiedConstraints);
 
+        System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
         return unsatisfiedConstraints;
     }
 

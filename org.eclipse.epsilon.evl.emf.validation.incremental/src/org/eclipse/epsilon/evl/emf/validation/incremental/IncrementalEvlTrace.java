@@ -1,5 +1,7 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
+import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,14 +12,14 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 public class IncrementalEvlTrace {
 
     protected List<ConstraintPropertyAccess> propertyAccesses = new ArrayList<>();
+    protected Set<UnsatisfiedConstraint> unsatisfiedConstraints = null;
 
     public void addPropertyAccess(ConstraintPropertyAccess propertyAccess) {
         propertyAccesses.add(propertyAccess);
+    }
 
-        MYLOGGER.log(MyLog.STATE, "\nLogging ConstraintPropertyAccess to trace: " +
-                "\nConstraint: " + propertyAccess.getExecution().getConstraint() +
-                "\nModel Element: " + propertyAccess.getModelElement() + " . " + propertyAccess.getPropertyName());
-
+    public void setUnsatisfiedConstraints (Set<UnsatisfiedConstraint> listOfUnsatisifedConstraints) {
+        unsatisfiedConstraints = listOfUnsatisifedConstraints;
     }
 
     protected Set<ConstraintExecution> propertyModified(Object modelElement, String propertyName) {

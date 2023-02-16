@@ -6,17 +6,17 @@ import java.util.logging.*;
 
 public class MyLog {
 
-    private Level reportLevel = Level.FINEST;
-    private static Level consoleLevel = Level.FINE;
+    private Level reportLevel = Level.FINE;
+    private static Level consoleLevel = Level.OFF;
     private static String PREFIXLOGFILENAME = "myLog_";
     
     private static MyLog myLog = null;
     private static Logger myLogger = null;
     
-    public static Level NOTIFICATION = Level.FINE;
+    public static Level NOTIFICATION = Level.FINEST;
     public static Level STATE = Level.FINEST;
     public static Level FLOW = Level.FINER;
-    public static Level EXPLORE = Level.FINER;
+    public static Level EXPLORE = Level.FINE;
 
     private MyLog(){
             myLogger = Logger.getLogger("MyLog");

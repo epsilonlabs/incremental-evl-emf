@@ -18,7 +18,7 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 
 
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
-    private static boolean REPORT = false;
+    private static boolean REPORT = true;
 
     private boolean validationHasRun = false; //Track that we have run one Validation
     private IncrementalEvlTrace lastTrace = null;
@@ -50,7 +50,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // All Model elements
         if (REPORT) {
-            System.out.println("Model elements :");
+            System.out.println("\nModel elements :");
             Collection<EObject> elements = model.allContents();
             for (EObject e : elements) {
                 System.out.println("hashCode: " + e.hashCode() + " object: " + e.toString());
@@ -84,6 +84,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
 
         MYLOGGER.log(MyLog.FLOW, "\n [!] ...Executing validation...\n");
+
+
         unsatisfiedConstraints = module.execute();
 
         validationHasRun = true; // Confirm at least one validation hasRun
@@ -92,18 +94,25 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         MYLOGGER.log(MyLog.STATE, "\n [!] Review trace (constraintPropertyAccess Objects) in EvlModule:\n" + lastTrace.propertyAccesses.toString());
 
         if (null != lastTrace && REPORT) {
+            System.out.println("\nReporting lastTrace");
+
             int i = 0;
+            System.out.println("\nConstrainPropertyAccess list: ");
             for (ConstraintPropertyAccess cpa : lastTrace.propertyAccesses) {
                 i++;
-                System.out.println("\nConstrain Property Access: " + i);
+                System.out.print(i+", ");
 
-                System.out.println("CPA name: " + cpa.execution.constraint.getName());        // constraint name?
-                cpa.getExecution().getConstraint().getName();    // constraint name?
-                EObject elementAsEobject = (EObject) cpa.getModelElement();
-                System.out.println("element hashCode: " + elementAsEobject.hashCode());    //
-                System.out.println("property name: " + cpa.getPropertyName());    //
-                cpa.getExecution().getConstraint().getMessageBlock();
+                System.out.print("Constraint: " + cpa.execution.constraint.getName());
+                System.out.println(" | model hashcode: " + cpa.getModelElement().hashCode());
+            }
 
+            i = 0;
+            System.out.println("\nUnsatisfiedConstraint list: ");
+            for (UnsatisfiedConstraint uc : lastTrace.unsatisfiedConstraints) {
+                i++;
+                System.out.println(i + ", Constraint: " + uc.getConstraint().getName() +
+                        " | model hashcode: " + uc.getInstance().hashCode()
+                );
             }
         }
     }
@@ -118,6 +127,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     public void notifyChanged(Notification notification) {
         super.notifyChanged(notification);
         notifications.add(notification);
+
+        // Parse the lastTrace and mark Constraint accesses as needing to be tested
 
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature(); // unpack the feature from the notification
 
