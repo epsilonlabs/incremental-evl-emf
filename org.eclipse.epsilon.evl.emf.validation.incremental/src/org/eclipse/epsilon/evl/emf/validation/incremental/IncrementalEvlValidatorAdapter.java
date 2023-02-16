@@ -110,7 +110,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             System.out.println("\nUnsatisfiedConstraint list: ");
             for (UnsatisfiedConstraint uc : lastTrace.unsatisfiedConstraints) {
                 i++;
-                System.out.println(i + ", Constraint: " + uc.getConstraint().getName() +
+                System.out.println(i + ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() +
                         " | model hashcode: " + uc.getInstance().hashCode()
                 );
             }
