@@ -46,8 +46,7 @@ public class IncrementalEvlTrace {
         for (ConstraintPropertyAccess propertyAccess : propertyAccesses) {
             if ((modelElement.hashCode() == propertyAccess.getModelElement().hashCode())
                     && (constraint.hashCode() == propertyAccess.getExecution().getConstraint().hashCode())) {
-                System.out.println("\n trace MATCHED Model HASH " + modelElement.hashCode()
-                        + "\n && Const hash: " + constraint.hashCode() + " == " + propertyAccess.getExecution().getConstraint().hashCode());
+                //System.out.println("\n trace MATCHED Model HASH " + modelElement.hashCode() + "\n && Const hash: " + constraint.hashCode() + " == " + propertyAccess.getExecution().getConstraint().hashCode());
                 return true;
             }
         }
@@ -59,7 +58,7 @@ public class IncrementalEvlTrace {
         for (UnsatisfiedConstraint result : unsatisfiedConstraints) {
             if ((modelElement.hashCode() == result.getInstance().hashCode())
                     && (constraint.hashCode() == result.getConstraint().hashCode())) {
-                System.out.println("Found old result: " + result);
+                //System.out.println("Found old result: " + result);
                 return result;
             }
         }

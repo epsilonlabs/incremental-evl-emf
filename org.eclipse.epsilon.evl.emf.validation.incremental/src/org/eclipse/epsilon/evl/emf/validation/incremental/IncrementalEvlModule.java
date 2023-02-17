@@ -69,6 +69,7 @@ public class IncrementalEvlModule extends EvlModule {
                     if(null != lastTrace) {
                         lastTrace.checkPropertyAccesses(self,this);  // check to see if there is a property access listed in the lastTrace
                         lastTrace.checkUnsatisfiedContraint(self, this); // get the last result if there is one
+                        /*
                         for (ConstraintPropertyAccess propertyAccess : lastTrace.propertyAccesses) {
                             if ((self.hashCode() == propertyAccess.getModelElement().hashCode())
                                 &&
@@ -77,14 +78,14 @@ public class IncrementalEvlModule extends EvlModule {
                                         + "\n && Const hash: " + this.hashCode() + " == " + propertyAccess.getExecution().getConstraint().hashCode());
                             }
                         }
-
+                        */
                     }
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
                     Optional<UnsatisfiedConstraint> Result = super.execute(context_, self);
 
                     MYLOGGER.log(MyLog.EXPLORE, " [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
-                    System.out.println(" [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
+                    //System.out.println(" [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
                     //System.out.println("model: " + ((EClass) self).hashCode() + " | constraint: " + this.hashCode() + " | Result: " + Result);
                     return Result;
                 }
@@ -99,7 +100,7 @@ public class IncrementalEvlModule extends EvlModule {
     public Set<UnsatisfiedConstraint> execute() throws EolRuntimeException {
 
         // RUN or fake RUN here?
-        System.out.println("\nEXECUTING CONSTRAINTS");
+        //System.out.println("\nEXECUTING CONSTRAINTS");
 
 
         propertyAccessRecorder.startRecording();
@@ -113,7 +114,7 @@ public class IncrementalEvlModule extends EvlModule {
         }
         trace.setUnsatisfiedConstraints(unsatisfiedConstraints);
 
-        System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
+        //System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
         return unsatisfiedConstraints;
     }
 

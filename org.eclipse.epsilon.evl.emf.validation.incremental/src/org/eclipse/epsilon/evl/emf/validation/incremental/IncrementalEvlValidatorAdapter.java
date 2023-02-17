@@ -128,6 +128,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         super.notifyChanged(notification);
         notifications.add(notification);
 
+        if(null != lastTrace){
+            System.out.println ("NOTIFICATION HASH : " + ((EObject) notification.getNotifier()));
+        }
+
         // Parse the lastTrace and mark Constraint accesses as needing to be tested
 
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature(); // unpack the feature from the notification
