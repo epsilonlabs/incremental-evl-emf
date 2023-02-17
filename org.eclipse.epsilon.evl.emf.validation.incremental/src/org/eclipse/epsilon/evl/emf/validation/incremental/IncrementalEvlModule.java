@@ -67,20 +67,17 @@ public class IncrementalEvlModule extends EvlModule {
                     // else run the test
 
                     if(null != lastTrace) {
+                        lastTrace.checkPropertyAccesses(self,this);  // check to see if there is a property access listed in the lastTrace
+                        lastTrace.checkUnsatisfiedContraint(self, this); // get the last result if there is one
                         for (ConstraintPropertyAccess propertyAccess : lastTrace.propertyAccesses) {
                             if ((self.hashCode() == propertyAccess.getModelElement().hashCode())
                                 &&
                                     (this.hashCode() == propertyAccess.getExecution().getConstraint().hashCode())) {
                                 System.out.println("\n MATCHED Model HASH " + self.hashCode()
                                         + "\n && Const hash: " + this.hashCode() + " == " + propertyAccess.getExecution().getConstraint().hashCode());
-                                /*
-                                // Self && PA point to the same object -- there is no difference in them
-                                if (!self.equals(propertyAccess.getModelElement())) {
-                                    System.out.println( "Not the same? \nself: " + self + "\n  PA: " +propertyAccess.getModelElement());
-                                }
-                                */
                             }
                         }
+
                     }
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
