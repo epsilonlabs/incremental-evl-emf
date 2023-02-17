@@ -17,6 +17,10 @@ public class IncrementalEvlTrace {
         propertyAccesses.add(propertyAccess);
     }
 
+    public List<ConstraintPropertyAccess> getPropertyAccesses() {
+        return propertyAccesses;
+    }
+
     public void setUnsatisfiedConstraints(Set<UnsatisfiedConstraint> listOfUnsatisifedConstraints) {
         unsatisfiedConstraints = listOfUnsatisifedConstraints;
     }
@@ -42,7 +46,6 @@ public class IncrementalEvlTrace {
 
 
     public boolean checkPropertyAccesses(Object modelElement, Constraint constraint) {
-
         for (ConstraintPropertyAccess propertyAccess : propertyAccesses) {
             if ((modelElement.hashCode() == propertyAccess.getModelElement().hashCode())
                     && (constraint.hashCode() == propertyAccess.getExecution().getConstraint().hashCode())) {
@@ -50,7 +53,6 @@ public class IncrementalEvlTrace {
                 return true;
             }
         }
-
         return false;
     }
 

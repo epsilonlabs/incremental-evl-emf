@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
@@ -100,7 +101,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             System.out.println("\nConstrainPropertyAccess list: ");
             for (ConstraintPropertyAccess cpa : lastTrace.propertyAccesses) {
                 i++;
-                System.out.print(i+", ");
+                System.out.print(i + ", ");
 
                 System.out.print("Constraint: " + cpa.execution.constraint.getName());
                 System.out.println(" | model hashcode: " + cpa.getModelElement().hashCode());
@@ -128,13 +129,24 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         super.notifyChanged(notification);
         notifications.add(notification);
 
-        if(null != lastTrace){
-            System.out.println ("NOTIFICATION HASH : " + ((EObject) notification.getNotifier()));
+        EObject modelElement = (EObject) notification.getNotifier();
+        EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
+        if (null != lastTrace) {
+            System.out.println("\nNOTIFICATION from : " + EcoreUtil.getURI(modelElement) + " feature: " + feature.getName());
+            List<ConstraintPropertyAccess> PAlist = lastTrace.getPropertyAccesses();
+
+            for (ConstraintPropertyAccess pa : PAlist) {
+                System.out.println( "pa list: " + EcoreUtil.getURI( (EObject) pa.getModelElement() )
+                        + " feature: " + pa.getPropertyName() );
+                if ( EcoreUtil.getURI( (EObject) pa.getModelElement() ).equals( EcoreUtil.getURI(modelElement) ) ) {
+                 System.out.println("Remove from palist: " + pa);
+                }
+            }
         }
 
         // Parse the lastTrace and mark Constraint accesses as needing to be tested
 
-        EStructuralFeature feature = (EStructuralFeature) notification.getFeature(); // unpack the feature from the notification
+        //EStructuralFeature feature = (EStructuralFeature) notification.getFeature(); // unpack the feature from the notification
 
         MYLOGGER.log(MyLog.NOTIFICATION, "\n [!] notifyChanged(Notification notification) : " +
                 notification.getFeature().hashCode() + " " +
