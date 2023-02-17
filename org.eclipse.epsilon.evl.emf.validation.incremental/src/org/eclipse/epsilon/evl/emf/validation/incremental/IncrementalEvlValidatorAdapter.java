@@ -127,27 +127,14 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     @Override
     public void notifyChanged(Notification notification) {
         super.notifyChanged(notification);
-        notifications.add(notification);
+        notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
 
-        EObject modelElement = (EObject) notification.getNotifier();
-        EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
+        // IF there is a lastTrace, then we need to send the update to EVLTrace and update the ConstraintPropertyAccess list
         if (null != lastTrace) {
-            System.out.println("\nNOTIFICATION from : " + EcoreUtil.getURI(modelElement) + " feature: " + feature.getName());
-            List<ConstraintPropertyAccess> PAlist = lastTrace.getPropertyAccesses();
-
-            for (ConstraintPropertyAccess pa : PAlist) {
-                System.out.println( "pa list: " + EcoreUtil.getURI( (EObject) pa.getModelElement() )
-                        + " feature: " + pa.getPropertyName() );
-                if ( EcoreUtil.getURI( (EObject) pa.getModelElement() ).equals( EcoreUtil.getURI(modelElement) ) ) {
-                 System.out.println("Remove from palist: " + pa);
-                }
-            }
+            lastTrace.processModelNotification(notification);
         }
 
-        // Parse the lastTrace and mark Constraint accesses as needing to be tested
-
-        //EStructuralFeature feature = (EStructuralFeature) notification.getFeature(); // unpack the feature from the notification
-
+        EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
         MYLOGGER.log(MyLog.NOTIFICATION, "\n [!] notifyChanged(Notification notification) : " +
                 notification.getFeature().hashCode() + " " +
                 "\n notification for feature name: " + feature.getName() +

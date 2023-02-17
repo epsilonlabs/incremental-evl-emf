@@ -1,10 +1,16 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 
+import org.eclipse.emf.common.notify.Notification;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -65,5 +71,26 @@ public class IncrementalEvlTrace {
             }
         }
         return null;
+    }
+
+    public void processModelNotification(Notification notification) {
+        EObject modelElement = (EObject) notification.getNotifier();
+        EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
+
+        System.out.println("\nNOTIFICATION from : " + EcoreUtil.getURI(modelElement) + " feature: " + feature.getName());
+
+        System.out.println("BEFORE - PA list size:" + propertyAccesses.size());
+
+        ListIterator<ConstraintPropertyAccess> iterator = propertyAccesses.listIterator();
+        while (iterator.hasNext()) {
+            ConstraintPropertyAccess current = iterator.next();
+            if ((EcoreUtil.getURI((EObject) current.getModelElement()).equals(EcoreUtil.getURI(modelElement)))
+                    &&
+                    (current.getPropertyName().equals(feature.getName()))) {
+                System.out.println("Removed from palist: " + current);
+                iterator.remove();
+            }
+        }
+        System.out.println("AFTER - PA list size:" + propertyAccesses.size());
     }
 }
