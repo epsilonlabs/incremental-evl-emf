@@ -70,7 +70,7 @@ public class IncrementalEvlModule extends EvlModule {
                     // Return the old result if available
                     for (ConstraintTraceItem item : getContext().getConstraintTrace().getItems()) {
                         if (item.getInstance().equals(self) && item.getConstraint().equals(moduleElement)) {
-                            if (item.getResult() == true) {
+                            if (item.getResult()) {
                                 return Optional.empty();
                             } else {
                                 // Go find the unsatisfied constraint in the list
