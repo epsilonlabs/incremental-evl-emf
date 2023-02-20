@@ -61,29 +61,27 @@ public class IncrementalEvlModule extends EvlModule {
                     // this -- is the constraint
                     // self -- is the model element under test
                     // lastTrace -- is the last execution trace of the constraints
+                    Optional<UnsatisfiedConstraint> Result; // The Result of executing the Constraint.
 
-                    // We could check here if the last execution -- return the result of the last test
-                    // Is there a notification? Is it on the last Trace? Is it listed as an unsatisfied constraint?
-                    // else run the test
+                    // We could check here if the last execution -- return the result of the last execution instead of executing the constraint test
+                    // Notifications REMOVE PropertyAccesses from the LastTrace. (Elements with no access get tested)
 
+                    // IF there is a last Trace, and the PropertyAccess matches then we know it PASSED or FAILED (if Unsatisfied)
                     if(null != lastTrace) {
                         lastTrace.checkPropertyAccesses(self,this);  // check to see if there is a property access listed in the lastTrace
-                        lastTrace.checkUnsatisfiedContraint(self, this); // get the last result if there is one
-                        /*
-                        for (ConstraintPropertyAccess propertyAccess : lastTrace.propertyAccesses) {
-                            if ((self.hashCode() == propertyAccess.getModelElement().hashCode())
-                                &&
-                                    (this.hashCode() == propertyAccess.getExecution().getConstraint().hashCode())) {
-                                System.out.println("\n MATCHED Model HASH " + self.hashCode()
-                                        + "\n && Const hash: " + this.hashCode() + " == " + propertyAccess.getExecution().getConstraint().hashCode());
-                            }
-                        }
-                        */
+                        // IF there is a propertyAccess on the lastTrace then we would check UnsatisfiedConstraints on the lastTrace next
+                            lastTrace.checkUnsatisfiedContraint(self, this); // get the last result if there is one
+
+                        // RETURN an Empty Optional Result or the UnsatisfiedConstraint Result. exit before Execution occurs.
                     }
+
+                    // IF there is nothing on the last Trace then Execute as normal.
+
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
-                    Optional<UnsatisfiedConstraint> Result = super.execute(context_, self);
+                    Result = super.execute(context_, self);
 
+                    // Just some Logging
                     MYLOGGER.log(MyLog.EXPLORE, " [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
                     //System.out.println(" [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
                     //System.out.println("model: " + ((EClass) self).hashCode() + " | constraint: " + this.hashCode() + " | Result: " + Result);
@@ -99,20 +97,18 @@ public class IncrementalEvlModule extends EvlModule {
     @Override
     public Set<UnsatisfiedConstraint> execute() throws EolRuntimeException {
 
-        // RUN or fake RUN here?
         //System.out.println("\nEXECUTING CONSTRAINTS");
-
 
         propertyAccessRecorder.startRecording();
         getContext().getExecutorFactory().addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
 
         // Jumps to >> public ModuleElement adapt(AST cst, ModuleElement parentAst)
-        Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();  // persist this in the instance?
+        Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();  // The returning Unsatisfied Constraints come in here.
 
         for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
             trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);
         }
-        trace.setUnsatisfiedConstraints(unsatisfiedConstraints);
+        trace.setUnsatisfiedConstraints(unsatisfiedConstraints);  // Store the list on the trace, which will become the "last trace"
 
         //System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
         return unsatisfiedConstraints;

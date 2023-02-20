@@ -51,6 +51,7 @@ public class IncrementalEvlTrace {
     }
 
 
+    // Move this to "Execution Cache"
     public boolean checkPropertyAccesses(Object modelElement, Constraint constraint) {
         for (ConstraintPropertyAccess propertyAccess : propertyAccesses) {
             if ((modelElement.hashCode() == propertyAccess.getModelElement().hashCode())
@@ -62,6 +63,7 @@ public class IncrementalEvlTrace {
         return false;
     }
 
+    // Move this to "Execution Cache"
     public UnsatisfiedConstraint checkUnsatisfiedContraint(Object modelElement, Constraint constraint) {
         for (UnsatisfiedConstraint result : unsatisfiedConstraints) {
             if ((modelElement.hashCode() == result.getInstance().hashCode())
@@ -73,7 +75,12 @@ public class IncrementalEvlTrace {
         return null;
     }
 
+    // Move this to "Execution Cache"? -- turn this into a remove "property access object"?
     public void processModelNotification(Notification notification) {
+
+        // Do we also need to remove model elements from UnsatisfiedConstraints?
+        // -- UCs are "new" to each Trace, which becomes the "lastTrace". UCs are only returned if a model element is on the trace.
+
         EObject modelElement = (EObject) notification.getNotifier();
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
 
