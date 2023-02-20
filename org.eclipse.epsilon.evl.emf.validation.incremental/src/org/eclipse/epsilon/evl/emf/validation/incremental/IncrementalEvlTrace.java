@@ -95,6 +95,11 @@ public class IncrementalEvlTrace {
                     &&
                     (current.getPropertyName().equals(feature.getName()))) {
                 System.out.println("Removed from palist: " + current);
+
+                // 1. Remove the old result from the module's getContext().getConstraintTrace()
+                // 2. Remove the old result from the module's getContext().getUnsatisfiedConstraints()
+                // 3. Forget all property accesses from current.getExecution() (not just this one)
+
                 iterator.remove();
             }
         }

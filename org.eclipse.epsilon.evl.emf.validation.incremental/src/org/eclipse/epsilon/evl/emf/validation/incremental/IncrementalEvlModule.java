@@ -23,6 +23,7 @@ import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessExe
 import org.eclipse.epsilon.evl.EvlModule;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
+import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
 
@@ -66,16 +67,21 @@ public class IncrementalEvlModule extends EvlModule {
                     // We could check here if the last execution -- return the result of the last execution instead of executing the constraint test
                     // Notifications REMOVE PropertyAccesses from the LastTrace. (Elements with no access get tested)
 
-                    // IF there is a last Trace, and the PropertyAccess matches then we know it PASSED or FAILED (if Unsatisfied)
-                    if(null != lastTrace) {
-                        lastTrace.checkPropertyAccesses(self,this);  // check to see if there is a property access listed in the lastTrace
-                        // IF there is a propertyAccess on the lastTrace then we would check UnsatisfiedConstraints on the lastTrace next
-                            lastTrace.checkUnsatisfiedContraint(self, this); // get the last result if there is one
-
-                        // RETURN an Empty Optional Result or the UnsatisfiedConstraint Result. exit before Execution occurs.
+                    // Return the old result if available
+                    for (ConstraintTraceItem item : getContext().getConstraintTrace().getItems()) {
+                        if (item.getInstance().equals(self) && item.getConstraint().equals(moduleElement)) {
+                            if (item.getResult() == true) {
+                                return Optional.empty();
+                            } else {
+                                // Go find the unsatisfied constraint in the list
+                                for (UnsatisfiedConstraint uc : getContext().getUnsatisfiedConstraints()) {
+                                    if (uc.getConstraint().equals(moduleElement) && uc.getInstance().equals(self)) {
+                                        return Optional.of(uc);
+                                    }
+                                }
+                            }
+                        }
                     }
-
-                    // IF there is nothing on the last Trace then Execute as normal.
 
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
