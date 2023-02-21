@@ -70,7 +70,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         module.parse(validator.getConstraints());    // constraints ArrayList<E>[]
         module.getContext().getModelRepository().addModel(model);
 
-
+        // Console output
         if (REPORT) {
             System.out.println("\nConstraints to Execute : ");
             List<Constraint> constraintsToExecute = module.getConstraints();
@@ -87,19 +87,22 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         MYLOGGER.log(MyLog.FLOW, "\n [!] ...Executing validation...\n");
 
 
+        // -------- EXECUTION --------
         unsatisfiedConstraints = module.execute();
 
+        System.out.println("Unsat: " + module.getContext().getUnsatisfiedConstraints().size()) ;
+
         validationHasRun = true; // Confirm at least one validation hasRun
+        // -------- PROCESS RESULTS --------
         lastTrace = module.getTrace();
 
-        MYLOGGER.log(MyLog.STATE, "\n [!] Review trace (constraintPropertyAccess Objects) in EvlModule:\n" + lastTrace.propertyAccesses.toString());
-
-        if (null != lastTrace && REPORT) {
-            System.out.println("\nReporting lastTrace");
+        // Console output
+        if (REPORT) {
+            System.out.println("\nModule Trace");
 
             int i = 0;
             System.out.println("\nConstrainPropertyAccess list: ");
-            for (ConstraintPropertyAccess cpa : lastTrace.propertyAccesses) {
+            for (ConstraintPropertyAccess cpa : module.getTrace().propertyAccesses) {
                 i++;
                 System.out.print(i + ", ");
 
@@ -109,7 +112,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
             i = 0;
             System.out.println("\nUnsatisfiedConstraint list: ");
-            for (UnsatisfiedConstraint uc : lastTrace.unsatisfiedConstraints) {
+            for (UnsatisfiedConstraint uc : module.getContext().getUnsatisfiedConstraints()) {
                 i++;
                 System.out.println(i + ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() +
                         " | model hashcode: " + uc.getInstance().hashCode()
@@ -117,12 +120,6 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             }
         }
     }
-
-    public IncrementalEvlTrace getLastTrace() {
-        //System.out.println("\ngetLastTrace(): " + lastTrace.propertyAccesses.toString());
-        return lastTrace;
-    }
-
 
     @Override
     public void notifyChanged(Notification notification) {
