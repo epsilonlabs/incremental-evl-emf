@@ -66,32 +66,40 @@ public class IncrementalEvlModule extends EvlModule {
                     // Return the old result if available
                     // moduleElement >> this ??
                     if(null != lastModule) {
-                        System.out.println(" Searching old context : " + lastModule.getContext().getConstraintTrace().getItems().size());
+                        System.out.println("\nSearching lastModule ConstraintTrace : "
+                                + lastModule.getContext().getConstraintTrace().getItems().size()
+                                + self.hashCode() + " & " + this.getName());
                         for (ConstraintTraceItem item : lastModule.getContext().getConstraintTrace().getItems()) {
                             System.out.print("  Model: " + item.getInstance().hashCode() + " == " + self.hashCode());
                             System.out.println(" && Constraint: " + item.getConstraint().getName() + " == " + this.getName());
 
                             if (item.getInstance().equals(self) && item.getConstraint().equals(this)) {
-                                System.out.println(" - MATCHED - " + self.hashCode() + " " + this.getName());
+                                System.out.println("- MATCHED model & constraint - " + self.hashCode() + " " + this.getName());
 
                                 if (item.getResult()) {
-                                    System.out.println("Result passed (TRUE) - [EMPTY] ");
+                                    System.out.println("Result = PASS (TRUE) - [EMPTY] ");
                                     return Optional.empty();
                                 } else {
-                                    System.out.println("Result failed FALSE : ");
+                                    System.out.println("Result = FAIL (FALSE) : ");
                                     // Go find the unsatisfied constraint in the list
-                                    System.out.print(" Searching old UnsatisfiedConstraints : " + lastModule.getContext().getUnsatisfiedConstraints().size() );
+                                    System.out.print(" Searching lastModule UnsatisfiedConstraints : "
+                                            + lastModule.getContext().getUnsatisfiedConstraints().size()
+                                            + self.hashCode() + " & " + this.getName());
                                     for (UnsatisfiedConstraint uc : lastModule.getContext().getUnsatisfiedConstraints()) {
                                         System.out.print("    Model: " + uc.getInstance().hashCode() + " == " + self.hashCode());
                                         System.out.println(" && Constraint: " + uc.getConstraint().getName() + " == " + this.getName());
                                         if ( uc.getInstance().equals(self) && uc.getConstraint().equals(this)  ) {
-                                            System.out.println (" - MATCHED -  UC Result: " + uc.getConstraint().getName());
+                                            System.out.println (" - MATCHED UC -  UC Result: " + uc.getConstraint().getName());
                                             return Optional.of(uc);
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+                    else {
+                        System.out.println(" (No lastModule) -- Validating: "
+                                + self.hashCode() + " & " + this.getName());
                     }
 
                     // Set up the recorder and execute the constraint test to get a result

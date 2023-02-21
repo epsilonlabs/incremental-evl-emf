@@ -4,12 +4,12 @@ context EClass {
 		check: self.name <> "C1"
 		message: "C1 not my name"
 	}
-
+/*
     constraint NotC1repeated {
         check: self.name <> "C1"
         message: "C1 not my name"
     }
-
+*/
 	constraint NotC2 {
 		check: self.name <> "C2"
 		message: "C2 not my name"

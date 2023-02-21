@@ -23,6 +23,7 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     private static boolean REPORT = true;
+    private int validationCount = 0;
 
     private boolean validationHasRun = false; //Track that we have run one Validation
     private IncrementalEvlTrace lastTrace = null;
@@ -47,6 +48,9 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {
+        validationCount++;
+        System.out.println("\n ** RUNNING VALIDATION " + validationCount + " **");
+
         MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
 
         // Make an in memory version of the Model (root element) for testing
@@ -100,10 +104,11 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // -------- EXECUTION --------
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
+        if(REPORT) {System.out.println( "\n ! EXECUTING !");}
         unsatisfiedConstraints = module.execute();
 
 
-        System.out.println("Unsat: " + module.getContext().getUnsatisfiedConstraints().size()) ;
+
 
         validationHasRun = true; // Confirm at least one validation hasRun
         // -------- PROCESS RESULTS --------
@@ -111,7 +116,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // Console output
         if (REPORT) {
-            System.out.println("\nModule Trace");
+            System.out.println("\n == Module results ==");
+            System.out.println("UnsatisfiedConstraints: " + module.getContext().getUnsatisfiedConstraints().size()) ;
 
             int i = 0;
             System.out.println("\nConstrainPropertyAccess list: ");
@@ -124,7 +130,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             }
 
             i = 0;
-            System.out.println("\nConstraint Trace list: ");
+            System.out.println("\nConstraintTrace list: ");
             for (ConstraintTraceItem item : module.getContext().getConstraintTrace()) {
                 i++;
                 System.out.println(i + ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode() +
@@ -140,6 +146,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
                         " | model hashcode: " + uc.getInstance().hashCode()
                 );
             }
+
+            System.out.println("\n ====================\n");
         }
     }
 
@@ -148,9 +156,14 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         super.notifyChanged(notification);
         notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
 
+        if(REPORT) {
+            EObject modelElement = (EObject) notification.getNotifier();
+            EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
+            System.out.println("\n[MODEL CHANGE NOTIFICATION]\n from : " + EcoreUtil.getURI(modelElement) + "\n feature: " + feature.getName() + "\n was: " + notification.getOldValue() + "\n now: " + notification.getNewValue());
+        }
         // IF there is a lastTrace, then we need to send the update to EVLTrace and update the ConstraintPropertyAccess list
         if (null != lastTrace) {
-            lastTrace.processModelNotification(notification);
+           // lastTrace.processModelNotification(notification);
         }
 
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature();

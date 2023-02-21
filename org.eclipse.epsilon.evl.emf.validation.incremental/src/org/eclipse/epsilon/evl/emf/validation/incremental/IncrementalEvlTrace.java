@@ -84,8 +84,6 @@ public class IncrementalEvlTrace {
         EObject modelElement = (EObject) notification.getNotifier();
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
 
-        System.out.println("\nNOTIFICATION\n from : " + EcoreUtil.getURI(modelElement) + "\n feature: " + feature.getName() + "\n was: " + notification.getOldValue() + "\n now: " + notification.getNewValue());
-
         System.out.println("BEFORE - PA list size:" + propertyAccesses.size());
 
         ListIterator<ConstraintPropertyAccess> iterator = propertyAccesses.listIterator();
