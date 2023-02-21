@@ -29,23 +29,19 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 
 public class IncrementalEvlModule extends EvlModule {
     private static boolean REPORT = false;
+    protected IncrementalEvlModule lastModule;
 
     //private Logger MYLOGGER = MyLog.getMyLogger();
-    protected List<Notification> notifications;
-    protected Set<UnsatisfiedConstraint> unsatisfiedConstraints;
-    protected IncrementalEvlTrace lastTrace;
 
     public IncrementalEvlModule() {
         //System.out.println(" [i] IncrementalEclModel constructor");
         MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor");
     }
 
-    public IncrementalEvlModule(List<Notification> notifications, Set<UnsatisfiedConstraint> unsatisfiedConstraints, IncrementalEvlTrace lastTrace) {
-        //System.out.println(" [i] IncrementalEclModel constructor with settings");
-        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor with settings");
-        this.notifications = notifications;
-        this.unsatisfiedConstraints = unsatisfiedConstraints;
-        this.lastTrace = lastTrace;
+    public IncrementalEvlModule(IncrementalEvlModule lastModule) {
+        //System.out.println(" [i] IncrementalEclModel constructor");
+        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor -- with the lastModule");
+        this.lastModule = lastModule;
     }
 
     protected ConstraintPropertyAccessRecorder propertyAccessRecorder = new ConstraintPropertyAccessRecorder();
@@ -68,15 +64,30 @@ public class IncrementalEvlModule extends EvlModule {
                     // Notifications REMOVE PropertyAccesses from the LastTrace. (Elements with no access get tested)
 
                     // Return the old result if available
-                    for (ConstraintTraceItem item : getContext().getConstraintTrace().getItems()) {
-                        if (item.getInstance().equals(self) && item.getConstraint().equals(moduleElement)) {
-                            if (item.getResult()) {
-                                return Optional.empty();
-                            } else {
-                                // Go find the unsatisfied constraint in the list
-                                for (UnsatisfiedConstraint uc : getContext().getUnsatisfiedConstraints()) {
-                                    if (uc.getConstraint().equals(moduleElement) && uc.getInstance().equals(self)) {
-                                        return Optional.of(uc);
+                    // moduleElement >> this ??
+                    if(null != lastModule) {
+                        System.out.println(" Searching old context : " + lastModule.getContext().getConstraintTrace().getItems().size());
+                        for (ConstraintTraceItem item : lastModule.getContext().getConstraintTrace().getItems()) {
+                            System.out.print("  Model: " + item.getInstance().hashCode() + " == " + self.hashCode());
+                            System.out.println(" && Constraint: " + item.getConstraint().getName() + " == " + this.getName());
+
+                            if (item.getInstance().equals(self) && item.getConstraint().equals(this)) {
+                                System.out.println(" - MATCHED - " + self.hashCode() + " " + this.getName());
+
+                                if (item.getResult()) {
+                                    System.out.println("Result passed (TRUE) - [EMPTY] ");
+                                    return Optional.empty();
+                                } else {
+                                    System.out.println("Result failed FALSE : ");
+                                    // Go find the unsatisfied constraint in the list
+                                    System.out.print(" Searching old UnsatisfiedConstraints : " + lastModule.getContext().getUnsatisfiedConstraints().size() );
+                                    for (UnsatisfiedConstraint uc : lastModule.getContext().getUnsatisfiedConstraints()) {
+                                        System.out.print("    Model: " + uc.getInstance().hashCode() + " == " + self.hashCode());
+                                        System.out.println(" && Constraint: " + uc.getConstraint().getName() + " == " + this.getName());
+                                        if ( uc.getInstance().equals(self) && uc.getConstraint().equals(this)  ) {
+                                            System.out.println (" - MATCHED -  UC Result: " + uc.getConstraint().getName());
+                                            return Optional.of(uc);
+                                        }
                                     }
                                 }
                             }

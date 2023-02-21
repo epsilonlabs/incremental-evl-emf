@@ -12,8 +12,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
+import org.eclipse.epsilon.eol.models.ModelRepository;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
+import org.eclipse.epsilon.evl.execute.context.IEvlContext;
+import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
 
@@ -25,6 +28,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     private IncrementalEvlTrace lastTrace = null;
     private Set<UnsatisfiedConstraint> unsatisfiedConstraints;
 
+    protected IncrementalEvlModule module;
+    protected IncrementalEvlModule lastModule;
     protected IncrementalEvlValidator validator = null;
     protected List<Notification> notifications = new ArrayList<>();
 
@@ -44,12 +49,12 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     public void validate(ResourceSet resourceSet) throws Exception {
         MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
 
-        // Model (root element)
+        // Make an in memory version of the Model (root element) for testing
         InMemoryEmfModel model = new InMemoryEmfModel(resourceSet.getResources().get(0));
         model.setConcurrent(true);
-        MYLOGGER.log(MyLog.STATE, "Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
 
-        // All Model elements
+        MYLOGGER.log(MyLog.STATE, "Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
+        // Console output
         if (REPORT) {
             System.out.println("\nModel elements :");
             Collection<EObject> elements = model.allContents();
@@ -61,13 +66,22 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // Module for doing evaluations
         // Two ways to setup a module, with and without prior knowledge of the last validation
-        IncrementalEvlModule module = null;
-        if (validationHasRun) {
-            module = new IncrementalEvlModule(notifications, unsatisfiedConstraints, lastTrace);
-        } else {
+        // -------- INITIALISE --------
+
+        // Swap out the module and create a new one
+        if(null != module) {
+            lastModule = module;
+            module = new IncrementalEvlModule(lastModule);
+            IEvlContext cont = module.getContext();
+        }
+        else {
             module = new IncrementalEvlModule();
         }
+
+        // Load constraints to be checked -- The list from the validator could be pruned using results from lastModule
         module.parse(validator.getConstraints());    // constraints ArrayList<E>[]
+
+        // Load the model to be checked -- Always needs to be "fresh" for testing
         module.getContext().getModelRepository().addModel(model);
 
         // Console output
@@ -81,14 +95,13 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             }
         }
 
-
-        //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
-
         MYLOGGER.log(MyLog.FLOW, "\n [!] ...Executing validation...\n");
 
 
         // -------- EXECUTION --------
+        //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
         unsatisfiedConstraints = module.execute();
+
 
         System.out.println("Unsat: " + module.getContext().getUnsatisfiedConstraints().size()) ;
 
@@ -108,6 +121,15 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
                 System.out.print("Constraint: " + cpa.execution.constraint.getName());
                 System.out.println(" | model hashcode: " + cpa.getModelElement().hashCode());
+            }
+
+            i = 0;
+            System.out.println("\nConstraint Trace list: ");
+            for (ConstraintTraceItem item : module.getContext().getConstraintTrace()) {
+                i++;
+                System.out.println(i + ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode() +
+                        " | model hashcode: " + item.getInstance().hashCode()
+                );
             }
 
             i = 0;
@@ -144,6 +166,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
     public boolean mustRevalidate(ResourceSet resourceSet) {
         return !notifications.isEmpty();
+    }
+
+    public IncrementalEvlModule getLastModule() {
+        return lastModule;
     }
 
 }
