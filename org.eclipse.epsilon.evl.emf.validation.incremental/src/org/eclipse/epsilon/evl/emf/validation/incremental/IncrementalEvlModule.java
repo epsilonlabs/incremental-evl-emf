@@ -132,10 +132,12 @@ public class IncrementalEvlModule extends EvlModule {
         // Jumps to >> public ModuleElement adapt(AST cst, ModuleElement parentAst)
         Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();  // The returning Unsatisfied Constraints come in here.
 
+        /*  -- DELETE --
         for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
             trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);
         }
         trace.setUnsatisfiedConstraints(unsatisfiedConstraints);  // Store the list on the trace, which will become the "last trace"
+        */
 
         //System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
         return unsatisfiedConstraints;

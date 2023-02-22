@@ -17,18 +17,9 @@ import java.util.stream.Collectors;
 public class IncrementalEvlTrace {
 
     protected List<ConstraintPropertyAccess> propertyAccesses = new ArrayList<>();
-    protected Set<UnsatisfiedConstraint> unsatisfiedConstraints = null;
 
     public void addPropertyAccess(ConstraintPropertyAccess propertyAccess) {
         propertyAccesses.add(propertyAccess);
-    }
-
-    public List<ConstraintPropertyAccess> getPropertyAccesses() {
-        return propertyAccesses;
-    }
-
-    public void setUnsatisfiedConstraints(Set<UnsatisfiedConstraint> listOfUnsatisifedConstraints) {
-        unsatisfiedConstraints = listOfUnsatisifedConstraints;
     }
 
     protected Set<ConstraintExecution> propertyModified(Object modelElement, String propertyName) {
@@ -50,7 +41,18 @@ public class IncrementalEvlTrace {
         return null;
     }
 
+    //protected Set<UnsatisfiedConstraint> unsatisfiedConstraints = null;
+    /*
+    public List<ConstraintPropertyAccess> getPropertyAccesses() {
+        return propertyAccesses;
+    }
 
+    public void setUnsatisfiedConstraints(Set<UnsatisfiedConstraint> listOfUnsatisifedConstraints) {
+        unsatisfiedConstraints = listOfUnsatisifedConstraints;
+    }
+    */
+
+    /*  -- Document and DELETE --
     // Move this to "Execution Cache"
     public boolean checkPropertyAccesses(Object modelElement, Constraint constraint) {
         for (ConstraintPropertyAccess propertyAccess : propertyAccesses) {
@@ -103,4 +105,6 @@ public class IncrementalEvlTrace {
         }
         System.out.println("AFTER - PA list size:" + propertyAccesses.size());
     }
+    */
+
 }
