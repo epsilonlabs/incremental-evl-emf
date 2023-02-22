@@ -126,15 +126,16 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
                 System.out.print(i + ", ");
 
                 System.out.print("Constraint: " + cpa.execution.constraint.getName());
-                System.out.println(" | model hashcode: " + cpa.getModelElement().hashCode());
+                System.out.println(" | Model hashcode: " + cpa.getModelElement().hashCode());
             }
 
             i = 0;
             System.out.println("\nConstraintTrace list: ");
             for (ConstraintTraceItem item : module.getContext().getConstraintTrace()) {
                 i++;
-                System.out.println(i + ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode() +
-                        " | model hashcode: " + item.getInstance().hashCode()
+                System.out.println(i + ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
+                        + " | Model hashcode: " + item.getInstance().hashCode()
+                        + " | Result : " + item.getResult()
                 );
             }
 
@@ -143,7 +144,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             for (UnsatisfiedConstraint uc : module.getContext().getUnsatisfiedConstraints()) {
                 i++;
                 System.out.println(i + ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() +
-                        " | model hashcode: " + uc.getInstance().hashCode()
+                        " | Model hashcode: " + uc.getInstance().hashCode()
                 );
             }
 

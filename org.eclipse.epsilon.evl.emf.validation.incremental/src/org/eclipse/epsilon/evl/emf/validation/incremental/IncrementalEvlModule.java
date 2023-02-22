@@ -76,6 +76,7 @@ public class IncrementalEvlModule extends EvlModule {
                             if (item.getInstance().equals(self) && item.getConstraint().equals(this)) {
                                 System.out.println("- MATCHED model & constraint - " + self.hashCode() + " " + this.getName());
 
+                                getContext().getConstraintTrace().addChecked(item.getConstraint(), item.getInstance(), item.getResult()); // Back-fill for bypass
                                 if (item.getResult()) {
                                     System.out.println("Result = PASS (TRUE) - [EMPTY] ");
                                     return Optional.empty();
@@ -90,6 +91,7 @@ public class IncrementalEvlModule extends EvlModule {
                                         System.out.println(" && Constraint: " + uc.getConstraint().getName() + " == " + this.getName());
                                         if ( uc.getInstance().equals(self) && uc.getConstraint().equals(this)  ) {
                                             System.out.println (" - MATCHED UC -  UC Result: " + uc.getConstraint().getName());
+                                            getContext().getUnsatisfiedConstraints().add(uc);  // Back-fill for the bypass
                                             return Optional.of(uc);
                                         }
                                     }
