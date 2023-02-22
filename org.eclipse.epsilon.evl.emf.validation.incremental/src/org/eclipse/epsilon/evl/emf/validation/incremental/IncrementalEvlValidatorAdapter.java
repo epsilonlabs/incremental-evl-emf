@@ -16,6 +16,7 @@ import org.eclipse.epsilon.eol.models.ModelRepository;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.execute.context.IEvlContext;
+import org.eclipse.epsilon.evl.trace.ConstraintTrace;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
@@ -30,6 +31,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
     protected IncrementalEvlModule module;
     protected IncrementalEvlModule lastModule;
+    protected ConstraintExecutionCache constraintExecutionCache;
     protected IncrementalEvlValidator validator = null;
     protected List<Notification> notifications = new ArrayList<>();
 
@@ -109,6 +111,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // -------- PROCESS RESULTS --------
 
+        constraintExecutionCache = new ConstraintExecutionCache(module.getContext().getConstraintTrace(), module.getContext().getUnsatisfiedConstraints());
+
         // Console output
         if (REPORT) {
             System.out.println("\n == Module results ==");
@@ -160,6 +164,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // IF there is a lastModule, then we need update ConstraintTrace and UnsatisfiedConstraints lists
         if (null != lastModule) {
+            ConstraintTrace ct = lastModule.getContext().getConstraintTrace();
+
            // lastTrace.processModelNotification(notification);
         }
 
