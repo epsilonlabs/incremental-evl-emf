@@ -24,9 +24,8 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     private static boolean REPORT = true;
     private int validationCount = 0;
-
     private boolean validationHasRun = false; //Track that we have run one Validation
-    private IncrementalEvlTrace lastTrace = null;
+
     private Set<UnsatisfiedConstraint> unsatisfiedConstraints;
 
     protected IncrementalEvlModule module;
@@ -106,13 +105,9 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
         if(REPORT) {System.out.println( "\n ! EXECUTING !");}
         unsatisfiedConstraints = module.execute();
-
-
-
-
         validationHasRun = true; // Confirm at least one validation hasRun
+
         // -------- PROCESS RESULTS --------
-        lastTrace = module.getTrace();
 
         // Console output
         if (REPORT) {
@@ -162,8 +157,9 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
             System.out.println("\n[MODEL CHANGE NOTIFICATION]\n from : " + EcoreUtil.getURI(modelElement) + "\n feature: " + feature.getName() + "\n was: " + notification.getOldValue() + "\n now: " + notification.getNewValue());
         }
-        // IF there is a lastTrace, then we need to send the update to EVLTrace and update the ConstraintPropertyAccess list
-        if (null != lastTrace) {
+
+        // IF there is a lastModule, then we need update ConstraintTrace and UnsatisfiedConstraints lists
+        if (null != lastModule) {
            // lastTrace.processModelNotification(notification);
         }
 
