@@ -40,6 +40,7 @@ public class IncrementalEvlModule extends EvlModule {
     public IncrementalEvlModule() {
         //System.out.println(" [i] IncrementalEclModel constructor");
         MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor");
+        System.out.println("\n -- Module init --");
     }
 
     public IncrementalEvlModule(IncrementalEvlModule lastModule) {
@@ -48,7 +49,7 @@ public class IncrementalEvlModule extends EvlModule {
         this.lastModule = lastModule;
         // Setup the Execution Cache here using the last Module
         constraintExecutionCache = Optional.of(new ConstraintExecutionCache(lastModule));
-
+        System.out.println("\n -- Module init with 'lastModule' -- ");
     }
 
 
@@ -69,15 +70,16 @@ public class IncrementalEvlModule extends EvlModule {
                     // We could check here if the last execution -- return the result of the last execution instead of executing the constraint test
                     // Notifications REMOVE PropertyAccesses from the LastTrace. (Elements with no access get tested)
 
-                    // Return the old result if available
-                    // moduleElement >> this ??
+                    // the "lastModule" in this section needs to be change to ask the ExecutionCache if there are any useable results from a prior execution
+
+
                     if(null != lastModule) {
                         System.out.println("\nSearching lastModule ConstraintTrace : "
                                 + lastModule.getContext().getConstraintTrace().getItems().size()
                                 + self.hashCode() + " & " + this.getName());
                         for (ConstraintTraceItem item : lastModule.getContext().getConstraintTrace().getItems()) {
-                            System.out.print("  Model: " + item.getInstance().hashCode() + " == " + self.hashCode());
-                            System.out.println(" && Constraint: " + item.getConstraint().getName() + " == " + this.getName());
+                            System.out.print("  IF Model: " + item.getInstance().hashCode() + " == " + self.hashCode());
+                            System.out.println(" && Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode() + " == " + this.getName() + " " + this.hashCode());
 
                             if (item.getInstance().equals(self) && item.getConstraint().equals(this)) {
                                 System.out.println("- MATCHED model & constraint - " + self.hashCode() + " " + this.getName());
@@ -93,7 +95,7 @@ public class IncrementalEvlModule extends EvlModule {
                                             + lastModule.getContext().getUnsatisfiedConstraints().size()
                                             + self.hashCode() + " & " + this.getName());
                                     for (UnsatisfiedConstraint uc : lastModule.getContext().getUnsatisfiedConstraints()) {
-                                        System.out.print("    Model: " + uc.getInstance().hashCode() + " == " + self.hashCode());
+                                        System.out.print("    IF Model: " + uc.getInstance().hashCode() + " == " + self.hashCode());
                                         System.out.println(" && Constraint: " + uc.getConstraint().getName() + " == " + this.getName());
                                         if ( uc.getInstance().equals(self) && uc.getConstraint().equals(this)  ) {
                                             System.out.println (" - MATCHED UC -  UC Result: " + uc.getConstraint().getName());

@@ -94,7 +94,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             int i = 0;
             for (Constraint c : constraintsToExecute) {
                 i++;
-                System.out.println(i + ", " + c.getName());
+                System.out.println(i + ", " + c.getName() + " " + c.hashCode());
             }
         }
 
@@ -122,7 +122,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
                 i++;
                 System.out.print(i + ", ");
 
-                System.out.print("Constraint: " + cpa.execution.constraint.getName());
+                System.out.print("Constraint: " + cpa.execution.constraint.getName() + " " + cpa.execution.constraint.hashCode());
                 System.out.println(" | Model hashcode: " + cpa.getModelElement().hashCode());
             }
 
