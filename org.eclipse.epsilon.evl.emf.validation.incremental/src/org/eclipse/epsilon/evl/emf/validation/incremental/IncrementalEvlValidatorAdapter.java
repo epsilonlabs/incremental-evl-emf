@@ -31,7 +31,6 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
     protected IncrementalEvlModule module;
     protected IncrementalEvlModule lastModule;
-    protected ConstraintExecutionCache constraintExecutionCache;
     protected IncrementalEvlValidator validator = null;
     protected List<Notification> notifications = new ArrayList<>();
 
@@ -77,7 +76,6 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         if(null != module) {
             lastModule = module;
             module = new IncrementalEvlModule(lastModule);
-            IEvlContext cont = module.getContext();
         }
         else {
             module = new IncrementalEvlModule();
@@ -111,7 +109,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // -------- PROCESS RESULTS --------
 
-        constraintExecutionCache = new ConstraintExecutionCache(module.getContext().getConstraintTrace(), module.getContext().getUnsatisfiedConstraints());
+
 
         // Console output
         if (REPORT) {

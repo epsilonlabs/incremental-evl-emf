@@ -29,7 +29,11 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 
 public class IncrementalEvlModule extends EvlModule {
     private static boolean REPORT = false;
-    protected IncrementalEvlModule lastModule;
+    protected IncrementalEvlModule lastModule; // Make this optional too? (avoid null testing)
+    protected Optional<ConstraintExecutionCache> constraintExecutionCache;
+
+    protected ConstraintPropertyAccessRecorder propertyAccessRecorder = new ConstraintPropertyAccessRecorder();
+    protected IncrementalEvlTrace trace = new IncrementalEvlTrace();
 
     //private Logger MYLOGGER = MyLog.getMyLogger();
 
@@ -42,10 +46,12 @@ public class IncrementalEvlModule extends EvlModule {
         //System.out.println(" [i] IncrementalEclModel constructor");
         MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor -- with the lastModule");
         this.lastModule = lastModule;
+        // Setup the Execution Cache here using the last Module
+        constraintExecutionCache = Optional.of(new ConstraintExecutionCache(lastModule));
+
     }
 
-    protected ConstraintPropertyAccessRecorder propertyAccessRecorder = new ConstraintPropertyAccessRecorder();
-    protected IncrementalEvlTrace trace = new IncrementalEvlTrace();
+
 
     @Override
     public ModuleElement adapt(AST cst, ModuleElement parentAst) {
@@ -132,14 +138,14 @@ public class IncrementalEvlModule extends EvlModule {
         // Jumps to >> public ModuleElement adapt(AST cst, ModuleElement parentAst)
         Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();  // The returning Unsatisfied Constraints come in here.
 
-        /*  -- DELETE --
+        // Transfer captured propertyAccesses from the Recorder to the ConstrainPropertyAccess (trace).
         for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
             trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);
         }
-        trace.setUnsatisfiedConstraints(unsatisfiedConstraints);  // Store the list on the trace, which will become the "last trace"
-        */
 
+        //trace.setUnsatisfiedConstraints(unsatisfiedConstraints);  // Store the list on the trace, which will become the "last trace"
         //System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
+
         return unsatisfiedConstraints;
     }
 

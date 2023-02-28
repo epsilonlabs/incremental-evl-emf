@@ -2,22 +2,26 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
-import org.eclipse.epsilon.evl.trace.ConstraintTrace;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 import javax.management.Notification;
 import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 public class ConstraintExecutionCache {
     // The Module.getContext() grants access to contraintTrace and UnsatisfiedConstraint, but you can't delete items from them; so we make our own lists in here to delete items from
     protected Collection<ConstraintTraceItem> constraintTraceItems;
     protected Collection<UnsatisfiedConstraint> unsatisfiedConstraints;
+    protected List <ConstraintPropertyAccess> constraintPropertyAccess;
 
-    public ConstraintExecutionCache(ConstraintTrace constraintTrace, Collection<UnsatisfiedConstraint> unsatisfiedConstraints) {
-        this.constraintTraceItems = constraintTrace.getItems();
-        this.unsatisfiedConstraints = unsatisfiedConstraints;
+    public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
+        this.constraintTraceItems = lastModule.getContext().getConstraintTrace().getItems();
+        this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
+        //this.constraintPropertyAccess = lastModule.getTrace().getConstraintPropertyAccess();
+        this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
+        System.out.println("\nSetting up Execution Cache");
+        printExecutionCache();
+
     }
 
     public ConstraintTraceItem checkCachedConstraintTrace (Object model, Constraint constraint) {
@@ -60,6 +64,7 @@ public class ConstraintExecutionCache {
         System.out.println("\n == Execution Cache state ==");
         System.out.println("ContraintTraceItems: " + constraintTraceItems.size());
         System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size()) ;
+        System.out.println("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size()) ;
 
         int i = 0;
 
@@ -80,6 +85,18 @@ public class ConstraintExecutionCache {
             System.out.println(i + ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() +
                     " | Model hashcode: " + uc.getInstance().hashCode()
             );
+        }
+
+        i = 0;
+        System.out.println("\n[Trace] (Constraint)PropertyAccess list: ");
+
+
+        for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
+            i++;
+            System.out.print(i + ", ");
+
+            System.out.print("Constraint: " + cpa.execution.constraint.getName());
+            System.out.println(" | Model hashcode: " + cpa.getModelElement().hashCode());
         }
 
         System.out.println("\n ====================\n");
