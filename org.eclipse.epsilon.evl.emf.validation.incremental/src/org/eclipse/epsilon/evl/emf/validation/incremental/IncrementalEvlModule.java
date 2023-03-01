@@ -49,6 +49,12 @@ public class IncrementalEvlModule extends EvlModule {
         System.out.println("\n -- Module init with 'constraintExecutionCache' -- ");
         this.constraintExecutionCache = constraintExecutionCache;
 
+        // Transfer prior propertyAccesses from the constraintExecutionCache into this modules trace.
+        for (IPropertyAccess propertyAccess : constraintExecutionCache.get().constraintPropertyAccess) {
+            trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);
+        }
+
+
     }
 
 
