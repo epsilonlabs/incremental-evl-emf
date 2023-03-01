@@ -1,9 +1,6 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -30,7 +27,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     private Set<UnsatisfiedConstraint> unsatisfiedConstraints;
 
     protected IncrementalEvlModule module;
-    protected IncrementalEvlModule lastModule;
+
+    protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
     protected IncrementalEvlValidator validator = null;
     protected List<Notification> notifications = new ArrayList<>();
 
@@ -73,9 +71,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         // -------- INITIALISE --------
 
         // Swap out the module and create a new one
-        if(null != module) {
-            lastModule = module;
-            module = new IncrementalEvlModule(lastModule);
+
+        // Replace lastModule with constraintExecutionCache
+        if(constraintExecutionCache.isPresent()){
+            module = new IncrementalEvlModule(constraintExecutionCache);
         }
         else {
             module = new IncrementalEvlModule();
@@ -109,7 +108,12 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // -------- PROCESS RESULTS --------
 
+        // Extract from module data to populate the ExecutionCache for the next run.
 
+        // Pass module to ExecutionCache constructor and make a NEW one to replace the existing one
+        // Constructor extracts = (Constraint)PropertyAccess & ContraintTrace & UnsatisfiedConstraints
+        System.out.println(" [i] Adapter constraintExecutionCache created");
+        constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module));
 
         // Console output
         if (REPORT) {
@@ -160,12 +164,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             System.out.println("\n[MODEL CHANGE NOTIFICATION]\n from : " + EcoreUtil.getURI(modelElement) + "\n feature: " + feature.getName() + "\n was: " + notification.getOldValue() + "\n now: " + notification.getNewValue());
         }
 
-        // IF there is a lastModule, then we need update ConstraintTrace and UnsatisfiedConstraints lists
-        if (null != lastModule) {
-            ConstraintTrace ct = lastModule.getContext().getConstraintTrace();
+        // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
 
-           // lastTrace.processModelNotification(notification);
-        }
 
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
         MYLOGGER.log(MyLog.NOTIFICATION, "\n [!] notifyChanged(Notification notification) : " +
@@ -180,10 +180,6 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
     public boolean mustRevalidate(ResourceSet resourceSet) {
         return !notifications.isEmpty();
-    }
-
-    public IncrementalEvlModule getLastModule() {
-        return lastModule;
     }
 
 }

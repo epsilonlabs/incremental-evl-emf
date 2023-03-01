@@ -29,8 +29,8 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 
 public class IncrementalEvlModule extends EvlModule {
     private static boolean REPORT = false;
-    protected IncrementalEvlModule lastModule; // Make this optional too? (avoid null testing)
-    protected Optional<ConstraintExecutionCache> constraintExecutionCache;
+
+    protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
 
     protected ConstraintPropertyAccessRecorder propertyAccessRecorder = new ConstraintPropertyAccessRecorder();
     protected IncrementalEvlTrace trace = new IncrementalEvlTrace();
@@ -43,13 +43,12 @@ public class IncrementalEvlModule extends EvlModule {
         System.out.println("\n -- Module init --");
     }
 
-    public IncrementalEvlModule(IncrementalEvlModule lastModule) {
-        //System.out.println(" [i] IncrementalEclModel constructor");
-        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor -- with the lastModule");
-        this.lastModule = lastModule;
-        // Setup the Execution Cache here using the last Module
-        constraintExecutionCache = Optional.of(new ConstraintExecutionCache(lastModule));
-        System.out.println("\n -- Module init with 'lastModule' -- ");
+
+    public IncrementalEvlModule(Optional <ConstraintExecutionCache> constraintExecutionCache) {
+        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor -- with the constraintExecutionCache");
+        System.out.println("\n -- Module init with 'constraintExecutionCache' -- ");
+        this.constraintExecutionCache = constraintExecutionCache;
+
     }
 
 
@@ -73,11 +72,13 @@ public class IncrementalEvlModule extends EvlModule {
                     // the "lastModule" in this section needs to be change to ask the ExecutionCache if there are any useable results from a prior execution
                     // This should backfill the module "propertyAccess (trace) with the pa in the Execution Cache
 
-                    if(null != lastModule) {
-                        System.out.println("\nSearching lastModule ConstraintTrace : "
-                                + lastModule.getContext().getConstraintTrace().getItems().size()
+                    if(constraintExecutionCache.isPresent()) {
+                        System.out.println("\nSearching constraintExecutionCache ConstraintTrace : "
+                                + constraintExecutionCache.get().constraintTraceItems.size()
                                 + self.hashCode() + " & " + this.getName());
-                        for (ConstraintTraceItem item : lastModule.getContext().getConstraintTrace().getItems()) {
+
+
+                        for (ConstraintTraceItem item : constraintExecutionCache.get().constraintTraceItems) {
                             System.out.print("  IF Model: " + item.getInstance().hashCode() + " == " + self.hashCode());
                             System.out.println(" && Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode() + " == " + this.getName() + " " + this.hashCode());
 
@@ -92,9 +93,9 @@ public class IncrementalEvlModule extends EvlModule {
                                     System.out.println("Result = FAIL (FALSE) : ");
                                     // Go find the unsatisfied constraint in the list
                                     System.out.print(" Searching lastModule UnsatisfiedConstraints : "
-                                            + lastModule.getContext().getUnsatisfiedConstraints().size()
+                                            + constraintExecutionCache.get().unsatisfiedConstraints.size()
                                             + self.hashCode() + " & " + this.getName());
-                                    for (UnsatisfiedConstraint uc : lastModule.getContext().getUnsatisfiedConstraints()) {
+                                    for (UnsatisfiedConstraint uc : constraintExecutionCache.get().unsatisfiedConstraints) {
                                         System.out.print("    IF Model: " + uc.getInstance().hashCode() + " == " + self.hashCode());
                                         System.out.println(" && Constraint: " + uc.getConstraint().getName() + " == " + this.getName());
                                         if ( uc.getInstance().equals(self) && uc.getConstraint().equals(this)  ) {
@@ -106,6 +107,7 @@ public class IncrementalEvlModule extends EvlModule {
                                 }
                             }
                         }
+
                     }
                     else {
                         System.out.println(" (No lastModule) -- Validating: "
