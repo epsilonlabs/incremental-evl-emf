@@ -7,14 +7,17 @@ import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 import javax.management.Notification;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class ConstraintExecutionCache {
     // The Module.getContext() grants access to contraintTrace and UnsatisfiedConstraint, but you can't delete items from them; so we make our own lists in here to delete items from
-    protected Collection<ConstraintTraceItem> constraintTraceItems;
+    protected Set<ConstraintTraceItem> constraintTraceItems;
     protected Collection<UnsatisfiedConstraint> unsatisfiedConstraints;
     protected List <ConstraintPropertyAccess> constraintPropertyAccess;
 
     public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
+        // Change these to "defencive copies"?
+
         this.constraintTraceItems = lastModule.getContext().getConstraintTrace().getItems();
         this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
         //this.constraintPropertyAccess = lastModule.getTrace().getConstraintPropertyAccess();
@@ -50,14 +53,15 @@ public class ConstraintExecutionCache {
     public void processModelNotification (Notification notification) {
         // IF a model element changes we need to remove all the cached results.
 
+        // find any properyAccesses and delete them
+
         // find any constraintTraceItems and delete them
 
         // find any unstatisfiedConstraints and delete them
+
+
     }
 
-    public void processConstraintNotification (Notification notification) {
-        // If a constraint changes we need to remove all cached results.
-    }
 
     public void printExecutionCache () {
         // Dump the lists to the Console for inspection

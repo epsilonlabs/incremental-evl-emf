@@ -71,7 +71,7 @@ public class IncrementalEvlModule extends EvlModule {
                     // Notifications REMOVE PropertyAccesses from the LastTrace. (Elements with no access get tested)
 
                     // the "lastModule" in this section needs to be change to ask the ExecutionCache if there are any useable results from a prior execution
-
+                    // This should backfill the module "propertyAccess (trace) with the pa in the Execution Cache
 
                     if(null != lastModule) {
                         System.out.println("\nSearching lastModule ConstraintTrace : "
