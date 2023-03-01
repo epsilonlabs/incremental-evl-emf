@@ -22,7 +22,7 @@ public class ConstraintExecutionCache {
         this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
         //this.constraintPropertyAccess = lastModule.getTrace().getConstraintPropertyAccess();
         this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
-        System.out.println("\nSetting up Execution Cache");
+        System.out.println("Setting up Execution Cache");
         printExecutionCache();
 
     }

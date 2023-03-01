@@ -112,7 +112,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // Pass module to ExecutionCache constructor and make a NEW one to replace the existing one
         // Constructor extracts = (Constraint)PropertyAccess & ContraintTrace & UnsatisfiedConstraints
-        System.out.println(" [i] Adapter constraintExecutionCache created");
+        System.out.println("\n [i] Adapter constraintExecutionCache created");
         constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module));
 
         // Console output
