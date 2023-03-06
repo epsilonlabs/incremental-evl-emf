@@ -20,7 +20,7 @@ public class IncrementalEvlTrace {
 
     public void addPropertyAccess(ConstraintPropertyAccess propertyAccess) {
         propertyAccesses.add(propertyAccess);
-        System.out.println("propertyAccess recorded: " + propertyAccess.getModelElement() + " - " + propertyAccess.getPropertyName());
+        System.out.println("   propertyAccess recorded: mE " + propertyAccess.getModelElement().hashCode() + " - mF " + propertyAccess.getPropertyName() + " - c " + propertyAccess.getExecution().getConstraint().getName());
     }
 
     protected Set<ConstraintExecution> propertyModified(Object modelElement, String propertyName) {
