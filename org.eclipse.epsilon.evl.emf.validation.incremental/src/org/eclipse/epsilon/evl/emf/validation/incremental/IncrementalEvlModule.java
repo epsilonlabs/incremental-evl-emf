@@ -82,43 +82,24 @@ public class IncrementalEvlModule extends EvlModule {
                         System.out.println("\nSearching constraintExecutionCache ConstraintTrace : "
                                 + constraintExecutionCache.get().constraintTraceItems.size()
                                 + self.hashCode() + " & " + this.getName());
-
-
-                        for (ConstraintTraceItem item : constraintExecutionCache.get().constraintTraceItems) {
-                            System.out.print("  IF Model: " + item.getInstance().hashCode() + " == " + self.hashCode());
-                            System.out.println(" && Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode() + " == " + this.getName() + " " + this.hashCode());
-
-                            if (item.getInstance().equals(self) && item.getConstraint().equals(this)) {
-                                System.out.println("- MATCHED model & constraint - " + self.hashCode() + " " + this.getName());
-
-                                getContext().getConstraintTrace().addChecked(item.getConstraint(), item.getInstance(), item.getResult()); // Back-fill for bypass
-                                if (item.getResult()) {
-                                    System.out.println("Result = PASS (TRUE) - [EMPTY] ");
-                                    return Optional.empty();
-                                } else {
-                                    System.out.println("Result = FAIL (FALSE) : ");
-                                    // Go find the unsatisfied constraint in the list
-                                    System.out.print(" Searching lastModule UnsatisfiedConstraints : "
-                                            + constraintExecutionCache.get().unsatisfiedConstraints.size()
-                                            + self.hashCode() + " & " + this.getName());
-                                    for (UnsatisfiedConstraint uc : constraintExecutionCache.get().unsatisfiedConstraints) {
-                                        System.out.print("    IF Model: " + uc.getInstance().hashCode() + " == " + self.hashCode());
-                                        System.out.println(" && Constraint: " + uc.getConstraint().getName() + " == " + this.getName());
-                                        if ( uc.getInstance().equals(self) && uc.getConstraint().equals(this)  ) {
-                                            System.out.println (" - MATCHED UC -  UC Result: " + uc.getConstraint().getName());
-                                            getContext().getUnsatisfiedConstraints().add(uc);  // Back-fill for the bypass
-                                            return Optional.of(uc);
-                                        }
-                                    }
-                                }
+                        ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCachedConstraintTrace(self,this );
+                        if (null != ctitem) {
+                            getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(), ctitem.getResult()); // Back-fill for bypass
+                            if(ctitem.getResult()) {
+                                System.out.println("Result = PASS (TRUE) - [EMPTY] ");
+                                return Optional.empty();
+                            } else {
+                                UnsatisfiedConstraint uc = constraintExecutionCache.get().getCachedUnsatisfiedConstraint(self,this);
+                                getContext().getUnsatisfiedConstraints().add(uc);  // Back-fill for the bypass
+                                return Optional.of(uc);
                             }
                         }
-
                     }
                     else {
-                        System.out.println(" (No lastModule) -- Validating: "
-                                + self.hashCode() + " & " + this.getName());
+                        System.out.println(" [!] No constraintExecutionCache ");
                     }
+
+                    System.out.println(" Need for Validation: " + self.hashCode() + " & " + this.getName());
 
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
