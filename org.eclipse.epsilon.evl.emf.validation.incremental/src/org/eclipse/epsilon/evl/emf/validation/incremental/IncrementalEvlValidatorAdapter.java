@@ -157,15 +157,21 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     public void notifyChanged(Notification notification) {
         super.notifyChanged(notification);
         notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
-
+        EObject modelElement = (EObject) notification.getNotifier();
+        EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
         if(REPORT) {
-            EObject modelElement = (EObject) notification.getNotifier();
-            EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
-            System.out.println("\n[MODEL CHANGE NOTIFICATION]\n from : " + EcoreUtil.getURI(modelElement) + "\n feature: " + feature.getName() + "\n was: " + notification.getOldValue() + "\n now: " + notification.getNewValue());
+            System.out.println("\n[MODEL CHANGE NOTIFICATION]"
+                    + "\n from : " + EcoreUtil.getURI(modelElement) + " " + modelElement.hashCode()
+                    + "\n feature: " + modelFeature.getName()
+                    + "\n was: " + notification.getOldValue()
+                    + "\n now: " + notification.getNewValue());
         }
 
         // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
-
+        if(constraintExecutionCache.isPresent()){
+            constraintExecutionCache.get().processModelNotification(modelElement, modelFeature);
+            constraintExecutionCache.get().printExecutionCache();
+        }
 
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
         MYLOGGER.log(MyLog.NOTIFICATION, "\n [!] notifyChanged(Notification notification) : " +
