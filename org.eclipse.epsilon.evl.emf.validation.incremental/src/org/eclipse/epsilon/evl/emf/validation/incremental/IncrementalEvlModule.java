@@ -80,7 +80,6 @@ public class IncrementalEvlModule extends EvlModule {
 
                     if(constraintExecutionCache.isPresent()) {
                         System.out.println("\nSearching constraintExecutionCache ConstraintTrace : "
-                                + constraintExecutionCache.get().constraintTraceItems.size()
                                 + self.hashCode() + " & " + this.getName());
                         ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCachedConstraintTrace(self,this );
                         if (null != ctitem) {

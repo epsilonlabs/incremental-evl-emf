@@ -56,25 +56,17 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 		Diagnostician diagnostician = new Diagnostician(EValidator.Registry.INSTANCE);
 		diagnostician.validate(ePackage);
 
-		//c1.setName("C1");
-		//addElement("C2",ePackage);
-		//diagnostician.validate(ePackage);
-
-		c1.setName("C1");
-		diagnostician.validate(ePackage);
-
-		/*
-		c1.setName("C3");
-
-		diagnostician.validate(ePackage);
-
 		EClass c2 = EcoreFactory.eINSTANCE.createEClass();
 		c2.setName("C2");
 		ePackage.getEClassifiers().add(c2);
-
 		diagnostician.validate(ePackage);
 
-		 */
+		c1.setName("C3");
+		diagnostician.validate(ePackage);
+
+		c2.setName("C3");
+		diagnostician.validate(ePackage);
+
 
 	}
 
