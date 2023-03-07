@@ -67,7 +67,7 @@ public class ConstraintExecutionCache {
         Iterator itr = null;
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
         // IF a model element changes we need to remove all the cached results.
-        System.out.println(" [i] ConstaintExecutionCache processModelNotification() ");
+        System.out.println(" [i] ConstraintExecutionCache processModelNotification() ");
 
         // find any properyAccesses (make a list of contraints) and delete them
         itr = constraintPropertyAccess.iterator();
