@@ -1,15 +1,86 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.*;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.URISyntaxException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class IncrementalEvlTests {
+
+
+    protected Resource resource;
+    protected EPackage ePackage;
+    protected ResourceSet resourceSet;
+
+    IncrementalEcoreValidator validator;
+    Diagnostician diagnostician;
+    protected EClass modelElement1, modelElement2;
+    protected BuildTestModel buildTestModel = new BuildTestModel();
+
     @Before
     public void setUp() {
+        System.out.println("Setup ModelPackage with Validator...");
 
+        resourceSet = new ResourceSetImpl();
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new ResourceFactoryImpl());
+        resource = resourceSet.createResource(URI.createURI("foo.ecore"));
+
+        ePackage = EcoreFactory.eINSTANCE.createEPackage();
+        ePackage.setName("p");
+        resource.getContents().add(ePackage);
+
+        validator = new IncrementalEcoreValidator();
+        EValidator.Registry.INSTANCE.put(EcorePackage.eINSTANCE, new EValidator.Descriptor() {
+            public EValidator getEValidator() {
+                return validator;
+            }
+        });
+
+        diagnostician = new Diagnostician(EValidator.Registry.INSTANCE);
+
+        //diagnostician.validate(ePackage);
+        //validator.setConstraintFile("ecore.evl");
     }
 
+    @Test
+    public void testAOneElementModelExists() {
+        buildTestModel.getOneElementModel(ePackage);
+        assertEquals(1,ePackage.getEClassifiers().size());
+    }
+
+    @Test
+    public void testATwoElementModelExists() {
+        buildTestModel.getTwoElementModel(ePackage);
+        assertEquals(2,ePackage.getEClassifiers().size());
+    }
+
+
+    @Test
+    public void testValidationWithOneElementModel() {
+        buildTestModel.getOneElementModel(ePackage);
+        diagnostician.validate(ePackage);
+        System.out.println(ePackage.eAdapters());
+        IncrementalEvlValidatorAdapter resultingAdapter = (IncrementalEvlValidatorAdapter) ePackage.eAdapters().get(0);
+        //System.out.println("ConstraintTrace size: " + resultingAdapter.module.getContext().getConstraintTrace().getItems().size());
+        //System.out.println("Trace size: " + resultingAdapter.module.trace.propertyAccesses.size());
+        assertEquals(
+                resultingAdapter.module.getContext().getConstraintTrace().getItems().size(),
+                resultingAdapter.module.trace.propertyAccesses.size());
+    }
+
+
+    /*
     @Test
     public void collectPropertyAccess() {
         // 1. Set up model
@@ -97,5 +168,5 @@ public class IncrementalEvlTests {
     public void reorderedElementWithinContainer() {
         // TODO
     }
-
+*/
 }

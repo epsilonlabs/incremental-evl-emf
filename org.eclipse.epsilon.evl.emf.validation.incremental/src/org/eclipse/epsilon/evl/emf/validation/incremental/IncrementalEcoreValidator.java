@@ -26,6 +26,11 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 	private static MyLog MYLOG = MyLog.getMyLog();
 	public static Logger MYLOGGER = MYLOG.getMyLogger();
 
+	private String constraintFilename = "ecore.evl";
+	public void setConstraintFile (String filename) {
+		this.constraintFilename = filename;
+	}
+
 	public static final IncrementalEcoreValidator INSTANCE = new IncrementalEcoreValidator();
 
 	public static void main(String[] args) {
@@ -46,7 +51,6 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 		ePackage.getEClassifiers().add(c1);
 
 		IncrementalEcoreValidator validator = new IncrementalEcoreValidator();
-
 		EValidator.Registry.INSTANCE.put(EcorePackage.eINSTANCE, new EValidator.Descriptor() {
 			public EValidator getEValidator() {
 				return validator;
@@ -55,6 +59,8 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 
 		Diagnostician diagnostician = new Diagnostician(EValidator.Registry.INSTANCE);
 		diagnostician.validate(ePackage);
+
+
 
 		EClass c2 = EcoreFactory.eINSTANCE.createEClass();
 		c2.setName("C2");
@@ -67,7 +73,12 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 		c2.setName("C3");
 		diagnostician.validate(ePackage);
 
-
+		System.out.println("c1 Adapters: "+c1.eAdapters());
+		System.out.println("c2 Adapters: "+c2.eAdapters());
+		System.out.println("resourceSet adapter: " + resourceSet.eAdapters());
+		System.out.println("resource adapter: " + resource.eAdapters());
+		IncrementalEvlValidatorAdapter adapter =  (IncrementalEvlValidatorAdapter) resource.eAdapters().get(0);
+		adapter.module.constraintExecutionCache.get().printExecutionCache();
 	}
 
 	private static void addElement(String name, EPackage ePackage) {
@@ -79,7 +90,7 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 	@Override
 	protected java.net.URI getConstraints() {
 		try {
-			return IncrementalEcoreValidator.class.getResource("ecore.evl").toURI();
+			return IncrementalEcoreValidator.class.getResource(constraintFilename).toURI();
 		} catch (URISyntaxException e) {
 			return null;
 		}
