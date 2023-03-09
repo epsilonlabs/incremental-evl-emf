@@ -6,21 +6,22 @@ import org.eclipse.emf.ecore.EcoreFactory;
 
 public class BuildTestModel {
 
-    public static void addModelElementToePackage(String name, EPackage ePackage) {
+    public IncrementalEvlValidatorAdapter getValidationAdapter (EPackage epackage) {
+        IncrementalEvlValidatorAdapter resultingAdapter;
+        for(var adapter : epackage.eAdapters()) {
+            if(adapter.getClass().equals(IncrementalEvlValidatorAdapter.class)) {
+                System.out.println("Found adapter: "+ adapter);
+                return (IncrementalEvlValidatorAdapter) adapter;
+            }
+        }
+        return null;
+    }
+
+    public static EClass addModelElementToePackage(String name, EPackage ePackage) {
         EClass temp = EcoreFactory.eINSTANCE.createEClass();
         temp.setName(name);
         ePackage.getEClassifiers().add(temp);
-    }
-
-    public EPackage getOneElementModel(EPackage ePackage) {
-        addModelElementToePackage("c1", ePackage);
-        return ePackage;
-    }
-
-    public EPackage getTwoElementModel(EPackage ePackage) {
-        addModelElementToePackage("c1", ePackage);
-        addModelElementToePackage("c2", ePackage);
-        return ePackage;
+        return temp;
     }
 
 }

@@ -27,6 +27,7 @@ public class IncrementalEvlTests {
     Diagnostician diagnostician;
     protected EClass modelElement1, modelElement2;
     protected BuildTestModel buildTestModel = new BuildTestModel();
+    IncrementalEvlValidatorAdapter resultingAdapter;
 
     @Before
     public void setUp() {
@@ -55,29 +56,43 @@ public class IncrementalEvlTests {
 
     @Test
     public void testAOneElementModelExists() {
-        buildTestModel.getOneElementModel(ePackage);
+        buildTestModel.addModelElementToePackage("C1", ePackage);
         assertEquals(1,ePackage.getEClassifiers().size());
     }
 
     @Test
     public void testATwoElementModelExists() {
-        buildTestModel.getTwoElementModel(ePackage);
+        buildTestModel.addModelElementToePackage("C1", ePackage);
+        buildTestModel.addModelElementToePackage("C2", ePackage);
         assertEquals(2,ePackage.getEClassifiers().size());
     }
 
 
     @Test
     public void testValidationWithOneElementModel() {
-        buildTestModel.getOneElementModel(ePackage);
+        buildTestModel.addModelElementToePackage("C1", ePackage);
         diagnostician.validate(ePackage);
         System.out.println(ePackage.eAdapters());
-        IncrementalEvlValidatorAdapter resultingAdapter = (IncrementalEvlValidatorAdapter) ePackage.eAdapters().get(0);
-        //System.out.println("ConstraintTrace size: " + resultingAdapter.module.getContext().getConstraintTrace().getItems().size());
-        //System.out.println("Trace size: " + resultingAdapter.module.trace.propertyAccesses.size());
+        resultingAdapter = buildTestModel.getValidationAdapter(ePackage);
         assertEquals(
                 resultingAdapter.module.getContext().getConstraintTrace().getItems().size(),
                 resultingAdapter.module.trace.propertyAccesses.size());
     }
+
+    @Test
+    public void testCacheClearsOnNotificationPropertySet() {
+        modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage);
+        diagnostician.validate(ePackage);
+        modelElement1.setName("C2");
+
+        resultingAdapter = buildTestModel.getValidationAdapter(ePackage);
+        assertTrue(resultingAdapter.constraintExecutionCache.isPresent());
+        assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintPropertyAccess.size());
+        assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintTraceItems.size());
+        assertEquals(0, resultingAdapter.constraintExecutionCache.get().unsatisfiedConstraints.size());
+        diagnostician.validate(ePackage);
+    }
+
 
 
     /*
