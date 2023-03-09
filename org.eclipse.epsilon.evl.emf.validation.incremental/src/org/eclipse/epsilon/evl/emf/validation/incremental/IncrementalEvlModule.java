@@ -39,7 +39,7 @@ public class IncrementalEvlModule extends EvlModule {
 
     public IncrementalEvlModule() {
         //System.out.println(" [i] IncrementalEclModel constructor");
-        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor");
+        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEvlModel constructor");
         System.out.println("\n -- Module init --");
     }
 

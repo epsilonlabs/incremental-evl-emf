@@ -20,7 +20,7 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 
 
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
-    private static boolean REPORT = true;
+    private static boolean REPORT = false;
     private int validationCount = 0;
     private boolean validationHasRun = false; //Track that we have run one Validation
 
@@ -117,39 +117,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // Console output
         if (REPORT) {
-            System.out.println("\n == Module results ==");
-            System.out.println("UnsatisfiedConstraints: " + module.getContext().getUnsatisfiedConstraints().size()) ;
-
-            int i = 0;
-            System.out.println("\nConstrainPropertyAccess list: ");
-            for (ConstraintPropertyAccess cpa : module.getTrace().propertyAccesses) {
-                i++;
-                System.out.print(i + ", ");
-
-                System.out.print("Constraint: " + cpa.execution.constraint.getName() + " " + cpa.execution.constraint.hashCode());
-                System.out.println(" | Model hashcode: " + cpa.getModelElement().hashCode());
-            }
-
-            i = 0;
-            System.out.println("\nConstraintTrace list: ");
-            for (ConstraintTraceItem item : module.getContext().getConstraintTrace()) {
-                i++;
-                System.out.println(i + ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
-                        + " | Model hashcode: " + item.getInstance().hashCode()
-                        + " | Result : " + item.getResult()
-                );
-            }
-
-            i = 0;
-            System.out.println("\nUnsatisfiedConstraint list: ");
-            for (UnsatisfiedConstraint uc : module.getContext().getUnsatisfiedConstraints()) {
-                i++;
-                System.out.println(i + ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() +
-                        " | Model hashcode: " + uc.getInstance().hashCode()
-                );
-            }
-
-            System.out.println("\n ====================\n");
+            printModuleState();
         }
     }
 
@@ -186,6 +154,42 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
     public boolean mustRevalidate(ResourceSet resourceSet) {
         return !notifications.isEmpty();
+    }
+
+    public void printModuleState () {
+        System.out.println("\n == Module results ==");
+        System.out.println("UnsatisfiedConstraints: " + module.getContext().getUnsatisfiedConstraints().size()) ;
+
+        int i = 0;
+        System.out.println("\nConstrainPropertyAccess list: ");
+        for (ConstraintPropertyAccess cpa : module.getTrace().propertyAccesses) {
+            i++;
+            System.out.print(i + ", ");
+
+            System.out.print("Constraint: " + cpa.execution.constraint.getName() + " " + cpa.execution.constraint.hashCode());
+            System.out.println(" | Model hashcode: " + cpa.getModelElement().hashCode());
+        }
+
+        i = 0;
+        System.out.println("\nConstraintTrace list: ");
+        for (ConstraintTraceItem item : module.getContext().getConstraintTrace()) {
+            i++;
+            System.out.println(i + ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
+                    + " | Model hashcode: " + item.getInstance().hashCode()
+                    + " | Result : " + item.getResult()
+            );
+        }
+
+        i = 0;
+        System.out.println("\nUnsatisfiedConstraint list: ");
+        for (UnsatisfiedConstraint uc : module.getContext().getUnsatisfiedConstraints()) {
+            i++;
+            System.out.println(i + ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() +
+                    " | Model hashcode: " + uc.getInstance().hashCode()
+            );
+        }
+
+        System.out.println("\n ====================\n");
     }
 
 }
