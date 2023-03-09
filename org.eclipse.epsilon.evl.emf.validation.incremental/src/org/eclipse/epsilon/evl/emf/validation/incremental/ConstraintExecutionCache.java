@@ -67,12 +67,32 @@ public class ConstraintExecutionCache {
         return null; // This should not happen if there is an entry on the trace.
     }
 
-    public void processModelNotification (EObject modelElement, EStructuralFeature modelFeature ) {
+    public void processModelNotification (EObject modelElement, EStructuralFeature modelFeature, int notificationType ) {
+        // IF a model element changes we need to remove all the cached results.
+
+
+        switch (notificationType) {
+            case 1: // SET
+                System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- " +
+                        modelElement.hashCode() + " & " + modelFeature.getName() + "notificationType: SET");
+                    removeFromCache(modelElement,modelFeature);
+                    break;
+            case 4: // REMOVE
+                break;
+            case 8: // REMOVEING_ADAPTER
+                // nada
+                break;
+                default:
+                    //nada
+                    break;
+
+        }
+    }
+
+    private void removeFromCache(EObject modelElement, EStructuralFeature modelFeature ) {
         Iterator itr = null;
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
-        // IF a model element changes we need to remove all the cached results.
-        System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- " +
-                modelElement.hashCode() + " & " + modelFeature.getName());
+
 
         // find any properyAccesses (make a list of contraints) and delete them
         itr = constraintPropertyAccess.iterator();

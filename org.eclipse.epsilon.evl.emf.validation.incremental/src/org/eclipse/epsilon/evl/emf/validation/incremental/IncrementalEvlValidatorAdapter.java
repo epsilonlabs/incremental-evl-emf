@@ -20,7 +20,8 @@ import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcor
 
 
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
-    private static boolean REPORT = false;
+    private boolean REPORT = false;
+    private boolean REPORTnotification = true;
     private int validationCount = 0;
     private boolean validationHasRun = false; //Track that we have run one Validation
 
@@ -127,25 +128,34 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
         EObject modelElement = (EObject) notification.getNotifier();
         EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
-        if(REPORT) {
-            System.out.println("\n[MODEL CHANGE NOTIFICATION]"
-                    + "\n from : " + EcoreUtil.getURI(modelElement) + " " + modelElement.hashCode()
+        if(REPORTnotification) {
+
+            System.out.println("\n[MODEL CHANGE NOTIFICATION]  " + " " + notification.getEventType()
+                    + "\n " + notification);
+
+            if(notification.getEventType() != 8){
+                    System.out.print("\n from : " + EcoreUtil.getURI(modelElement) + " " + modelElement.hashCode()
                     + "\n feature: " + modelFeature.getName()
                     + "\n was: " + notification.getOldValue()
                     + "\n now: " + notification.getNewValue());
+            }
+
         }
 
         // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
         if(constraintExecutionCache.isPresent()){
-            constraintExecutionCache.get().processModelNotification(modelElement, modelFeature);
+            constraintExecutionCache.get().processModelNotification(modelElement, modelFeature, notification.getEventType());
             if(REPORT) {constraintExecutionCache.get().printExecutionCache();}
         }
 
         EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
+
+        /*
         MYLOGGER.log(MyLog.NOTIFICATION, "\n [!] notifyChanged(Notification notification) : " +
                 notification.getFeature().hashCode() + " " +
                 "\n notification for feature name: " + feature.getName() +
                 notification.getOldValue() + " to " + notification.getNewValue());
+        */
     }
 
     public IncrementalEvlValidator getValidator() {

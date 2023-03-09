@@ -93,6 +93,23 @@ public class IncrementalEvlTests {
         diagnostician.validate(ePackage);
     }
 
+    @Test
+    public void addTwoModelElementsAndRemoveOne() {
+        modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage);
+        modelElement2 = buildTestModel.addModelElementToePackage("C2", ePackage);
+        diagnostician.validate(ePackage);
+
+        ePackage.getEClassifiers().remove(modelElement1);
+        diagnostician.validate(ePackage);
+
+        resultingAdapter = buildTestModel.getValidationAdapter(ePackage);
+        assertTrue(resultingAdapter.constraintExecutionCache.isPresent());
+        assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintPropertyAccess.size());
+        assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintTraceItems.size());
+        assertEquals(0, resultingAdapter.constraintExecutionCache.get().unsatisfiedConstraints.size());
+        diagnostician.validate(ePackage);
+    }
+
 
 
     /*
