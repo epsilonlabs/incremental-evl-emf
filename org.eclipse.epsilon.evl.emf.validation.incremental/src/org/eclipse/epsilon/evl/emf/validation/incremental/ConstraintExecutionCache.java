@@ -11,6 +11,7 @@ import java.util.*;
 
 public class ConstraintExecutionCache {
     // The Module.getContext() grants access to contraintTrace and UnsatisfiedConstraint, but you can't delete items from them; so we make our own lists in here to delete items from
+    private boolean REPORT = false;
     protected Set<ConstraintTraceItem> constraintTraceItems;
     protected Collection<UnsatisfiedConstraint> unsatisfiedConstraints;
     protected List <ConstraintPropertyAccess> constraintPropertyAccess;
@@ -22,8 +23,11 @@ public class ConstraintExecutionCache {
         this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
         //this.constraintPropertyAccess = lastModule.getTrace().getConstraintPropertyAccess();
         this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
-        System.out.println("Setting up Execution Cache");
-        printExecutionCache();
+
+        if (REPORT){
+            System.out.println("Setting up Execution Cache");
+            printExecutionCache();
+        }
 
     }
 
@@ -67,7 +71,8 @@ public class ConstraintExecutionCache {
         Iterator itr = null;
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
         // IF a model element changes we need to remove all the cached results.
-        System.out.println(" [i] ConstraintExecutionCache processModelNotification() ");
+        System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- " +
+                modelElement.hashCode() + " & " + modelFeature.getName());
 
         // find any properyAccesses (make a list of contraints) and delete them
         itr = constraintPropertyAccess.iterator();

@@ -16,11 +16,12 @@ import java.util.stream.Collectors;
 
 public class IncrementalEvlTrace {
 
+    private boolean REPORT = false;
     protected List<ConstraintPropertyAccess> propertyAccesses = new ArrayList<>();
 
     public void addPropertyAccess(ConstraintPropertyAccess propertyAccess) {
         propertyAccesses.add(propertyAccess);
-        System.out.println("   propertyAccess recorded: mE " + propertyAccess.getModelElement().hashCode() + " - mF " + propertyAccess.getPropertyName() + " - c " + propertyAccess.getExecution().getConstraint().getName());
+        if(REPORT){System.out.println("   propertyAccess recorded: mE " + propertyAccess.getModelElement().hashCode() + " - mF " + propertyAccess.getPropertyName() + " - c " + propertyAccess.getExecution().getConstraint().getName());}
     }
 
     protected Set<ConstraintExecution> propertyModified(Object modelElement, String propertyName) {

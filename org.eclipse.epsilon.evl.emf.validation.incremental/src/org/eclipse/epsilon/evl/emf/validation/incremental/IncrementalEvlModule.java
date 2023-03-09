@@ -40,13 +40,13 @@ public class IncrementalEvlModule extends EvlModule {
     public IncrementalEvlModule() {
         //System.out.println(" [i] IncrementalEclModel constructor");
         MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEvlModel constructor");
-        System.out.println("\n -- Module init --");
+        if(REPORT){System.out.println("\n -- Module init --");}
     }
 
 
     public IncrementalEvlModule(Optional <ConstraintExecutionCache> constraintExecutionCache) {
         MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor -- with the constraintExecutionCache");
-        System.out.println("\n -- Module init with 'constraintExecutionCache' -- ");
+        if(REPORT){System.out.println("\n -- Module init with 'constraintExecutionCache' -- ");}
         this.constraintExecutionCache = constraintExecutionCache;
 
         // Transfer prior propertyAccesses from the constraintExecutionCache into this modules trace.
@@ -79,13 +79,15 @@ public class IncrementalEvlModule extends EvlModule {
                     // This should backfill the module "propertyAccess (trace) with the pa in the Execution Cache
 
                     if(constraintExecutionCache.isPresent()) {
-                        System.out.println("\nSearching constraintExecutionCache ConstraintTrace : "
-                                + self.hashCode() + " & " + this.getName());
+                        if(REPORT) {
+                            System.out.println("\nSearching constraintExecutionCache ConstraintTrace : "
+                                    + self.hashCode() + " & " + this.getName());
+                        }
                         ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCachedConstraintTrace(self,this );
                         if (null != ctitem) {
                             getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(), ctitem.getResult()); // Back-fill for bypass
                             if(ctitem.getResult()) {
-                                System.out.println("Result = PASS (TRUE) - [EMPTY] ");
+                                if(REPORT) {System.out.println("Result = PASS (TRUE) - [EMPTY] ");}
                                 return Optional.empty();
                             } else {
                                 UnsatisfiedConstraint uc = constraintExecutionCache.get().getCachedUnsatisfiedConstraint(self,this);
@@ -95,10 +97,10 @@ public class IncrementalEvlModule extends EvlModule {
                         }
                     }
                     else {
-                        System.out.println(" [!] No constraintExecutionCache ");
+                        if(REPORT) {System.out.println(" [!] No constraintExecutionCache ");}
                     }
 
-                    System.out.println(" Need for Validation: " + self.hashCode() + " & " + this.getName());
+                    if(REPORT){System.out.println(" Need for Validation: " + self.hashCode() + " & " + this.getName());}
 
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
