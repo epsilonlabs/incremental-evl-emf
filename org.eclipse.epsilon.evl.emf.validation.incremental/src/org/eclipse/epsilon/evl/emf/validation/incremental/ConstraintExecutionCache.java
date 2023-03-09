@@ -73,11 +73,15 @@ public class ConstraintExecutionCache {
 
         switch (notificationType) {
             case 1: // SET
-                System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- " +
-                        modelElement.hashCode() + " & " + modelFeature.getName() + "notificationType: SET");
+                System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
+                        + "notificationType: SET "
+                        + modelElement.hashCode() + " & " + modelFeature.getName() );
                     removeFromCache(modelElement,modelFeature);
                     break;
             case 4: // REMOVE
+                System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
+                        + "notificationType: REMOVE "
+                        + modelElement.hashCode() + " & " + modelFeature.getName() );
                 break;
             case 8: // REMOVEING_ADAPTER
                 // nada

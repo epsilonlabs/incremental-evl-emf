@@ -130,14 +130,15 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
         if(REPORTnotification) {
 
-            System.out.println("\n[MODEL CHANGE NOTIFICATION]  " + " " + notification.getEventType()
+            System.out.println("\n[MODEL CHANGE NOTIFICATION]  " + " Type:" + notification.getEventType()
                     + "\n " + notification);
 
             if(notification.getEventType() != 8){
-                    System.out.print("\n from : " + EcoreUtil.getURI(modelElement) + " " + modelElement.hashCode()
+                    System.out.println(" element : " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
                     + "\n feature: " + modelFeature.getName()
                     + "\n was: " + notification.getOldValue()
-                    + "\n now: " + notification.getNewValue());
+                    + "\n now: " + notification.getNewValue()
+                    + "\n");
             }
 
         }
