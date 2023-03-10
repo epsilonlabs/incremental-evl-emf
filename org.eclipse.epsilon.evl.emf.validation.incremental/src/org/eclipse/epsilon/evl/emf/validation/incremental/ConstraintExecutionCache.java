@@ -70,7 +70,6 @@ public class ConstraintExecutionCache {
     public void processModelNotification (EObject modelElement, EStructuralFeature modelFeature, int notificationType ) {
         // IF a model element changes we need to remove all the cached results.
 
-
         switch (notificationType) {
             case 1: // SET
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
@@ -78,17 +77,39 @@ public class ConstraintExecutionCache {
                         + modelElement.hashCode() + " & " + modelFeature.getName() );
                     removeFromCache(modelElement,modelFeature);
                     break;
-            case 4: // REMOVE
+            case 2: // UNSET
+                break;
+            case 3: // ADD
+                break;
+            case 4: // REMOVE -- the "wasValue" is the model element being removed.
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: REMOVE "
-                        + modelElement.hashCode() + " & " + modelFeature.getName() );
+                        + modelElement.hashCode() );
                 break;
-            case 8: // REMOVEING_ADAPTER
+            case 5: // ADD_MANY
+                break;
+            case 6: // REMOVE_MANY
+                constraintPropertyAccess.clear();
+                constraintTraceItems.clear();
+                unsatisfiedConstraints.clear();
+                break;
+            case 7: // MOVE
+                break;
+            case 8: // REMOVEING_ADAPTER -- does this equate to removing a model element from validation?
+                System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
+                        + "notificationType: REMOVEING_ADAPTER "
+                        + modelElement.hashCode() );
+                removeFromCache(modelElement);
                 // nada
                 break;
-                default:
-                    //nada
-                    break;
+            case 9: //n RESOLVE
+                break;
+            case 10: // EVENT_TYPE_COUNT
+                break;
+            case -1: // NO_FEATURE_ID or NO_INDEX
+                break;
+            default: // Unexpected type
+                break;
 
         }
     }
@@ -96,7 +117,6 @@ public class ConstraintExecutionCache {
     private void removeFromCache(EObject modelElement, EStructuralFeature modelFeature ) {
         Iterator itr = null;
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
-
 
         // find any properyAccesses (make a list of contraints) and delete them
         itr = constraintPropertyAccess.iterator();
@@ -108,6 +128,57 @@ public class ConstraintExecutionCache {
                         + cpa.getModelElement().hashCode() + " == " + modelElement.hashCode()
                         + " && "
                         + cpa.getPropertyName() + " == " + modelFeature.getName()
+                        + " (constraint: " + cpa.getExecution().getConstraint().getName() + ")");
+                constraintsToInvalidate.add(cpa);
+                itr.remove();
+            }
+        }
+
+        // Using the list of constraintsTobe invalidated remove constraint trace/unsatisfied based on model & constraint matches
+        System.out.println("\nClear Constraint Trace/Unsatisfied where Model & Constraint match removed constraintPropertyAccesses");
+        for(ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
+            // find any constraintTraceItems and delete them
+            itr = constraintTraceItems.iterator();
+            while (itr.hasNext()) {
+                ConstraintTraceItem ctitem = (ConstraintTraceItem) itr.next();
+                if (ctitem.getInstance() == invalidcpa.getModelElement()
+                        && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint()) { // need to resolve "feature" for each result
+                    System.out.println("  - Notification: ConstraintTraceItem Removed "
+                            + ctitem.getInstance().hashCode() + " == " + invalidcpa.getModelElement().hashCode()
+                            + " && "
+                            + ctitem.getConstraint().getName() + " == " + invalidcpa.getExecution().getConstraint().getName() );
+                    itr.remove();
+                }
+            }
+
+            // find any unstatisfiedConstraints and delete them
+            itr = unsatisfiedConstraints.iterator();
+            while (itr.hasNext()) {
+                UnsatisfiedConstraint uc = (UnsatisfiedConstraint) itr.next();
+                if (uc.getInstance() == invalidcpa.getModelElement()
+                        && uc.getConstraint() == invalidcpa.getExecution().getConstraint() ) {
+                    System.out.println("  - Notification: UnsatisfiedConstraints Removed "
+                            + uc.getInstance().hashCode() + " == " + invalidcpa.getModelElement().hashCode()
+                            + " && "
+                            + uc.getConstraint().getName() + " == " + invalidcpa.getExecution().getConstraint().getName() );
+                    itr.remove();
+                }
+
+            }
+        }
+    }
+
+    private void removeFromCache(EObject modelElement) {
+        Iterator itr = null;
+        List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
+
+        // find any properyAccesses (make a list of contraints) and delete them
+        itr = constraintPropertyAccess.iterator();
+        while (itr.hasNext()){
+            ConstraintPropertyAccess cpa = (ConstraintPropertyAccess) itr.next();
+            if( cpa.getModelElement() == modelElement ) {
+                System.out.println("  - Notification: ConstraintPropertyAccess Removed "
+                        + cpa.getModelElement().hashCode() + " == " + modelElement.hashCode()
                         + " (constraint: " + cpa.getExecution().getConstraint().getName() + ")");
                 constraintsToInvalidate.add(cpa);
                 itr.remove();
