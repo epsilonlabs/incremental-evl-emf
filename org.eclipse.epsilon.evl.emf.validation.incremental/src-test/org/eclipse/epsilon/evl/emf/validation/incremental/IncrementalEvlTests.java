@@ -7,11 +7,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -19,9 +16,13 @@ import static org.junit.Assert.assertTrue;
 public class IncrementalEvlTests {
 
 
-    protected Resource resource;
-    protected EPackage ePackage;
-    protected ResourceSet resourceSet;
+    protected Resource resource1;
+    protected EPackage ePackage1;
+    protected ResourceSet resourceSet1;
+
+    protected Resource resource2;
+    protected EPackage ePackage2;
+    protected ResourceSet resourceSet2;
 
     IncrementalEcoreValidator validator;
     Diagnostician diagnostician;
@@ -33,13 +34,22 @@ public class IncrementalEvlTests {
     public void setUp() {
         System.out.println("Setup ModelPackage with Validator...");
 
-        resourceSet = new ResourceSetImpl();
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new ResourceFactoryImpl());
-        resource = resourceSet.createResource(URI.createURI("foo.ecore"));
+        resourceSet1 = new ResourceSetImpl();
+        resourceSet1.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new ResourceFactoryImpl());
+        resource1 = resourceSet1.createResource(URI.createURI("foo.ecore1"));
 
-        ePackage = EcoreFactory.eINSTANCE.createEPackage();
-        ePackage.setName("p");
-        resource.getContents().add(ePackage);
+        ePackage1 = EcoreFactory.eINSTANCE.createEPackage();
+        ePackage1.setName("p");
+        resource1.getContents().add(ePackage1);
+
+        resourceSet2 = new ResourceSetImpl();
+        resourceSet2.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new ResourceFactoryImpl());
+        resource2 = resourceSet2.createResource(URI.createURI("foo.ecore2"));
+
+        ePackage2 = EcoreFactory.eINSTANCE.createEPackage();
+        ePackage2.setName("q");
+        resource2.getContents().add(ePackage2);
+        
 
         validator = new IncrementalEcoreValidator();
         EValidator.Registry.INSTANCE.put(EcorePackage.eINSTANCE, new EValidator.Descriptor() {
@@ -56,59 +66,85 @@ public class IncrementalEvlTests {
 
     @Test
     public void testAOneElementModelExists() {
-        buildTestModel.addModelElementToePackage("C1", ePackage);
-        assertEquals(1,ePackage.getEClassifiers().size());
+        buildTestModel.addModelElementToePackage("C1", ePackage1);
+        assertEquals(1, ePackage1.getEClassifiers().size());
     }
 
     @Test
     public void testATwoElementModelExists() {
-        buildTestModel.addModelElementToePackage("C1", ePackage);
-        buildTestModel.addModelElementToePackage("C2", ePackage);
-        assertEquals(2,ePackage.getEClassifiers().size());
+        buildTestModel.addModelElementToePackage("C1", ePackage1);
+        buildTestModel.addModelElementToePackage("C2", ePackage1);
+        assertEquals(2, ePackage1.getEClassifiers().size());
     }
 
 
     @Test
     public void testValidationWithOneElementModel() {
-        buildTestModel.addModelElementToePackage("C1", ePackage);
-        diagnostician.validate(ePackage);
-        System.out.println(ePackage.eAdapters());
-        resultingAdapter = buildTestModel.getValidationAdapter(ePackage);
+        buildTestModel.addModelElementToePackage("C1", ePackage1);
+
+        diagnostician.validate(ePackage1);
+        resultingAdapter = buildTestModel.getValidationAdapter(ePackage1);
         assertEquals(
-                resultingAdapter.module.getContext().getConstraintTrace().getItems().size(),
-                resultingAdapter.module.trace.propertyAccesses.size());
+                resultingAdapter.module.trace.propertyAccesses.size(),
+                resultingAdapter.module.getContext().getConstraintTrace().getItems().size() );
     }
 
     @Test
     public void testCacheClearsOnNotificationPropertySet() {
-        modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage);
-        diagnostician.validate(ePackage);
+        modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage1);
+        diagnostician.validate(ePackage1);
         modelElement1.setName("C2");
 
-        resultingAdapter = buildTestModel.getValidationAdapter(ePackage);
+        resultingAdapter = buildTestModel.getValidationAdapter(ePackage1);
         assertTrue(resultingAdapter.constraintExecutionCache.isPresent());
         assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintPropertyAccess.size());
         assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintTraceItems.size());
         assertEquals(0, resultingAdapter.constraintExecutionCache.get().unsatisfiedConstraints.size());
-        diagnostician.validate(ePackage);
+        diagnostician.validate(ePackage1);
     }
 
     @Test
     public void addTwoModelElementsAndRemoveOne() {
-        modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage);
-        modelElement2 = buildTestModel.addModelElementToePackage("C2", ePackage);
-        diagnostician.validate(ePackage);
+        modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage1);
+        modelElement2 = buildTestModel.addModelElementToePackage("C2", ePackage1);
+        diagnostician.validate(ePackage1);
 
-        ePackage.getEClassifiers().remove(modelElement1);
-        //diagnostician.validate(ePackage);
+        ePackage1.getEClassifiers().remove(modelElement1);
 
-        /*
-        resultingAdapter = buildTestModel.getValidationAdapter(ePackage);
-        assertTrue(resultingAdapter.constraintExecutionCache.isPresent());
+        resultingAdapter = buildTestModel.getValidationAdapter(ePackage1);
+        assertEquals(
+                resultingAdapter.module.getConstraints().size(),
+                resultingAdapter.constraintExecutionCache.get().constraintPropertyAccess.size());
+        assertEquals(
+                resultingAdapter.module.getConstraints().size(),
+                resultingAdapter.constraintExecutionCache.get().constraintTraceItems.size());
+    }
+
+    @Test
+    public void addTwoModelElementsAndClear(){
+
+        modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage1);
+        modelElement2 = buildTestModel.addModelElementToePackage("C2", ePackage1);
+        diagnostician.validate(ePackage1);
+
+        ePackage1.getEClassifiers().clear();
+
+        resultingAdapter = buildTestModel.getValidationAdapter(ePackage1);
         assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintPropertyAccess.size());
         assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintTraceItems.size());
         assertEquals(0, resultingAdapter.constraintExecutionCache.get().unsatisfiedConstraints.size());
-        */
+    }
+    
+    @Test
+    public void addTwoModelElementsAndMoveOne() {
+        modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage1);
+        modelElement2 = buildTestModel.addModelElementToePackage("C2", ePackage1);
+        diagnostician.validate(ePackage1);
+
+        System.out.println("before:" + ePackage1.getEClassifiers());
+        ePackage1.getEClassifiers().move(modelElement1.getClassifierID(),modelElement2.getClassifierID());
+        System.out.println("after:" + ePackage1.getEClassifiers());
+        
     }
 
 
