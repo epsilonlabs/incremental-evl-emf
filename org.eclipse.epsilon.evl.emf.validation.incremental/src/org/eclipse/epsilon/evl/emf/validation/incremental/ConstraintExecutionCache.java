@@ -1,7 +1,9 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
@@ -89,10 +91,13 @@ public class ConstraintExecutionCache {
 
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: REMOVE "
-                        + modelElement.hashCode() );
+                        + modelElement.hashCode()
+                        + "\nclass: " + modelElement.getClass());
                 // The notification is for the eClassifiers feature and the old value is the model element being removed.
                 // Removing here is better than on adapter remove, as we don't know what other adapters might be removed
-                if(modelFeature.getName().equals("eClassifiers")) {
+
+
+                if(modelElement.getClass().equals(EPackageImpl.class)) {
                     removeFromCache((EObject) notification.getOldValue());
                 }
 
