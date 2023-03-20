@@ -6,7 +6,7 @@ import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
-import javax.management.Notification;
+import org.eclipse.emf.common.notify.Notification;
 import java.util.*;
 
 public class ConstraintExecutionCache {
@@ -67,7 +67,7 @@ public class ConstraintExecutionCache {
         return null; // This should not happen if there is an entry on the trace.
     }
 
-    public void processModelNotification (EObject modelElement, EStructuralFeature modelFeature, int notificationType ) {
+    public void processModelNotification (EObject modelElement, EStructuralFeature modelFeature, int notificationType, Notification notification ) {
         // IF a model element changes we need to remove all the cached results.
 
         switch (notificationType) {
@@ -85,6 +85,12 @@ public class ConstraintExecutionCache {
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: REMOVE "
                         + modelElement.hashCode() );
+                // The notification is for the eClassifiers feature and the old value is the model element being removed.
+                // Removing here is better than on adapter remove, as we don't know what other adapters might be removed
+                if(modelFeature.getName().equals("eClassifiers")) {
+                    removeFromCache((EObject) notification.getOldValue());
+                }
+
                 break;
             case 5: // ADD_MANY
                 break;
@@ -96,11 +102,14 @@ public class ConstraintExecutionCache {
             case 7: // MOVE
                 break;
             case 8: // REMOVEING_ADAPTER -- does this equate to removing a model element from validation?
+               /*
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: REMOVEING_ADAPTER "
                         + modelElement.hashCode() );
                 removeFromCache(modelElement);
+                */
                 // nada
+
                 break;
             case 9: //n RESOLVE
                 break;
