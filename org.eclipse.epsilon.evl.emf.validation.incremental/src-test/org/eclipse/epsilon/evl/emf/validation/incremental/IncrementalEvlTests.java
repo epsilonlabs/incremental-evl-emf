@@ -134,17 +134,19 @@ public class IncrementalEvlTests {
         assertEquals(0, resultingAdapter.constraintExecutionCache.get().constraintTraceItems.size());
         assertEquals(0, resultingAdapter.constraintExecutionCache.get().unsatisfiedConstraints.size());
     }
-    
+
+
     @Test
     public void addTwoModelElementsAndMoveOne() {
         modelElement1 = buildTestModel.addModelElementToePackage("C1", ePackage1);
         modelElement2 = buildTestModel.addModelElementToePackage("C2", ePackage1);
         diagnostician.validate(ePackage1);
 
-        System.out.println("before:" + ePackage1.getEClassifiers());
+        System.out.println("before:"  );
+        buildTestModel.showEPackage(ePackage1);
         ePackage1.getEClassifiers().move(modelElement1.getClassifierID(),modelElement2.getClassifierID());
-        System.out.println("after:" + ePackage1.getEClassifiers());
-        
+        System.out.println("after:");
+        buildTestModel.showEPackage(ePackage1);
     }
 
 

@@ -1,6 +1,7 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 
@@ -22,6 +23,14 @@ public class BuildTestModel {
         temp.setName(name);
         ePackage.getEClassifiers().add(temp);
         return temp;
+    }
+
+    public static void showEPackage (EPackage ePackage) {
+        System.out.println("ePackage: " + ePackage.getName() + " " + ePackage.hashCode());
+        for(EClassifier item : ePackage.getEClassifiers()){
+            System.out.println("hash: "+ item.hashCode() + " " +item);
+        }
+
     }
 
 }

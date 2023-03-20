@@ -1,8 +1,7 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.*;
+import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
@@ -110,6 +109,24 @@ public class ConstraintExecutionCache {
                 unsatisfiedConstraints.clear();
                 break;
             case 7: // MOVE
+
+                // When a MOVE occurs, two model elements swap places, remove both from the execution cache
+                EPackage ePackage = (EPackage) modelElement;
+                System.out.println(notification.getNewValue().hashCode());
+                System.out.println("now @: "+notification.getPosition()
+                        + " " + ePackage.getEClassifiers().get(notification.getPosition()).getName()
+                        + " " + ePackage.getEClassifiers().get(notification.getPosition()).hashCode()
+                );
+                System.out.println("was @: " + notification.getOldValue()
+                        + " " + ePackage.getEClassifiers().get((int)notification.getOldValue()).getName()
+                        + " " + ePackage.getEClassifiers().get((int)notification.getOldValue()).hashCode()
+                );
+
+                EModelElement modelElement1 = ePackage.getEClassifiers().get(notification.getPosition());
+                EModelElement modelElement2 = ePackage.getEClassifiers().get((int)notification.getOldValue());
+                removeFromCache(modelElement1);
+                removeFromCache(modelElement2);
+
                 break;
             case 8: // REMOVEING_ADAPTER -- does this equate to removing a model element from validation?
                /*
@@ -188,6 +205,8 @@ public class ConstraintExecutionCache {
     }
 
     private void removeFromCache(EObject modelElement) {
+        System.out.println("\nremoveFromCache:" + modelElement.hashCode());
+
         Iterator itr = null;
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
 
