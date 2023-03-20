@@ -145,7 +145,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
         if(constraintExecutionCache.isPresent()){
-            constraintExecutionCache.get().processModelNotification(modelElement, modelFeature, notification.getEventType(), notification);
+            constraintExecutionCache.get().processModelNotification(notification);
             if(REPORT) {constraintExecutionCache.get().printExecutionCache();}
         }
 

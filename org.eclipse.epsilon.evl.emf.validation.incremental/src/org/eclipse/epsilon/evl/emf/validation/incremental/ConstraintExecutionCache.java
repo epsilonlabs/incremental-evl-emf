@@ -67,8 +67,11 @@ public class ConstraintExecutionCache {
         return null; // This should not happen if there is an entry on the trace.
     }
 
-    public void processModelNotification (EObject modelElement, EStructuralFeature modelFeature, int notificationType, Notification notification ) {
+    public void processModelNotification (Notification notification ) {
         // IF a model element changes we need to remove all the cached results.
+        int notificationType= notification.getEventType();
+        EObject modelElement = (EObject) notification.getNotifier();
+        EStructuralFeature modelFeature = (EStructuralFeature)notification.getFeature();
 
         switch (notificationType) {
             case 1: // SET
@@ -82,6 +85,8 @@ public class ConstraintExecutionCache {
             case 3: // ADD
                 break;
             case 4: // REMOVE -- the "wasValue" is the model element being removed.
+
+
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: REMOVE "
                         + modelElement.hashCode() );
