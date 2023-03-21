@@ -174,16 +174,19 @@ public class IncrementalEvlTests {
     public void createAndAddManyModelElements(){
 
         modelElement1 = buildTestModel.createAndAddModelElementToePackage("C0",ePackage1);
+        buildTestModel.showEPackage(ePackage1);
         diagnostician.validate(ePackage1);
+        assertEquals(1, ePackage1.getEClassifiers().size());
 
         Collection<EClass> listOfModelElements = new ArrayList<EClass>();
-
         for(int i=1; i<4;i++) {
             listOfModelElements.add(buildTestModel.createNamedModelElement("C"+i));
         }
 
         ePackage1.getEClassifiers().addAll(listOfModelElements);
         buildTestModel.showEPackage(ePackage1);
+        diagnostician.validate(ePackage1);
+        assertEquals(4, ePackage1.getEClassifiers().size());
 
     }
 
@@ -193,19 +196,37 @@ public class IncrementalEvlTests {
 
         modelElement1 = buildTestModel.createAndAddModelElementToePackage("C0",ePackage1);
         diagnostician.validate(ePackage1);
+        buildTestModel.showEPackage(ePackage1);
+        // Model has 1 validated element
+        assertEquals(1, TestTools.getSize(ePackage1));
+        assertEquals("C0", TestTools.getName(ePackage1, 0));
 
+        // Create C1, C2, C3 in an array to load into the ePackage
         Collection<EClass> listOfModelElements = new ArrayList<EClass>();
-
         for(int i=1; i<4;i++) {
             listOfModelElements.add(buildTestModel.createNamedModelElement("C"+i));
         }
 
-        ePackage1.getEClassifiers().addAll(listOfModelElements);
-        buildTestModel.showEPackage(ePackage1);
 
+        ePackage1.getEClassifiers().addAll(listOfModelElements);
         diagnostician.validate(ePackage1);
+        buildTestModel.showEPackage(ePackage1);
+        // Model now has 4 validated elements
+        assertEquals(4, TestTools.getSize(ePackage1));
+        assertEquals("C0", TestTools.getName(ePackage1, 0));
+        assertEquals("C1", TestTools.getName(ePackage1, 1));
+        assertEquals("C2", TestTools.getName(ePackage1, 2));
+        assertEquals("C3", TestTools.getName(ePackage1, 3));
+
         ePackage1.getEClassifiers().removeAll(listOfModelElements);
         diagnostician.validate(ePackage1);
+        buildTestModel.showEPackage(ePackage1);
+        // Model now has 1 validated element
+        assertEquals(1, TestTools.getSize(ePackage1));
+        assertEquals("C0", TestTools.getName(ePackage1, 0));
+
+
+
     }
 
     /*
