@@ -117,15 +117,11 @@ public class ConstraintExecutionCache {
 
 
                 break;
-            case 6: //
-
+            case 6: // REMOVE_MANY
                 for(EObject item : (Collection<EClass>) notification.getOldValue()) {
                     removeFromCache(item);
                 }
 
-                //constraintPropertyAccess.clear();
-                //constraintTraceItems.clear();
-                //unsatisfiedConstraints.clear();
                 break;
             case 7: // MOVE
 
@@ -157,6 +153,8 @@ public class ConstraintExecutionCache {
                         + modelElement.hashCode() );
                 removeFromCache(modelElement);
                 */
+
+
                 break;
             case 9: //n RESOLVE
                 System.out.println("\n [n] Notification: RESOLVE");
