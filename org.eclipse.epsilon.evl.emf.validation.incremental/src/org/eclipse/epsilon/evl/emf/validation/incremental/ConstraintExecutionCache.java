@@ -111,18 +111,21 @@ public class ConstraintExecutionCache {
             case 5: // ADD_MANY
                 // newValue contains an Array list of modelElements being added
 
-                System.out.println("\n [n] Notification: ADD MANY");
-
                 for(EObject item : (Collection<EClass>) notification.getNewValue()) {
                     removeFromCache(item);
                 }
 
 
                 break;
-            case 6: // REMOVE_MANY
-                constraintPropertyAccess.clear();
-                constraintTraceItems.clear();
-                unsatisfiedConstraints.clear();
+            case 6: //
+
+                for(EObject item : (Collection<EClass>) notification.getOldValue()) {
+                    removeFromCache(item);
+                }
+
+                //constraintPropertyAccess.clear();
+                //constraintTraceItems.clear();
+                //unsatisfiedConstraints.clear();
                 break;
             case 7: // MOVE
 
@@ -145,14 +148,15 @@ public class ConstraintExecutionCache {
 
                 break;
             case 8: // REMOVEING_ADAPTER -- does this equate to removing a model element from validation?
-               /*
+
+                // nada
+
+                /*
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: REMOVEING_ADAPTER "
                         + modelElement.hashCode() );
                 removeFromCache(modelElement);
                 */
-                // nada
-
                 break;
             case 9: //n RESOLVE
                 System.out.println("\n [n] Notification: RESOLVE");
