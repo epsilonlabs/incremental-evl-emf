@@ -8,7 +8,10 @@ import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 import org.eclipse.emf.common.notify.Notification;
+
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class ConstraintExecutionCache {
     // The Module.getContext() grants access to contraintTrace and UnsatisfiedConstraint, but you can't delete items from them; so we make our own lists in here to delete items from
@@ -106,7 +109,14 @@ public class ConstraintExecutionCache {
 
                 break;
             case 5: // ADD_MANY
+                // newValue contains an Array list of modelElements being added
+
                 System.out.println("\n [n] Notification: ADD MANY");
+
+                for(EObject item : (Collection<EClass>) notification.getNewValue()) {
+                    removeFromCache(item);
+                }
+
 
                 break;
             case 6: // REMOVE_MANY

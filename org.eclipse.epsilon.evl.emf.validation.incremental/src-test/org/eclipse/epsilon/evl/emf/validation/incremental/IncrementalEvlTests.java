@@ -10,6 +10,8 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -166,6 +168,22 @@ public class IncrementalEvlTests {
         buildTestModel.showEPackage(ePackage2);
         //ePackage1.getEClassifiers().move(modelElement2.getClassifierID(),modelElement4);
         //buildTestModel.showEPackage(ePackage1);
+
+    }
+    @Test
+    public void createAndAddManyModelElements(){
+
+        modelElement1 = buildTestModel.createAndAddModelElementToePackage("C0",ePackage1);
+        diagnostician.validate(ePackage1);
+
+        Collection<EClass> listOfModelElements = new ArrayList<EClass>();
+
+        for(int i=1; i<4;i++) {
+            listOfModelElements.add(buildTestModel.createNamedModelElement("C"+i));
+        }
+
+        ePackage1.getEClassifiers().addAll(listOfModelElements);
+        buildTestModel.showEPackage(ePackage1);
 
     }
 
