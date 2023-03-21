@@ -18,11 +18,18 @@ public class BuildTestModel {
         return null;
     }
 
-    public static EClass addModelElementToePackage(String name, EPackage ePackage) {
+    public static EClass createAndAddModelElementToePackage(String name, EPackage ePackage) {
         EClass temp = EcoreFactory.eINSTANCE.createEClass();
         temp.setName(name);
         ePackage.getEClassifiers().add(temp);
         return temp;
+    }
+
+    public static void addModelElementToePackage(EClass modelElement, EPackage ePackage) {
+        ePackage.getEClassifiers().add(modelElement);
+    }
+
+    public static void removeModelElementFromPackage(EPackage ePackage){
     }
 
     public static void showEPackage (EPackage ePackage) {

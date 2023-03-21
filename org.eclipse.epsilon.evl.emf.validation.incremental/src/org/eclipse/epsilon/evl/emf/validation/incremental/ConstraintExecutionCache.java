@@ -82,11 +82,16 @@ public class ConstraintExecutionCache {
                     removeFromCache(modelElement,modelFeature);
                     break;
             case 2: // UNSET
+                System.out.println("\n [n] Notification: UNSET");
                 break;
             case 3: // ADD
+                // newValue is the model Element being added
+                System.out.println("\n [n] Notification: ADD");
+                if(modelElement.getClass().equals(EPackageImpl.class)) {
+                    removeFromCache((EObject) notification.getNewValue());
+                }
                 break;
             case 4: // REMOVE -- the "wasValue" is the model element being removed.
-
 
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: REMOVE "
@@ -95,13 +100,14 @@ public class ConstraintExecutionCache {
                 // The notification is for the eClassifiers feature and the old value is the model element being removed.
                 // Removing here is better than on adapter remove, as we don't know what other adapters might be removed
 
-
                 if(modelElement.getClass().equals(EPackageImpl.class)) {
                     removeFromCache((EObject) notification.getOldValue());
                 }
 
                 break;
             case 5: // ADD_MANY
+                System.out.println("\n [n] Notification: ADD MANY");
+
                 break;
             case 6: // REMOVE_MANY
                 constraintPropertyAccess.clear();
@@ -139,10 +145,13 @@ public class ConstraintExecutionCache {
 
                 break;
             case 9: //n RESOLVE
+                System.out.println("\n [n] Notification: RESOLVE");
                 break;
             case 10: // EVENT_TYPE_COUNT
+                System.out.println("\n [n] Notification: EVENT_TYPE_COUNT");
                 break;
             case -1: // NO_FEATURE_ID or NO_INDEX
+                System.out.println("\n [n] Notification: NO_FEATURE_ID");
                 break;
             default: // Unexpected type
                 break;
