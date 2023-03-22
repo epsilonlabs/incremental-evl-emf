@@ -31,7 +31,7 @@ public class IncrementalEvlTests {
     IncrementalEvlValidatorAdapter resultingAdapter;
 
     @Before
-    public void setUp() {
+    public void setup() {
         System.out.println("Setup ModelPackage with Validator...");
 
         resourceSet1 = new ResourceSetImpl();
