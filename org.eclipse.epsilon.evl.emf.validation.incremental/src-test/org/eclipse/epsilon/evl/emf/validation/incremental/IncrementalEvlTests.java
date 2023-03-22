@@ -203,6 +203,8 @@ public class IncrementalEvlTests {
         assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
         assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
         assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertTrue("checkExecutionCacheConstraintTraceItemsForModelElementName",TestTools.checkExecutionCacheConstraintTraceItemsForModelElementName(ePackage1,"C0"));
+        assertTrue("checkExecutionCacheConstraintPropertyAccessForModelElementName",TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1,"C0"));
 
         // Create C1, C2, C3 in an array to load into the ePackage
         Collection<EClass> listOfModelElements = new ArrayList<EClass>();

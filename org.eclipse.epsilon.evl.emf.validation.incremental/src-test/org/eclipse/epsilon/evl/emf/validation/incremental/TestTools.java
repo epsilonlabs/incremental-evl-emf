@@ -1,7 +1,12 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
+
+import java.util.*;
 
 public class TestTools {
 
@@ -54,4 +59,29 @@ public class TestTools {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
         adapter.constraintExecutionCache.get().printExecutionCache();
     }
+
+    public static boolean checkExecutionCacheConstraintTraceItemsForModelElementName (EPackage ePackage, String name) {
+        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+        Collection <ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;
+        for(ConstraintTraceItem item : traceItems) {
+            EClass modelElement = (EClass) item.getInstance();
+            if(modelElement.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkExecutionCacheConstraintPropertyAccessForModelElementName (EPackage ePackage, String name) {
+        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+        Collection <ConstraintPropertyAccess> constraintPropertyAccess = adapter.constraintExecutionCache.get().constraintPropertyAccess;
+        for(ConstraintPropertyAccess CPA : constraintPropertyAccess) {
+            EClass modelElement = (EClass) CPA.getModelElement();
+            if(modelElement.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
