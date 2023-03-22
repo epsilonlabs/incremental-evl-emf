@@ -29,7 +29,6 @@ public class IncrementalEvlTests {
     IncrementalEcoreValidator validator;
     Diagnostician diagnostician;
     protected EClass modelElement1, modelElement2, modelElement3, modelElement4;
-    protected BuildTestModel buildTestModel = new BuildTestModel();
     IncrementalEvlValidatorAdapter resultingAdapter;
 
     @Before
@@ -68,21 +67,21 @@ public class IncrementalEvlTests {
 
     @Test
     public void testAOneElementModelExists() {
-        buildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         assertEquals(1, ePackage1.getEClassifiers().size());
     }
 
     @Test
     public void testATwoElementModelExists() {
-        buildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
-        buildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
+        BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
         assertEquals(2, ePackage1.getEClassifiers().size());
     }
 
 
     @Test
     public void testValidationWithOneElementModel() {
-        buildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
 
         diagnostician.validate(ePackage1);
         resultingAdapter = TestTools.getValidationAdapter(ePackage1);
@@ -93,7 +92,7 @@ public class IncrementalEvlTests {
 
     @Test
     public void testCacheClearsOnNotificationPropertySet() {
-        modelElement1 = buildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         diagnostician.validate(ePackage1);
         modelElement1.setName("C2");
 
@@ -107,8 +106,8 @@ public class IncrementalEvlTests {
 
     @Test
     public void addTwoModelElementsAndRemoveOne() {
-        modelElement1 = buildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
-        modelElement2 = buildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
+        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
         diagnostician.validate(ePackage1);
 
         ePackage1.getEClassifiers().remove(modelElement1);
@@ -125,8 +124,8 @@ public class IncrementalEvlTests {
     @Test
     public void addTwoModelElementsAndClear(){
 
-        modelElement1 = buildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
-        modelElement2 = buildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
+        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
         diagnostician.validate(ePackage1);
 
         ePackage1.getEClassifiers().clear();
@@ -140,32 +139,32 @@ public class IncrementalEvlTests {
 
     @Test
     public void addTwoModelElementsAndMoveOne() {
-        modelElement1 = buildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
-        modelElement2 = buildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
+        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
         diagnostician.validate(ePackage1);
 
         System.out.println("before:"  );
-        buildTestModel.showEPackage(ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
         ePackage1.getEClassifiers().move(modelElement1.getClassifierID(),modelElement2.getClassifierID());
         System.out.println("after:");
-        buildTestModel.showEPackage(ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
     }
 
     @Test
     public void twoModelsAddElementInOneModelOtherModel() {
-        modelElement1 = buildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
-        modelElement2 = buildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
+        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
         diagnostician.validate(ePackage1);
 
-        modelElement3 = buildTestModel.createAndAddModelElementToePackage("D1", ePackage2);
-        modelElement4 = buildTestModel.createAndAddModelElementToePackage("D2", ePackage2);
+        modelElement3 = BuildTestModel.createAndAddModelElementToePackage("D1", ePackage2);
+        modelElement4 = BuildTestModel.createAndAddModelElementToePackage("D2", ePackage2);
         diagnostician.validate(ePackage2);
 
-        buildTestModel.addModelElementToePackage(modelElement1,ePackage2);
+        BuildTestModel.addModelElementToePackage(modelElement1,ePackage2);
 
 
-        buildTestModel.showEPackage(ePackage1);
-        buildTestModel.showEPackage(ePackage2);
+        BuildTestModel.showEPackage(ePackage1);
+        BuildTestModel.showEPackage(ePackage2);
         //ePackage1.getEClassifiers().move(modelElement2.getClassifierID(),modelElement4);
         //buildTestModel.showEPackage(ePackage1);
 
@@ -173,18 +172,18 @@ public class IncrementalEvlTests {
     @Test
     public void createAndAddManyModelElements(){
 
-        modelElement1 = buildTestModel.createAndAddModelElementToePackage("C0",ePackage1);
-        buildTestModel.showEPackage(ePackage1);
+        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C0",ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
         diagnostician.validate(ePackage1);
         assertEquals(1, ePackage1.getEClassifiers().size());
 
         Collection<EClass> listOfModelElements = new ArrayList<EClass>();
         for(int i=1; i<4;i++) {
-            listOfModelElements.add(buildTestModel.createNamedModelElement("C"+i));
+            listOfModelElements.add(BuildTestModel.createNamedModelElement("C"+i));
         }
 
         ePackage1.getEClassifiers().addAll(listOfModelElements);
-        buildTestModel.showEPackage(ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
         diagnostician.validate(ePackage1);
         assertEquals(4, ePackage1.getEClassifiers().size());
 
@@ -196,7 +195,7 @@ public class IncrementalEvlTests {
 
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C0",ePackage1);
         diagnostician.validate(ePackage1);
-        buildTestModel.showEPackage(ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
         TestTools.showExecutionCache(ePackage1);
         // Model has 1 validated element
         assertEquals(1, TestTools.getModelSize(ePackage1));
@@ -208,13 +207,13 @@ public class IncrementalEvlTests {
         // Create C1, C2, C3 in an array to load into the ePackage
         Collection<EClass> listOfModelElements = new ArrayList<EClass>();
         for(int i=1; i<4;i++) {
-            listOfModelElements.add(buildTestModel.createNamedModelElement("C"+i));
+            listOfModelElements.add(BuildTestModel.createNamedModelElement("C"+i));
         }
 
 
         ePackage1.getEClassifiers().addAll(listOfModelElements);
         diagnostician.validate(ePackage1);
-        buildTestModel.showEPackage(ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
         // Model now has 4 validated elements
         assertEquals(4, TestTools.getModelSize(ePackage1));
         assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
@@ -224,7 +223,7 @@ public class IncrementalEvlTests {
 
         ePackage1.getEClassifiers().removeAll(listOfModelElements);
         diagnostician.validate(ePackage1);
-        buildTestModel.showEPackage(ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
         // Model now has 1 validated element
         assertEquals(1, TestTools.getModelSize(ePackage1));
         assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
