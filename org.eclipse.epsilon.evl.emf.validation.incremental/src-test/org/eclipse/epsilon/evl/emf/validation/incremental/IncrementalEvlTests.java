@@ -199,8 +199,8 @@ public class IncrementalEvlTests {
         buildTestModel.showEPackage(ePackage1);
         TestTools.showExecutionCache(ePackage1);
         // Model has 1 validated element
-        assertEquals(1, TestTools.getSize(ePackage1));
-        assertEquals("C0", TestTools.getName(ePackage1, 0));
+        assertEquals(1, TestTools.getModelSize(ePackage1));
+        assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
         assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
         assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
         assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
@@ -216,18 +216,18 @@ public class IncrementalEvlTests {
         diagnostician.validate(ePackage1);
         buildTestModel.showEPackage(ePackage1);
         // Model now has 4 validated elements
-        assertEquals(4, TestTools.getSize(ePackage1));
-        assertEquals("C0", TestTools.getName(ePackage1, 0));
-        assertEquals("C1", TestTools.getName(ePackage1, 1));
-        assertEquals("C2", TestTools.getName(ePackage1, 2));
-        assertEquals("C3", TestTools.getName(ePackage1, 3));
+        assertEquals(4, TestTools.getModelSize(ePackage1));
+        assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
+        assertEquals("C1", TestTools.getModelElementName(ePackage1, 1));
+        assertEquals("C2", TestTools.getModelElementName(ePackage1, 2));
+        assertEquals("C3", TestTools.getModelElementName(ePackage1, 3));
 
         ePackage1.getEClassifiers().removeAll(listOfModelElements);
         diagnostician.validate(ePackage1);
         buildTestModel.showEPackage(ePackage1);
         // Model now has 1 validated element
-        assertEquals(1, TestTools.getSize(ePackage1));
-        assertEquals("C0", TestTools.getName(ePackage1, 0));
+        assertEquals(1, TestTools.getModelSize(ePackage1));
+        assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
 
 
 

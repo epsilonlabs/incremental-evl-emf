@@ -8,14 +8,14 @@ public class TestTools {
     //
     // Model Inspections
 
-    public static String getName (EClassifier modelElement) {
+    public static String getModelElementName(EClassifier modelElement) {
         return modelElement.getName();
     }
-    public static  String getName (EPackage ePackage, int index) {
+    public static  String getModelElementName(EPackage ePackage, int index) {
         return ePackage.getEClassifiers().get(index).getName();
     }
 
-    public static int getSize(EPackage ePackage){
+    public static int getModelSize(EPackage ePackage){
         return ePackage.getEClassifiers().size();
     }
 
