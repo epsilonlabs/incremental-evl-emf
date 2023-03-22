@@ -134,7 +134,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
                     + "\n " + notification);
 
             if(notification.getEventType() != 8){
-                    System.out.println(" element : " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
+                // Type 8 removes the adapter and produces NULL conditions
+                    System.out.println(" element: " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
                     + "\n feature: " + modelFeature.getName()
                     + "\n was: " + notification.getOldValue()
                     + "\n now: " + notification.getNewValue()
