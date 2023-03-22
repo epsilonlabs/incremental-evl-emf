@@ -226,7 +226,7 @@ public class ConstraintExecutionCache {
     }
 
     private void removeFromCache(EObject modelElement) {
-        System.out.println("\nremoveFromCache:" + modelElement.hashCode());
+        System.out.println("\nremoveFromCache: " + modelElement.hashCode() + " " + modelElement);
 
         Iterator itr = null;
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
@@ -281,7 +281,7 @@ public class ConstraintExecutionCache {
 
     public void printExecutionCache () {
         // Dump the lists to the Console for inspection
-        System.out.println("\n == Execution Cache state ==");
+        System.out.println(" == Execution Cache state ==");
         System.out.println("ContraintTraceItems: " + constraintTraceItems.size());
         System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size()) ;
         System.out.println("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size()) ;

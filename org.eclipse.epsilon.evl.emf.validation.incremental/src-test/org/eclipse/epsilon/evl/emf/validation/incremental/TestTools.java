@@ -25,6 +25,15 @@ public class TestTools {
         return ePackage.getEClassifiers().size();
     }
 
+    public static boolean checkModelContainsElementName (EPackage ePackage, String name) {
+        Collection <EClassifier> classifiers = ePackage.getEClassifiers();
+        for(EClassifier classifer : classifiers) {
+            if(classifer.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     //
@@ -34,7 +43,7 @@ public class TestTools {
         IncrementalEvlValidatorAdapter resultingAdapter;
         for(var adapter : epackage.eAdapters()) {
             if(adapter.getClass().equals(IncrementalEvlValidatorAdapter.class)) {
-                System.out.println("Found adapter: "+ adapter);
+                //System.out.println("Found adapter: "+ adapter);
                 return (IncrementalEvlValidatorAdapter) adapter;
             }
         }
@@ -58,6 +67,8 @@ public class TestTools {
 
     public static void showExecutionCache (EPackage ePackage) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+        System.out.println("\nExecution Cache for Model: " + ePackage.getName());
+
         adapter.constraintExecutionCache.get().printExecutionCache();
     }
 

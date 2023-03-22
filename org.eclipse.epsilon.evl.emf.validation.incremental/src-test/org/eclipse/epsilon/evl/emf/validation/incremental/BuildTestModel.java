@@ -28,9 +28,9 @@ public class BuildTestModel {
     }
 
     public static void showEPackage (EPackage ePackage) {
-        System.out.println("ePackage: " + ePackage.getName() + " " + ePackage.hashCode());
+        System.out.println("\nModel (ePackage): " + ePackage.getName() + " " + ePackage.hashCode());
         for(EClassifier item : ePackage.getEClassifiers()){
-            System.out.println("hash: "+ item.hashCode() + " " +item);
+            System.out.println("[" + item.getClassifierID() + "] Element (hash): " + item.hashCode() + " " + item);
         }
 
     }

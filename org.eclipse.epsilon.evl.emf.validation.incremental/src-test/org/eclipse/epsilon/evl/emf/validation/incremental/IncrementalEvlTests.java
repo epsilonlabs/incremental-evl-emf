@@ -12,8 +12,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class IncrementalEvlTests {
 
@@ -68,57 +67,73 @@ public class IncrementalEvlTests {
     @Test
     public void testAOneElementModelExists() {
         BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
-        assertEquals(1, ePackage1.getEClassifiers().size());
+        BuildTestModel.showEPackage(ePackage1);
+        assertEquals(1, TestTools.getModelSize(ePackage1));
+        assertTrue("checkModelContainsElementName == C1",TestTools.checkModelContainsElementName(ePackage1,"C1"));
     }
 
     @Test
     public void testATwoElementModelExists() {
         BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
-        assertEquals(2, ePackage1.getEClassifiers().size());
+        BuildTestModel.showEPackage(ePackage1);
+        assertEquals(2, TestTools.getModelSize(ePackage1));
+        assertTrue("checkModelContainsElementName == C1",TestTools.checkModelContainsElementName(ePackage1,"C1"));
+        assertTrue("checkModelContainsElementName == C2",TestTools.checkModelContainsElementName(ePackage1,"C2"));
     }
 
 
     @Test
     public void testValidationWithOneElementModel() {
         BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
 
         diagnostician.validate(ePackage1);
-        resultingAdapter = TestTools.getValidationAdapter(ePackage1);
-        assertEquals(
-                resultingAdapter.module.trace.propertyAccesses.size(),
-                resultingAdapter.module.getContext().getConstraintTrace().getItems().size() );
+        assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
     }
 
     @Test
     public void testCacheClearsOnNotificationPropertySet() {
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         diagnostician.validate(ePackage1);
-        modelElement1.setName("C2");
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
-        resultingAdapter = TestTools.getValidationAdapter(ePackage1);
-        assertTrue(resultingAdapter.constraintExecutionCache.isPresent());
+        modelElement1.setName("C2");
         assertEquals(0, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
         assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
         diagnostician.validate(ePackage1);
+        assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
     }
 
     @Test
     public void addTwoModelElementsAndRemoveOne() {
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
+
         diagnostician.validate(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals(2, TestTools.getModelSize(ePackage1));
+        assertEquals(6, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         ePackage1.getEClassifiers().remove(modelElement1);
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals(1, TestTools.getModelSize(ePackage1));
+        assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
-        resultingAdapter = TestTools.getValidationAdapter(ePackage1);
-        assertEquals(
-                resultingAdapter.module.getConstraints().size(),
-                resultingAdapter.constraintExecutionCache.get().constraintPropertyAccess.size());
-        assertEquals(
-                resultingAdapter.module.getConstraints().size(),
-                resultingAdapter.constraintExecutionCache.get().constraintTraceItems.size());
     }
 
     @Test
@@ -126,13 +141,17 @@ public class IncrementalEvlTests {
 
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
+
         diagnostician.validate(ePackage1);
+        assertEquals(2, TestTools.getModelSize(ePackage1));
+        assertEquals(6, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         ePackage1.getEClassifiers().clear();
-
-        resultingAdapter = TestTools.getValidationAdapter(ePackage1);
+        assertEquals(0, TestTools.getModelSize(ePackage1));
         assertEquals(0, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
         assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
     }
 
@@ -143,25 +162,59 @@ public class IncrementalEvlTests {
         modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
         diagnostician.validate(ePackage1);
 
+        assertEquals(2, TestTools.getModelSize(ePackage1));
+        assertEquals(6, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
         System.out.println("before:"  );
         BuildTestModel.showEPackage(ePackage1);
+
         ePackage1.getEClassifiers().move(modelElement1.getClassifierID(),modelElement2.getClassifierID());
+
         System.out.println("after:");
         BuildTestModel.showEPackage(ePackage1);
+
+        assertEquals(2, TestTools.getModelSize(ePackage1));
+        assertEquals(0, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
     }
 
     @Test
     public void twoModelsAddElementInOneModelOtherModel() {
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
-        diagnostician.validate(ePackage1);
 
         modelElement3 = BuildTestModel.createAndAddModelElementToePackage("D1", ePackage2);
         modelElement4 = BuildTestModel.createAndAddModelElementToePackage("D2", ePackage2);
+
+        diagnostician.validate(ePackage1);
+        assertEquals(2, TestTools.getModelSize(ePackage1));
+        assertEquals(6, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
         diagnostician.validate(ePackage2);
+        assertEquals(2, TestTools.getModelSize(ePackage2));
+        assertEquals(6, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage2));
+        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage2));
+        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage2));
+
 
         BuildTestModel.addModelElementToePackage(modelElement1,ePackage2);
 
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals(1, TestTools.getModelSize(ePackage1));
+        assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
+        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
+        TestTools.showExecutionCache(ePackage2);
+        assertEquals(3, TestTools.getModelSize(ePackage2));
+        assertEquals(6, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage2));
+        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage2));
+        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage2));
 
         BuildTestModel.showEPackage(ePackage1);
         BuildTestModel.showEPackage(ePackage2);
@@ -174,18 +227,22 @@ public class IncrementalEvlTests {
 
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C0",ePackage1);
         BuildTestModel.showEPackage(ePackage1);
-        diagnostician.validate(ePackage1);
-        assertEquals(1, ePackage1.getEClassifiers().size());
 
+        diagnostician.validate(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals(1, TestTools.getModelSize(ePackage1));
+
+        // Grow the model with some more elements
         Collection<EClass> listOfModelElements = new ArrayList<EClass>();
         for(int i=1; i<4;i++) {
             listOfModelElements.add(BuildTestModel.createNamedModelElement("C"+i));
         }
-
         ePackage1.getEClassifiers().addAll(listOfModelElements);
         BuildTestModel.showEPackage(ePackage1);
+
         diagnostician.validate(ePackage1);
-        assertEquals(4, ePackage1.getEClassifiers().size());
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals(4,TestTools.getModelSize(ePackage1));
 
     }
 
@@ -236,6 +293,9 @@ public class IncrementalEvlTests {
         // Model now has 1 validated element
         assertEquals(1, TestTools.getModelSize(ePackage1));
         assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
+        assertFalse(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C1"));
+        assertFalse(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C2"));
+        assertFalse(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C3"));
 
 
 
