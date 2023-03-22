@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 import java.util.*;
@@ -77,6 +78,18 @@ public class TestTools {
         Collection <ConstraintPropertyAccess> constraintPropertyAccess = adapter.constraintExecutionCache.get().constraintPropertyAccess;
         for(ConstraintPropertyAccess CPA : constraintPropertyAccess) {
             EClass modelElement = (EClass) CPA.getModelElement();
+            if(modelElement.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName (EPackage ePackage, String name) {
+        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+        Collection <UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache.get().unsatisfiedConstraints;
+        for(UnsatisfiedConstraint UC : unsatisfiedConstraints) {
+            EClass modelElement = (EClass) UC.getInstance();
             if(modelElement.getName().equals(name)) {
                 return true;
             }

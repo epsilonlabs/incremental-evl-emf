@@ -206,6 +206,7 @@ public class IncrementalEvlTests {
         assertTrue("checkExecutionCacheConstraintTraceItemsForModelElementName",TestTools.checkExecutionCacheConstraintTraceItemsForModelElementName(ePackage1,"C0"));
         assertTrue("checkExecutionCacheConstraintPropertyAccessForModelElementName",TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1,"C0"));
 
+
         // Create C1, C2, C3 in an array to load into the ePackage
         Collection<EClass> listOfModelElements = new ArrayList<EClass>();
         for(int i=1; i<4;i++) {
@@ -216,16 +217,22 @@ public class IncrementalEvlTests {
         ePackage1.getEClassifiers().addAll(listOfModelElements);
         diagnostician.validate(ePackage1);
         BuildTestModel.showEPackage(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
         // Model now has 4 validated elements
         assertEquals(4, TestTools.getModelSize(ePackage1));
         assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
         assertEquals("C1", TestTools.getModelElementName(ePackage1, 1));
         assertEquals("C2", TestTools.getModelElementName(ePackage1, 2));
         assertEquals("C3", TestTools.getModelElementName(ePackage1, 3));
+        assertTrue(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C1"));
+        assertTrue(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C2"));
+        assertTrue(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C3"));
+
 
         ePackage1.getEClassifiers().removeAll(listOfModelElements);
         diagnostician.validate(ePackage1);
         BuildTestModel.showEPackage(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
         // Model now has 1 validated element
         assertEquals(1, TestTools.getModelSize(ePackage1));
         assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
