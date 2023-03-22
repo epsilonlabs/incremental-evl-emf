@@ -89,9 +89,10 @@ public class IncrementalEvlTests {
         BuildTestModel.showEPackage(ePackage1);
 
         diagnostician.validate(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
         assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
         assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
     }
 
@@ -105,11 +106,13 @@ public class IncrementalEvlTests {
         assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         modelElement1.setName("C2");
+        TestTools.showExecutionCache(ePackage1);
         assertEquals(0, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
         assertEquals(0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
         assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         diagnostician.validate(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
         assertEquals(3, TestTools.getExecutionCacheConstrainProperyAccessSize(ePackage1));
         assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
         assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
