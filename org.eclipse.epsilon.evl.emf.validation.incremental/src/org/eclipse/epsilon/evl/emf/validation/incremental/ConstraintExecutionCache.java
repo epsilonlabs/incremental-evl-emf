@@ -78,24 +78,22 @@ public class ConstraintExecutionCache {
         EStructuralFeature modelFeature = (EStructuralFeature)notification.getFeature();
 
         switch (notificationType) {
-            case 1: // SET
+            case Notification.UNSET:
+            case Notification.SET: // SET
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: SET "
                         + modelElement.hashCode() + " & " + modelFeature.getName() );
-                    removeFromCache(modelElement,modelFeature);
-                    break;
-            case 2: // UNSET
-                System.out.println("\n [n] Notification: UNSET");
+                removeFromCache(modelElement, modelFeature);
                 break;
-            case 3: // ADD
+            case Notification.ADD: // ADD
                 // newValue is the model Element being added
                 System.out.println("\n [n] Notification: ADD");
-                if(modelElement.getClass().equals(EPackageImpl.class)) {
+                removeFromCache(modelElement, modelFeature);
+                if (notification.getNewValue() instanceof EObject) {
                     removeFromCache((EObject) notification.getNewValue());
                 }
                 break;
-            case 4: // REMOVE -- the "wasValue" is the model element being removed.
-
+            case Notification.REMOVE: // REMOVE -- the "wasValue" is the model element being removed.
                 System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
                         + "notificationType: REMOVE "
                         + modelElement.hashCode()
@@ -103,27 +101,24 @@ public class ConstraintExecutionCache {
                 // The notification is for the eClassifiers feature and the old value is the model element being removed.
                 // Removing here is better than on adapter remove, as we don't know what other adapters might be removed
 
-                if(modelElement.getClass().equals(EPackageImpl.class)) {
+                removeFromCache(modelElement, modelFeature);
+                if (notification.getOldValue() instanceof EObject) {
                     removeFromCache((EObject) notification.getOldValue());
                 }
 
                 break;
-            case 5: // ADD_MANY
+            case Notification.ADD_MANY: // ADD_MANY
                 // newValue contains an Array list of modelElements being added
-
-                for(EObject item : (Collection<EClass>) notification.getNewValue()) {
+                for (EObject item : (Collection<EObject>) notification.getNewValue()) {
                     removeFromCache(item);
                 }
-
-
                 break;
-            case 6: // REMOVE_MANY
-                for(EObject item : (Collection<EClass>) notification.getOldValue()) {
+            case Notification.REMOVE_MANY: // REMOVE_MANY
+                for (EObject item : (Collection<EObject>) notification.getOldValue()) {
                     removeFromCache(item);
                 }
-
                 break;
-            case 7: // MOVE
+            case Notification.MOVE: // MOVE
 
                 // When a MOVE occurs, two model elements swap places, remove both from the execution cache
                 EPackage ePackage = (EPackage) modelElement;

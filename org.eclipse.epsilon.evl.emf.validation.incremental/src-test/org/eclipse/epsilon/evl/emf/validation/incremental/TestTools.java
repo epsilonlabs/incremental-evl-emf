@@ -2,7 +2,6 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
@@ -50,7 +49,7 @@ public class TestTools {
         return null;
     }
 
-    public static int getExecutionCacheConstrainProperyAccessSize (EPackage ePackage) {
+    public static int getExecutionCacheConstrainPropertyAccessSize(EPackage ePackage) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
         return adapter.constraintExecutionCache.get().constraintPropertyAccess.size();
     }
