@@ -1,10 +1,14 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModelFactory;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.*;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.junit.Before;
@@ -53,6 +57,11 @@ public class IncrementalEvlTests {
 
         validator = new IncrementalEcoreValidator();
         EValidator.Registry.INSTANCE.put(EcorePackage.eINSTANCE, new EValidator.Descriptor() {
+            public EValidator getEValidator() {
+                return validator;
+            }
+        });
+        EValidator.Registry.INSTANCE.put(GenModelPackage.eINSTANCE, new EValidator.Descriptor() {
             public EValidator getEValidator() {
                 return validator;
             }
@@ -147,9 +156,18 @@ public class IncrementalEvlTests {
     // TODO Add test for unsetting a feature
     @Test
     public void addOneModelElementAndUnsetOne() {
-        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
-        diagnostician.validate(ePackage1);
-        TestTools.showExecutionCache(ePackage1);
+        ResourceSet rs = new ResourceSetImpl();
+        Resource r = new ResourceImpl();
+        rs.getResources().add(r);
+
+        GenModel eob = GenModelFactory.eINSTANCE.createGenModel();
+        r.getContents().add(eob);
+        eob.setEditDirectory("something");
+        diagnostician.validate(eob);
+
+        eob.unsetEditDirectory();
+        TestTools.showExecutionCache(eob);
+
 //        assertEquals("Property Accesses should equal model elements * constraints (3)", 3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
 //        assertEquals("Trace Items should equal model elements * constraints (3)", 3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
 //        assertEquals("Unsatisfied Constraints should equal model constraints failed (1)",1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));

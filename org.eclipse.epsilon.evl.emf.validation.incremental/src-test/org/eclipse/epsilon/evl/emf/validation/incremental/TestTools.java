@@ -2,6 +2,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
@@ -38,11 +39,9 @@ public class TestTools {
     //
     // Execution Cache inspections
 
-    public static IncrementalEvlValidatorAdapter getValidationAdapter (EPackage epackage) {
-        IncrementalEvlValidatorAdapter resultingAdapter;
-        for(var adapter : epackage.eAdapters()) {
+    public static IncrementalEvlValidatorAdapter getValidationAdapter(EObject eob) {
+        for(var adapter : eob.eAdapters()) {
             if(adapter.getClass().equals(IncrementalEvlValidatorAdapter.class)) {
-                //System.out.println("Found adapter: "+ adapter);
                 return (IncrementalEvlValidatorAdapter) adapter;
             }
         }
@@ -64,10 +63,8 @@ public class TestTools {
         return adapter.constraintExecutionCache.get().unsatisfiedConstraints.size();
     }
 
-    public static void showExecutionCache (EPackage ePackage) {
+    public static void showExecutionCache (EObject ePackage) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        System.out.println("\nExecution Cache for Model: " + ePackage.getName());
-
         adapter.constraintExecutionCache.get().printExecutionCache();
     }
 
