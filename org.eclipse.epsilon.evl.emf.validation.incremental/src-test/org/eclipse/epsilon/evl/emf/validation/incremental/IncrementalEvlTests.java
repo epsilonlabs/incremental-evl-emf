@@ -71,9 +71,12 @@ public class IncrementalEvlTests {
 
         diagnostician.validate(ePackage1);
         TestTools.showExecutionCache(ePackage1);
-        assertEquals(3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("Property Accesses should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (1)",
+                1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
     }
 
     @Test
@@ -81,26 +84,89 @@ public class IncrementalEvlTests {
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         diagnostician.validate(ePackage1);
         TestTools.showExecutionCache(ePackage1);
-        assertEquals(3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("Property Accesses should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (1)",
+                1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         modelElement1.setName("C2");
         TestTools.showExecutionCache(ePackage1);
-        assertEquals("After changing the name, the property access trace should remain empty", 0, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals("After changing the name, the execution cache should remain empty", 0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals("After changing the name, the execution cache should not report any unsatisfied constraints yet", 0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("After changing the name, Property Accesses should reduce by model elements changed * constraints (0)",
+                0, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After changing the name, Trace Items should reduce by model elements changed * constraints (0)",
+                0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After changing the name, Unsatisfied Constraints relating to the changed model element are removed (0)",
+                0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         diagnostician.validate(ePackage1);
         TestTools.showExecutionCache(ePackage1);
-        assertEquals("After rerunning the validation, the property access trace should be populated again!", 3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("After rerunning the validation, Property Accesses should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After rerunning the validation, Trace Items should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After rerunning the validation, Unsatisfied Constraints should equal model constraints failed (1)",
+                1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
     }
 
-    // TODO Add test where out of two elements, only one gets updated (only that one should be re-validated)
+    @Test
+    public void addTwoModelElementsAndChangeOne() {
+
+        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
+
+        diagnostician.validate(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals("Property Accesses should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (2)",
+                2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
+        modelElement2.setName("C3");
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals("After changing the name, Property Accesses should reduce by model elements changed * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After changing the name, Trace Items should reduce by model elements changed * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After changing the name, Unsatisfied Constraints relating to the changed model element are removed (1)",
+                1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
+        diagnostician.validate(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals("After rerunning the validation, Property Accesses should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After rerunning the validation, Trace Items should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After rerunning the validation, Unsatisfied Constraints should equal model constraints failed (2)",
+                2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+    }
 
     // TODO Add test for unsetting a feature
+    @Test
+    public void addOneModelElementAndUnsetOne() {
+        modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        diagnostician.validate(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
+//        assertEquals("Property Accesses should equal model elements * constraints (3)", 3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+//        assertEquals("Trace Items should equal model elements * constraints (3)", 3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+//        assertEquals("Unsatisfied Constraints should equal model constraints failed (1)",1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
+        // modelElement1=null;  // does not generate "unSet"
+        //ePackage1.eUnset(ePackage1.eContainingFeature());
+        //TestTools.showExecutionCache(ePackage1);
+//        assertEquals("After changing the name, Property Accesses should reduce by model elements changed * constraints (0)", 0, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+//        assertEquals("After changing the name, Trace Items should reduce by model elements changed * constraints (0)", 0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+//        assertEquals("After changing the name, Unsatisfied Constraints relating to the changed model element are removed (0)", 0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
+//        diagnostician.validate(ePackage1);
+//        TestTools.showExecutionCache(ePackage1);
+//        assertEquals("After rerunning the validation, Property Accesses should equal model elements * constraints (3)", 3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+//        assertEquals("After rerunning the validation, Trace Items should equal model elements * constraints (3)", 3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+//        assertEquals("After rerunning the validation, Unsatisfied Constraints should equal model constraints failed (1)", 1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+    }
 
     // TODO Add test for ePackage.ownedClassifiers.add(xyz) invalidating constraints that use ePackage.ownedClassifiers
 
@@ -110,14 +176,20 @@ public class IncrementalEvlTests {
         modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
 
         diagnostician.validate(ePackage1);
-        assertEquals(6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("Property Accesses should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (2)",
+                2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         ePackage1.getEClassifiers().remove(modelElement1);
-        assertEquals(3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("After removing one model element, Property Accesses should reduce by model elements changed * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After removing one model element, Trace Items should reduce by model elements changed * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After removing one model element, Unsatisfied Constraints relating to the changed model element are removed (1)",
+                1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
     }
 
     @Test
@@ -126,16 +198,24 @@ public class IncrementalEvlTests {
         modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
 
         diagnostician.validate(ePackage1);
-        assertEquals(2, TestTools.getModelSize(ePackage1));
-        assertEquals(6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("Model should contain 2 elements, something wrong in EMF?",
+                2, TestTools.getModelSize(ePackage1));
+        assertEquals("Property Accesses should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (2)",
+                2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         ePackage1.getEClassifiers().clear();
-        assertEquals(0, TestTools.getModelSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("Model has been cleared there should be 0 elements, something wrong in EMF?",
+                0, TestTools.getModelSize(ePackage1));
+        assertEquals("After clearing a model, Property Accesses should reduce by model elements changed * constraints (0)",
+                0, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After clearing a model, Trace Items should reduce by model elements changed * constraints (0)",
+                0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After clearing a model, Unsatisfied Constraints relating to the changed model element are removed (0)",
+                0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
     }
 
 
@@ -145,22 +225,30 @@ public class IncrementalEvlTests {
         modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
         diagnostician.validate(ePackage1);
 
-        assertEquals(2, TestTools.getModelSize(ePackage1));
-        assertEquals(6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("Model should contain 2 elements, something wrong in EMF?",
+                2, TestTools.getModelSize(ePackage1));
+        assertEquals("Property Accesses should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (2)",
+                2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         System.out.println("before:"  );
         BuildTestModel.showEPackage(ePackage1);
 
+        // Move model elements about (swap C1 and C2 round)
         ePackage1.getEClassifiers().move(modelElement1.getClassifierID(),modelElement2.getClassifierID());
 
         System.out.println("after:");
         BuildTestModel.showEPackage(ePackage1);
 
-        assertEquals(0, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("After swapping two model elements, Property Accesses should reduce by model elements changed * constraints (0)",
+                0, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After swapping two model elements, Trace Items should reduce by model elements changed * constraints (0)",
+                0, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After swapping two model elements, Unsatisfied Constraints relating to the changed model element are removed (0)",
+                0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
     }
 
     @Test
@@ -175,30 +263,60 @@ public class IncrementalEvlTests {
 
         // assertEquals((("C1", "name"), ("C1", "x"), ...), TestTools.getAccesses(ePackage1))
 
-        assertEquals(6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("Property Accesses should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (2)",
+                2, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         diagnostician.validate(ePackage2);
-        assertEquals(6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage2));
-        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage2));
-        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage2));
+        assertEquals("Property Accesses should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage2));
+        assertEquals("Trace Items should equal model elements * constraints (6)",
+                6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage2));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (0)",
+                0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage2));
 
         BuildTestModel.addModelElementToePackage(modelElement1, ePackage2);
 
-        // TODO add messages explaining where these expectations are coming from
         TestTools.showExecutionCache(ePackage1);
-        assertEquals(3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertEquals("After moving a model element, Property Accesses should reduce by model elements changed * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After moving a model element, Trace Items should reduce by model elements changed * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After moving a model element, Unsatisfied Constraints relating to the changed model element are removed (1)",
+                1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         TestTools.showExecutionCache(ePackage2);
-        assertEquals(6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage2));
-        assertEquals(6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage2));
-        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage2));
+        assertEquals("After moving a model element, Property Accesses should reduce by model elements changed * constraints (3)",
+                6, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage2));
+        assertEquals("After moving a model element, Trace Items should reduce by model elements changed * constraints (3)",
+                6, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage2));
+        assertEquals("After moving a model element, Unsatisfied Constraints relating to the changed model element are removed (1)",
+                0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage2));
 
         BuildTestModel.showEPackage(ePackage1);
         BuildTestModel.showEPackage(ePackage2);
+
+        diagnostician.validate(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
+        assertEquals("After revalidating, Property Accesses should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("After revalidating, Trace Items should reduce by model elements changed * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("After revalidating, Unsatisfied Constraints should equal model constraints failed  (1)",
+                1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+
+        diagnostician.validate(ePackage2);
+        TestTools.showExecutionCache(ePackage2);
+        assertEquals("After revalidating, Property Accesses should equal model elements * constraints (9)",
+                9, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage2));
+        assertEquals("After revalidating, Trace Items should reduce by model elements changed * constraints (9)",
+                9, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage2));
+        assertEquals("After revalidating, Unsatisfied Constraints should equal model constraints failed  (1)",
+                1, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage2));
+
         //ePackage1.getEClassifiers().move(modelElement2.getClassifierID(),modelElement4);
         //buildTestModel.showEPackage(ePackage1);
     }
@@ -210,7 +328,14 @@ public class IncrementalEvlTests {
 
         diagnostician.validate(ePackage1);
         TestTools.showExecutionCache(ePackage1);
-        assertEquals(1, TestTools.getModelSize(ePackage1));
+        assertEquals("Model should contain 1 element, something wrong in EMF?",
+                1, TestTools.getModelSize(ePackage1));
+        assertEquals("Property Accesses should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (0)",
+                0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
         // Grow the model with some more elements
         Collection<EClass> listOfModelElements = new ArrayList<EClass>();
@@ -222,7 +347,14 @@ public class IncrementalEvlTests {
 
         diagnostician.validate(ePackage1);
         TestTools.showExecutionCache(ePackage1);
-        assertEquals(4,TestTools.getModelSize(ePackage1));
+        assertEquals("Model should contain 4 element, something wrong in EMF?",
+                4,TestTools.getModelSize(ePackage1));
+        assertEquals("Property Accesses should equal model elements * constraints (12)",
+                12, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (12)",
+                12, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (3)",
+                3, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
 
     }
 
@@ -237,11 +369,16 @@ public class IncrementalEvlTests {
         // Model has 1 validated element
         assertEquals(1, TestTools.getModelSize(ePackage1));
         assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
-        assertEquals(3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
-        assertEquals(3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
-        assertEquals(0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
-        assertTrue("checkExecutionCacheConstraintTraceItemsForModelElementName",TestTools.checkExecutionCacheConstraintTraceItemsForModelElementName(ePackage1,"C0"));
-        assertTrue("checkExecutionCacheConstraintPropertyAccessForModelElementName",TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1,"C0"));
+        assertEquals("Property Accesses should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
+        assertEquals("Trace Items should equal model elements * constraints (3)",
+                3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
+        assertEquals("Unsatisfied Constraints should equal model constraints failed (1)",
+                0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
+        assertTrue("checkExecutionCacheConstraintTraceItemsForModelElementName",
+                TestTools.checkExecutionCacheConstraintTraceItemsForModelElementName(ePackage1,"C0"));
+        assertTrue("checkExecutionCacheConstraintPropertyAccessForModelElementName",
+                TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1,"C0"));
 
 
         // Create C1, C2, C3 in an array to load into the ePackage
@@ -250,32 +387,61 @@ public class IncrementalEvlTests {
             listOfModelElements.add(BuildTestModel.createNamedModelElement("C"+i));
         }
 
-
+        // Add the list of elements to the model
         ePackage1.getEClassifiers().addAll(listOfModelElements);
+
         diagnostician.validate(ePackage1);
         BuildTestModel.showEPackage(ePackage1);
         TestTools.showExecutionCache(ePackage1);
         // Model now has 4 validated elements
-        assertEquals(4, TestTools.getModelSize(ePackage1));
-        assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
-        assertEquals("C1", TestTools.getModelElementName(ePackage1, 1));
-        assertEquals("C2", TestTools.getModelElementName(ePackage1, 2));
-        assertEquals("C3", TestTools.getModelElementName(ePackage1, 3));
-        assertTrue(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C1"));
-        assertTrue(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C2"));
-        assertTrue(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C3"));
+        assertEquals("Model should have 4 elements",
+                4, TestTools.getModelSize(ePackage1));
 
+        assertTrue("Model should contain an element C0",
+                TestTools.checkModelContainsElementName(ePackage1, "C0"));
+        assertTrue("Model should contain an element C1",
+                TestTools.checkModelContainsElementName(ePackage1, "C1"));
+        assertTrue("Model should contain an element C2",
+                TestTools.checkModelContainsElementName(ePackage1, "C2"));
+        assertTrue("Model should contain an element C3",
+                TestTools.checkModelContainsElementName(ePackage1, "C3"));
 
+        assertFalse("Cache Unsatisfied Constraint should NOT contain C0",
+                TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1, "C0"));
+        assertTrue( "Cache Unsatisfied Constraint should contain C1",
+                TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C1"));
+        assertTrue( "Cache Unsatisfied Constraint should contain C2",
+                TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C2"));
+        assertTrue("Cache Unsatisfied Constraint should contain C3",
+                TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C3"));
+
+        // Remove the listed model elements
         ePackage1.getEClassifiers().removeAll(listOfModelElements);
+
+        assertTrue("Cache Property Access should contain an element C0",
+                TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1, "C0"));
+        assertFalse("Cache Property Access should NOT contain an element C1",
+                TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1, "C1"));
+        assertFalse("Cache Property Access should NOT contain an element C2",
+                TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1, "C2"));
+        assertFalse("Cache Property Access should NOT contain an element C3",
+                TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1, "C3"));
+
+
+
         diagnostician.validate(ePackage1);
         BuildTestModel.showEPackage(ePackage1);
         TestTools.showExecutionCache(ePackage1);
         // Model now has 1 validated element
         assertEquals(1, TestTools.getModelSize(ePackage1));
-        assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
-        assertFalse(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C1"));
-        assertFalse(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C2"));
-        assertFalse(TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C3"));
+        assertEquals("Model should contain an element C0",
+                "C0", TestTools.getModelElementName(ePackage1, 0));
+        assertFalse("Model should NOT contain an element C1",
+                TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C1"));
+        assertFalse("Model should NOT contain an element C2",
+                TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C2"));
+        assertFalse("Model should NOT contain an element C3",
+                TestTools.checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName(ePackage1,"C3"));
 
 
 
