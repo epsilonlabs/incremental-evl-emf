@@ -68,6 +68,17 @@ public class TestTools {
         adapter.constraintExecutionCache.get().printExecutionCache();
     }
 
+    public static List<String> getPackageNamesInConstraintTrace(EPackage ePackage) {
+        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+        Collection <ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;
+        List<String> names = new ArrayList<>();
+        for(ConstraintTraceItem item : traceItems) {
+            EClass modelElement = (EClass) item.getInstance();
+            names.add(modelElement.getName());
+        }
+        return names;
+    }
+
     public static boolean checkExecutionCacheConstraintTraceItemsForModelElementName (EPackage ePackage, String name) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
         Collection <ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;

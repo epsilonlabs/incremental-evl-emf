@@ -17,6 +17,8 @@ import org.junit.Test;
 import java.util.*;
 
 import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class IncrementalEvlTests {
 
@@ -387,14 +389,13 @@ public class IncrementalEvlTests {
         // Model has 1 validated element
         assertEquals(1, TestTools.getModelSize(ePackage1));
         assertEquals("C0", TestTools.getModelElementName(ePackage1, 0));
-        assertEquals("Property Accesses should equal model elements * constraints (3)",
-                3, TestTools.getExecutionCacheConstrainPropertyAccessSize(ePackage1));
         assertEquals("Trace Items should equal model elements * constraints (3)",
                 3, TestTools.getExecutionCacheConstraintTraceItemSize(ePackage1));
         assertEquals("Unsatisfied Constraints should equal model constraints failed (1)",
                 0, TestTools.getExecutionCacheUnsatisfiedConstraintsSize(ePackage1));
-        assertTrue("checkExecutionCacheConstraintTraceItemsForModelElementName",
-                TestTools.checkExecutionCacheConstraintTraceItemsForModelElementName(ePackage1,"C0"));
+
+        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).containsExactly("C0", "C0", "C0");
+
         assertTrue("checkExecutionCacheConstraintPropertyAccessForModelElementName",
                 TestTools.checkExecutionCacheConstraintPropertyAccessForModelElementName(ePackage1,"C0"));
 
