@@ -23,23 +23,21 @@ public class ConstraintExecutionCache {
     protected List <ConstraintPropertyAccess> constraintPropertyAccess;
 
     public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
-        // Change these to "defencive copies"?
+        // Change these to "defensive copies"?
 
         this.constraintTraceItems = lastModule.getContext().getConstraintTrace().getItems();
         this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
-        //this.constraintPropertyAccess = lastModule.getTrace().getConstraintPropertyAccess();
         this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
 
         if (REPORT){
             System.out.println("Setting up Execution Cache");
             printExecutionCache();
         }
-
     }
 
     public List <ConstraintPropertyAccess> getConstraintsPropertyAccessFor (EObject modelElement, EStructuralFeature modelFeature) {
         // Given a model Element and Feature, find all constraints as constraint property access for the model element & feature
-        List <ConstraintPropertyAccess> matchedcpa = null;
+        List <ConstraintPropertyAccess> matchedcpa = new ArrayList<>();
         for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
             if(cpa.getModelElement() == modelElement && cpa.getPropertyName().equals(modelFeature.getName())) {
                 matchedcpa.add(cpa);
@@ -121,7 +119,6 @@ public class ConstraintExecutionCache {
                 }
                 break;
             case Notification.MOVE: // MOVE
-
                 // When a MOVE occurs, two model elements swap places, remove both from the execution cache
                 EPackage ePackage = (EPackage) modelElement;
                 System.out.println(notification.getNewValue().hashCode());
@@ -138,43 +135,15 @@ public class ConstraintExecutionCache {
                 EModelElement modelElement2 = ePackage.getEClassifiers().get((int)notification.getOldValue());
                 removeFromCache(modelElement1);
                 removeFromCache(modelElement2);
-
                 break;
-            case 8: // REMOVEING_ADAPTER -- does this equate to removing a model element from validation?
-
-                // nada
-
-                /*
-                System.out.println(" [i] ConstraintExecutionCache processModelNotification() -- "
-                        + "notificationType: REMOVEING_ADAPTER "
-                        + modelElement.hashCode() );
-                removeFromCache(modelElement);
-                */
-
-
-                break;
-            case 9: //n RESOLVE
-                System.out.println("\n [n] Notification: RESOLVE");
-                break;
-            case 10: // EVENT_TYPE_COUNT
-                System.out.println("\n [n] Notification: EVENT_TYPE_COUNT");
-                break;
-            case -1: // NO_FEATURE_ID or NO_INDEX
-                System.out.println("\n [n] Notification: NO_FEATURE_ID");
-                break;
-            default: // Unexpected type
-                break;
-
         }
     }
 
     private void removeFromCache(EObject modelElement, EStructuralFeature modelFeature ) {
-        Iterator itr = null;
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
 
         // find any properyAccesses (make a list of contraints) and delete them
-        itr = constraintPropertyAccess.iterator();
-        while (itr.hasNext()){
+        for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
             ConstraintPropertyAccess cpa = (ConstraintPropertyAccess) itr.next();
             if( ( cpa.getModelElement() == modelElement )
                     && cpa.getPropertyName().equals(modelFeature.getName()) ){
@@ -190,11 +159,10 @@ public class ConstraintExecutionCache {
 
         // Using the list of constraintsTobe invalidated remove constraint trace/unsatisfied based on model & constraint matches
         System.out.println("\nClear Constraint Trace/Unsatisfied where Model & Constraint match removed constraintPropertyAccesses");
-        for(ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
+        for (ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
             // find any constraintTraceItems and delete them
-            itr = constraintTraceItems.iterator();
-            while (itr.hasNext()) {
-                ConstraintTraceItem ctitem = (ConstraintTraceItem) itr.next();
+        	for (Iterator<ConstraintTraceItem> itr = constraintTraceItems.iterator(); itr.hasNext(); ) {
+                ConstraintTraceItem ctitem = itr.next();
                 if (ctitem.getInstance() == invalidcpa.getModelElement()
                         && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint()) { // need to resolve "feature" for each result
                     System.out.println("  - Notification: ConstraintTraceItem Removed "
@@ -206,9 +174,8 @@ public class ConstraintExecutionCache {
             }
 
             // find any unstatisfiedConstraints and delete them
-            itr = unsatisfiedConstraints.iterator();
-            while (itr.hasNext()) {
-                UnsatisfiedConstraint uc = (UnsatisfiedConstraint) itr.next();
+            for (Iterator<UnsatisfiedConstraint> itr = unsatisfiedConstraints.iterator(); itr.hasNext(); ) {
+                UnsatisfiedConstraint uc = itr.next();
                 if (uc.getInstance() == invalidcpa.getModelElement()
                         && uc.getConstraint() == invalidcpa.getExecution().getConstraint() ) {
                     System.out.println("  - Notification: UnsatisfiedConstraints Removed "
@@ -225,13 +192,11 @@ public class ConstraintExecutionCache {
     private void removeFromCache(EObject modelElement) {
         System.out.println("\nremoveFromCache: " + modelElement.hashCode() + " " + modelElement);
 
-        Iterator itr = null;
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
 
         // find any properyAccesses (make a list of contraints) and delete them
-        itr = constraintPropertyAccess.iterator();
-        while (itr.hasNext()){
-            ConstraintPropertyAccess cpa = (ConstraintPropertyAccess) itr.next();
+        for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
+            ConstraintPropertyAccess cpa = itr.next();
             if( cpa.getModelElement() == modelElement ) {
                 System.out.println("  - Notification: ConstraintPropertyAccess Removed "
                         + cpa.getModelElement().hashCode() + " == " + modelElement.hashCode()
@@ -243,10 +208,9 @@ public class ConstraintExecutionCache {
 
         // Using the list of constraintsTobe invalidated remove constraint trace/unsatisfied based on model & constraint matches
         System.out.println("\nClear Constraint Trace/Unsatisfied where Model & Constraint match removed constraintPropertyAccesses");
-        for(ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
+        for (ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
             // find any constraintTraceItems and delete them
-            itr = constraintTraceItems.iterator();
-            while (itr.hasNext()) {
+            for (Iterator<ConstraintTraceItem> itr = constraintTraceItems.iterator(); itr.hasNext(); ) {
                 ConstraintTraceItem ctitem = (ConstraintTraceItem) itr.next();
                 if (ctitem.getInstance() == invalidcpa.getModelElement()
                         && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint()) { // need to resolve "feature" for each result
@@ -259,9 +223,8 @@ public class ConstraintExecutionCache {
             }
 
             // find any unstatisfiedConstraints and delete them
-            itr = unsatisfiedConstraints.iterator();
-            while (itr.hasNext()) {
-                UnsatisfiedConstraint uc = (UnsatisfiedConstraint) itr.next();
+            for (Iterator<UnsatisfiedConstraint> itr = unsatisfiedConstraints.iterator(); itr.hasNext(); ) {
+                UnsatisfiedConstraint uc = itr.next();
                 if (uc.getInstance() == invalidcpa.getModelElement()
                         && uc.getConstraint() == invalidcpa.getExecution().getConstraint() ) {
                     System.out.println("  - Notification: UnsatisfiedConstraints Removed "

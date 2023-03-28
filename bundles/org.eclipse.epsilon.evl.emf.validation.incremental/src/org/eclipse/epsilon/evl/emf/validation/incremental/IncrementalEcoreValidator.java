@@ -19,8 +19,7 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 
 public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 
-	private static MyLog MYLOG = MyLog.getMyLog();
-	public static Logger MYLOGGER = MYLOG.getMyLogger();
+	public static final Logger MYLOGGER = MyLog.getMyLogger();
 
 	private String constraintFilename = "ecore.evl";
 	public void setConstraintFile (String filename) {
@@ -56,8 +55,6 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 		Diagnostician diagnostician = new Diagnostician(EValidator.Registry.INSTANCE);
 		diagnostician.validate(ePackage);
 
-
-
 		EClass c2 = EcoreFactory.eINSTANCE.createEClass();
 		c2.setName("C2");
 		ePackage.getEClassifiers().add(c2);
@@ -75,12 +72,6 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 		System.out.println("resource adapter: " + resource.eAdapters());
 		IncrementalEvlValidatorAdapter adapter =  (IncrementalEvlValidatorAdapter) resource.eAdapters().get(0);
 		adapter.module.constraintExecutionCache.get().printExecutionCache();
-	}
-
-	private static void addElement(String name, EPackage ePackage) {
-		EClass temp = EcoreFactory.eINSTANCE.createEClass();
-		temp.setName(name);
-		ePackage.getEClassifiers().add(temp);
 	}
 
 	@Override

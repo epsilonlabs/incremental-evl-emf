@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -24,9 +23,6 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     private boolean REPORT = false;
     private boolean REPORTnotification = true;
     private int validationCount = 0;
-    private boolean validationHasRun = false; //Track that we have run one Validation
-
-    private Set<UnsatisfiedConstraint> unsatisfiedConstraints;
 
     protected IncrementalEvlModule module;
 
@@ -40,11 +36,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
     public void revalidate(ResourceSet resourceSet) throws Exception {
         MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
-
         validate(resourceSet);
-
         notifications.clear();
-
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {
@@ -105,8 +98,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         // -------- EXECUTION --------
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
         if(REPORT) {System.out.println( "\n ! EXECUTING !");}
-        unsatisfiedConstraints = module.execute();
-        validationHasRun = true; // Confirm at least one validation hasRun
+        module.execute();
 
         // -------- PROCESS RESULTS --------
 
@@ -150,15 +142,6 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             constraintExecutionCache.get().processModelNotification(notification);
             if(REPORT) {constraintExecutionCache.get().printExecutionCache();}
         }
-
-        EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
-
-        /*
-        MYLOGGER.log(MyLog.NOTIFICATION, "\n [!] notifyChanged(Notification notification) : " +
-                notification.getFeature().hashCode() + " " +
-                "\n notification for feature name: " + feature.getName() +
-                notification.getOldValue() + " to " + notification.getNewValue());
-        */
     }
 
     public IncrementalEvlValidator getValidator() {
