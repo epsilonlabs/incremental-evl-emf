@@ -1,16 +1,7 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.epsilon.evl.dom.Constraint;
-import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
-
-import org.eclipse.emf.common.notify.Notification;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 import java.util.stream.Collectors;
 

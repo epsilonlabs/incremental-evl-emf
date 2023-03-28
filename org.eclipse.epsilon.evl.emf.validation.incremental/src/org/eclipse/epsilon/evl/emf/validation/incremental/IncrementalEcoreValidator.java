@@ -1,6 +1,9 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.net.URISyntaxException;
+// Logging
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -13,13 +16,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
-
-import java.io.IOException;
-// Logging
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.Date;
-import java.util.logging.*;
 
 public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 
