@@ -1,0 +1,9 @@
+context NamedElement {
+  constraint HasName {
+    check: self.name.isDefined() 
+  }
+  constraint HasMoreThanOneLetter {
+    guard: self.satisfies('HasName')
+    check: self.name.length() > 1
+  }
+}

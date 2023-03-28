@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:f="http://eclipse.org/epsilon/incrementalEVL/flowcharts/1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
-  <viewpoint:DAnalysis uid="_jnheoM1-Ee2gd4mz-7swXA" selectedViews="_wzPSAM1-Ee2gd4mz-7swXA" version="15.0.0.202201261500">
+  <viewpoint:DAnalysis uid="_jnheoM1-Ee2gd4mz-7swXA" selectedViews="_wzPSAM1-Ee2gd4mz-7swXA" version="15.0.0.202209061200">
     <semanticResources>MyFlowcharts.flowcharts</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_wzPSAM1-Ee2gd4mz-7swXA">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_wzslAM1-Ee2gd4mz-7swXA" name="Flowchart Diagram" repPath="#_wzcGUM1-Ee2gd4mz-7swXA" changeId="11c15da1-bf4b-45bc-b576-7adf396f93e7">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_wzslAM1-Ee2gd4mz-7swXA" name="Flowchart Diagram" repPath="#_wzcGUM1-Ee2gd4mz-7swXA" changeId="dab1f831-1300-44a4-95c8-19d9e0a500a2">
         <description xmi:type="description_1:DiagramDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']"/>
         <target xmi:type="f:Flowchart" href="MyFlowcharts.flowcharts#/"/>
       </ownedRepresentationDescriptors>
@@ -224,7 +224,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_1GTF0M2CEe2GhoLv98avlg" name="Option A" outgoingEdges="_CcsfNM2DEe2GhoLv98avlg" incomingEdges="_AgKhGM2DEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_1GTF0M2CEe2GhoLv98avlg" outgoingEdges="_CcsfNM2DEe2GhoLv98avlg" incomingEdges="_AgKhGM2DEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.4"/>
       <semanticElements xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.4"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -235,7 +235,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_3kb8MM2CEe2GhoLv98avlg" name="Option B" outgoingEdges="_DBYgsM2DEe2GhoLv98avlg" incomingEdges="_BCAC1M2DEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_3kb8MM2CEe2GhoLv98avlg" name="abcd" outgoingEdges="_DBYgsM2DEe2GhoLv98avlg" incomingEdges="_BCAC1M2DEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.5"/>
       <semanticElements xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.5"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
