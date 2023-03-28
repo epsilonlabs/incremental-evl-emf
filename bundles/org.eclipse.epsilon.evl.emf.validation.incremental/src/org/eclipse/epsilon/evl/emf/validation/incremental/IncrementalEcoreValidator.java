@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 
 public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 
-	public static final Logger MYLOGGER = MyLog.getMyLogger();
+	public static final Logger MYLOGGER = Logger.getLogger(IncrementalEcoreValidator.class.getName());
 
 	private String constraintFilename = "ecore.evl";
 	public void setConstraintFile (String filename) {

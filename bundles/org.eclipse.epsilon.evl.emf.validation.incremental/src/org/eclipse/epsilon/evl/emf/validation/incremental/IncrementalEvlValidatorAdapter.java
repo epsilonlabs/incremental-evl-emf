@@ -26,6 +26,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
     protected IncrementalEvlModule module;
 
+    public IncrementalEvlModule getModule() {
+    	return module;
+    }
+
     protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
     protected IncrementalEvlValidator validator = null;
     protected List<Notification> notifications = new ArrayList<>();
@@ -118,29 +122,32 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     @Override
     public void notifyChanged(Notification notification) {
         super.notifyChanged(notification);
-        notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
-        EObject modelElement = (EObject) notification.getNotifier();
-        EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
-        if(REPORTnotification) {
 
-            System.out.println("\n[MODEL CHANGE NOTIFICATION]  " + " Type:" + notification.getEventType()
-                    + "\n " + notification);
+        if (notification.getNotifier() instanceof EObject) {
+            notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
+            EObject modelElement = (EObject) notification.getNotifier();
+            EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
+            if(REPORTnotification) {
 
-            if(notification.getEventType() != 8){
-                // Type 8 removes the adapter and produces NULL conditions
-                    System.out.println(" element: " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
-                    + "\n feature: " + modelFeature.getName()
-                    + "\n was: " + notification.getOldValue()
-                    + "\n now: " + notification.getNewValue()
-                    + "\n");
+                System.out.println("\n[MODEL CHANGE NOTIFICATION]  " + " Type:" + notification.getEventType()
+                        + "\n " + notification);
+
+                if(notification.getEventType() != 8){
+                    // Type 8 removes the adapter and produces NULL conditions
+                        System.out.println(" element: " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
+                        + "\n feature: " + modelFeature.getName()
+                        + "\n was: " + notification.getOldValue()
+                        + "\n now: " + notification.getNewValue()
+                        + "\n");
+                }
+
             }
 
-        }
-
-        // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
-        if(constraintExecutionCache.isPresent()){
-            constraintExecutionCache.get().processModelNotification(notification);
-            if(REPORT) {constraintExecutionCache.get().printExecutionCache();}
+            // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
+            if(constraintExecutionCache.isPresent()){
+                constraintExecutionCache.get().processModelNotification(notification);
+                if(REPORT) {constraintExecutionCache.get().printExecutionCache();}
+            }
         }
     }
 

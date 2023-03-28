@@ -39,7 +39,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 		}
 	}
 	
-	public boolean validateImpl(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) throws Exception {
+	private boolean validateImpl(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) throws Exception {
 		MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidator.validateImpl() called\n");
 		// Get hold of the resource set of the eObject
 		// We only want to validate each resource set once in batch mode
@@ -76,10 +76,9 @@ public abstract class IncrementalEvlValidator implements EValidator {
 				filter(a -> a instanceof IncrementalEvlValidatorAdapter && ((IncrementalEvlValidatorAdapter) a).getValidator() == this).
 				findFirst().orElse(null);
 	}
-	
+
 	@Override
-	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics,
-			Map<Object, Object> context) { return false; }
+	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) { return false; }
 	
 	@Override
 	public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) { return false; }
