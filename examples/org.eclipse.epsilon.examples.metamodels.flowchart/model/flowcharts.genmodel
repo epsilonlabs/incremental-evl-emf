@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.epsilon.examples.metamodels.flowchart/src"
+    modelPluginID="org.eclipse.epsilon.examples.metamodels.flowchart" modelName="Flowcharts"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>flowcharts.ecore</foreignModel>
+  <genPackages prefix="Flowcharts" disposableProviderFactory="true" ecorePackage="flowcharts.ecore#/">
+    <genClasses ecoreClass="flowcharts.ecore#//Flowchart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcharts.ecore#//Flowchart/nodes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcharts.ecore#//Flowchart/edges"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="flowcharts.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flowcharts.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="flowcharts.ecore#//Node">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcharts.ecore#//Node/out"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcharts.ecore#//Node/in"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcharts.ecore#//Edge">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcharts.ecore#//Edge/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcharts.ecore#//Edge/target"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcharts.ecore#//Start"/>
+    <genClasses ecoreClass="flowcharts.ecore#//Action"/>
+    <genClasses ecoreClass="flowcharts.ecore#//Decision"/>
+    <genClasses ecoreClass="flowcharts.ecore#//End"/>
+  </genPackages>
+</genmodel:GenModel>

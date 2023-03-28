@@ -1,0 +1,37 @@
+@namespace(uri="http://eclipse.org/epsilon/incrementalEVL/flowcharts/1.0", prefix="f")
+package flowcharts;
+
+class Flowchart {
+	val Node[*] nodes;
+	val Edge[*] edges;
+}
+
+abstract class NamedElement {
+	attr String name;
+}
+
+abstract class Node {
+	ref Edge[*]#source out;
+	ref Edge[*]#target in;
+}
+
+class Edge extends NamedElement {
+	ref Node#out source;
+	ref Node#in target;
+}
+
+class Start extends Node {
+	
+}
+
+class Action extends Node, NamedElement {
+	
+}
+
+class Decision extends Node, NamedElement {
+	
+}
+
+class End extends Node {
+	
+}
