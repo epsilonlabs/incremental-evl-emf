@@ -56,6 +56,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 
 			if (adapter.mustRevalidate(resourceSet)) {
 				adapter.revalidate(resourceSet);
+				return adapter.getModule().getContext().getUnsatisfiedConstraints().isEmpty();
 			}
 			
 		}
@@ -66,9 +67,10 @@ public abstract class IncrementalEvlValidator implements EValidator {
 			adapter.validate(resourceSet);
 
 			MYLOGGER.log(MyLog.FLOW,"\n [!] Added adapter : hashCode" + adapter.hashCode());
+			return adapter.getModule().getContext().getUnsatisfiedConstraints().isEmpty();
 		}
 		
-		return false;
+		return true;
 	}
 	
 	public IncrementalEvlValidatorAdapter getIncrementalEvlValidatorAdapter(ResourceSet resourceSet) {
