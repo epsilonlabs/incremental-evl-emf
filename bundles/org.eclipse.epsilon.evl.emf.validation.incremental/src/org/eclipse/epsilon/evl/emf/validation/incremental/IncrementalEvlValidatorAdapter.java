@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -20,7 +22,11 @@ import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
-    private boolean REPORT = false;
+	private static final Logger logger = Logger.getLogger(IncrementalEvlValidatorAdapter.class.getName());
+	
+//    private boolean REPORT = false;
+    private boolean REPORTstate = true;
+    private boolean REPORTactivities = false;
     private boolean REPORTnotification = true;
     private int validationCount = 0;
 
@@ -38,30 +44,36 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         this.validator = validator;
     }
 
-    public void revalidate(ResourceSet resourceSet) throws Exception {
-        MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
+    public void revalidate(ResourceSet resourceSet) throws Exception {  
+    	logger.entering(getClass().getName(),"revalidating: " + resourceSet.toString());
+    	
+    	logger.log(Level.INFO,"\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
+        //MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
         validate(resourceSet);
         notifications.clear();
+        
+        logger.exiting(getClass().getName(), "revalidate complete " + resourceSet.toString());
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {
         validationCount++;
-        System.out.println("\n ** RUNNING VALIDATION " + validationCount + " **");
-
-        MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
+        //System.out.println("\n ** RUNNING VALIDATION " + validationCount + " **");
+        
+        if(REPORTactivities) {logger.log(Level.INFO, "\n [!] IncrementalEvlValidatorAdapter.validate() called\n");}
 
         // Make an in memory version of the Model (root element) for testing
         InMemoryEmfModel model = new InMemoryEmfModel(resourceSet.getResources().get(0));
         model.setConcurrent(true);
 
-        MYLOGGER.log(MyLog.STATE, "Model name : '" + model.getName() + "' hashCode: " + model.hashCode());
+        
         // Console output
-        if (REPORT) {
-            System.out.println("\nModel elements :");
+        if (REPORTstate) {
+        	String log = "\nModel name: '" + model.getName() + "' hashCode: " + model.hashCode() + "\nModel elements: ";
             Collection<EObject> elements = model.allContents();
             for (EObject e : elements) {
-                System.out.println("hashCode: " + e.hashCode() + " object: " + e.toString());
+                log = log.concat("\nhashCode: " + e.hashCode() + " object: " + e.toString());
             }
+            logger.log(Level.INFO, log);
         }
 
 
@@ -86,22 +98,24 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         module.getContext().getModelRepository().addModel(model);
 
         // Console output
-        if (REPORT) {
-            System.out.println("\nConstraints to Execute : ");
+        if (REPORTstate) {
+        	String log = "\nConstraints to Execute: ";
             List<Constraint> constraintsToExecute = module.getConstraints();
             int i = 0;
             for (Constraint c : constraintsToExecute) {
                 i++;
-                System.out.println(i + ", " + c.getName() + " " + c.hashCode());
+                log = log.concat("\n" + i + ", " + c.getName() + " " + c.hashCode());
             }
+            logger.log(Level.INFO, log);
         }
 
-        MYLOGGER.log(MyLog.FLOW, "\n [!] ...Executing validation...\n");
+        
 
 
         // -------- EXECUTION --------
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
-        if(REPORT) {System.out.println( "\n ! EXECUTING !");}
+        
+        if(REPORTactivities) {logger.log(Level.INFO, "\n [!] ...Executing validation...\n");}
         module.execute();
 
         // -------- PROCESS RESULTS --------
@@ -110,13 +124,11 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // Pass module to ExecutionCache constructor and make a NEW one to replace the existing one
         // Constructor extracts = (Constraint)PropertyAccess & ContraintTrace & UnsatisfiedConstraints
-        if(REPORT) {System.out.println("\n [i] Adapter constraintExecutionCache created");}
+        if(REPORTactivities) {logger.log(Level.INFO,"\n [i] Adapter constraintExecutionCache created");}
         constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module));
 
         // Console output
-        if (REPORT) {
-            printModuleState();
-        }
+        if(REPORTstate) {logger.log(Level.INFO, modelStateToString());}
     }
 
     @Override
@@ -128,25 +140,27 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             EObject modelElement = (EObject) notification.getNotifier();
             EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
             if(REPORTnotification) {
-
-                System.out.println("\n[MODEL CHANGE NOTIFICATION]  " + " Type:" + notification.getEventType()
+            	String notificationText = ("\n[MODEL CHANGE NOTIFICATION]  " 
+            			+ " Type:" + notification.getEventType()
                         + "\n " + notification);
-
+                        
+                
                 if(notification.getEventType() != 8){
                     // Type 8 removes the adapter and produces NULL conditions
-                        System.out.println(" element: " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
+                        notificationText = notificationText.concat(
+                        " element: " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
                         + "\n feature: " + modelFeature.getName()
                         + "\n was: " + notification.getOldValue()
                         + "\n now: " + notification.getNewValue()
                         + "\n");
                 }
-
+                logger.log(Level.INFO, notificationText);
             }
 
             // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
             if(constraintExecutionCache.isPresent()){
                 constraintExecutionCache.get().processModelNotification(notification);
-                if(REPORT) {constraintExecutionCache.get().printExecutionCache();}
+                if(REPORTstate) {constraintExecutionCache.get().printExecutionCache();}
             }
         }
     }
@@ -159,40 +173,44 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         return !notifications.isEmpty();
     }
 
-    public void printModuleState () {
-        System.out.println("\n == Module results ==");
-        System.out.println("UnsatisfiedConstraints: " + module.getContext().getUnsatisfiedConstraints().size()) ;
+    public String modelStateToString () {
+    	String stateString = "\n == Module results ==";
+    	
+    	stateString = stateString.concat("\nUnsatisfiedConstraints: " + module.getContext().getUnsatisfiedConstraints().size()) ;
 
         int i = 0;
-        System.out.println("\nConstrainPropertyAccess list: ");
+        stateString = stateString.concat("\nConstrainPropertyAccess list: ");
         for (ConstraintPropertyAccess cpa : module.getTrace().propertyAccesses) {
             i++;
-            System.out.print(i + ", ");
-
-            System.out.print("Constraint: " + cpa.execution.constraint.getName() + " " + cpa.execution.constraint.hashCode());
-            System.out.println(" | Model hashcode: " + cpa.getModelElement().hashCode());
+            stateString = stateString.concat("\n" + i 
+            		+ ", Constraint: " + cpa.execution.constraint.getName() + " " + cpa.execution.constraint.hashCode()
+            		+ " | Model hashcode: " + cpa.getModelElement().hashCode() );            
         }
 
         i = 0;
-        System.out.println("\nConstraintTrace list: ");
+        stateString = stateString.concat("\nConstraintTrace list: ");
         for (ConstraintTraceItem item : module.getContext().getConstraintTrace()) {
             i++;
-            System.out.println(i + ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
+            stateString = stateString.concat("\n" + i 
+            		+ ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
                     + " | Model hashcode: " + item.getInstance().hashCode()
                     + " | Result : " + item.getResult()
             );
         }
 
         i = 0;
-        System.out.println("\nUnsatisfiedConstraint list: ");
+        stateString = stateString.concat("\nUnsatisfiedConstraint list: ");
         for (UnsatisfiedConstraint uc : module.getContext().getUnsatisfiedConstraints()) {
             i++;
-            System.out.println(i + ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() +
-                    " | Model hashcode: " + uc.getInstance().hashCode()
+            stateString = stateString.concat("\n" + i 
+            		+ ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() 
+            		+ " | Model hashcode: " + uc.getInstance().hashCode()
             );
         }
 
-        System.out.println("\n ====================\n");
+        stateString = stateString.concat("\n ====================\n");
+        
+        return stateString;
     }
 
 }
