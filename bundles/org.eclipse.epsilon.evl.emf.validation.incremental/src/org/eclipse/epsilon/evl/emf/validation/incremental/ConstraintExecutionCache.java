@@ -30,8 +30,7 @@ public class ConstraintExecutionCache {
         this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
 
         if (REPORT){
-            System.out.println("Setting up Execution Cache");
-            printExecutionCache();
+            System.out.println("Setting up Execution Cache" + executionCacheToString());
         }
     }
 
@@ -239,47 +238,51 @@ public class ConstraintExecutionCache {
     }
 
 
-    public void printExecutionCache () {
+    public String executionCacheToString () {
         // Dump the lists to the Console for inspection
-        System.out.println(" == Execution Cache state ==");
-        System.out.println("ContraintTraceItems: " + constraintTraceItems.size());
-        System.out.println("UnsatisfiedConstraints: " + unsatisfiedConstraints.size()) ;
-        System.out.println("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size()) ;
+    	String exeCacheString = "\n== Execution Cache state ==";
+    	
+    	exeCacheString = exeCacheString.concat("\n ContraintTraceItems: " + constraintTraceItems.size());
+    	exeCacheString = exeCacheString.concat("\n UnsatisfiedConstraints: " + unsatisfiedConstraints.size()) ;
+    	exeCacheString = exeCacheString.concat("\n ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size()) ;
 
         int i = 0;
 
         i = 0;
-        System.out.println("\nConstraintTrace list: ");
+        exeCacheString = exeCacheString.concat("\nConstraintTrace list: ");
         for (ConstraintTraceItem item : constraintTraceItems) {
             i++;
-            System.out.println(i + ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
+            exeCacheString = exeCacheString.concat("\n  " + i 
+            		+ ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
                     + " | Model hashcode: " + item.getInstance().hashCode()
                     + " | Result : " + item.getResult()
             );
         }
 
         i = 0;
-        System.out.println("\nUnsatisfiedConstraint list: ");
+        exeCacheString = exeCacheString.concat("\nUnsatisfiedConstraint list: ");
         for (UnsatisfiedConstraint uc : unsatisfiedConstraints) {
             i++;
-            System.out.println(i + ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() +
-                    " | Model hashcode: " + uc.getInstance().hashCode()
+            exeCacheString = exeCacheString.concat("\n  " + i 
+            		+ ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() 
+            		+ " | Model hashcode: " + uc.getInstance().hashCode()
             );
         }
 
         i = 0;
-        System.out.println("\n[Trace] (Constraint)PropertyAccess list: ");
+        exeCacheString = exeCacheString.concat("\n[Trace] (Constraint)PropertyAccess list: ");
 
 
         for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
             i++;
-            System.out.print(i + ", ");
-
-            System.out.print("Constraint: " + cpa.execution.constraint.getName());
-            System.out.println(" | Model hashcode: " + cpa.getModelElement().hashCode());
+            exeCacheString = exeCacheString.concat("\n  " + i 
+            		+ ", Constraint: " + cpa.execution.constraint.getName()
+            		+ " | Model hashcode: " + cpa.getModelElement().hashCode());
         }
 
-        System.out.println("\n ====================\n");
+        //exeCacheString = exeCacheString.concat("\n ====================\n");
+        
+        return exeCacheString;
     }
 
 }

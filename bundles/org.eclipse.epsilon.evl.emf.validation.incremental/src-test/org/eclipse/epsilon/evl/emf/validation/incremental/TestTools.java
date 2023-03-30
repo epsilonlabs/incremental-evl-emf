@@ -65,7 +65,7 @@ public class TestTools {
 
     public static void showExecutionCache (EObject ePackage) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        adapter.constraintExecutionCache.get().printExecutionCache();
+        adapter.constraintExecutionCache.get().executionCacheToString();
     }
 
     public static List<String> getPackageNamesInConstraintTrace(EPackage ePackage) {
