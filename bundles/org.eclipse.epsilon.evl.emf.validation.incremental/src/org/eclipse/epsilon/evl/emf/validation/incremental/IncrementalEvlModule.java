@@ -2,6 +2,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epsilon.common.module.ModuleElement;
@@ -18,7 +19,9 @@ import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
 
 public class IncrementalEvlModule extends EvlModule {
-    private static boolean REPORT = false;
+	private static final Logger logger = Logger.getLogger(IncrementalEvlModule.class.getName());
+    private static boolean REPORTstate = true;
+    private static boolean REPORTactivity = true;
 
     protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
 
@@ -26,13 +29,11 @@ public class IncrementalEvlModule extends EvlModule {
     protected IncrementalEvlTrace trace = new IncrementalEvlTrace();
 
     public IncrementalEvlModule() {
-        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEvlModel constructor");
-        if (REPORT) { System.out.println("\n -- Module init --"); }
+        if (REPORTactivity) { logger.log(Level.INFO,"\n -- IncrementalEVLModule started without constraintExecutionCache --"); }
     }
 
-    public IncrementalEvlModule(Optional <ConstraintExecutionCache> constraintExecutionCache) {
-        MYLOGGER.log(MyLog.FLOW, " [i] IncrementalEclModel constructor -- with the constraintExecutionCache");
-        if(REPORT){System.out.println("\n -- Module init with 'constraintExecutionCache' -- ");}
+    public IncrementalEvlModule(Optional <ConstraintExecutionCache> constraintExecutionCache) {        
+        if(REPORTactivity){logger.log(Level.INFO,"\n -- IncrementalEVLModule started with constraintExecutionCache -- ");}
         this.constraintExecutionCache = constraintExecutionCache;
 
         // Transfer prior propertyAccesses from the constraintExecutionCache into this modules trace.
@@ -54,43 +55,38 @@ public class IncrementalEvlModule extends EvlModule {
                     Optional<UnsatisfiedConstraint> Result; // The Result of executing the Constraint.
 
                     // We could check here if the last execution -- return the result of the last execution instead of executing the constraint test
-                    // Notifications REMOVE PropertyAccesses from the LastTrace. (Elements with no access get tested)
+                    // Notifications REMOVE PropertyAccesses from the LastTrace. (Elements with no property accesses get tested)
 
-                    // the "lastModule" in this section needs to be change to ask the ExecutionCache if there are any useable results from a prior execution
+                    // The ExecutionCache is searched for any useable results from a prior execution
                     // This should backfill the module "propertyAccess (trace) with the pa in the Execution Cache
+                    // Then if nothing is found in the ExecutionCache a validation test is performed
 
                     if(constraintExecutionCache.isPresent()) {
-                        if(REPORT) {
-                            System.out.println("\nSearching constraintExecutionCache ConstraintTrace : "
-                                    + self.hashCode() + " & " + this.getName());
-                        }
+                    	
+                        if(REPORTactivity) {logger.log(Level.INFO,"Searching constraintExecutionCache ConstraintTrace: " + self.hashCode() + " & " + this.getName());}
+                        
                         ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCachedConstraintTrace(self,this );
                         if (null != ctitem) {
                             getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(), ctitem.getResult()); // Back-fill for bypass
                             if(ctitem.getResult()) {
-                                if(REPORT) {System.out.println("Result = PASS (TRUE) - [EMPTY] ");}
+                                if(REPORTstate) {logger.log(Level.INFO,"Cached Result = PASS (TRUE) - [EMPTY] ");}
                                 return Optional.empty();
                             } else {
-                                UnsatisfiedConstraint uc = constraintExecutionCache.get().getCachedUnsatisfiedConstraint(self,this);
+                            	UnsatisfiedConstraint uc = constraintExecutionCache.get().getCachedUnsatisfiedConstraint(self,this);
+                            	if(REPORTstate) {logger.log(Level.INFO,"Cached Result = FAIL (FALSE) - " + uc.getMessage());}                                
                                 getContext().getUnsatisfiedConstraints().add(uc);  // Back-fill for the bypass
                                 return Optional.of(uc);
                             }
                         }
                     }
-                    else {
-                        if(REPORT) {System.out.println(" [!] No constraintExecutionCache ");}
-                    }
-
-                    if(REPORT){System.out.println(" Need for Validation: " + self.hashCode() + " & " + this.getName());}
+                    // else { if(REPORTstate) {logger.log(Level.INFO,"No constraintExecutionCache "); } }
+                    if(REPORTactivity){logger.log(Level.INFO,"Need for Validation: " + self.hashCode() + " & " + this.getName());}
 
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
                     Result = super.execute(context_, self);
 
-                    // Just some Logging
-                    //MYLOGGER.log(MyLog.EXPLORE, " [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
-                    //System.out.println(" [exec] model: " + ((EClass) self).getName() + " | constraint: " + this.getName() + " | Result: " + Result);
-                    //System.out.println("model: " + ((EClass) self).hashCode() + " | constraint: " + this.hashCode() + " | Result: " + Result);
+                    if(REPORTstate) {logger.log(Level.INFO, "Validation test Result - " + Result);}
                     return Result;
                 }
 
