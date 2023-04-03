@@ -1,2 +1,2 @@
-/myLog_TEXTLOG.txt
-/myLog_XMLLOG.xml
+target/
+myLog_*
