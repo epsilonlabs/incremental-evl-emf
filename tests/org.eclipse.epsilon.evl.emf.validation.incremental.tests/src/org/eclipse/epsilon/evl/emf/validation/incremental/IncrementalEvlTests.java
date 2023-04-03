@@ -213,14 +213,14 @@ public class IncrementalEvlTests {
 
         ePackage1.getEClassifiers().clear();
         //TestTools.showExecutionCache(ePackage1);
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).containsExactly();
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1)).containsExactly();
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1)).containsExactly();
+        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).isEmpty();
+        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1)).isEmpty();
+        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1)).isEmpty();
         
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).containsExactly();
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1)).containsExactly();
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1)).containsExactly();
+        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).isEmpty();
+        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1)).isEmpty();
+        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1)).isEmpty();
     }
 
 
@@ -235,10 +235,13 @@ public class IncrementalEvlTests {
         assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1)).contains("C1","C2");
 
         // Move model elements about (swap C1 and C2 round) -- cache should clear C1 & C2
-        ePackage1.getEClassifiers().move(modelElement1.getClassifierID(),modelElement2.getClassifierID());
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).contains();
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1)).contains();
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1)).contains();
+        ePackage1.getEClassifiers().move(0, 1);
+
+        // TODO - add a constraint to ecore.evl which uses package.classifiers
+
+        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).isEmpty();
+        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1)).isEmpty();
+        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1)).isEmpty();
         
         diagnostician.validate(ePackage1);
         assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).contains("C1", "C1", "C1", "C2", "C2", "C2");

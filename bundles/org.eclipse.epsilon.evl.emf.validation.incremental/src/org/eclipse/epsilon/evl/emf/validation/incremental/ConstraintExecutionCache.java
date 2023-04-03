@@ -5,12 +5,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
@@ -78,78 +77,23 @@ public class ConstraintExecutionCache {
         // IF a model element changes we need to remove all the cached results.
         int notificationType = notification.getEventType();
         EObject modelElement = (EObject) notification.getNotifier();
-        EStructuralFeature modelFeature = (EStructuralFeature)notification.getFeature();
-
-        // TODO: can we just get away with removeFromCache(modelElement, modelFeature);
-        //
-        // Anything that doesn't work with it should have a test case.
+        EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
 
         switch (notificationType) {
-            case Notification.UNSET:
-            case Notification.SET: // SET
-                if(REPORTactivity) logger.log(Level.INFO," Process Notification: UNSET/SET");
-                removeFromCache(modelElement, modelFeature);
-                break;
-            case Notification.ADD: // ADD
-                // newValue is the model Element being added
-            	if(REPORTactivity) logger.log(Level.INFO," Process Notification: ADD");
-                //removeFromCache(modelElement, modelFeature);
-                //removeFromCache((EObject) notification.getNewValue(), (EStructuralFeature) notification.getFeature());
-                
-            	removeFromCache((EObject) notification.getNewValue());
-            	/*
-                if (notification.getNewValue() instanceof EObject) {
-                    removeFromCache((EObject) notification.getNewValue());
-                }
-                */
-                break;
-            case Notification.REMOVE: // REMOVE -- the "wasValue" is the model element being removed.
-            	if(REPORTactivity) logger.log(Level.INFO," Process Notification: REMOVE");
-                // The notification is for the eClassifiers feature and the old value is the model element being removed.
-                // Removing here is better than on adapter remove, as we don't know what other adapters might be removed
-
-            	/*
-                removeFromCache(modelElement, modelFeature);
-                if (notification.getOldValue() instanceof EObject) {
-                    removeFromCache((EObject) notification.getOldValue());
-                }
-                */
-                removeFromCache((EObject) notification.getOldValue());
-
-                break;
-            case Notification.ADD_MANY: // ADD_MANY
-            	if(REPORTactivity) logger.log(Level.INFO," Process Notification: ADD_MANY");
-                // newValue contains an Array list of modelElements being added
-                for (EObject item : (Collection<EObject>) notification.getNewValue()) {
-                    removeFromCache(item);
-                }
-                break;
-            case Notification.REMOVE_MANY: // REMOVE_MANY
-            	if(REPORTactivity) logger.log(Level.INFO," Process Notification: REMOVE_MANY");
-                for (EObject item : (Collection<EObject>) notification.getOldValue()) {
-                    removeFromCache(item);
-                }
-                break;
-            case Notification.MOVE: // MOVE
-            	if(REPORTactivity) logger.log(Level.INFO," Process Notification: MOVE");
-                // When a MOVE occurs, two model elements swap places, remove both from the execution cache
-                EPackage ePackage = (EPackage) modelElement;
-                /*
-                System.out.println(notification.getNewValue().hashCode());
-                System.out.println("now @: "+notification.getPosition()
-                        + " " + ePackage.getEClassifiers().get(notification.getPosition()).getName()
-                        + " " + ePackage.getEClassifiers().get(notification.getPosition()).hashCode()
-                );
-                System.out.println("was @: " + notification.getOldValue()
-                        + " " + ePackage.getEClassifiers().get((int)notification.getOldValue()).getName()
-                        + " " + ePackage.getEClassifiers().get((int)notification.getOldValue()).hashCode()
-                );
-				*/
-                EModelElement modelElement1 = ePackage.getEClassifiers().get(notification.getPosition());
-                EModelElement modelElement2 = ePackage.getEClassifiers().get((int)notification.getOldValue());
-                removeFromCache(modelElement1);
-                removeFromCache(modelElement2);
-                break;
+        case Notification.UNSET:
+        case Notification.SET:
+        case Notification.REMOVE:
+        case Notification.REMOVE_MANY:
+        case Notification.ADD:
+        case Notification.ADD_MANY:
+        case Notification.MOVE:
+        	removeFromCache(modelElement, modelFeature);
+        	break;
+        case Notification.REMOVING_ADAPTER:
+        	if (notification.getOldValue() instanceof IncrementalEvlValidatorAdapter) {
+        		removeFromCache(modelElement);
+        	}
+        	break;
         }
     }
 
