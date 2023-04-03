@@ -1,6 +1,5 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import java.net.URISyntaxException;
 // Logging
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,17 +18,23 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 
 public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 
-	public static final Logger MYLOGGER = Logger.getLogger(IncrementalEcoreValidator.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(IncrementalEcoreValidator.class.getName());
 
-	private String constraintFilename = "ecore.evl";
-	public void setConstraintFile (String filename) {
-		this.constraintFilename = filename;
+	private java.net.URI constraintsURI;
+
+	public void setConstraintsURI(java.net.URI uri) {
+		this.constraintsURI = uri;
+	}
+
+	@Override
+	public java.net.URI getConstraintsURI() {
+		return constraintsURI;
 	}
 
 	public static final IncrementalEcoreValidator INSTANCE = new IncrementalEcoreValidator();
 
 	public static void main(String[] args) {
-		MYLOGGER.log(Level.FINEST, "working");
+		LOGGER.log(Level.FINEST, "working");
 
 		System.out.print("GO!!!\n\n\n");
 
@@ -74,15 +79,6 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 		
 		System.out.println(adapter.module.constraintExecutionCache.get().executionCacheToString());
 		
-	}
-
-	@Override
-	protected java.net.URI getConstraints() {
-		try {
-			return IncrementalEcoreValidator.class.getResource(constraintFilename).toURI();
-		} catch (URISyntaxException e) {
-			return null;
-		}
 	}
 
 }

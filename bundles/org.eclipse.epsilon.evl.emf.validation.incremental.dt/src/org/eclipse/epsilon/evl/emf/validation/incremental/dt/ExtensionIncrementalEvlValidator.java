@@ -36,7 +36,7 @@ public class ExtensionIncrementalEvlValidator extends EvlValidator {
 
 		validator = new IncrementalEvlValidator() {
 			@Override
-			protected URI getConstraints() {
+			public URI getConstraintsURI() {
 				return source;
 			}
 		};

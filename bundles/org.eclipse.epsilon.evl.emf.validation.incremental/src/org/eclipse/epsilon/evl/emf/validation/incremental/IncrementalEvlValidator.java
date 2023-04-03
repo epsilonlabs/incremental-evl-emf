@@ -2,6 +2,8 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
@@ -10,27 +12,26 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
-
 public abstract class IncrementalEvlValidator implements EValidator {
+
+	private static final Logger LOGGER = Logger.getLogger(IncrementalEcoreValidator.class.getName());
 	
-	private static final boolean REPORT = false;
-	
-	protected abstract URI getConstraints();
+	public abstract URI getConstraintsURI();
 	
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidator.validate() called\n");
 
 		try {
-			if(REPORT) {
-				System.out.println("\n\n--- IncrementalEvlValidator.validate()");
-				System.out.println("eClass: " + eClass);
-				System.out.println("eObject: " + eObject);		
-				System.out.println("diagnostic: "+ diagnostics); // return for the constraint check
-				System.out.println("Context (Map): "+ context);
-				System.out.println("---\n");
+			if (LOGGER.isLoggable(Level.FINE)) {
+				LOGGER.fine("\n [!] IncrementalEvlValidator.validate() called\n");
+				LOGGER.fine("\n\n--- IncrementalEvlValidator.validate()");
+				LOGGER.fine("eClass: " + eClass);
+				LOGGER.fine("eObject: " + eObject);		
+				LOGGER.fine("diagnostic: "+ diagnostics); // return for the constraint check
+				LOGGER.fine("Context (Map): "+ context);
+				LOGGER.fine("---\n");
 			}
+
 			return validateImpl(eClass, eObject, diagnostics, context);
 		}
 		catch (Exception e) {
@@ -40,7 +41,8 @@ public abstract class IncrementalEvlValidator implements EValidator {
 	}
 	
 	private boolean validateImpl(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) throws Exception {
-		MYLOGGER.log(MyLog.FLOW,"\n [!] IncrementalEvlValidator.validateImpl() called\n");
+		LOGGER.fine("\n [!] IncrementalEvlValidator.validateImpl() called\n");
+
 		// Get hold of the resource set of the eObject
 		// We only want to validate each resource set once in batch mode
 		// and then listen for changes to update validation results incrementally
@@ -52,7 +54,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 		// If it has such an adapter it means that the resource set has already
 		// been batch validated
 		if (adapter != null) {
-			MYLOGGER.log(MyLog.FLOW,"\n [!] Already has adapter : hashCode:" + adapter.hashCode());
+			LOGGER.fine("Already has adapter : hashCode: " + adapter.hashCode());
 
 			if (adapter.mustRevalidate(resourceSet)) {
 				adapter.revalidate(resourceSet);
@@ -66,7 +68,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 			resourceSet.eAdapters().add(adapter);
 			adapter.validate(resourceSet);
 
-			MYLOGGER.log(MyLog.FLOW,"\n [!] Added adapter : hashCode" + adapter.hashCode());
+			LOGGER.fine("Added adapter : hashCode" + adapter.hashCode());
 			return adapter.getModule().getContext().getUnsatisfiedConstraints().isEmpty();
 		}
 		

@@ -1,10 +1,20 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.*;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
@@ -13,11 +23,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.*;
-
-import static org.junit.Assert.*;
-import static org.assertj.core.api.Assertions.assertThat;
 //import static org.assertj.core.api.Assertions.*;
 
 public class IncrementalEvlTests {
@@ -55,9 +60,10 @@ public class IncrementalEvlTests {
         ePackage2 = EcoreFactory.eINSTANCE.createEPackage();
         ePackage2.setName("q");
         resource2.getContents().add(ePackage2);
-        
 
         validator = new IncrementalEcoreValidator();
+        validator.setConstraintsURI(new File("resources/ecore.evl").toURI());
+        
         EValidator.Registry.INSTANCE.put(EcorePackage.eINSTANCE, new EValidator.Descriptor() {
             public EValidator getEValidator() {
                 return validator;

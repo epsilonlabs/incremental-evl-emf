@@ -2,9 +2,9 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epsilon.common.module.ModuleElement;
 import org.eclipse.epsilon.common.parse.AST;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
@@ -16,11 +16,10 @@ import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
-import static org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEcoreValidator.MYLOGGER;
-
 public class IncrementalEvlModule extends EvlModule {
-	private static final Logger logger = Logger.getLogger(IncrementalEvlModule.class.getName());
-    private static boolean REPORTstate = true;
+	private static final Logger LOGGER = Logger.getLogger(IncrementalEvlModule.class.getName());
+
+	private static boolean REPORTstate = true;
     private static boolean REPORTactivity = true;
 
     protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
@@ -29,11 +28,11 @@ public class IncrementalEvlModule extends EvlModule {
     protected IncrementalEvlTrace trace = new IncrementalEvlTrace();
 
     public IncrementalEvlModule() {
-        if (REPORTactivity) { logger.log(Level.INFO,"\n -- IncrementalEVLModule started without constraintExecutionCache --"); }
+        LOGGER.fine("IncrementalEVLModule started without constraintExecutionCache");
     }
 
     public IncrementalEvlModule(Optional <ConstraintExecutionCache> constraintExecutionCache) {        
-        if(REPORTactivity){logger.log(Level.INFO,"\n -- IncrementalEVLModule started with constraintExecutionCache -- ");}
+        LOGGER.fine("IncrementalEVLModule started with constraintExecutionCache");
         this.constraintExecutionCache = constraintExecutionCache;
 
         // Transfer prior propertyAccesses from the constraintExecutionCache into this modules trace.
@@ -63,30 +62,30 @@ public class IncrementalEvlModule extends EvlModule {
 
                     if(constraintExecutionCache.isPresent()) {
                     	
-                        if(REPORTactivity) {logger.log(Level.INFO,"Searching constraintExecutionCache ConstraintTrace: " + self.hashCode() + " & " + this.getName());}
+                        if(REPORTactivity) {LOGGER.log(Level.INFO,"Searching constraintExecutionCache ConstraintTrace: " + self.hashCode() + " & " + this.getName());}
                         
                         ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCachedConstraintTrace(self,this );
                         if (null != ctitem) {
                             getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(), ctitem.getResult()); // Back-fill for bypass
                             if(ctitem.getResult()) {
-                                if(REPORTstate) {logger.log(Level.INFO,"Cached Result = PASS (TRUE) - [EMPTY] ");}
+                                if(REPORTstate) {LOGGER.log(Level.INFO,"Cached Result = PASS (TRUE) - [EMPTY] ");}
                                 return Optional.empty();
                             } else {
                             	UnsatisfiedConstraint uc = constraintExecutionCache.get().getCachedUnsatisfiedConstraint(self,this);
-                            	if(REPORTstate) {logger.log(Level.INFO,"Cached Result = FAIL (FALSE) - " + uc.getMessage());}                                
+                            	if(REPORTstate) {LOGGER.log(Level.INFO,"Cached Result = FAIL (FALSE) - " + uc.getMessage());}                                
                                 getContext().getUnsatisfiedConstraints().add(uc);  // Back-fill for the bypass
                                 return Optional.of(uc);
                             }
                         }
                     }
                     // else { if(REPORTstate) {logger.log(Level.INFO,"No constraintExecutionCache "); } }
-                    if(REPORTactivity){logger.log(Level.INFO,"Need for Validation: " + self.hashCode() + " & " + this.getName());}
+                    if(REPORTactivity){LOGGER.log(Level.INFO,"Need for Validation: " + self.hashCode() + " & " + this.getName());}
 
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
                     Result = super.execute(context_, self);
 
-                    if(REPORTstate) {logger.log(Level.INFO, "Validation test Result - " + Result);}
+                    if(REPORTstate) {LOGGER.log(Level.INFO, "Validation test Result - " + Result);}
                     return Result;
                 }
 
