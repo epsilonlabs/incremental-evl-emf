@@ -65,7 +65,8 @@ public class TestTools {
 
     public static void showExecutionCache (EObject ePackage) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        adapter.constraintExecutionCache.get().executionCacheToString();
+        String output = adapter.constraintExecutionCache.get().executionCacheToString();
+        System.out.println(output);
     }
 
     public static List<String> getPackageNamesInConstraintTrace(EPackage ePackage) {
@@ -78,6 +79,29 @@ public class TestTools {
         }
         return names;
     }
+    
+    public static List<String> getPackageNamesInPropertyAccesses(EPackage ePackage) {
+    	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+    	Collection <ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
+    	List<String> names = new ArrayList<>();
+    	for(ConstraintPropertyAccess propertyAccess : propertyAccesses) {
+    		EClass modelElement = (EClass) propertyAccess.getModelElement();
+    		names.add(modelElement.getName());
+    	}    	
+    	return names;
+    }
+    
+    public static List<String> getPackageNamesInUnsatisfiedConstraints(EPackage ePackage) {
+    	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+    	Collection <UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache.get().unsatisfiedConstraints; 
+    	List<String> names = new ArrayList<>();
+    	for(UnsatisfiedConstraint unsatisfiedConstraint : unsatisfiedConstraints) {
+    		EClass modelElement = (EClass) unsatisfiedConstraint.getInstance();
+    		names.add(modelElement.getName());
+    	}    	
+    	return names;
+    }
+    
 
     public static boolean checkExecutionCacheConstraintTraceItemsForModelElementName (EPackage ePackage, String name) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
