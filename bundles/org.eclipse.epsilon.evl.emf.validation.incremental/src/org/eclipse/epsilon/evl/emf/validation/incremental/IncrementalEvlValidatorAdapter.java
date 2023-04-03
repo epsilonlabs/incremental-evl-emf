@@ -135,6 +135,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     public void notifyChanged(Notification notification) {
         super.notifyChanged(notification);
 
+        // TODO: handle Resources that are notifiers (needs test with Type.all)
+
         if (notification.getNotifier() instanceof EObject) {
             notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
             EObject modelElement = (EObject) notification.getNotifier();

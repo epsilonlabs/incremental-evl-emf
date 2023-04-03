@@ -8,3 +8,11 @@ context flowcharts::NamedElement {
     check: self.name.length() > 1
   }
 }
+
+// TODO: generate a large model to highlight the performance differences
+
+// TODO: avoid loops
+
+// TODO: decisions must have >2 outgoing
+
+// TODO: print messages when you're doing validation (to highlight execution of constraints)

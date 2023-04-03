@@ -80,6 +80,10 @@ public class ConstraintExecutionCache {
         EObject modelElement = (EObject) notification.getNotifier();
         EStructuralFeature modelFeature = (EStructuralFeature)notification.getFeature();
 
+        // TODO: can we just get away with removeFromCache(modelElement, modelFeature);
+        //
+        // Anything that doesn't work with it should have a test case.
+
         switch (notificationType) {
             case Notification.UNSET:
             case Notification.SET: // SET
