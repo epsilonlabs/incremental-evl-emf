@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Epsilon Target Platform" sequenceNumber="1680529518">
+<target name="Epsilon Target Platform" sequenceNumber="1680539167">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -48,6 +48,7 @@
       <unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
       <unit id="org.antlr.runtime" version="3.5.2.v20200724-1452"/>
       <unit id="org.assertj" version="3.20.2.v20210706-1104"/>
+      <unit id="ch.qos.logback.slf4j" version="1.2.3.v20200428-2012"/>
       <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20211213173813/repository"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">

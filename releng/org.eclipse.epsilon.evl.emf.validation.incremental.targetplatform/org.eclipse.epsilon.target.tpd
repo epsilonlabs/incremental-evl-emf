@@ -45,6 +45,7 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202112131738
 	javax.xml.stream [1.0.1,1.0.2)
 	org.antlr.runtime [3.5.2.v20200724-1452,3.5.2.v20200724-1452]
 	org.assertj [3.20.2,3.21.0)
+	ch.qos.logback.slf4j [1.2.3,1.2.4)
 }
 
 location "https://download.eclipse.org/acceleo/updates/releases/3.7/" {
