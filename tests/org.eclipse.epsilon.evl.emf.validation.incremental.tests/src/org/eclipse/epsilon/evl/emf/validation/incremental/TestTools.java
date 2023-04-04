@@ -38,7 +38,18 @@ public class TestTools {
         return false;
     }
 
-
+    //
+    // Adapter Inspections
+    
+    public static String getStringOfNotifications(EPackage ePackage) {
+    	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+    	return adapter.getStringOfNotifications();    	
+    }
+    
+    public static void showAdapterNotifications(EPackage ePackage) {
+    	System.out.println(getStringOfNotifications(ePackage));
+    }
+    
     //
     // Execution Cache inspections
 

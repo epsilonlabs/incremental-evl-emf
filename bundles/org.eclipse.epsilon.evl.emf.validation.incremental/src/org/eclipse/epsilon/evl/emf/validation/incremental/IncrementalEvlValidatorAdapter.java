@@ -127,11 +127,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     @Override
     public void notifyChanged(Notification notification) {
         super.notifyChanged(notification);
-
+        notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
+        
         // TODO: handle Resources that are notifiers (needs test with Type.all)
-
-        if (notification.getNotifier() instanceof EObject) {
-            notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
+        if (notification.getNotifier() instanceof EObject) {            
             EObject modelElement = (EObject) notification.getNotifier();
             EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
             
@@ -207,6 +206,16 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         stateString = stateString.concat("\n ====================\n");
         
         return stateString;
+    }
+
+    public String getStringOfNotifications() {
+    	String stringOfNotifications = "\nAdapter has recieved " + notifications.size() + " notification(s): ";
+    	int i = 0;
+    	for(Notification notification : notifications) {
+    		i++;
+    		stringOfNotifications = stringOfNotifications.concat("\n" + i + ", " + notification.toString());
+    	}   	    	
+    	return stringOfNotifications;
     }
 
 }
