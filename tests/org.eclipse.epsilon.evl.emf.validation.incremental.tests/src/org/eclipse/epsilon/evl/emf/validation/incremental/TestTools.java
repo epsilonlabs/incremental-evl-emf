@@ -57,21 +57,6 @@ public class TestTools {
         System.out.println(output);
     }
     
-    public static int getExecutionCacheConstrainPropertyAccessSize(EPackage ePackage) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        return adapter.constraintExecutionCache.get().constraintPropertyAccess.size();
-    }
-
-    public static int getExecutionCacheConstraintTraceItemSize (EPackage ePackage) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        return adapter.constraintExecutionCache.get().constraintTraceItems.size();
-    }
-
-    public static int getExecutionCacheUnsatisfiedConstraintsSize (EPackage ePackage) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        return adapter.constraintExecutionCache.get().unsatisfiedConstraints.size();
-    }
-    
     public static List<Object> getModelObjectsFromExecutionCacheConstraintPropertyAccess (EPackage ePackage) {    	
     	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
     	Collection <ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
@@ -102,6 +87,22 @@ public class TestTools {
     	return modelObjects;
     }
     
+    
+    /*
+    public static int getExecutionCacheConstrainPropertyAccessSize(EPackage ePackage) {
+        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+        return adapter.constraintExecutionCache.get().constraintPropertyAccess.size();
+    }
+
+    public static int getExecutionCacheConstraintTraceItemSize (EPackage ePackage) {
+        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+        return adapter.constraintExecutionCache.get().constraintTraceItems.size();
+    }
+
+    public static int getExecutionCacheUnsatisfiedConstraintsSize (EPackage ePackage) {
+        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+        return adapter.constraintExecutionCache.get().unsatisfiedConstraints.size();
+    }
 
     public static List<String> getPackageNamesInPropertyAccesses(EPackage ePackage) {
     	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
@@ -172,5 +173,5 @@ public class TestTools {
         }
         return false;
     }
-
+     */
 }

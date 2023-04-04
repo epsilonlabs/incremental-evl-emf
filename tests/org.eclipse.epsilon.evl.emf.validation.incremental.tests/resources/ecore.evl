@@ -15,11 +15,10 @@ context EClass {
 	}
 }
 
-/*
+
 context EPackage {
      constraint NotEmpty {
          check: not self.eClassifiers.isEmpty()
          message: "Package should not be empty"
      }
 }
-*/

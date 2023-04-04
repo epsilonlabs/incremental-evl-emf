@@ -112,11 +112,11 @@ public class IncrementalEvlTests {
 
         modelElement1.setName("C2");
         //TestTools.showExecutionCache(ePackage1);
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
         	.isEmpty();
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintTrace(ePackage1))
         	.isEmpty();
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
         	.isEmpty();
         
         diagnostician.validate(ePackage1);
@@ -247,20 +247,20 @@ public class IncrementalEvlTests {
 
         ePackage1.getEClassifiers().clear();
         //TestTools.showExecutionCache(ePackage1);
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
         	.isEmpty();
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintTrace(ePackage1))
         	.isEmpty();
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
         	.isEmpty();
         
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1))
-        	.isEmpty();
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1))
-        	.isEmpty();
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1))
-        	.isEmpty();
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+	    	.isEmpty();
+	    assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    	.isEmpty();
+	    assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    	.isEmpty();
     }
 
 
@@ -282,11 +282,11 @@ public class IncrementalEvlTests {
 
         // TODO - add a constraint to ecore.evl which uses package.classifiers
 
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
         	.isEmpty();
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintTrace(ePackage1))
         	.isEmpty();
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1))
+        assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
         	.isEmpty();
         
         diagnostician.validate(ePackage1);
@@ -358,9 +358,11 @@ public class IncrementalEvlTests {
         diagnostician.validate(ePackage2);        
         //TestTools.showExecutionCache(ePackage2);
         assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage2))
-    		.contains(modelElement1,modelElement1,modelElement1, modelElement3,modelElement3,modelElement3,modelElement4,modelElement4,modelElement4);
+    		.contains(modelElement1,modelElement1,modelElement1, modelElement3,modelElement3,modelElement3,
+    				modelElement4,modelElement4,modelElement4);
         assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintTrace(ePackage2))
-    		.contains(modelElement1,modelElement1,modelElement1, modelElement3,modelElement3,modelElement3,modelElement4,modelElement4,modelElement4);
+    		.contains(modelElement1,modelElement1,modelElement1, modelElement3,modelElement3,modelElement3,
+    				modelElement4,modelElement4,modelElement4);
         assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage2))
     		.contains(modelElement1);
         
@@ -376,35 +378,44 @@ public class IncrementalEvlTests {
 
         diagnostician.validate(ePackage1);
         //TestTools.showExecutionCache(ePackage1);
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1))
-        	.contains("C0", "C0", "C0" );
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1))
-        	.contains("C0", "C0", "C0");
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1))
-        	.contains();
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+	    	.contains(modelElement1,modelElement1,modelElement1);
+	    assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    	.contains(modelElement1,modelElement1,modelElement1);
+	    assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    	.isEmpty();
 
         // Grow the model with some more elements
-        Collection<EClass> listOfModelElements = new ArrayList<EClass>();
+        List<EClass> listOfModelElements = new ArrayList<EClass>();
         for(int i=1; i<4;i++) {
             listOfModelElements.add(BuildTestModel.createNamedModelElement("C"+i));
         }
+        modelElement2 = listOfModelElements.get(0);
+        modelElement3 = listOfModelElements.get(1);
+        modelElement4 = listOfModelElements.get(2);
         
         // MODEL CHANGE
         ePackage1.getEClassifiers().addAll(listOfModelElements);
         //BuildTestModel.showEPackage(ePackage1);
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+	    	.contains(modelElement1,modelElement1,modelElement1);
+	    assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    	.contains(modelElement1,modelElement1,modelElement1);
+	    assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    	.isEmpty();
 
         diagnostician.validate(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
-        
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1))
-        	.contains("C0", "C0", "C0","C1", "C1", "C1", "C2", "C2", "C2", "C3", "C3", "C3");
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1))
-        	.contains("C0", "C0", "C0","C1", "C1", "C1", "C2", "C2", "C2", "C3", "C3", "C3");
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1))
-        	.contains("C1", "C2", "C3");
+        //TestTools.showExecutionCache(ePackage1);        
+        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+	    	.contains(modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2,
+	    			modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
+	    assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    	.contains(modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2,
+	    			modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
+	    assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    	.contains(modelElement2, modelElement3, modelElement4);
 
     }
-
 
     @Test
     public void createAndAddRemoveManyModelElements(){
