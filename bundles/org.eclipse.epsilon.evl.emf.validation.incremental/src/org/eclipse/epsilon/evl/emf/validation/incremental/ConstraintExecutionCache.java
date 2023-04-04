@@ -16,10 +16,12 @@ import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 public class ConstraintExecutionCache {
-	private static final Logger logger = Logger.getLogger(ConstraintExecutionCache.class.getName());
-	private boolean REPORT = false;
-	private boolean REPORTactivity = false;
-	private boolean REPORTstate = false;
+	private static final Logger LOGGER = Logger.getLogger(ConstraintExecutionCache.class.getName());
+	/*
+	 * Logging levels
+	 * 	- System activities finer
+	 *  - System states finest
+	 */	
 	
     // The Module.getContext() grants access to contraintTrace and UnsatisfiedConstraint, but you can't delete items from them; so we make our own lists in here to delete items from
     
@@ -33,7 +35,7 @@ public class ConstraintExecutionCache {
         this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
         this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
 
-        if (REPORTactivity){logger.log(Level.INFO,"Setting up Execution Cache" + executionCacheToString());}
+        LOGGER.finer("Setting up Execution Cache" + executionCacheToString());
     }
 
     public List <ConstraintPropertyAccess> getConstraintsPropertyAccessFor (EObject modelElement, EStructuralFeature modelFeature) {
@@ -48,28 +50,28 @@ public class ConstraintExecutionCache {
     }
 
     public ConstraintTraceItem checkCachedConstraintTrace (Object model, Constraint constraint) {
-    	if(REPORTactivity) {logger.log(Level.INFO,"Execution cache - checkCachedConstraintTrace - " + model.hashCode() + " " + constraint.getName());}
-    	if(REPORTstate) logger.log(Level.INFO,constraintTraceToString(constraintTraceItems));
+    	LOGGER.finer("Execution cache - checkCachedConstraintTrace - " + model.hashCode() + " " + constraint.getName());
+    	LOGGER.finest(constraintTraceToString(constraintTraceItems));
     	for (ConstraintTraceItem item : constraintTraceItems) {
             if (item.getInstance().equals(model) && item.getConstraint().equals(constraint)) {
-                if(REPORTactivity) {logger.log(Level.INFO,"Execution cache - MATCHED model & constraint - " + item.hashCode() + " " + constraint.getName());}
+                LOGGER.finer("Execution cache - MATCHED model & constraint - " + item.hashCode() + " " + constraint.getName());
                 return item;
             }
         }
-    	if(REPORTactivity) {logger.log(Level.INFO,"Execution cache - NO MATCHES");}
+    	LOGGER.finer("Execution cache - NO MATCHES");
         return null;
     }
 
     public UnsatisfiedConstraint getCachedUnsatisfiedConstraint (Object model, Constraint constraint) {
-    	if(REPORTactivity) {logger.log(Level.INFO,"Execution cache - getCachedUnsatisfiedConstraint - " + model.hashCode() + " " + constraint.getName());}
-    	if(REPORTstate) {logger.log(Level.INFO, unsatisfiedConstraintsToString(unsatisfiedConstraints));}
+    	LOGGER.finer("Execution cache - getCachedUnsatisfiedConstraint - " + model.hashCode() + " " + constraint.getName());
+    	LOGGER.finest(unsatisfiedConstraintsToString(unsatisfiedConstraints));
         for (UnsatisfiedConstraint unsatisfiedConstraint : unsatisfiedConstraints) {
             if ( unsatisfiedConstraint.getInstance().equals(model) && unsatisfiedConstraint.getConstraint().equals(constraint)  ) {
-            	if(REPORTactivity) {logger.log(Level.INFO, "Execution cache - MATCHED UC -  UC Result: " + unsatisfiedConstraint.getConstraint().getName());}
+            	LOGGER.finer("Execution cache - MATCHED UC -  UC Result: " + unsatisfiedConstraint.getConstraint().getName());
                 return unsatisfiedConstraint;
             }        
         }
-        if(REPORTactivity) {logger.log(Level.INFO, "Execution cache - NO MATCHES");}   
+		LOGGER.finer("Execution cache - NO MATCHES");   
         return null; // This should not happen if there is an entry on the trace.
     }
 
@@ -98,7 +100,7 @@ public class ConstraintExecutionCache {
     }
 
     private void removeFromCache(EObject modelElement, EStructuralFeature modelFeature ) {
-    	if(REPORTactivity) {logger.log(Level.INFO, "Try and remove model element " + modelElement.hashCode() + " with feature " + modelFeature.getName() + " from execution cache");}
+    	LOGGER.finer("Try and remove model element " + modelElement.hashCode() + " with feature " + modelFeature.getName() + " from execution cache");
     	
     	// Make a method which makes a list of constraints related to the model element and feature
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
@@ -108,7 +110,7 @@ public class ConstraintExecutionCache {
             if( ( cpa.getModelElement() == modelElement )
                     && 
                 ( cpa.getPropertyName().equals(modelFeature.getName()) ) ){
-                if(REPORTactivity) {logger.log(Level.INFO, "marked for clearing and removed " + cpa.toString());}
+            	LOGGER.finer("marked for clearing and removed " + cpa.toString());
                 constraintsToInvalidate.add(cpa);
                 itr.remove();
             }
@@ -119,7 +121,7 @@ public class ConstraintExecutionCache {
 
     private void removeFromCache(EObject modelElement) {
         //System.out.println("\nremoveFromCache: " + modelElement.hashCode() + " " + modelElement);
-        if(REPORTactivity) {logger.log(Level.INFO, "Try and remove model element " + modelElement.hashCode() + " with ANY feature from execution cache");}
+    	LOGGER.finer("Try and remove model element " + modelElement.hashCode() + " with ANY feature from execution cache");
 
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
 
@@ -127,7 +129,7 @@ public class ConstraintExecutionCache {
         for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
             ConstraintPropertyAccess cpa = itr.next();
             if( cpa.getModelElement() == modelElement ) {
-            	if(REPORTactivity) {logger.log(Level.INFO, "marked for clearing and removed " + cpa.toString());}
+            	LOGGER.finer("marked for clearing and removed " + cpa.toString());
             	constraintsToInvalidate.add(cpa);
             	itr.remove();
             }
@@ -137,7 +139,7 @@ public class ConstraintExecutionCache {
     }
     
     private void clearConstraintTracesAndUnsatisfiedConstraints(List <ConstraintPropertyAccess> constraintsToInvalidate) {
-        if(REPORTstate) {logger.log(Level.INFO,"List of constraintsToInvalidate: " + constraintsToInvalidate);}        
+    	LOGGER.finest("List of constraintsToInvalidate: " + constraintsToInvalidate);    
         
         // Using the list of constraints to invalidate, remove constraint trace/unsatisfied based on model & constraint matches       
         for (ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
@@ -147,7 +149,7 @@ public class ConstraintExecutionCache {
                 ConstraintTraceItem ctitem = itr.next();
                 if (ctitem.getInstance() == invalidcpa.getModelElement()
                         && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint()) { // need to resolve "feature" for each result
-                    if(REPORTactivity) {logger.log(Level.INFO, "Removed constraintTraceItem model hash " + ctitem.getInstance().hashCode() + " constraint " + ctitem.getConstraint().getName() );}               
+                	LOGGER.finer("Removed constraintTraceItem model hash " + ctitem.getInstance().hashCode() + " constraint " + ctitem.getConstraint().getName() );               
                     itr.remove();
                 }
             }
@@ -157,7 +159,7 @@ public class ConstraintExecutionCache {
                 UnsatisfiedConstraint uc = itr.next();
                 if (uc.getInstance() == invalidcpa.getModelElement()
                         && uc.getConstraint() == invalidcpa.getExecution().getConstraint() ) {
-                	if(REPORTactivity) {logger.log(Level.INFO, "Removed unsatisfiedConstraint model hash " + uc.getInstance().hashCode() + " constraint " + uc.getConstraint().getName() );}
+                	LOGGER.finer("Removed unsatisfiedConstraint model hash " + uc.getInstance().hashCode() + " constraint " + uc.getConstraint().getName() );
                     itr.remove();
                 }
 

@@ -22,14 +22,14 @@ public abstract class IncrementalEvlValidator implements EValidator {
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 
 		try {
-			if (LOGGER.isLoggable(Level.FINE)) {
-				LOGGER.fine("\n [!] IncrementalEvlValidator.validate() called\n");
-				LOGGER.fine("\n\n--- IncrementalEvlValidator.validate()");
-				LOGGER.fine("eClass: " + eClass);
-				LOGGER.fine("eObject: " + eObject);		
-				LOGGER.fine("diagnostic: "+ diagnostics); // return for the constraint check
-				LOGGER.fine("Context (Map): "+ context);
-				LOGGER.fine("---\n");
+			if (LOGGER.isLoggable(Level.FINEST)) {
+				String log = "\n [!] IncrementalEvlValidator.validate() called";
+				log = log.concat("\neClass: " + eClass);
+				log = log.concat("\neObject: " + eObject);		
+				log = log.concat("\ndiagnostic: "+ diagnostics); // return for the constraint check
+				log = log.concat("\nContext (Map): "+ context);
+				log = log.concat("\n---\n");
+				LOGGER.finest(log);
 			}
 
 			return validateImpl(eClass, eObject, diagnostics, context);
@@ -41,7 +41,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 	}
 	
 	private boolean validateImpl(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) throws Exception {
-		LOGGER.fine("\n [!] IncrementalEvlValidator.validateImpl() called\n");
+		LOGGER.finer("\n [!] IncrementalEvlValidator.validateImpl() called\n");
 
 		// Get hold of the resource set of the eObject
 		// We only want to validate each resource set once in batch mode
@@ -54,7 +54,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 		// If it has such an adapter it means that the resource set has already
 		// been batch validated
 		if (adapter != null) {
-			LOGGER.fine("Already has adapter : hashCode: " + adapter.hashCode());
+			LOGGER.finer("Already has adapter : hashCode: " + adapter.hashCode());
 
 			if (adapter.mustRevalidate(resourceSet)) {
 				adapter.revalidate(resourceSet);
@@ -68,7 +68,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 			resourceSet.eAdapters().add(adapter);
 			adapter.validate(resourceSet);
 
-			LOGGER.fine("Added adapter : hashCode" + adapter.hashCode());
+			LOGGER.finer("Added adapter : hashCode" + adapter.hashCode());
 			return adapter.getModule().getContext().getUnsatisfiedConstraints().isEmpty();
 		}
 		

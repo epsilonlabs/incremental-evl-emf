@@ -21,10 +21,12 @@ import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 	private static final Logger LOGGER = Logger.getLogger(IncrementalEvlValidatorAdapter.class.getName());
-	
-    private boolean REPORTstate = true;
-    private boolean REPORTactivities = false;
-    private boolean REPORTnotification = true;
+	/*
+	 * Logging levels
+	 * 	- System activities finer
+	 *  - System states finest
+	 *  - System notification finest
+	 */
 
     protected IncrementalEvlModule module;
 
@@ -43,7 +45,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     public void revalidate(ResourceSet resourceSet) throws Exception {  
     	LOGGER.entering(getClass().getName(),"revalidating: " + resourceSet.toString());
     	
-    	LOGGER.log(Level.INFO,"\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
+    	LOGGER.finer("\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
         //MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
         validate(resourceSet);
         notifications.clear();
@@ -52,20 +54,20 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {
-        if(REPORTactivities) {LOGGER.log(Level.INFO, "\n [!] IncrementalEvlValidatorAdapter.validate() called\n");}
+        LOGGER.finer("\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
 
         // Make an in memory version of the Model (root element) for testing
         InMemoryEmfModel model = new InMemoryEmfModel(resourceSet.getResources().get(0));
         model.setConcurrent(true);
         
         // Console output
-        if (REPORTstate) {
+        if(LOGGER.isLoggable(Level.FINEST)) {
         	String log = "\nModel name: '" + model.getName() + "' hashCode: " + model.hashCode() + "\nModel elements: ";
             Collection<EObject> elements = model.allContents();
             for (EObject e : elements) {
                 log = log.concat("\nhashCode: " + e.hashCode() + " object: " + e.toString());
             }
-            LOGGER.log(Level.INFO, log);
+            LOGGER.finest(log);
         }
 
         // Module for doing evaluations
@@ -89,7 +91,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         module.getContext().getModelRepository().addModel(model);
 
         // Console output
-        if (REPORTstate) {
+        if(LOGGER.isLoggable(Level.FINEST)) {
         	String log = "\nConstraints to Execute: ";
             List<Constraint> constraintsToExecute = module.getConstraints();
             int i = 0;
@@ -97,7 +99,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
                 i++;
                 log = log.concat("\n" + i + ", " + c.getName() + " " + c.hashCode());
             }
-            LOGGER.log(Level.INFO, log);
+            LOGGER.finest(log);
         }
 
         
@@ -106,7 +108,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         // -------- EXECUTION --------
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
         
-        if(REPORTactivities) {LOGGER.log(Level.INFO, "\n [!] ...Executing validation...\n");}
+        LOGGER.finer("\n [!] ...Executing validation...\n");
         module.execute();
 
         // -------- PROCESS RESULTS --------
@@ -115,11 +117,11 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // Pass module to ExecutionCache constructor and make a NEW one to replace the existing one
         // Constructor extracts = (Constraint)PropertyAccess & ContraintTrace & UnsatisfiedConstraints
-        if(REPORTactivities) {LOGGER.log(Level.INFO,"\n [i] Adapter constraintExecutionCache created");}
+        LOGGER.finer("\n [i] Adapter constraintExecutionCache created");
         constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module));
 
         // Console output
-        if(REPORTstate) {LOGGER.log(Level.INFO, modelStateToString());}
+        LOGGER.finest (modelStateToString());
     }
 
     @Override
@@ -132,7 +134,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             notifications.add(notification);  // Can be removed, won't need a list of update notifications, pass them as they occur to the Trace
             EObject modelElement = (EObject) notification.getNotifier();
             EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
-            if(REPORTnotification) {
+            
+            if(LOGGER.isLoggable(Level.FINEST)) {
             	String notificationText = ("\n[MODEL CHANGE NOTIFICATION]  " 
             			+ " Type:" + notification.getEventType()
                         + "\n " + notification);
@@ -147,13 +150,13 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
                         + "\n now: " + notification.getNewValue()
                         + "\n");
                 }
-                LOGGER.log(Level.INFO, notificationText);
+                LOGGER.finest(notificationText);
             }
 
             // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
             if(constraintExecutionCache.isPresent()){
                 constraintExecutionCache.get().processModelNotification(notification);
-                if(REPORTstate) {LOGGER.log(Level.INFO, constraintExecutionCache.get().executionCacheToString());}
+                LOGGER.finest(constraintExecutionCache.get().executionCacheToString());
             }
         }
     }

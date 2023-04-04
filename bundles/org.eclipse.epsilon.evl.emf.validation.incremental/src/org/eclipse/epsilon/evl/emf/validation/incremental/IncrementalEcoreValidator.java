@@ -1,5 +1,6 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
+import java.io.File;
 // Logging
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +36,6 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 
 	public static void main(String[] args) {
 		LOGGER.log(Level.FINEST, "working");
-
 		System.out.print("GO!!!\n\n\n");
 
 		ResourceSet resourceSet = new ResourceSetImpl();
@@ -56,6 +56,7 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 				return validator;
 			}
 		});
+		validator.setConstraintsURI(new File("resources/ecore.evl").toURI());
 
 		Diagnostician diagnostician = new Diagnostician(EValidator.Registry.INSTANCE);
 		diagnostician.validate(ePackage);
