@@ -1,5 +1,8 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,6 +36,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     public IncrementalEvlModule getModule() {
     	return module;
     }
+    
+    protected int validationCount;
 
     protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
     protected IncrementalEvlValidator validator = null;
@@ -54,6 +59,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {
+    	validationCount++;
+    	
         LOGGER.finer("\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
 
         // Make an in memory version of the Model (root element) for testing
@@ -109,7 +116,12 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
         
         LOGGER.finer("\n [!] ...Executing validation...\n");
+        
+        long startTime = System.currentTimeMillis();
         module.execute();
+        long endTime = System.currentTimeMillis();
+        String vid = this.hashCode() + "." + validationCount + "." + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        IncrementalEvlMetrics.reportValidationMetrics(startTime, endTime, vid);
 
         // -------- PROCESS RESULTS --------
 
