@@ -4,7 +4,7 @@
     <semanticResources>MyFlowcharts.flowcharts</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_wzPSAM1-Ee2gd4mz-7swXA">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_wzslAM1-Ee2gd4mz-7swXA" name="Flowchart Diagram" repPath="#_wzcGUM1-Ee2gd4mz-7swXA" changeId="dab1f831-1300-44a4-95c8-19d9e0a500a2">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_wzslAM1-Ee2gd4mz-7swXA" name="Flowchart Diagram" repPath="#_wzcGUM1-Ee2gd4mz-7swXA" changeId="1622a2c8-ef40-4e92-a549-33a803784450">
         <description xmi:type="description_1:DiagramDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']"/>
         <target xmi:type="f:Flowchart" href="MyFlowcharts.flowcharts#/"/>
       </ownedRepresentationDescriptors>
@@ -79,108 +79,174 @@
           <styles xmi:type="notation:ShapeStyle" xmi:id="_3kdxac2CEe2GhoLv98avlg" fontName="Noto Sans" fontHeight="12"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3kdxas2CEe2GhoLv98avlg" x="390" y="360" width="101" height="46"/>
         </children>
+        <children xmi:type="notation:Node" xmi:id="_yXPAYNOJEe2KdcT0lLmd3A" type="2001" element="_yW1XwtOJEe2KdcT0lLmd3A">
+          <children xmi:type="notation:Node" xmi:id="_yXSqwNOJEe2KdcT0lLmd3A" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_yXSqwdOJEe2KdcT0lLmd3A" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yXVHANOJEe2KdcT0lLmd3A" type="3003" element="_yW2l4NOJEe2KdcT0lLmd3A">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_yXVHAdOJEe2KdcT0lLmd3A" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yXVHAtOJEe2KdcT0lLmd3A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_yXPAYdOJEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yXPAYtOJEe2KdcT0lLmd3A" x="30" y="352" width="151" height="61"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_t-3KkNOMEe2KdcT0lLmd3A" type="2001" element="_t-vOwNOMEe2KdcT0lLmd3A">
+          <children xmi:type="notation:Node" xmi:id="_t-3xoNOMEe2KdcT0lLmd3A" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_t-3xodOMEe2KdcT0lLmd3A" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_t-4_wNOMEe2KdcT0lLmd3A" type="3003" element="_t-v10NOMEe2KdcT0lLmd3A">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_t-4_wdOMEe2KdcT0lLmd3A" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_t-4_wtOMEe2KdcT0lLmd3A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_t-3KkdOMEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_t-3KktOMEe2KdcT0lLmd3A" x="100" y="195" width="30" height="30"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_S6qAkNOQEe2KdcT0lLmd3A" type="2001" element="_S53WaNOQEe2KdcT0lLmd3A">
+          <children xmi:type="notation:Node" xmi:id="_S6qAk9OQEe2KdcT0lLmd3A" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_S6qAlNOQEe2KdcT0lLmd3A" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_S6qnoNOQEe2KdcT0lLmd3A" type="3017" element="_S539cNOQEe2KdcT0lLmd3A">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_S6qnodOQEe2KdcT0lLmd3A" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S6qnotOQEe2KdcT0lLmd3A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_S6qAkdOQEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S6qAktOQEe2KdcT0lLmd3A" width="30" height="30"/>
+        </children>
         <styles xmi:type="notation:DiagramStyle" xmi:id="_w0Ip4s1-Ee2gd4mz-7swXA"/>
-        <edges xmi:type="notation:Edge" xmi:id="_zHPYIM2CEe2GhoLv98avlg" type="4001" element="_zG7PEM2CEe2GhoLv98avlg" source="_0gmUkM1-Ee2gd4mz-7swXA" target="_N-GNMM2AEe2GhoLv98avlg">
-          <children xmi:type="notation:Node" xmi:id="_zHP_MM2CEe2GhoLv98avlg" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zHP_Mc2CEe2GhoLv98avlg" y="-10"/>
+        <edges xmi:type="notation:Edge" xmi:id="__pFestOOEe2KdcT0lLmd3A" type="4001" element="__o-J8tOOEe2KdcT0lLmd3A" source="_N-GNMM2AEe2GhoLv98avlg" target="_5SEYIM2BEe2GhoLv98avlg">
+          <children xmi:type="notation:Node" xmi:id="__pFettOOEe2KdcT0lLmd3A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pFet9OOEe2KdcT0lLmd3A" y="-10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_zHTCgM2CEe2GhoLv98avlg" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zHTCgc2CEe2GhoLv98avlg" x="-1" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="__pFeuNOOEe2KdcT0lLmd3A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pFeudOOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_zHTpkM2CEe2GhoLv98avlg" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zHTpkc2CEe2GhoLv98avlg" x="-2" y="13"/>
+          <children xmi:type="notation:Node" xmi:id="__pFeutOOEe2KdcT0lLmd3A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pFeu9OOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <styles xmi:type="notation:ConnectorStyle" xmi:id="_zHPYIc2CEe2GhoLv98avlg"/>
-          <styles xmi:type="notation:FontStyle" xmi:id="_zHPYIs2CEe2GhoLv98avlg" fontName="Noto Sans" fontHeight="12"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_zHPYI82CEe2GhoLv98avlg" points="[0, 16, -3, -39]$[3, 55, 0, 0]"/>
-          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_zHWF0c2CEe2GhoLv98avlg" id="(0.510752688172043,0.0)"/>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="__pFes9OOEe2KdcT0lLmd3A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="__pFetNOOEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__pFetdOOEe2KdcT0lLmd3A" points="[0, 0, 0, -95]$[0, 95, 0, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGFwNOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGFwdOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
         </edges>
-        <edges xmi:type="notation:Edge" xmi:id="_0PO68M2CEe2GhoLv98avlg" type="4001" element="_0PJbYs2CEe2GhoLv98avlg" source="_N-GNMM2AEe2GhoLv98avlg" target="_5SEYIM2BEe2GhoLv98avlg">
-          <children xmi:type="notation:Node" xmi:id="_0PO69M2CEe2GhoLv98avlg" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0PO69c2CEe2GhoLv98avlg" x="-3" y="-7"/>
+        <edges xmi:type="notation:Edge" xmi:id="__pGFwtOOEe2KdcT0lLmd3A" type="4001" element="__o-J99OOEe2KdcT0lLmd3A" source="_5SEYIM2BEe2GhoLv98avlg" target="_1GU7CM2CEe2GhoLv98avlg">
+          <children xmi:type="notation:Node" xmi:id="__pGFxtOOEe2KdcT0lLmd3A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pGFx9OOEe2KdcT0lLmd3A" y="-10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_0PO69s2CEe2GhoLv98avlg" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0PO6982CEe2GhoLv98avlg" x="-2" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="__pGFyNOOEe2KdcT0lLmd3A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pGFydOOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_0PPiAM2CEe2GhoLv98avlg" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0PPiAc2CEe2GhoLv98avlg" x="-4" y="12"/>
+          <children xmi:type="notation:Node" xmi:id="__pGFytOOEe2KdcT0lLmd3A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pGFy9OOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <styles xmi:type="notation:ConnectorStyle" xmi:id="_0PO68c2CEe2GhoLv98avlg"/>
-          <styles xmi:type="notation:FontStyle" xmi:id="_0PO68s2CEe2GhoLv98avlg" fontName="Noto Sans" fontHeight="12"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0PO6882CEe2GhoLv98avlg" points="[0, 0, -3, -52]$[2, 44, -1, -8]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_0PPiAs2CEe2GhoLv98avlg" id="(0.4838709677419355,1.0)"/>
-          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_0PPiA82CEe2GhoLv98avlg" id="(0.5,0.08791208791208792)"/>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="__pGFw9OOEe2KdcT0lLmd3A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="__pGFxNOOEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__pGFxdOOEe2KdcT0lLmd3A" points="[0, 0, 118, -168]$[-118, 168, 0, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGs0NOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGs0dOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
         </edges>
-        <edges xmi:type="notation:Edge" xmi:id="_AgPZkM2DEe2GhoLv98avlg" type="4001" element="_AgKhGM2DEe2GhoLv98avlg" source="_5SEYIM2BEe2GhoLv98avlg" target="_1GU7CM2CEe2GhoLv98avlg">
-          <children xmi:type="notation:Node" xmi:id="_AgQAoM2DEe2GhoLv98avlg" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AgQAoc2DEe2GhoLv98avlg" x="1" y="-10"/>
+        <edges xmi:type="notation:Edge" xmi:id="__pGs0tOOEe2KdcT0lLmd3A" type="4001" element="__o-xBNOOEe2KdcT0lLmd3A" source="_5SEYIM2BEe2GhoLv98avlg" target="_3kdxaM2CEe2GhoLv98avlg">
+          <children xmi:type="notation:Node" xmi:id="__pGs1tOOEe2KdcT0lLmd3A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pGs19OOEe2KdcT0lLmd3A" y="-10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_AgQAos2DEe2GhoLv98avlg" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AgQAo82DEe2GhoLv98avlg" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="__pGs2NOOEe2KdcT0lLmd3A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pGs2dOOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_AgQApM2DEe2GhoLv98avlg" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AgQApc2DEe2GhoLv98avlg" x="1" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="__pGs2tOOEe2KdcT0lLmd3A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pGs29OOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <styles xmi:type="notation:ConnectorStyle" xmi:id="_AgPZkc2DEe2GhoLv98avlg" routing="Tree"/>
-          <styles xmi:type="notation:FontStyle" xmi:id="_AgPZks2DEe2GhoLv98avlg" fontName="Noto Sans" fontHeight="12"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_AgPZk82DEe2GhoLv98avlg" points="[0, 0, 75, -54]$[0, 39, 75, -15]$[-75, 39, 0, -15]$[-75, 54, 0, 0]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AgQAps2DEe2GhoLv98avlg" id="(0.33962264150943394,0.8021978021978022)"/>
-          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AgQAp82DEe2GhoLv98avlg" id="(0.4945054945054945,0.0)"/>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="__pGs09OOEe2KdcT0lLmd3A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="__pGs1NOOEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__pGs1dOOEe2KdcT0lLmd3A" points="[0, 0, -27, -168]$[27, 168, 0, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGs3NOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGs3dOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
         </edges>
-        <edges xmi:type="notation:Edge" xmi:id="_BCFiYM2DEe2GhoLv98avlg" type="4001" element="_BCAC1M2DEe2GhoLv98avlg" source="_5SEYIM2BEe2GhoLv98avlg" target="_3kdxaM2CEe2GhoLv98avlg">
-          <children xmi:type="notation:Node" xmi:id="_BCFiZM2DEe2GhoLv98avlg" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BCFiZc2DEe2GhoLv98avlg" y="-10"/>
+        <edges xmi:type="notation:Edge" xmi:id="__pHT4NOOEe2KdcT0lLmd3A" type="4001" element="__o_YEtOOEe2KdcT0lLmd3A" source="_1GU7CM2CEe2GhoLv98avlg" target="_RouE0M2AEe2GhoLv98avlg">
+          <children xmi:type="notation:Node" xmi:id="__pHT5NOOEe2KdcT0lLmd3A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pHT5dOOEe2KdcT0lLmd3A" y="-10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_BCFiZs2DEe2GhoLv98avlg" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BCFiZ82DEe2GhoLv98avlg" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="__pHT5tOOEe2KdcT0lLmd3A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pHT59OOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_BCFiaM2DEe2GhoLv98avlg" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BCFiac2DEe2GhoLv98avlg" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="__pHT6NOOEe2KdcT0lLmd3A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pHT6dOOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <styles xmi:type="notation:ConnectorStyle" xmi:id="_BCFiYc2DEe2GhoLv98avlg" routing="Tree"/>
-          <styles xmi:type="notation:FontStyle" xmi:id="_BCFiYs2DEe2GhoLv98avlg" fontName="Noto Sans" fontHeight="12"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_BCFiY82DEe2GhoLv98avlg" points="[0, 0, -75, -54]$[75, 54, 0, 0]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_BCFias2DEe2GhoLv98avlg" id="(0.7169811320754716,0.967032967032967)"/>
-          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_BCFia82DEe2GhoLv98avlg" id="(0.594059405940594,0.0)"/>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="__pHT4dOOEe2KdcT0lLmd3A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="__pHT4tOOEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__pHT49OOEe2KdcT0lLmd3A" points="[0, 0, -118, -127]$[104, 112, -14, -15]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pH68NOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pH68dOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
         </edges>
-        <edges xmi:type="notation:Edge" xmi:id="_CcuUYM2DEe2GhoLv98avlg" type="4001" element="_CcsfNM2DEe2GhoLv98avlg" source="_1GU7CM2CEe2GhoLv98avlg" target="_RouE0M2AEe2GhoLv98avlg">
-          <children xmi:type="notation:Node" xmi:id="_CcuUZM2DEe2GhoLv98avlg" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CcuUZc2DEe2GhoLv98avlg" x="1" y="-10"/>
+        <edges xmi:type="notation:Edge" xmi:id="__pH68tOOEe2KdcT0lLmd3A" type="4001" element="__o__INOOEe2KdcT0lLmd3A" source="_3kdxaM2CEe2GhoLv98avlg" target="_RouE0M2AEe2GhoLv98avlg">
+          <children xmi:type="notation:Node" xmi:id="__pH69tOOEe2KdcT0lLmd3A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pH699OOEe2KdcT0lLmd3A" y="-10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_CcuUZs2DEe2GhoLv98avlg" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CcuUZ82DEe2GhoLv98avlg" x="-2" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="__pH6-NOOEe2KdcT0lLmd3A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pH6-dOOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_CcuUaM2DEe2GhoLv98avlg" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CcuUac2DEe2GhoLv98avlg" x="-3" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="__pH6-tOOEe2KdcT0lLmd3A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="__pH6-9OOEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <styles xmi:type="notation:ConnectorStyle" xmi:id="_CcuUYc2DEe2GhoLv98avlg" routing="Tree"/>
-          <styles xmi:type="notation:FontStyle" xmi:id="_CcuUYs2DEe2GhoLv98avlg" fontName="Noto Sans" fontHeight="12"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_CcuUY82DEe2GhoLv98avlg" points="[0, 0, -65, -89]$[65, 89, 0, 0]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_CcuUas2DEe2GhoLv98avlg" id="(0.6043956043956044,1.0)"/>
-          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_CcuUa82DEe2GhoLv98avlg" id="(0.5666666666666667,0.0)"/>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="__pH689OOEe2KdcT0lLmd3A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="__pH69NOOEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__pH69dOOEe2KdcT0lLmd3A" points="[0, 0, 27, -127]$[-24, 112, 3, -15]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pIiANOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pIiAdOOEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
         </edges>
-        <edges xmi:type="notation:Edge" xmi:id="_DBaV1M2DEe2GhoLv98avlg" type="4001" element="_DBYgsM2DEe2GhoLv98avlg" source="_3kdxaM2CEe2GhoLv98avlg" target="_RouE0M2AEe2GhoLv98avlg">
-          <children xmi:type="notation:Node" xmi:id="_DBa84M2DEe2GhoLv98avlg" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DBa84c2DEe2GhoLv98avlg" y="-10"/>
+        <edges xmi:type="notation:Edge" xmi:id="_m9mm8NOPEe2KdcT0lLmd3A" type="4001" element="_m9TsANOPEe2KdcT0lLmd3A" source="_0gmUkM1-Ee2gd4mz-7swXA" target="_N-GNMM2AEe2GhoLv98avlg">
+          <children xmi:type="notation:Node" xmi:id="_m9mm9NOPEe2KdcT0lLmd3A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_m9mm9dOPEe2KdcT0lLmd3A" y="-10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_DBa84s2DEe2GhoLv98avlg" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DBa8482DEe2GhoLv98avlg" y="11"/>
+          <children xmi:type="notation:Node" xmi:id="_m9mm9tOPEe2KdcT0lLmd3A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_m9mm99OPEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_DBa85M2DEe2GhoLv98avlg" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DBa85c2DEe2GhoLv98avlg" y="11"/>
+          <children xmi:type="notation:Node" xmi:id="_m9mm-NOPEe2KdcT0lLmd3A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_m9mm-dOPEe2KdcT0lLmd3A" y="10"/>
           </children>
-          <styles xmi:type="notation:ConnectorStyle" xmi:id="_DBaV1c2DEe2GhoLv98avlg" routing="Tree"/>
-          <styles xmi:type="notation:FontStyle" xmi:id="_DBaV1s2DEe2GhoLv98avlg" fontName="Noto Sans" fontHeight="12"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DBaV182DEe2GhoLv98avlg" points="[0, 0, 95, -89]$[-95, 89, 0, 0]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DBa85s2DEe2GhoLv98avlg" id="(0.693069306930693,1.0)"/>
-          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DBa8582DEe2GhoLv98avlg" id="(0.5666666666666667,0.0)"/>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_m9mm8dOPEe2KdcT0lLmd3A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_m9mm8tOPEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_m9mm89OPEe2KdcT0lLmd3A" points="[0, 0, -16, -70]$[16, 70, 0, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_m9nOANOPEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_m9nOAdOPEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_S6rOsNOQEe2KdcT0lLmd3A" type="4001" element="_S55LmNOQEe2KdcT0lLmd3A" source="_0gmUkM1-Ee2gd4mz-7swXA" target="_S6qAkNOQEe2KdcT0lLmd3A">
+          <children xmi:type="notation:Node" xmi:id="_S6r1wNOQEe2KdcT0lLmd3A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S6r1wdOQEe2KdcT0lLmd3A" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_S6r1wtOQEe2KdcT0lLmd3A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S6r1w9OQEe2KdcT0lLmd3A" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_S6r1xNOQEe2KdcT0lLmd3A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S6r1xdOQEe2KdcT0lLmd3A" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_S6rOsdOQEe2KdcT0lLmd3A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_S6rOstOQEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_S6rOs9OQEe2KdcT0lLmd3A" points="[0, 0, 332, 35]$[-317, -34, 15, 1]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_S6r1xtOQEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_S6r1x9OQEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_VUW7gNOTEe2KdcT0lLmd3A" type="4001" element="_VUGc0NOTEe2KdcT0lLmd3A" source="_S6qAkNOQEe2KdcT0lLmd3A" target="_S6qAkNOQEe2KdcT0lLmd3A">
+          <children xmi:type="notation:Node" xmi:id="_VUXikNOTEe2KdcT0lLmd3A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VUXikdOTEe2KdcT0lLmd3A" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_VUYJoNOTEe2KdcT0lLmd3A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VUYJodOTEe2KdcT0lLmd3A" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_VUYwsNOTEe2KdcT0lLmd3A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VUYwsdOTEe2KdcT0lLmd3A" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_VUW7gdOTEe2KdcT0lLmd3A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_VUW7gtOTEe2KdcT0lLmd3A" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_VUW7g9OTEe2KdcT0lLmd3A" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VUYwstOTEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VUYws9OTEe2KdcT0lLmd3A" id="(0.5,0.5)"/>
         </edges>
       </data>
     </ownedAnnotationEntries>
     <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_w0UQEM1-Ee2gd4mz-7swXA" source="DANNOTATION_CUSTOMIZATION_KEY">
       <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_w0UQEc1-Ee2gd4mz-7swXA"/>
     </ownedAnnotationEntries>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_0gJooM1-Ee2gd4mz-7swXA" outgoingEdges="_zG7PEM2CEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_0gJooM1-Ee2gd4mz-7swXA" outgoingEdges="_m9TsANOPEe2KdcT0lLmd3A _S55LmNOQEe2KdcT0lLmd3A" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="f:Start" href="MyFlowcharts.flowcharts#//@nodes.0"/>
       <semanticElements xmi:type="f:Start" href="MyFlowcharts.flowcharts#//@nodes.0"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -191,7 +257,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_N-AGkM2AEe2GhoLv98avlg" name="Initialise" outgoingEdges="_0PJbYs2CEe2GhoLv98avlg" incomingEdges="_zG7PEM2CEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_N-AGkM2AEe2GhoLv98avlg" name="Initialise" outgoingEdges="__o-J8tOOEe2KdcT0lLmd3A" incomingEdges="_m9TsANOPEe2KdcT0lLmd3A" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.1"/>
       <semanticElements xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.1"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -202,7 +268,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_RoqacM2AEe2GhoLv98avlg" incomingEdges="_CcsfNM2DEe2GhoLv98avlg _DBYgsM2DEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_RoqacM2AEe2GhoLv98avlg" incomingEdges="__o_YEtOOEe2KdcT0lLmd3A __o__INOOEe2KdcT0lLmd3A" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="f:End" href="MyFlowcharts.flowcharts#//@nodes.2"/>
       <semanticElements xmi:type="f:End" href="MyFlowcharts.flowcharts#//@nodes.2"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -213,7 +279,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_5R9qcM2BEe2GhoLv98avlg" name="decide" outgoingEdges="_AgKhGM2DEe2GhoLv98avlg _BCAC1M2DEe2GhoLv98avlg" incomingEdges="_0PJbYs2CEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_5R9qcM2BEe2GhoLv98avlg" name="decide" outgoingEdges="__o-J99OOEe2KdcT0lLmd3A __o-xBNOOEe2KdcT0lLmd3A" incomingEdges="__o-J8tOOEe2KdcT0lLmd3A" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="f:Decision" href="MyFlowcharts.flowcharts#//@nodes.3"/>
       <semanticElements xmi:type="f:Decision" href="MyFlowcharts.flowcharts#//@nodes.3"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -224,7 +290,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_1GTF0M2CEe2GhoLv98avlg" outgoingEdges="_CcsfNM2DEe2GhoLv98avlg" incomingEdges="_AgKhGM2DEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_1GTF0M2CEe2GhoLv98avlg" name="xy" outgoingEdges="__o_YEtOOEe2KdcT0lLmd3A" incomingEdges="__o-J99OOEe2KdcT0lLmd3A" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.4"/>
       <semanticElements xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.4"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -235,7 +301,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_3kb8MM2CEe2GhoLv98avlg" name="abcd" outgoingEdges="_DBYgsM2DEe2GhoLv98avlg" incomingEdges="_BCAC1M2DEe2GhoLv98avlg" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_3kb8MM2CEe2GhoLv98avlg" name="abcd" outgoingEdges="__o__INOOEe2KdcT0lLmd3A" incomingEdges="__o-xBNOOEe2KdcT0lLmd3A" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.5"/>
       <semanticElements xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.5"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -246,61 +312,102 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_zG7PEM2CEe2GhoLv98avlg" sourceNode="_0gJooM1-Ee2gd4mz-7swXA" targetNode="_N-AGkM2AEe2GhoLv98avlg">
-      <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.0"/>
-      <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.0"/>
-      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_zHDK4M2CEe2GhoLv98avlg" size="2">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
-        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_zHDx8M2CEe2GhoLv98avlg" labelSize="12"/>
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_yW1XwtOJEe2KdcT0lLmd3A" name="some action" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.6"/>
+      <semanticElements xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.6"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:Square" uid="_yW2l4NOJEe2KdcT0lLmd3A" labelSize="12" showIcon="false" labelPosition="node" color="114,159,207">
+        <description xmi:type="style:SquareDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']/@conditionnalStyles.3/@style"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_0PJbYs2CEe2GhoLv98avlg" sourceNode="_N-AGkM2AEe2GhoLv98avlg" targetNode="_5R9qcM2BEe2GhoLv98avlg">
-      <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.1"/>
-      <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.1"/>
-      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_0PJbY82CEe2GhoLv98avlg" size="2">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
-        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_0PJbZM2CEe2GhoLv98avlg" labelSize="12"/>
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_t-vOwNOMEe2KdcT0lLmd3A" name="Somename" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.7"/>
+      <semanticElements xmi:type="f:Action" href="MyFlowcharts.flowcharts#//@nodes.7"/>
+      <ownedStyle xmi:type="diagram:Square" uid="_t-v10NOMEe2KdcT0lLmd3A" labelSize="12" showIcon="false" labelPosition="node" color="114,159,207">
+        <description xmi:type="style:SquareDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']/@conditionnalStyles.3/@style"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_AgKhGM2DEe2GhoLv98avlg" sourceNode="_5R9qcM2BEe2GhoLv98avlg" targetNode="_1GTF0M2CEe2GhoLv98avlg">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_S53WaNOQEe2KdcT0lLmd3A" name="The big decision" outgoingEdges="_VUGc0NOTEe2KdcT0lLmd3A" incomingEdges="_S55LmNOQEe2KdcT0lLmd3A _VUGc0NOTEe2KdcT0lLmd3A" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="f:Decision" href="MyFlowcharts.flowcharts#//@nodes.8"/>
+      <semanticElements xmi:type="f:Decision" href="MyFlowcharts.flowcharts#//@nodes.8"/>
+      <ownedStyle xmi:type="diagram:Lozenge" uid="_S539cNOQEe2KdcT0lLmd3A" labelSize="12" showIcon="false" labelPosition="node" color="252,233,79">
+        <description xmi:type="style:LozengeNodeDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']/@conditionnalStyles.2/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="__o-J8tOOEe2KdcT0lLmd3A" sourceNode="_N-AGkM2AEe2GhoLv98avlg" targetNode="_5R9qcM2BEe2GhoLv98avlg">
       <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.2"/>
       <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.2"/>
-      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_AgLIIM2DEe2GhoLv98avlg" size="2" routingStyle="tree">
-        <customFeatures>routingStyle</customFeatures>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="__o-J89OOEe2KdcT0lLmd3A" size="2">
         <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
-        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_AgLIIc2DEe2GhoLv98avlg" labelSize="12"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="__o-J9NOOEe2KdcT0lLmd3A" labelSize="12"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_BCAC1M2DEe2GhoLv98avlg" sourceNode="_5R9qcM2BEe2GhoLv98avlg" targetNode="_3kb8MM2CEe2GhoLv98avlg">
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="__o-J99OOEe2KdcT0lLmd3A" sourceNode="_5R9qcM2BEe2GhoLv98avlg" targetNode="_1GTF0M2CEe2GhoLv98avlg">
       <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.3"/>
       <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.3"/>
-      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_BCAC1c2DEe2GhoLv98avlg" size="2" routingStyle="tree">
-        <customFeatures>routingStyle</customFeatures>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="__o-xANOOEe2KdcT0lLmd3A" size="2">
         <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
-        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_BCAC1s2DEe2GhoLv98avlg" labelSize="12"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="__o-xAdOOEe2KdcT0lLmd3A" labelSize="12"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_CcsfNM2DEe2GhoLv98avlg" sourceNode="_1GTF0M2CEe2GhoLv98avlg" targetNode="_RoqacM2AEe2GhoLv98avlg">
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="__o-xBNOOEe2KdcT0lLmd3A" sourceNode="_5R9qcM2BEe2GhoLv98avlg" targetNode="_3kb8MM2CEe2GhoLv98avlg">
       <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.4"/>
       <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.4"/>
-      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_CcsfNc2DEe2GhoLv98avlg" size="2" routingStyle="tree">
-        <customFeatures>routingStyle</customFeatures>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="__o-xBdOOEe2KdcT0lLmd3A" size="2">
         <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
-        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_CcsfNs2DEe2GhoLv98avlg" labelSize="12"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="__o-xBtOOEe2KdcT0lLmd3A" labelSize="12"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_DBYgsM2DEe2GhoLv98avlg" sourceNode="_3kb8MM2CEe2GhoLv98avlg" targetNode="_RoqacM2AEe2GhoLv98avlg">
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="__o_YEtOOEe2KdcT0lLmd3A" sourceNode="_1GTF0M2CEe2GhoLv98avlg" targetNode="_RoqacM2AEe2GhoLv98avlg">
       <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.5"/>
       <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.5"/>
-      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_DBYgsc2DEe2GhoLv98avlg" size="2" routingStyle="tree">
-        <customFeatures>routingStyle</customFeatures>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="__o_YE9OOEe2KdcT0lLmd3A" size="2">
         <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
-        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_DBYgss2DEe2GhoLv98avlg" labelSize="12"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="__o_YFNOOEe2KdcT0lLmd3A" labelSize="12"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="__o__INOOEe2KdcT0lLmd3A" sourceNode="_3kb8MM2CEe2GhoLv98avlg" targetNode="_RoqacM2AEe2GhoLv98avlg">
+      <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.6"/>
+      <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.6"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="__o__IdOOEe2KdcT0lLmd3A" size="2">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="__o__ItOOEe2KdcT0lLmd3A" labelSize="12"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_m9TsANOPEe2KdcT0lLmd3A" sourceNode="_0gJooM1-Ee2gd4mz-7swXA" targetNode="_N-AGkM2AEe2GhoLv98avlg">
+      <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.1"/>
+      <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_m9UTENOPEe2KdcT0lLmd3A" size="2">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_m9UTEdOPEe2KdcT0lLmd3A" labelSize="12"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_S55LmNOQEe2KdcT0lLmd3A" sourceNode="_0gJooM1-Ee2gd4mz-7swXA" targetNode="_S53WaNOQEe2KdcT0lLmd3A">
+      <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.0"/>
+      <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.0"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_S55yoNOQEe2KdcT0lLmd3A" size="2">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_S55yodOQEe2KdcT0lLmd3A" labelSize="12"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_VUGc0NOTEe2KdcT0lLmd3A" sourceNode="_S53WaNOQEe2KdcT0lLmd3A" targetNode="_S53WaNOQEe2KdcT0lLmd3A">
+      <target xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.7"/>
+      <semanticElements xmi:type="f:Edge" href="MyFlowcharts.flowcharts#//@edges.7"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_VUGc0dOTEe2KdcT0lLmd3A" size="2">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_VUGc0tOTEe2KdcT0lLmd3A" labelSize="12"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.flowchart.design/description/flowchart.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@edgeMappings[name='diagramEdges']"/>
     </ownedDiagramElements>
