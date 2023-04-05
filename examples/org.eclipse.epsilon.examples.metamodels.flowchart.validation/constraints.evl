@@ -1,18 +1,58 @@
 context flowcharts::NamedElement {
   constraint HasName {
     check: self.name.isDefined() 
+    message: "must have a name"
   }
 
   constraint HasMoreThanOneLetter {
     guard: self.satisfies('HasName')
     check: self.name.length() > 1
+    message: "name too short"
   }
+}
+
+context flowcharts::Action {
+  constraint HasIn {
+  	check: self.In.notEmpty()
+  	message: "missing In"
+  }
+  
+  constraint HasOut {
+  	check: self.Out.notEmpty()
+  	message: "missing Out"
+  }  
+}
+
+context flowcharts::Decision {
+	constraint HasMoreThanOneOut {
+	check: self.Out.size() > 1
+	message: "decision needs more outward edges"
+	}
+}
+
+
+context flowcharts::Edge {
+  constraint HasSource {
+  	check: self.source.isDefined()
+  	message: "missing source"
+  }
+
+  constraint HasTarget {
+  	check: self.target.isDefined()
+  	message: "missing target"
+  }
+  
+  constraint SourceTargetNotSame {
+  	check: self.target != self.source
+  	message: "Source and Target node must be different"
+  }
+  
 }
 
 // TODO: generate a large model to highlight the performance differences
 
-// TODO: avoid loops
+// TODO: avoid loops -- Edge Source != Target (done)
 
-// TODO: decisions must have >2 outgoing
+// TODO: decisions must have >2 outgoing (done)
 
 // TODO: print messages when you're doing validation (to highlight execution of constraints)
