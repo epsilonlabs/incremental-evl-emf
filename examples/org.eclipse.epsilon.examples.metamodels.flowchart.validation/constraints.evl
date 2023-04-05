@@ -43,6 +43,7 @@ context flowcharts::Edge {
   }
   
   constraint SourceTargetNotSame {
+    guard: self.satisfies('HasSource') and self.satisfies('HasTarget')
   	check: self.target != self.source
   	message: "Source and Target node must be different"
   }
