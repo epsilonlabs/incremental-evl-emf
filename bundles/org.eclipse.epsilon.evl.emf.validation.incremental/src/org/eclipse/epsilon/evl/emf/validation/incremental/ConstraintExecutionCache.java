@@ -89,11 +89,15 @@ public class ConstraintExecutionCache {
         case Notification.ADD:
         case Notification.ADD_MANY:
         case Notification.MOVE:
+        	LOGGER.info("Request remove from cache (not Adapter)\n ModelElement: " 
+        			+ modelElement + "\n ModelFeature: " + modelFeature);
         	removeFromCache(modelElement, modelFeature);
         	break;
         case Notification.REMOVING_ADAPTER:
         	if (notification.getOldValue() instanceof IncrementalEvlValidatorAdapter) {
         		removeFromCache(modelElement);
+        		LOGGER.info("Request remove from cache (Adapter)\n ModelElement: " 
+        				+ modelElement + "\n ModelFeature: " + modelFeature);
         	}
         	break;
         }

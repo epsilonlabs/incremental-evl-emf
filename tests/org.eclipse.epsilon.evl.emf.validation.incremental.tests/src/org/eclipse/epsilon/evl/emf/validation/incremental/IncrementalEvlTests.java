@@ -325,7 +325,7 @@ public class IncrementalEvlTests {
     	// MODEL
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
         modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
-        //BuildTestModel.showEPackage(ePackage1);
+        BuildTestModel.showEPackage(ePackage1);
         
         // VALIDATE
         diagnostician.validate(ePackage1);
@@ -337,11 +337,13 @@ public class IncrementalEvlTests {
     				modelElement2,modelElement2,modelElement2);
         assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1, modelElement2);
-        //TestTools.showExecutionCache(ePackage1);
+        TestTools.showExecutionCache(ePackage1);
 
         // CHANGE
         // Move model elements about (swap C1 and C2 round) -- cache should clear C1 & C2
         ePackage1.getEClassifiers().move(0, 1);
+        TestTools.showAdapterNotifications(ePackage1);
+        
         assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1, 
     				modelElement2,modelElement2,modelElement2);
@@ -350,7 +352,7 @@ public class IncrementalEvlTests {
     				modelElement2,modelElement2,modelElement2);
         assertThat(TestTools.getModelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1, modelElement2);
-        TestTools.showAdapterNotifications(ePackage1);
+
         //BuildTestModel.showEPackage(ePackage1);
         //TestTools.showExecutionCache(ePackage1);
         
