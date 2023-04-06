@@ -1,0 +1,13 @@
+context ccl::Connector {
+  constraint SourceTargetMustBeDifferentComponents {
+    guard: self.source.isDefined() and self.target.isDefined()
+    check: self.source.eContainer <> self.target.eContainer
+    message: "Connectors must link different components"
+  }
+}
+
+// Ideas for constraints:
+
+// Indirect cycles
+// Warnings about components without ports
+// Warnings about unused ports
