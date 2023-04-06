@@ -4,7 +4,28 @@
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="componentDiagram" domainClass="ccl::System" enablePopupBars="true">
       <metamodel href="http://eclipse.org/epsilon/ccl#/"/>
       <defaultLayer name="Default">
-        <edgeMappings name="connectorEdge" sourceMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']/@subNodeMappings[name='outPortNode']" targetMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']/@subNodeMappings[name='inPortNode']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="ccl::Connector" useDomainElement="true">
+        <nodeMappings name="nodeContainer" domainClass="ccl::Component">
+          <borderedNodeMappings name="borderNodeOut" semanticCandidatesExpression="feature:eAllContents" domainClass="ccl::OutPort">
+            <style xsi:type="style:DotDescription" labelSize="12" showIcon="false" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="borderNodeIn" semanticCandidatesExpression="feature:eAllContents" domainClass="ccl::InPort">
+            <style xsi:type="style:LozengeNodeDescription" labelSize="12" showIcon="false" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+            </style>
+          </borderedNodeMappings>
+          <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="connectorEdge" sourceMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeOut']" targetMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeIn']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="ccl::Connector" useDomainElement="true">
           <style sizeComputationExpression="2">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription labelSize="12">
@@ -12,64 +33,26 @@
             </centerLabelStyleDescription>
           </style>
         </edgeMappings>
-        <containerMappings name="componentContainer" label="componentContainer" domainClass="ccl::Component" childrenPresentation="HorizontalStack">
-          <subContainerMappings name="componentContainerIn" semanticCandidatesExpression="var:self" domainClass="ccl::Component">
-            <subNodeMappings name="inPortNode" semanticCandidatesExpression="aql:self.ports->select(p|p.oclIsKindOf(ccl::InPort))" domainClass="ccl::InPort">
-              <style xsi:type="style:SquareDescription" labelSize="12" labelPosition="node" resizeKind="NSEW">
-                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
-              </style>
-            </subNodeMappings>
-            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="in ports">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
-              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
-            </style>
-          </subContainerMappings>
-          <subContainerMappings name="componentContainerOut" semanticCandidatesExpression="var:self" domainClass="ccl::Component">
-            <subNodeMappings name="outPortNode" semanticCandidatesExpression="aql:self.ports->select(p|p.oclIsKindOf(ccl::OutPort))" domainClass="ccl::OutPort">
-              <style xsi:type="style:SquareDescription" labelSize="12" labelPosition="node" resizeKind="NSEW">
-                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
-              </style>
-            </subNodeMappings>
-            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="out ports">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
-              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
-            </style>
-          </subContainerMappings>
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
-            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
-          </style>
-        </containerMappings>
         <toolSections name="creationTools" label="Creation Tools">
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="createComponent" label="Create Component" containerMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="createComponent" label="Create Component" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="ccl::Component" referenceName="components"/>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:NodeCreationDescription" name="createPort" label="Create Port" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']/@subNodeMappings[name='inPortNode'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']/@subNodeMappings[name='outPortNode']">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="createOutPort" label="Create Out Port" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeOut']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool_1:Switch">
-                <cases conditionExpression="aql:containerView.actualMapping.name.equalsIgnoreCase('componentContainerIn')">
-                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="ccl::InPort" referenceName="ports"/>
-                </cases>
-                <cases conditionExpression="aql:containerView.actualMapping.name.equalsIgnoreCase('componentContainerOut')">
-                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="ccl::OutPort" referenceName="ports"/>
-                </cases>
-              </firstModelOperations>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="ccl::OutPort" referenceName="ports"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="createInPort" label="Create In Port" nodeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeIn']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="ccl::InPort" referenceName="ports"/>
             </initialOperation>
           </ownedTools>
           <ownedTools xsi:type="tool:EdgeCreationDescription" name="createConnector" label="Create Connector" edgeMappings="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']">
