@@ -33,7 +33,7 @@
             </style>
           </conditionnalStyles>
         </nodeMappings>
-        <edgeMappings name="diagramEdges" label="Diagram edges" sourceMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']" targetMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="flowcharts::Edge" useDomainElement="true">
+        <edgeMappings name="diagramEdges" label="Diagram edges" semanticCandidatesExpression="feature:edges" sourceMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']" targetMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='flowchartDiagram']/@defaultLayer/@nodeMappings[name='diagramNodes']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="flowcharts::Edge" useDomainElement="true">
           <style sizeComputationExpression="2">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription labelSize="12">
