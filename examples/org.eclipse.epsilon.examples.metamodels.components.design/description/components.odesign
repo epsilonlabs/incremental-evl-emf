@@ -4,15 +4,15 @@
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="componentDiagram" domainClass="ccl::System" enablePopupBars="true">
       <metamodel href="http://eclipse.org/epsilon/ccl#/"/>
       <defaultLayer name="Default">
-        <nodeMappings name="nodeContainer" domainClass="ccl::Component">
-          <borderedNodeMappings name="borderNodeOut" semanticCandidatesExpression="feature:eAllContents" domainClass="ccl::OutPort">
+        <nodeMappings name="nodeContainer" labelDirectEdit="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editLabel']" semanticCandidatesExpression="feature:components" domainClass="ccl::Component">
+          <borderedNodeMappings name="borderNodeOut" labelDirectEdit="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editLabel']" semanticCandidatesExpression="feature:eAllContents" domainClass="ccl::OutPort">
             <style xsi:type="style:DotDescription" labelSize="12" showIcon="false" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
             </style>
           </borderedNodeMappings>
-          <borderedNodeMappings name="borderNodeIn" semanticCandidatesExpression="feature:eAllContents" domainClass="ccl::InPort">
+          <borderedNodeMappings name="borderNodeIn" labelDirectEdit="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editLabel']" semanticCandidatesExpression="feature:eAllContents" domainClass="ccl::InPort">
             <style xsi:type="style:LozengeNodeDescription" labelSize="12" showIcon="false" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -25,7 +25,7 @@
             <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
           </style>
         </nodeMappings>
-        <edgeMappings name="connectorEdge" sourceMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeOut']" targetMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeIn']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="ccl::Connector" useDomainElement="true">
+        <edgeMappings name="connectorEdge" semanticCandidatesExpression="feature:connectors" sourceMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeOut']" targetMapping="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeIn']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="ccl::Connector" useDomainElement="true" reconnections="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='reconnectConnectorTarget'] //@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='reconnectConntectorSource']">
           <style sizeComputationExpression="2">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription labelSize="12">
@@ -67,6 +67,34 @@
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
                 </subModelOperations>
               </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="reconnectConnectorTarget">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="reconnectConntectorSource" reconnectionKind="RECONNECT_SOURCE">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:target"/>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DirectEditLabel" name="editLabel" inputLabelExpression="feature:name">
+            <mask mask="{0}"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:0"/>
             </initialOperation>
           </ownedTools>
         </toolSections>
