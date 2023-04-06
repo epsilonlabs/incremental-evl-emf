@@ -2,7 +2,6 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.epsilon.common.module.ModuleElement;

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +36,9 @@ public class ConstraintExecutionCache {
         this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
         this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
 
-        LOGGER.finer("Setting up Execution Cache" + executionCacheToString());
+        if (LOGGER.isLoggable(Level.FINE)) {
+        	LOGGER.finer("Setting up Execution Cache" + toString());
+        }
     }
 
     public List <ConstraintPropertyAccess> getConstraintsPropertyAccessFor (EObject modelElement, EStructuralFeature modelFeature) {
@@ -50,14 +53,16 @@ public class ConstraintExecutionCache {
     }
 
     public ConstraintTraceItem checkCachedConstraintTrace (Object model, Constraint constraint) {
-    	LOGGER.finer("Execution cache - checkCachedConstraintTrace - " + model.hashCode() + " " + constraint.getName());
-    	LOGGER.finest(constraintTraceToString(constraintTraceItems));
+    	LOGGER.finer(() -> "Execution cache - checkCachedConstraintTrace - " + model.hashCode() + " " + constraint.getName());
+    	LOGGER.finest(() -> constraintTraceToString(constraintTraceItems));
+
     	for (ConstraintTraceItem item : constraintTraceItems) {
             if (item.getInstance().equals(model) && item.getConstraint().equals(constraint)) {
                 LOGGER.finer("Execution cache - MATCHED model & constraint - " + item.hashCode() + " " + constraint.getName());
                 return item;
             }
         }
+
     	LOGGER.finer("Execution cache - NO MATCHES");
         return null;
     }
@@ -171,44 +176,6 @@ public class ConstraintExecutionCache {
         }
     }
     
-    
-    // Duplicate code
-    /*
-    private void clearConstraintTracesAndUnsatisfiedConstraintsB(List <ConstraintPropertyAccess> constraintsToInvalidate) {
-    	// Using the list of constraintsTobe invalidated remove constraint trace/unsatisfied based on model & constraint matches
-        System.out.println("\nClear Constraint Trace/Unsatisfied where Model & Constraint match removed constraintPropertyAccesses");
-        for (ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
-            // find any constraintTraceItems and delete them
-            for (Iterator<ConstraintTraceItem> itr = constraintTraceItems.iterator(); itr.hasNext(); ) {
-                ConstraintTraceItem ctitem = (ConstraintTraceItem) itr.next();
-                if (ctitem.getInstance() == invalidcpa.getModelElement()
-                        && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint()) { // need to resolve "feature" for each result
-                    System.out.println("  - Notification: ConstraintTraceItem Removed "
-                            + ctitem.getInstance().hashCode() + " == " + invalidcpa.getModelElement().hashCode()
-                            + " && "
-                            + ctitem.getConstraint().getName() + " == " + invalidcpa.getExecution().getConstraint().getName() );
-                    itr.remove();
-                }
-            }
-
-            // find any unstatisfiedConstraints and delete them
-            for (Iterator<UnsatisfiedConstraint> itr = unsatisfiedConstraints.iterator(); itr.hasNext(); ) {
-                UnsatisfiedConstraint uc = itr.next();
-                if (uc.getInstance() == invalidcpa.getModelElement()
-                        && uc.getConstraint() == invalidcpa.getExecution().getConstraint() ) {
-                    System.out.println("  - Notification: UnsatisfiedConstraints Removed "
-                            + uc.getInstance().hashCode() + " == " + invalidcpa.getModelElement().hashCode()
-                            + " && "
-                            + uc.getConstraint().getName() + " == " + invalidcpa.getExecution().getConstraint().getName() );
-                    itr.remove();
-                }
-
-            }
-        }
-    }
-    */
-    
-
     private String constraintTraceToString (Set<ConstraintTraceItem> constraintTraceItems) {
     	int i = 0;
     	String ctString = "\nConstraintTrace list: ";       
@@ -240,7 +207,6 @@ public class ConstraintExecutionCache {
     	int i = 0;
         String cpaString = "\n[Trace] (Constraint)PropertyAccess list: ";
 
-
         for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
             i++;
             cpaString = cpaString.concat("\n  " + i 
@@ -249,57 +215,23 @@ public class ConstraintExecutionCache {
         }
         return cpaString;
     }
-    
-    public String executionCacheToString () {
-        // Dump the lists to the Console for inspection
-    	String exeCacheString = 				"\n == Execution Cache state ==";
-    	
-    	
-    	exeCacheString = exeCacheString.concat("\n ContraintTraceItems: " + constraintTraceItems.size());
-    	exeCacheString = exeCacheString.concat("\n UnsatisfiedConstraints: " + unsatisfiedConstraints.size()) ;
-    	exeCacheString = exeCacheString.concat("\n ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size()) ;
 
-        int i = 0;
+    @Override
+    public String toString () {
+    	StringJoiner sj = new StringJoiner("\n");
 
-        exeCacheString = exeCacheString.concat(constraintTraceToString(constraintTraceItems));
-        /*
-        exeCacheString = exeCacheString.concat("\nConstraintTrace list: ");
-        i = 0;
-        for (ConstraintTraceItem item : constraintTraceItems) {
-            i++;
-            exeCacheString = exeCacheString.concat("\n  " + i 
-            		+ ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
-                    + " | Model hashcode: " + item.getInstance().hashCode()
-                    + " | Result : " + item.getResult()
-            );
-        }
-        */
-        exeCacheString = exeCacheString.concat(unsatisfiedConstraintsToString(unsatisfiedConstraints));
-        /*
-        i = 0;
-        exeCacheString = exeCacheString.concat("\nUnsatisfiedConstraint list: ");
-        for (UnsatisfiedConstraint uc : unsatisfiedConstraints) {
-            i++;
-            exeCacheString = exeCacheString.concat("\n  " + i 
-            		+ ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() 
-            		+ " | Model hashcode: " + uc.getInstance().hashCode()
-            );
-        }
-        */
-        
-        exeCacheString = exeCacheString.concat(constraintPropertyAccessToString(constraintPropertyAccess));
-        /*
-        i = 0;
-        exeCacheString = exeCacheString.concat("\n[Trace] (Constraint)PropertyAccess list: ");
-        for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
-            i++;
-            exeCacheString = exeCacheString.concat("\n  " + i 
-            		+ ", Constraint: " + cpa.execution.constraint.getName()
-            		+ " | Model hashcode: " + cpa.getModelElement().hashCode());
-        }        
-        */
-        exeCacheString = exeCacheString.concat(	"\n ===========================\n");
-        return exeCacheString;
+    	sj.add(" == Execution Cache state ==");
+    	sj.add("ContraintTraceItems: " + constraintTraceItems.size());
+    	sj.add("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
+    	sj.add("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size());
+
+    	// TODO: pass sj into these functions to keep building up the string
+        sj.add(constraintTraceToString(constraintTraceItems));
+        sj.add(unsatisfiedConstraintsToString(unsatisfiedConstraints));
+        sj.add(constraintPropertyAccessToString(constraintPropertyAccess));
+        sj.add(" =========================== ");
+
+        return sj.toString();
     }
 
 }

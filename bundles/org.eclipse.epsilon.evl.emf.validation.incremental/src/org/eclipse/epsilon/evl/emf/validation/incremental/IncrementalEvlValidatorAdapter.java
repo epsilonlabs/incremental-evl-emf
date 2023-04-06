@@ -1,6 +1,5 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -167,7 +166,9 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
             if(constraintExecutionCache.isPresent()){
                 constraintExecutionCache.get().processModelNotification(notification);
-                LOGGER.finest(constraintExecutionCache.get().executionCacheToString());
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                	LOGGER.finest(constraintExecutionCache.get().toString());
+                }
             }
         }
     }

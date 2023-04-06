@@ -78,8 +78,7 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 		System.out.println("resource adapter: " + resource.eAdapters());
 		IncrementalEvlValidatorAdapter adapter =  (IncrementalEvlValidatorAdapter) resource.eAdapters().get(0);
 		
-		System.out.println(adapter.module.constraintExecutionCache.get().executionCacheToString());
-		
+		System.out.println(adapter.module.constraintExecutionCache.get().toString());
 	}
 
 }
