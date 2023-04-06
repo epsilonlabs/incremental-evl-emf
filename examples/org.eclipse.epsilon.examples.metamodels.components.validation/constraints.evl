@@ -4,6 +4,18 @@ context ccl::Connector {
     check: self.source.eContainer <> self.target.eContainer
     message: "Connectors must link different components"
   }
+  
+  constraint ConnectorMustHasSource{
+  	check: self.source.isDefined()
+  	message: "Connector must have a Source port"
+  }
+  
+    constraint ConnectorMustHasSource{
+  	check: self.target.isDefined()
+  	message: "Connector must have a Target port"
+  }
+  
+  
 }
 
 context ccl::Component {
