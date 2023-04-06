@@ -5,7 +5,7 @@
     <semanticResources>generated.ccl</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_xIGaENRVEe26zrHodeUvDQ">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_h7wHgdRcEe2knaDmUzEm7g" name="Diagram for manual example" repPath="#_h7vgcNRcEe2knaDmUzEm7g" changeId="1d37cfdc-9ce8-42fc-9174-1589ab5e10f7">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_h7wHgdRcEe2knaDmUzEm7g" name="Diagram for manual example" repPath="#_h7vgcNRcEe2knaDmUzEm7g" changeId="de9cb83f-db59-49a6-bb14-0acc4f7bccd4">
         <description xmi:type="description_1:DiagramDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']"/>
         <target xmi:type="ccl:System" href="MyCcl.ccl#/"/>
       </ownedRepresentationDescriptors>
@@ -28,7 +28,7 @@
           </children>
           <children xmi:type="notation:Node" xmi:id="_pfJngNRcEe2knaDmUzEm7g" type="3001" element="_pfHyUNRcEe2knaDmUzEm7g">
             <children xmi:type="notation:Node" xmi:id="_pfJng9RcEe2knaDmUzEm7g" type="5001">
-              <layoutConstraint xmi:type="notation:Location" xmi:id="_pfJnhNRcEe2knaDmUzEm7g" y="5"/>
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_pfJnhNRcEe2knaDmUzEm7g" x="-7" y="-24"/>
             </children>
             <children xmi:type="notation:Node" xmi:id="_pfJnhdRcEe2knaDmUzEm7g" type="3002" element="_pfHyUdRcEe2knaDmUzEm7g">
               <styles xmi:type="notation:ShapeStyle" xmi:id="_pfJnhtRcEe2knaDmUzEm7g" fontName="Noto Sans"/>
@@ -70,35 +70,83 @@
             <styles xmi:type="notation:ShapeStyle" xmi:id="_B5OJsNRdEe2knaDmUzEm7g" fontName="Noto Sans" fontHeight="12"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_B5OJsdRdEe2knaDmUzEm7g" x="-22" y="30" width="30" height="30"/>
           </children>
+          <children xmi:type="notation:Node" xmi:id="_oIMwwNReEe2Vj6bTyeL_mQ" type="3001" element="_oH6c4NReEe2Vj6bTyeL_mQ">
+            <children xmi:type="notation:Node" xmi:id="_oIN-4NReEe2Vj6bTyeL_mQ" type="5001">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_oIN-4dReEe2Vj6bTyeL_mQ" x="-1"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_oIS3YNReEe2Vj6bTyeL_mQ" type="3002" element="_oH7D8NReEe2Vj6bTyeL_mQ">
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_oIS3YdReEe2Vj6bTyeL_mQ" fontName="Noto Sans"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oIS3YtReEe2Vj6bTyeL_mQ"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_oIMwwdReEe2Vj6bTyeL_mQ" fontName="Noto Sans" fontHeight="12"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oIMwwtReEe2Vj6bTyeL_mQ" x="153" y="30" width="30" height="30"/>
+          </children>
           <styles xmi:type="notation:ShapeStyle" xmi:id="__gn6odRcEe2knaDmUzEm7g" fontName="Noto Sans" fontHeight="12"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="__gn6otRcEe2knaDmUzEm7g" x="985" y="267" width="161" height="71"/>
         </children>
+        <children xmi:type="notation:Node" xmi:id="_64sbUNReEe2Vj6bTyeL_mQ" type="2001" element="_64XEINReEe2Vj6bTyeL_mQ">
+          <children xmi:type="notation:Node" xmi:id="_64wFsNReEe2Vj6bTyeL_mQ" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_64wFsdReEe2Vj6bTyeL_mQ" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_64zwENReEe2Vj6bTyeL_mQ" type="3003" element="_64augNReEe2Vj6bTyeL_mQ">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_64zwEdReEe2Vj6bTyeL_mQ" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_64zwEtReEe2Vj6bTyeL_mQ"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_9Ai4oNReEe2Vj6bTyeL_mQ" type="3001" element="_9AUPINReEe2Vj6bTyeL_mQ">
+            <children xmi:type="notation:Node" xmi:id="_9AtQsNReEe2Vj6bTyeL_mQ" type="5001">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_9AtQsdReEe2Vj6bTyeL_mQ" x="-1" y="2"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_9A0lcNReEe2Vj6bTyeL_mQ" type="3017" element="_9AWrYNReEe2Vj6bTyeL_mQ">
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_9A0lcdReEe2Vj6bTyeL_mQ" fontName="Noto Sans"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9A0lctReEe2Vj6bTyeL_mQ"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_9Ai4odReEe2Vj6bTyeL_mQ" fontName="Noto Sans" fontHeight="12"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9Ai4otReEe2Vj6bTyeL_mQ" x="70" y="-22" width="30" height="30"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_64sbUdReEe2Vj6bTyeL_mQ" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_64sbUtReEe2Vj6bTyeL_mQ" x="1000" y="470" width="146" height="51"/>
+        </children>
         <styles xmi:type="notation:DiagramStyle" xmi:id="_h7wuktRcEe2knaDmUzEm7g"/>
-        <edges xmi:type="notation:Edge" xmi:id="_Cvm_JNRdEe2knaDmUzEm7g" type="4001" element="_CvlJ8NRdEe2knaDmUzEm7g" source="_pfJngNRcEe2knaDmUzEm7g" target="_B5NipdRdEe2knaDmUzEm7g">
-          <children xmi:type="notation:Node" xmi:id="_CvnmMNRdEe2knaDmUzEm7g" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CvnmMdRdEe2knaDmUzEm7g" y="-10"/>
+        <edges xmi:type="notation:Edge" xmi:id="_yUha0NReEe2Vj6bTyeL_mQ" type="4001" element="_yTccwNReEe2Vj6bTyeL_mQ" source="_pfJngNRcEe2knaDmUzEm7g" target="_B5NipdRdEe2knaDmUzEm7g">
+          <children xmi:type="notation:Node" xmi:id="_yUiB4NReEe2Vj6bTyeL_mQ" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yUiB4dReEe2Vj6bTyeL_mQ" y="-10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_CvnmMtRdEe2knaDmUzEm7g" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CvnmM9RdEe2knaDmUzEm7g" x="-1" y="10"/>
+          <children xmi:type="notation:Node" xmi:id="_yUiB4tReEe2Vj6bTyeL_mQ" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yUiB49ReEe2Vj6bTyeL_mQ" y="10"/>
           </children>
-          <children xmi:type="notation:Node" xmi:id="_CvnmNNRdEe2knaDmUzEm7g" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CvnmNdRdEe2knaDmUzEm7g" x="-3" y="8"/>
+          <children xmi:type="notation:Node" xmi:id="_yUiB5NReEe2Vj6bTyeL_mQ" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yUiB5dReEe2Vj6bTyeL_mQ" y="10"/>
           </children>
-          <styles xmi:type="notation:ConnectorStyle" xmi:id="_Cvm_JdRdEe2knaDmUzEm7g"/>
-          <styles xmi:type="notation:FontStyle" xmi:id="_Cvm_JtRdEe2knaDmUzEm7g" fontName="Noto Sans" fontHeight="12"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Cvm_J9RdEe2knaDmUzEm7g" points="[0, 0, -137, -3]$[137, 3, 0, 0]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_CvnmNtRdEe2knaDmUzEm7g" id="(1.0,0.4666666666666667)"/>
-          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_CvnmN9RdEe2knaDmUzEm7g" id="(0.0,0.5)"/>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_yUha0dReEe2Vj6bTyeL_mQ"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_yUha0tReEe2Vj6bTyeL_mQ" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yUha09ReEe2Vj6bTyeL_mQ" points="[14, 0, -152, -2]$[151, 1, -15, -1]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yUio8NReEe2Vj6bTyeL_mQ" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yUio8dReEe2Vj6bTyeL_mQ" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_mrgT0NRfEe2Vj6bTyeL_mQ" type="4001" element="_-x13ItReEe2Vj6bTyeL_mQ" source="_oIMwwNReEe2Vj6bTyeL_mQ" target="_9Ai4oNReEe2Vj6bTyeL_mQ">
+          <children xmi:type="notation:Node" xmi:id="_mrhh8NRfEe2Vj6bTyeL_mQ" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mrhh8dRfEe2Vj6bTyeL_mQ" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_mrhh8tRfEe2Vj6bTyeL_mQ" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mrhh89RfEe2Vj6bTyeL_mQ" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_mriJANRfEe2Vj6bTyeL_mQ" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mriJAdRfEe2Vj6bTyeL_mQ" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_mrgT0dRfEe2Vj6bTyeL_mQ"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_mrgT0tRfEe2Vj6bTyeL_mQ" fontName="Noto Sans" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_mrgT09RfEe2Vj6bTyeL_mQ" points="[-3, 6, 60, -136]$[-57, 127, 6, -15]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_mriwENRfEe2Vj6bTyeL_mQ" id="(0.3333333333333333,0.8)"/>
         </edges>
       </data>
     </ownedAnnotationEntries>
     <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_h8H7DtRcEe2knaDmUzEm7g" source="DANNOTATION_CUSTOMIZATION_KEY">
       <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_h8IiANRcEe2knaDmUzEm7g"/>
     </ownedAnnotationEntries>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="_oUWBQNRcEe2knaDmUzEm7g" name="component1" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_oUWBQNRcEe2knaDmUzEm7g" name="foo" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.0"/>
       <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.0"/>
-      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_pfHyUNRcEe2knaDmUzEm7g" outgoingEdges="_CvlJ8NRdEe2knaDmUzEm7g" width="3" height="3" resizeKind="NSEW">
+      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_pfHyUNRcEe2knaDmUzEm7g" name="some" outgoingEdges="_yTccwNReEe2Vj6bTyeL_mQ" width="3" height="3" resizeKind="NSEW">
         <target xmi:type="ccl:OutPort" href="MyCcl.ccl#//@components.0/@ports.0"/>
         <semanticElements xmi:type="ccl:OutPort" href="MyCcl.ccl#//@components.0/@ports.0"/>
         <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -128,16 +176,27 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNode" uid="__gmFcNRcEe2knaDmUzEm7g" name="component2" width="3" height="3" resizeKind="NSEW">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="__gmFcNRcEe2knaDmUzEm7g" name="bar" width="3" height="3" resizeKind="NSEW">
       <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.1"/>
       <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.1"/>
-      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_B5LtcNRdEe2knaDmUzEm7g" incomingEdges="_CvlJ8NRdEe2knaDmUzEm7g" width="3" height="3" resizeKind="NSEW">
+      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_B5LtcNRdEe2knaDmUzEm7g" incomingEdges="_yTccwNReEe2Vj6bTyeL_mQ" width="3" height="3" resizeKind="NSEW">
         <target xmi:type="ccl:InPort" href="MyCcl.ccl#//@components.1/@ports.0"/>
         <semanticElements xmi:type="ccl:InPort" href="MyCcl.ccl#//@components.1/@ports.0"/>
         <ownedStyle xmi:type="diagram:Lozenge" uid="_B5LtcdRdEe2knaDmUzEm7g" labelSize="12" showIcon="false" color="204,242,166">
           <description xmi:type="style:LozengeNodeDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeIn']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeIn']"/>
+      </ownedBorderedNodes>
+      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_oH6c4NReEe2Vj6bTyeL_mQ" outgoingEdges="_-x13ItReEe2Vj6bTyeL_mQ" width="3" height="3" resizeKind="NSEW">
+        <target xmi:type="ccl:OutPort" href="MyCcl.ccl#//@components.1/@ports.1"/>
+        <semanticElements xmi:type="ccl:OutPort" href="MyCcl.ccl#//@components.1/@ports.1"/>
+        <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+        <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+        <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+        <ownedStyle xmi:type="diagram:Dot" uid="_oH7D8NReEe2Vj6bTyeL_mQ" labelSize="12" showIcon="false" backgroundColor="194,239,255">
+          <description xmi:type="style:DotDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeOut']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeOut']"/>
       </ownedBorderedNodes>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
       <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
@@ -147,12 +206,43 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_CvlJ8NRdEe2knaDmUzEm7g" sourceNode="_pfHyUNRcEe2knaDmUzEm7g" targetNode="_B5LtcNRdEe2knaDmUzEm7g">
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_64XEINReEe2Vj6bTyeL_mQ" name="xyz" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.2"/>
+      <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.2"/>
+      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_9AUPINReEe2Vj6bTyeL_mQ" incomingEdges="_-x13ItReEe2Vj6bTyeL_mQ" width="3" height="3" resizeKind="NSEW">
+        <target xmi:type="ccl:InPort" href="MyCcl.ccl#//@components.2/@ports.0"/>
+        <semanticElements xmi:type="ccl:InPort" href="MyCcl.ccl#//@components.2/@ports.0"/>
+        <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+        <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+        <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+        <ownedStyle xmi:type="diagram:Lozenge" uid="_9AWrYNReEe2Vj6bTyeL_mQ" labelSize="12" showIcon="false" color="204,242,166">
+          <description xmi:type="style:LozengeNodeDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeIn']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@borderedNodeMappings[name='borderNodeIn']"/>
+      </ownedBorderedNodes>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:Square" uid="_64augNReEe2Vj6bTyeL_mQ" labelSize="12" showIcon="false" labelPosition="node" color="255,245,181">
+        <description xmi:type="style:SquareDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_yTccwNReEe2Vj6bTyeL_mQ" sourceNode="_pfHyUNRcEe2knaDmUzEm7g" targetNode="_B5LtcNRdEe2knaDmUzEm7g">
+      <target xmi:type="ccl:Connector" href="MyCcl.ccl#//@connectors.0"/>
+      <semanticElements xmi:type="ccl:Connector" href="MyCcl.ccl#//@connectors.0"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_yTccwdReEe2Vj6bTyeL_mQ" size="2">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_yTccwtReEe2Vj6bTyeL_mQ" labelSize="12"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_-x13ItReEe2Vj6bTyeL_mQ" sourceNode="_oH6c4NReEe2Vj6bTyeL_mQ" targetNode="_9AUPINReEe2Vj6bTyeL_mQ">
       <target xmi:type="ccl:Connector" href="MyCcl.ccl#//@connectors.1"/>
       <semanticElements xmi:type="ccl:Connector" href="MyCcl.ccl#//@connectors.1"/>
-      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_CvlxANRdEe2knaDmUzEm7g" size="2">
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_-x3sUNReEe2Vj6bTyeL_mQ" size="2">
         <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']/@style"/>
-        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_CvlxAdRdEe2knaDmUzEm7g" labelSize="12"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_-x3sUdReEe2Vj6bTyeL_mQ" labelSize="12"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']"/>
     </ownedDiagramElements>
@@ -3802,8 +3892,6 @@
       <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='nodeContainer']"/>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DEdge" uid="_XK7z0NRdEe2knaDmUzEm7g" sourceNode="_XKw0sNRdEe2knaDmUzEm7g" targetNode="_XKxbwdRdEe2knaDmUzEm7g">
-      <target xmi:type="ccl:Connector" href="MyCcl.ccl#//@connectors.1"/>
-      <semanticElements xmi:type="ccl:Connector" href="MyCcl.ccl#//@connectors.1"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" uid="_XK8a4NRdEe2knaDmUzEm7g" size="2">
         <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']/@style"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_XK8a4dRdEe2knaDmUzEm7g" labelSize="12"/>

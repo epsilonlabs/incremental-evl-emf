@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="ASCII"?>
 <ccl:System xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccl="http://eclipse.org/epsilon/ccl">
-  <components name="component1">
-    <ports xsi:type="ccl:OutPort"/>
+  <components name="foo">
+    <ports xsi:type="ccl:OutPort" name="some"/>
     <ports xsi:type="ccl:InPort" name="test"/>
   </components>
-  <components name="component2">
+  <components name="bar">
+    <ports xsi:type="ccl:InPort"/>
+    <ports xsi:type="ccl:OutPort"/>
+  </components>
+  <components name="xyz">
     <ports xsi:type="ccl:InPort"/>
   </components>
-  <connectors/>
   <connectors source="//@components.0/@ports.0" target="//@components.1/@ports.0"/>
+  <connectors source="//@components.1/@ports.1" target="//@components.2/@ports.0"/>
 </ccl:System>
