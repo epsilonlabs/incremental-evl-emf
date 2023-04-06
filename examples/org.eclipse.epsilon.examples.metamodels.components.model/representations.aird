@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccl="http://eclipse.org/epsilon/ccl" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
+  <viewpoint:DAnalysis uid="_u0_H8NRVEe26zrHodeUvDQ" selectedViews="_xIGaENRVEe26zrHodeUvDQ" version="15.0.0.202209061200">
+    <semanticResources>MyCcl.ccl</semanticResources>
+    <ownedViews xmi:type="viewpoint:DView" uid="_xIGaENRVEe26zrHodeUvDQ">
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']"/>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_y1jaYNRVEe26zrHodeUvDQ" name="new componentDiagram" repPath="#_y1E5QNRVEe26zrHodeUvDQ" changeId="9e3ea937-0ef8-4335-9640-99af8234822c">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']"/>
+        <target xmi:type="ccl:System" href="MyCcl.ccl#/"/>
+      </ownedRepresentationDescriptors>
+    </ownedViews>
+  </viewpoint:DAnalysis>
+  <diagram:DSemanticDiagram uid="_y1E5QNRVEe26zrHodeUvDQ">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_y2KeYNRVEe26zrHodeUvDQ" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="_y2LFcNRVEe26zrHodeUvDQ" type="Sirius" element="_y1E5QNRVEe26zrHodeUvDQ" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_EcHocNRWEe26zrHodeUvDQ" visible="false" type="2001" element="_EcFMMNRWEe26zrHodeUvDQ">
+          <children xmi:type="notation:Node" xmi:id="_EcHoc9RWEe26zrHodeUvDQ" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_EcHodNRWEe26zrHodeUvDQ" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_EcIPgNRWEe26zrHodeUvDQ" type="3016" element="_EcFMMdRWEe26zrHodeUvDQ">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_EcIPgdRWEe26zrHodeUvDQ" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EcIPgtRWEe26zrHodeUvDQ"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_EcHocdRWEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EcHoctRWEe26zrHodeUvDQ" x="515" y="240" width="111" height="46"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_T6j28NRXEe26zrHodeUvDQ" type="2002" element="_T6hasNRXEe26zrHodeUvDQ">
+          <children xmi:type="notation:Node" xmi:id="_T6j289RXEe26zrHodeUvDQ" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_T6j29NRXEe26zrHodeUvDQ" type="7001">
+            <children xmi:type="notation:Node" xmi:id="_T6lFEdRXEe26zrHodeUvDQ" type="3008" element="_T6jP49RXEe26zrHodeUvDQ">
+              <children xmi:type="notation:Node" xmi:id="_T6lFFNRXEe26zrHodeUvDQ" type="5005"/>
+              <children xmi:type="notation:Node" xmi:id="_T6lFFdRXEe26zrHodeUvDQ" type="7002">
+                <children xmi:type="notation:Node" xmi:id="_T4aFYNRYEe26zrHodeUvDQ" type="3007" element="_T4Ul0NRYEe26zrHodeUvDQ">
+                  <children xmi:type="notation:Node" xmi:id="_T4ascNRYEe26zrHodeUvDQ" type="5003">
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_T4ascdRYEe26zrHodeUvDQ" y="5"/>
+                  </children>
+                  <children xmi:type="notation:Node" xmi:id="_T4bTgNRYEe26zrHodeUvDQ" type="3003" element="_T4WbANRYEe26zrHodeUvDQ">
+                    <styles xmi:type="notation:ShapeStyle" xmi:id="_T4bTgdRYEe26zrHodeUvDQ" fontName="Noto Sans"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T4bTgtRYEe26zrHodeUvDQ"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_T4aFYdRYEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T4aFYtRYEe26zrHodeUvDQ" x="49" y="50" width="71" height="41"/>
+                </children>
+                <styles xmi:type="notation:SortingStyle" xmi:id="_T6lFFtRXEe26zrHodeUvDQ"/>
+                <styles xmi:type="notation:FilteringStyle" xmi:id="_T6lFF9RXEe26zrHodeUvDQ"/>
+                <styles xmi:type="notation:DrawerStyle" xmi:id="_T6lFGNRXEe26zrHodeUvDQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_T6lFEtRXEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T6lFE9RXEe26zrHodeUvDQ" width="165" height="131"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_T6j299RXEe26zrHodeUvDQ" type="3008" element="_T6jP4NRXEe26zrHodeUvDQ">
+              <children xmi:type="notation:Node" xmi:id="_T6keANRXEe26zrHodeUvDQ" type="5005"/>
+              <children xmi:type="notation:Node" xmi:id="_T6keAdRXEe26zrHodeUvDQ" type="7002">
+                <children xmi:type="notation:Node" xmi:id="_ctt5M9RYEe26zrHodeUvDQ" type="3007" element="_ctq14NRYEe26zrHodeUvDQ">
+                  <children xmi:type="notation:Node" xmi:id="_ctugQNRYEe26zrHodeUvDQ" type="5003">
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_ctugQdRYEe26zrHodeUvDQ" y="5"/>
+                  </children>
+                  <children xmi:type="notation:Node" xmi:id="_ctugQtRYEe26zrHodeUvDQ" type="3003" element="_ctq14dRYEe26zrHodeUvDQ">
+                    <styles xmi:type="notation:ShapeStyle" xmi:id="_ctugQ9RYEe26zrHodeUvDQ" fontName="Noto Sans"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ctugRNRYEe26zrHodeUvDQ"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_ctt5NNRYEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ctt5NdRYEe26zrHodeUvDQ" x="59" y="51" width="66" height="41"/>
+                </children>
+                <styles xmi:type="notation:SortingStyle" xmi:id="_T6keAtRXEe26zrHodeUvDQ"/>
+                <styles xmi:type="notation:FilteringStyle" xmi:id="_T6keA9RXEe26zrHodeUvDQ"/>
+                <styles xmi:type="notation:DrawerStyle" xmi:id="_T6lFENRXEe26zrHodeUvDQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_T6j2-NRXEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T6j2-dRXEe26zrHodeUvDQ" x="165" width="174" height="131"/>
+            </children>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_T6j29dRXEe26zrHodeUvDQ"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_T6j29tRXEe26zrHodeUvDQ"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_T6j28dRXEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T6j28tRXEe26zrHodeUvDQ" x="290" y="323"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_2WqCQNRYEe26zrHodeUvDQ" type="2002" element="_2Wcm4NRYEe26zrHodeUvDQ">
+          <children xmi:type="notation:Node" xmi:id="_2WqCQ9RYEe26zrHodeUvDQ" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_2WqCRNRYEe26zrHodeUvDQ" type="7001">
+            <children xmi:type="notation:Node" xmi:id="_2WrQaNRYEe26zrHodeUvDQ" type="3008" element="_2Wj7otRYEe26zrHodeUvDQ">
+              <children xmi:type="notation:Node" xmi:id="_2Wr3cNRYEe26zrHodeUvDQ" type="5005"/>
+              <children xmi:type="notation:Node" xmi:id="_2Wr3cdRYEe26zrHodeUvDQ" type="7002">
+                <children xmi:type="notation:Node" xmi:id="_BHoRgNRZEe26zrHodeUvDQ" type="3007" element="_BHkAENRZEe26zrHodeUvDQ">
+                  <children xmi:type="notation:Node" xmi:id="_BHo4kNRZEe26zrHodeUvDQ" type="5003">
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_BHo4kdRZEe26zrHodeUvDQ" y="5"/>
+                  </children>
+                  <children xmi:type="notation:Node" xmi:id="_BHo4ktRZEe26zrHodeUvDQ" type="3003" element="_BHkAEdRZEe26zrHodeUvDQ">
+                    <styles xmi:type="notation:ShapeStyle" xmi:id="_BHo4k9RZEe26zrHodeUvDQ" fontName="Noto Sans"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BHo4lNRZEe26zrHodeUvDQ"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_BHoRgdRZEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BHoRgtRZEe26zrHodeUvDQ" x="49" y="55" width="56" height="36"/>
+                </children>
+                <styles xmi:type="notation:SortingStyle" xmi:id="_2Wr3ctRYEe26zrHodeUvDQ"/>
+                <styles xmi:type="notation:FilteringStyle" xmi:id="_2Wr3c9RYEe26zrHodeUvDQ"/>
+                <styles xmi:type="notation:DrawerStyle" xmi:id="_2Wr3dNRYEe26zrHodeUvDQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_2WrQadRYEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2WrQatRYEe26zrHodeUvDQ" width="140" height="134"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_2WtspNRYEe26zrHodeUvDQ" type="3008" element="_2Wlw0tRYEe26zrHodeUvDQ">
+              <children xmi:type="notation:Node" xmi:id="_2WuTsNRYEe26zrHodeUvDQ" type="5005"/>
+              <children xmi:type="notation:Node" xmi:id="_2WuTsdRYEe26zrHodeUvDQ" type="7002">
+                <children xmi:type="notation:Node" xmi:id="_B-CVENRZEe26zrHodeUvDQ" type="3007" element="_B99ckNRZEe26zrHodeUvDQ">
+                  <children xmi:type="notation:Node" xmi:id="_B-C8INRZEe26zrHodeUvDQ" type="5003">
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_B-C8IdRZEe26zrHodeUvDQ" y="5"/>
+                  </children>
+                  <children xmi:type="notation:Node" xmi:id="_B-C8ItRZEe26zrHodeUvDQ" type="3003" element="_B9-DoNRZEe26zrHodeUvDQ">
+                    <styles xmi:type="notation:ShapeStyle" xmi:id="_B-C8I9RZEe26zrHodeUvDQ" fontName="Noto Sans"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_B-C8JNRZEe26zrHodeUvDQ"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_B-CVEdRZEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_B-CVEtRZEe26zrHodeUvDQ" x="54" y="56" width="61" height="36"/>
+                </children>
+                <styles xmi:type="notation:SortingStyle" xmi:id="_2WuTstRYEe26zrHodeUvDQ"/>
+                <styles xmi:type="notation:FilteringStyle" xmi:id="_2WuTs9RYEe26zrHodeUvDQ"/>
+                <styles xmi:type="notation:DrawerStyle" xmi:id="_2WuTtNRYEe26zrHodeUvDQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_2WtspdRYEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2WtsptRYEe26zrHodeUvDQ" x="140" width="184" height="134"/>
+            </children>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_2WqCRdRYEe26zrHodeUvDQ"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_2WqCRtRYEe26zrHodeUvDQ"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_2WqCQdRYEe26zrHodeUvDQ" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2WqCQtRYEe26zrHodeUvDQ" x="815" y="320"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="_y2LFcdRVEe26zrHodeUvDQ"/>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_y2xiYNRVEe26zrHodeUvDQ" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_y2xiYdRVEe26zrHodeUvDQ"/>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_EcFMMNRWEe26zrHodeUvDQ" name="connector" visible="false" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="ccl:Connector" href="MyCcl.ccl#//@connectors.0"/>
+      <semanticElements xmi:type="ccl:Connector" href="MyCcl.ccl#//@connectors.0"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:Ellipse" uid="_EcFMMdRWEe26zrHodeUvDQ" labelSize="12" showIcon="false" labelPosition="node" color="194,239,255">
+        <description xmi:type="style:EllipseNodeDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='connectorNode']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@nodeMappings[name='connectorNode']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_T6hasNRXEe26zrHodeUvDQ" name="component1" childrenPresentation="HorizontalStack">
+      <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.0"/>
+      <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.0"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_T6hasdRXEe26zrHodeUvDQ" labelSize="12" borderSize="1" borderSizeComputationExpression="1">
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']"/>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_T6jP49RXEe26zrHodeUvDQ" name="in ports">
+        <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.0"/>
+        <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.0"/>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_T6jP5NRXEe26zrHodeUvDQ" labelSize="12" borderSize="1" borderSizeComputationExpression="1">
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']"/>
+        <ownedDiagramElements xmi:type="diagram:DNode" uid="_T4Ul0NRYEe26zrHodeUvDQ" name="bar" width="3" height="3" resizeKind="NSEW">
+          <target xmi:type="ccl:InPort" href="MyCcl.ccl#//@components.0/@ports.0"/>
+          <semanticElements xmi:type="ccl:InPort" href="MyCcl.ccl#//@components.0/@ports.0"/>
+          <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+          <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+          <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+          <ownedStyle xmi:type="diagram:Square" uid="_T4WbANRYEe26zrHodeUvDQ" labelSize="12" labelPosition="node" color="253,206,137">
+            <description xmi:type="style:SquareDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']/@subNodeMappings[name='inPortNode']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']/@subNodeMappings[name='inPortNode']"/>
+        </ownedDiagramElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_T6jP4NRXEe26zrHodeUvDQ" name="out ports">
+        <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.0"/>
+        <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.0"/>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_T6jP4dRXEe26zrHodeUvDQ" labelSize="12" borderSize="1" borderSizeComputationExpression="1">
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']"/>
+        <ownedDiagramElements xmi:type="diagram:DNode" uid="_ctq14NRYEe26zrHodeUvDQ" name="xyz" width="3" height="3" resizeKind="NSEW">
+          <target xmi:type="ccl:OutPort" href="MyCcl.ccl#//@components.0/@ports.1"/>
+          <semanticElements xmi:type="ccl:OutPort" href="MyCcl.ccl#//@components.0/@ports.1"/>
+          <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+          <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+          <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+          <ownedStyle xmi:type="diagram:Square" uid="_ctq14dRYEe26zrHodeUvDQ" labelSize="12" labelPosition="node" color="204,242,166">
+            <description xmi:type="style:SquareDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']/@subNodeMappings[name='outPortNode']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']/@subNodeMappings[name='outPortNode']"/>
+        </ownedDiagramElements>
+      </ownedDiagramElements>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_2Wcm4NRYEe26zrHodeUvDQ" name="component2" childrenPresentation="HorizontalStack">
+      <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.1"/>
+      <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.1"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_2Wcm4dRYEe26zrHodeUvDQ" labelSize="12" borderSize="1" borderSizeComputationExpression="1">
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']"/>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_2Wj7otRYEe26zrHodeUvDQ" name="in ports">
+        <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.1"/>
+        <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.1"/>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_2Wj7o9RYEe26zrHodeUvDQ" labelSize="12" borderSize="1" borderSizeComputationExpression="1">
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']"/>
+        <ownedDiagramElements xmi:type="diagram:DNode" uid="_BHkAENRZEe26zrHodeUvDQ" name="abc" width="3" height="3" resizeKind="NSEW">
+          <target xmi:type="ccl:InPort" href="MyCcl.ccl#//@components.1/@ports.0"/>
+          <semanticElements xmi:type="ccl:InPort" href="MyCcl.ccl#//@components.1/@ports.0"/>
+          <ownedStyle xmi:type="diagram:Square" uid="_BHkAEdRZEe26zrHodeUvDQ" labelSize="12" labelPosition="node" color="253,206,137">
+            <description xmi:type="style:SquareDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']/@subNodeMappings[name='inPortNode']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerIn']/@subNodeMappings[name='inPortNode']"/>
+        </ownedDiagramElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_2Wlw0tRYEe26zrHodeUvDQ" name="out ports">
+        <target xmi:type="ccl:Component" href="MyCcl.ccl#//@components.1"/>
+        <semanticElements xmi:type="ccl:Component" href="MyCcl.ccl#//@components.1"/>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_2Wlw09RYEe26zrHodeUvDQ" labelSize="12" borderSize="1" borderSizeComputationExpression="1">
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']"/>
+        <ownedDiagramElements xmi:type="diagram:DNode" uid="_B99ckNRZEe26zrHodeUvDQ" name="def" width="3" height="3" resizeKind="NSEW">
+          <target xmi:type="ccl:OutPort" href="MyCcl.ccl#//@components.1/@ports.1"/>
+          <semanticElements xmi:type="ccl:OutPort" href="MyCcl.ccl#//@components.1/@ports.1"/>
+          <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+          <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+          <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+          <ownedStyle xmi:type="diagram:Square" uid="_B9-DoNRZEe26zrHodeUvDQ" labelSize="12" labelPosition="node" color="204,242,166">
+            <description xmi:type="style:SquareDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']/@subNodeMappings[name='outPortNode']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@containerMappings[name='componentContainer']/@subContainerMappings[name='componentContainerOut']/@subNodeMappings[name='outPortNode']"/>
+        </ownedDiagramElements>
+      </ownedDiagramElements>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="_y1TiwNRVEe26zrHodeUvDQ"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/resource/org.eclipse.epsilon.examples.metamodels.components.design/description/components.odesign#//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer"/>
+    <target xmi:type="ccl:System" href="MyCcl.ccl#/"/>
+  </diagram:DSemanticDiagram>
+</xmi:XMI>

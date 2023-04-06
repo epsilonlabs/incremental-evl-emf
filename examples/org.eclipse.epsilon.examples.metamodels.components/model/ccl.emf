@@ -1,0 +1,27 @@
+@namespace(uri="http://eclipse.org/epsilon/ccl", prefix="ccl")
+package ccl;
+
+class System {
+	val Component[*] components;
+	val Connector[*] connectors;
+}
+
+class Component {
+    attr String name;
+    val Port[*]#component ports;
+}
+
+class Connector {
+    ref OutPort source;
+    ref InPort target;
+}
+
+class InPort extends Port {}
+
+class OutPort extends Port {}
+
+abstract class Port {
+    attr String name;
+    attr String type = "boolean";
+    ref Component#ports component;
+}
