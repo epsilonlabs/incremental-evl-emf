@@ -1,7 +1,7 @@
 var nComponents = 30;
 var nConnectors = nComponents;
 
-var minPort = 1;
+var minPort = 0;
 var maxPort = 4;
 
 var sys = new ccl::System;
@@ -10,17 +10,25 @@ var rnd = new Native('java.util.Random');
 
 for (i in 1.to(nComponents)) {
   var c = new ccl::Component;
-  c.name = 'component' + i;
+  
+  if (random(0,100)> 10) {
+  	c.name = 'Component' + i;}
+  else {
+  	c.name = 'component' + i;}
+  
+  
   sys.components.add(c);
 
   for (iIn in 1.to(random(minPort, maxPort))) {
     var inP = new ccl::InPort;
-    inP.name = 'c' + i + '_in' + iIn;
+    //inP.name = 'c' + i + '_in' + iIn;
+    inP.name = 'I' + iIn;    
     c.ports.add(inP);
   }
   for (iOut in 1.to(random(minPort, maxPort))) {
     var outP = new ccl::OutPort;
-    outP.name = 'c' + i + '_out' + iOut;
+    //outP.name = 'c' + i + '_out' + iOut;
+    outP.name = 'O' + iOut;
     c.ports.add(outP);
   }
 }

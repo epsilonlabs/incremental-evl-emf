@@ -1,223 +1,458 @@
 <?xml version="1.0" encoding="ASCII"?>
-<ccl:System xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccl="http://eclipse.org/epsilon/ccl">
-  <components name="component1">
-    <ports xsi:type="ccl:InPort" name="c1_in1"/>
-    <ports xsi:type="ccl:InPort" name="c1_in2"/>
-    <ports xsi:type="ccl:OutPort" name="c1_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c1_out2"/>
+<ccl:System
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ccl="http://eclipse.org/epsilon/ccl">
+  <components
+      name="Component1">
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
+    <ports xsi:type="ccl:InPort"/>
+    <ports xsi:type="ccl:InPort"/>
   </components>
-  <components name="component2">
-    <ports xsi:type="ccl:InPort" name="c2_in1"/>
-    <ports xsi:type="ccl:InPort" name="c2_in2"/>
-    <ports xsi:type="ccl:InPort" name="c2_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c2_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c2_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c2_out3"/>
+  <components
+      name="Component2">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component3">
-    <ports xsi:type="ccl:InPort" name="c3_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c3_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c3_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c3_out3"/>
+  <components
+      name="Component3">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component4">
-    <ports xsi:type="ccl:InPort" name="c4_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c4_out1"/>
+  <components
+      name="Component4">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
   </components>
-  <components name="component5">
-    <ports xsi:type="ccl:InPort" name="c5_in1"/>
-    <ports xsi:type="ccl:InPort" name="c5_in2"/>
-    <ports xsi:type="ccl:InPort" name="c5_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c5_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c5_out2"/>
+  <components
+      name="Component5">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
   </components>
-  <components name="component6">
-    <ports xsi:type="ccl:InPort" name="c6_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c6_out1"/>
+  <components
+      name="Component6">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component7">
-    <ports xsi:type="ccl:InPort" name="c7_in1"/>
-    <ports xsi:type="ccl:InPort" name="c7_in2"/>
-    <ports xsi:type="ccl:InPort" name="c7_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c7_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c7_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c7_out3"/>
+  <components
+      name="Component7">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O0"/>
   </components>
-  <components name="component8">
-    <ports xsi:type="ccl:InPort" name="c8_in1"/>
-    <ports xsi:type="ccl:InPort" name="c8_in2"/>
-    <ports xsi:type="ccl:OutPort" name="c8_out1"/>
+  <components
+      name="Component8">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
   </components>
-  <components name="component9">
-    <ports xsi:type="ccl:InPort" name="c9_in1"/>
-    <ports xsi:type="ccl:InPort" name="c9_in2"/>
-    <ports xsi:type="ccl:OutPort" name="c9_out1"/>
+  <components
+      name="Component9">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
   </components>
-  <components name="component10">
-    <ports xsi:type="ccl:InPort" name="c10_in1"/>
-    <ports xsi:type="ccl:InPort" name="c10_in2"/>
-    <ports xsi:type="ccl:InPort" name="c10_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c10_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c10_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c10_out3"/>
+  <components
+      name="Component10">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component11">
-    <ports xsi:type="ccl:InPort" name="c11_in1"/>
-    <ports xsi:type="ccl:InPort" name="c11_in2"/>
-    <ports xsi:type="ccl:InPort" name="c11_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c11_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c11_out2"/>
+  <components
+      name="Component11">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
   </components>
-  <components name="component12">
-    <ports xsi:type="ccl:InPort" name="c12_in1"/>
-    <ports xsi:type="ccl:InPort" name="c12_in2"/>
-    <ports xsi:type="ccl:OutPort" name="c12_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c12_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c12_out3"/>
+  <components
+      name="component12">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O0"/>
   </components>
-  <components name="component13">
-    <ports xsi:type="ccl:InPort" name="c13_in1"/>
-    <ports xsi:type="ccl:InPort" name="c13_in2"/>
-    <ports xsi:type="ccl:InPort" name="c13_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c13_out1"/>
+  <components
+      name="Component13">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component14">
-    <ports xsi:type="ccl:InPort" name="c14_in1"/>
-    <ports xsi:type="ccl:InPort" name="c14_in2"/>
-    <ports xsi:type="ccl:OutPort" name="c14_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c14_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c14_out3"/>
+  <components
+      name="Component14">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
   </components>
-  <components name="component15">
-    <ports xsi:type="ccl:InPort" name="c15_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c15_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c15_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c15_out3"/>
+  <components
+      name="Component15">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component16">
-    <ports xsi:type="ccl:InPort" name="c16_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c16_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c16_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c16_out3"/>
+  <components
+      name="Component16">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component17">
-    <ports xsi:type="ccl:InPort" name="c17_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c17_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c17_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c17_out3"/>
+  <components
+      name="Component17">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O0"/>
   </components>
-  <components name="component18">
-    <ports xsi:type="ccl:InPort" name="c18_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c18_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c18_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c18_out3"/>
+  <components
+      name="Component18">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component19">
-    <ports xsi:type="ccl:InPort" name="c19_in1"/>
-    <ports xsi:type="ccl:InPort" name="c19_in2"/>
-    <ports xsi:type="ccl:InPort" name="c19_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c19_out1"/>
+  <components
+      name="Component19">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O0"/>
   </components>
-  <components name="component20">
-    <ports xsi:type="ccl:InPort" name="c20_in1"/>
-    <ports xsi:type="ccl:InPort" name="c20_in2"/>
-    <ports xsi:type="ccl:InPort" name="c20_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c20_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c20_out2"/>
+  <components
+      name="Component20">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component21">
-    <ports xsi:type="ccl:InPort" name="c21_in1"/>
-    <ports xsi:type="ccl:InPort" name="c21_in2"/>
-    <ports xsi:type="ccl:InPort" name="c21_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c21_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c21_out2"/>
+  <components
+      name="Component21">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
   </components>
-  <components name="component22">
-    <ports xsi:type="ccl:InPort" name="c22_in1"/>
-    <ports xsi:type="ccl:InPort" name="c22_in2"/>
-    <ports xsi:type="ccl:InPort" name="c22_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c22_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c22_out2"/>
+  <components
+      name="Component22">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component23">
-    <ports xsi:type="ccl:InPort" name="c23_in1"/>
-    <ports xsi:type="ccl:InPort" name="c23_in2"/>
-    <ports xsi:type="ccl:InPort" name="c23_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c23_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c23_out2"/>
+  <components
+      name="Component23">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component24">
-    <ports xsi:type="ccl:InPort" name="c24_in1"/>
-    <ports xsi:type="ccl:InPort" name="c24_in2"/>
-    <ports xsi:type="ccl:OutPort" name="c24_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c24_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c24_out3"/>
+  <components
+      name="component24">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
   </components>
-  <components name="component25">
-    <ports xsi:type="ccl:InPort" name="c25_in1"/>
-    <ports xsi:type="ccl:InPort" name="c25_in2"/>
-    <ports xsi:type="ccl:InPort" name="c25_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c25_out1"/>
+  <components
+      name="Component25">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O0"/>
   </components>
-  <components name="component26">
-    <ports xsi:type="ccl:InPort" name="c26_in1"/>
-    <ports xsi:type="ccl:InPort" name="c26_in2"/>
-    <ports xsi:type="ccl:InPort" name="c26_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c26_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c26_out2"/>
+  <components
+      name="Component26">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component27">
-    <ports xsi:type="ccl:InPort" name="c27_in1"/>
-    <ports xsi:type="ccl:InPort" name="c27_in2"/>
-    <ports xsi:type="ccl:InPort" name="c27_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c27_out1"/>
+  <components
+      name="Component27">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O0"/>
   </components>
-  <components name="component28">
-    <ports xsi:type="ccl:InPort" name="c28_in1"/>
-    <ports xsi:type="ccl:InPort" name="c28_in2"/>
-    <ports xsi:type="ccl:InPort" name="c28_in3"/>
-    <ports xsi:type="ccl:OutPort" name="c28_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c28_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c28_out3"/>
+  <components
+      name="component28">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O3"/>
   </components>
-  <components name="component29">
-    <ports xsi:type="ccl:InPort" name="c29_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c29_out1"/>
-    <ports xsi:type="ccl:OutPort" name="c29_out2"/>
-    <ports xsi:type="ccl:OutPort" name="c29_out3"/>
+  <components
+      name="Component29">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I2"/>
+    <ports xsi:type="ccl:InPort"
+        name="I3"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O0"/>
   </components>
-  <components name="component30">
-    <ports xsi:type="ccl:InPort" name="c30_in1"/>
-    <ports xsi:type="ccl:OutPort" name="c30_out1"/>
+  <components
+      name="Component30">
+    <ports xsi:type="ccl:InPort"
+        name="I1"/>
+    <ports xsi:type="ccl:InPort"
+        name="I0"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O1"/>
+    <ports xsi:type="ccl:OutPort"
+        name="O2"/>
   </components>
-  <connectors source="//@components.15/@ports.2" target="//@components.25/@ports.0"/>
-  <connectors source="//@components.8/@ports.2" target="//@components.21/@ports.0"/>
-  <connectors source="//@components.15/@ports.2" target="//@components.27/@ports.1"/>
-  <connectors source="//@components.7/@ports.2" target="//@components.26/@ports.2"/>
-  <connectors source="//@components.25/@ports.3" target="//@components.10/@ports.0"/>
-  <connectors source="//@components.28/@ports.1" target="//@components.0/@ports.0"/>
-  <connectors source="//@components.2/@ports.3" target="//@components.21/@ports.2"/>
-  <connectors source="//@components.14/@ports.3" target="//@components.9/@ports.2"/>
-  <connectors source="//@components.28/@ports.3" target="//@components.6/@ports.1"/>
-  <connectors source="//@components.12/@ports.3" target="//@components.3/@ports.0"/>
-  <connectors source="//@components.0/@ports.3" target="//@components.12/@ports.1"/>
-  <connectors source="//@components.11/@ports.4" target="//@components.23/@ports.0"/>
-  <connectors source="//@components.13/@ports.2" target="//@components.7/@ports.1"/>
-  <connectors source="//@components.0/@ports.3" target="//@components.10/@ports.0"/>
-  <connectors source="//@components.10/@ports.3" target="//@components.19/@ports.2"/>
-  <connectors source="//@components.13/@ports.2" target="//@components.9/@ports.2"/>
-  <connectors source="//@components.1/@ports.3" target="//@components.6/@ports.0"/>
-  <connectors source="//@components.13/@ports.3" target="//@components.0/@ports.1"/>
-  <connectors source="//@components.13/@ports.4" target="//@components.23/@ports.0"/>
-  <connectors source="//@components.18/@ports.3" target="//@components.11/@ports.1"/>
-  <connectors source="//@components.6/@ports.3" target="//@components.0/@ports.0"/>
-  <connectors source="//@components.1/@ports.3" target="//@components.18/@ports.2"/>
-  <connectors source="//@components.0/@ports.2" target="//@components.17/@ports.0"/>
-  <connectors source="//@components.9/@ports.3" target="//@components.23/@ports.1"/>
-  <connectors source="//@components.4/@ports.3" target="//@components.10/@ports.2"/>
-  <connectors source="//@components.20/@ports.3" target="//@components.21/@ports.1"/>
-  <connectors source="//@components.2/@ports.3" target="//@components.19/@ports.0"/>
-  <connectors source="//@components.15/@ports.1" target="//@components.12/@ports.2"/>
-  <connectors source="//@components.10/@ports.4" target="//@components.4/@ports.1"/>
-  <connectors source="//@components.17/@ports.2" target="//@components.26/@ports.2"/>
+  <connectors
+      source="//@components.10/@ports.3"
+      target="//@components.14/@ports.0"/>
+  <connectors
+      source="//@components.24/@ports.3"
+      target="//@components.6/@ports.0"/>
+  <connectors
+      source="//@components.26/@ports.2"
+      target="//@components.10/@ports.1"/>
+  <connectors
+      source="//@components.21/@ports.3"
+      target="//@components.22/@ports.0"/>
+  <connectors
+      source="//@components.15/@ports.4"
+      target="//@components.2/@ports.0"/>
+  <connectors
+      source="//@components.11/@ports.2"
+      target="//@components.13/@ports.0"/>
+  <connectors
+      source="//@components.6/@ports.2"
+      target="//@components.9/@ports.1"/>
+  <connectors
+      source="//@components.7/@ports.2"
+      target="//@components.13/@ports.1"/>
+  <connectors
+      source="//@components.13/@ports.3"
+      target="//@components.29/@ports.1"/>
+  <connectors
+      source="//@components.25/@ports.3"
+      target="//@components.28/@ports.0"/>
+  <connectors
+      source="//@components.25/@ports.5"
+      target="//@components.19/@ports.1"/>
+  <connectors
+      source="//@components.1/@ports.3"
+      target="//@components.3/@ports.0"/>
+  <connectors
+      source="//@components.5/@ports.5"
+      target="//@components.2/@ports.0"/>
+  <connectors
+      source="//@components.15/@ports.4"
+      target="//@components.21/@ports.0"/>
+  <connectors
+      source="//@components.11/@ports.2"
+      target="//@components.21/@ports.1"/>
+  <connectors
+      source="//@components.27/@ports.4"
+      target="//@components.23/@ports.1"/>
+  <connectors
+      source="//@components.22/@ports.3"
+      target="//@components.5/@ports.2"/>
+  <connectors
+      source="//@components.11/@ports.3"
+      target="//@components.7/@ports.0"/>
+  <connectors
+      source="//@components.22/@ports.1"
+      target="//@components.28/@ports.1"/>
+  <connectors
+      source="//@components.21/@ports.2"
+      target="//@components.9/@ports.1"/>
+  <connectors
+      source="//@components.24/@ports.3"
+      target="//@components.28/@ports.1"/>
+  <connectors
+      source="//@components.3/@ports.3"
+      target="//@components.25/@ports.2"/>
+  <connectors
+      source="//@components.0/@ports.2"
+      target="//@components.10/@ports.0"/>
+  <connectors
+      source="//@components.22/@ports.1"
+      target="//@components.27/@ports.0"/>
+  <connectors
+      source="//@components.6/@ports.2"
+      target="//@components.21/@ports.1"/>
+  <connectors
+      source="//@components.6/@ports.1"
+      target="//@components.26/@ports.0"/>
+  <connectors
+      source="//@components.27/@ports.5"
+      target="//@components.21/@ports.0"/>
+  <connectors
+      source="//@components.20/@ports.2"
+      target="//@components.7/@ports.1"/>
+  <connectors
+      source="//@components.18/@ports.2"
+      target="//@components.29/@ports.0"/>
+  <connectors
+      source="//@components.24/@ports.3"
+      target="//@components.25/@ports.1"/>
+  <connectors
+      source="//@components.1/@ports.2"
+      target="//@components.1/@ports.1"/>
 </ccl:System>

@@ -6,20 +6,26 @@
       <defaultLayer name="Default">
         <nodeMappings name="nodeContainer" labelDirectEdit="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editLabel']" semanticCandidatesExpression="feature:components" domainClass="ccl::Component">
           <borderedNodeMappings name="borderNodeOut" labelDirectEdit="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editLabel']" semanticCandidatesExpression="feature:eAllContents" domainClass="ccl::OutPort">
-            <style xsi:type="style:DotDescription" labelSize="12" showIcon="false" resizeKind="NSEW">
+            <style xsi:type="style:DotDescription" labelSize="10" showIcon="false" labelPosition="node" strokeSizeComputationExpression="3">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>SOUTH</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
               <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
             </style>
           </borderedNodeMappings>
           <borderedNodeMappings name="borderNodeIn" labelDirectEdit="//@ownedViewpoints[name='MyViewpoint']/@ownedRepresentations[name='componentDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editLabel']" semanticCandidatesExpression="feature:eAllContents" domainClass="ccl::InPort">
-            <style xsi:type="style:LozengeNodeDescription" labelSize="12" showIcon="false" resizeKind="NSEW">
+            <style xsi:type="style:LozengeNodeDescription" labelSize="10" showIcon="false" labelPosition="node">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>SOUTH</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
               <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
             </style>
           </borderedNodeMappings>
-          <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelPosition="node" resizeKind="NSEW">
+          <style xsi:type="style:SquareDescription" labelSize="11" showIcon="false" labelPosition="node" resizeKind="NSEW" width="13" height="13">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>

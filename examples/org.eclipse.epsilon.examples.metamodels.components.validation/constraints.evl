@@ -6,6 +6,30 @@ context ccl::Connector {
   }
 }
 
+context ccl::Component {
+	constraint UniqueName {
+        check: Component.all.select(c|c.name = self.name).size() < 2
+        message: "Duplicate component name " + self.name
+    }
+
+	critique ValidName {
+		check: self.name = self.name.firstToUpperCase()
+		message: self.name + " should start with an upper-case letter"
+	}
+    
+    critique IsConnected {
+        check: Connector.all.exists(c|self.ports.includes(c.source)
+            or self.ports.includes(c.target))
+        message: "Component " + self.name + " is disconnected"
+    }
+    
+    constraint NoPorts {
+    	check: self.ports.notEmpty()
+    	message: self.name + "has no Ports"
+    }
+    
+}
+
 // Ideas for constraints:
 
 // Indirect cycles
