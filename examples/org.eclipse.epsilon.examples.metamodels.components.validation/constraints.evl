@@ -5,12 +5,12 @@ context ccl::Connector {
     message: "Connectors must link different components"
   }
   
-  constraint ConnectorMustHasSource{
+  constraint ConnectorMustHaveSource{
   	check: self.source.isDefined()
   	message: "Connector must have a Source port"
   }
   
-    constraint ConnectorMustHasSource{
+    constraint ConnectorMustHaveSource{
   	check: self.target.isDefined()
   	message: "Connector must have a Target port"
   }
