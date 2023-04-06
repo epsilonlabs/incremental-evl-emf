@@ -30,6 +30,13 @@ context flowcharts::Decision {
 	}
 }
 
+context flowcharts::Node {
+  constraint NoMoreThanOneOutgoing {
+    guard: not self.isKindOf(flowcharts::Decision)
+    check: self.Out.size() <= 1
+    message: "Non-decision nodes should not have more than one outgoing edge"
+  }
+}
 
 context flowcharts::Edge {
   constraint HasSource {
