@@ -116,11 +116,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         
         LOGGER.finer("\n [!] ...Executing validation...\n");
         
-        long startTime = System.currentTimeMillis();
         module.execute();
-        long endTime = System.currentTimeMillis();
-        String vid = this.hashCode() + "." + validationCount + "." + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        IncrementalEvlMetrics.reportValidationMetrics(startTime, endTime, vid);
 
         // -------- PROCESS RESULTS --------
 
