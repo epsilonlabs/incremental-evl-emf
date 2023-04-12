@@ -7,25 +7,23 @@ post EndTime{
 	(end - start).println('elapsed millis: ');
 	}
 
-
-
 context ccl::Connector {
 	
-  constraint SourceTargetMustBeDifferentComponents {      	  	
+  constraint ConnectorSourceTargetNotSameComponent {      	  	
     guard: self.source.isDefined() and self.target.isDefined()
-    check {	(self.source.name + " != " + self.target.name).println("checking Connector source and target not same: ");
+    check {	(self.source.eContainer.name + " != " + self.target.eContainer.name).println("ConnectorSourceTargetNotSameComponent:  ");
 			return self.source.eContainer <> self.target.eContainer;}
     message: "Connectors must link different components"    
   }
   
   constraint ConnectorMustHaveSource{
-  	check {	(self.source.name + " source " + self.source.isDefined()).println("checking Connector source: " );
+  	check {	(self.source.name + " source " + self.source.isDefined()).println("ConnectorMustHaveSource: " );
 			return self.source.isDefined(); }
   	message: "Connector must have a Source port"
   }
   
     constraint ConnectorMustHaveTarget{
-  	check {	(self.target.name + " target " + self.target.isDefined()).println("checking Connector target: " );
+  	check {	(self.target.name + " target " + self.target.isDefined()).println("ConnectorMustHaveTarget: " );
 			return self.target.isDefined();} 
   	message: "Connector must have a Target port"
   }
@@ -34,32 +32,32 @@ context ccl::Connector {
 context ccl::Component {
 
 
-	critique ValidName {
-	check {	(self.name).println("checking Component name format:" );
+	critique ComponentHasValidName {
+	check {	(self.name).println("ComponentHasValidName: " );
 			return self.name = self.name.firstToUpperCase();}
 	message: self.name + " should start with an upper-case letter"
 	}
 	
-	constraint NoPorts {
-    	check {	(self.name + " has " +  self.ports.size()+ " Ports").println("checking Component ports: ");
+	constraint ComponentHasPorts {
+    	check {	(self.name + " has " +  self.ports.size()+ " Ports").println("ComponentHasPorts: ");
 				return self.ports.notEmpty();}
     	message: self.name + "has no Ports"
     }
     
-    
-    constraint UniqueName {
-        check {	(self.name).println("checking Component name unique: ");
+    /*
+    constraint ComponentHasUniqueName {
+        check {	(self.name).println("ComponentHasUniqueName: ");
 				return Component.all.select(x|x.name = self.name).size() < 2;}
         message: "Duplicate component name " + self.name
     }
     
-    critique IsConnected {
-        check {	(self.name).println("checking Component is connectioned: ");
+    critique ComponentIsConnected {
+        check {	(self.name).println("ComponentIsConnected: ");
 				return Connector.all.exists(x|self.ports.includes(x.source)
             		or self.ports.includes(x.target));}
         message: "Component " + self.name + " is disconnected"
     } 
-	   
+	*/ 
 }
 
 
