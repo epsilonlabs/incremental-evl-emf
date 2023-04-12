@@ -692,7 +692,7 @@
         <setEntry value="org.eclipse.epsilon.evl.emf.validation.incremental.tests@default:false"/>
         <setEntry value="org.eclipse.epsilon.evl.emf.validation.incremental@default:default"/>
         <setEntry value="org.eclipse.epsilon.examples.metamodels.components.design@default:default"/>
-        <setEntry value="org.eclipse.epsilon.examples.metamodels.components.validation@default:default"/>
+        <setEntry value="org.eclipse.epsilon.examples.metamodels.components.validation.batch@default:default"/>
         <setEntry value="org.eclipse.epsilon.examples.metamodels.components@default:default"/>
         <setEntry value="org.eclipse.epsilon.examples.metamodels.flowchart.validation@default:default"/>
         <setEntry value="org.eclipse.epsilon.examples.metamodels.flowchart@default:default"/>

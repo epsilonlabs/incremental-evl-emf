@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.epsilon.evl.emf.validation">
+      <constraintsBinding
+            compose="true"
+            constraints="constraints.evl"
+            namespaceURI="http://eclipse.org/epsilon/ccl"
+            validator="org.eclipse.epsilon.evl.emf.validation.EvlValidator">
+      </constraintsBinding>
+   </extension>
+
+</plugin>
