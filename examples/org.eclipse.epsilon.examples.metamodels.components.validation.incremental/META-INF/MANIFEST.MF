@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Validation Rules for Component DSL
-Bundle-SymbolicName: org.eclipse.epsilon.examples.metamodels.components.validationBatch;singleton:=true
+Bundle-Name: Incremental Validation Rules for Component DSL
+Bundle-SymbolicName: org.eclipse.epsilon.examples.metamodels.components.validation.incremental;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.epsilon.evl.emf.validation;bundle-version="2.0.0",
  org.eclipse.epsilon.evl.emf.validation.incremental.dt;bundle-version="1.0.0"

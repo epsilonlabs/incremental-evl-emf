@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Validation Rules for Component DSL
+Bundle-Name: Batch Validation Rules for Component DSL
 Bundle-SymbolicName: org.eclipse.epsilon.examples.metamodels.components.validation.batch;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.epsilon.evl.emf.validation;bundle-version="2.0.0",

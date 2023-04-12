@@ -5,7 +5,7 @@
          point="org.eclipse.epsilon.evl.emf.validation">
       <constraintsBinding
             compose="true"
-            constraints="constraints.operations.evl_xxx"
+            constraints="constraints.evl"
             namespaceURI="http://eclipse.org/epsilon/ccl"
             validator="org.eclipse.epsilon.evl.emf.validation.incremental.dt.ExtensionIncrementalEvlValidator">
       </constraintsBinding>
