@@ -7,9 +7,9 @@
     <ports xsi:type="ccl:OutPort" name="O1"/>
   </components>
   <components name="Component2">
-    <ports xsi:type="ccl:InPort" name="I1"/>
+    <ports xsi:type="ccl:InPort" name="I1" connector="//@connectors.252"/>
     <ports xsi:type="ccl:InPort" name="I0"/>
-    <ports xsi:type="ccl:OutPort" name="O1"/>
+    <ports xsi:type="ccl:OutPort" name="O1" connector="//@connectors.250"/>
     <ports xsi:type="ccl:OutPort" name="O0"/>
   </components>
   <components name="Component3">
@@ -39,9 +39,9 @@
     <ports xsi:type="ccl:OutPort" name="O2" connector="//@connectors.65"/>
     <ports xsi:type="ccl:OutPort" name="O3" connector="//@connectors.181"/>
   </components>
-  <components name="Component7">
-    <ports xsi:type="ccl:InPort" name="I1"/>
-    <ports xsi:type="ccl:OutPort" name="O1"/>
+  <components name="">
+    <ports xsi:type="ccl:InPort" name="I1" connector="//@connectors.250"/>
+    <ports xsi:type="ccl:OutPort" name="O1" connector="//@connectors.251"/>
   </components>
   <components name="component8">
     <ports xsi:type="ccl:InPort" name="I1"/>
@@ -75,10 +75,10 @@
     <ports xsi:type="ccl:OutPort" name="O3"/>
   </components>
   <components name="component13">
-    <ports xsi:type="ccl:InPort" name="I1"/>
+    <ports xsi:type="ccl:InPort" name="I1" connector="//@connectors.251"/>
     <ports xsi:type="ccl:InPort" name="I2"/>
     <ports xsi:type="ccl:InPort" name="I3"/>
-    <ports xsi:type="ccl:OutPort" name="O1"/>
+    <ports xsi:type="ccl:OutPort" name="O1" connector="//@connectors.252"/>
     <ports xsi:type="ccl:OutPort" name="O2"/>
     <ports xsi:type="ccl:OutPort" name="O3"/>
   </components>
@@ -1743,4 +1743,7 @@
   <connectors source="//@components.216/@ports.2" target="//@components.98/@ports.1"/>
   <connectors source="//@components.191/@ports.4" target="//@components.81/@ports.1"/>
   <connectors source="//@components.7/@ports.3" target="//@components.133/@ports.1"/>
+  <connectors source="//@components.1/@ports.2" target="//@components.6/@ports.0"/>
+  <connectors source="//@components.6/@ports.1" target="//@components.12/@ports.0"/>
+  <connectors source="//@components.12/@ports.3" target="//@components.1/@ports.0"/>
 </ccl:System>

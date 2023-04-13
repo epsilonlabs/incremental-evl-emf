@@ -11,6 +11,11 @@
   <components name="xyz">
     <ports xsi:type="ccl:InPort" name="i1" connector="//@connectors.1"/>
     <ports xsi:type="ccl:OutPort" name="o1"/>
+    <ports xsi:type="ccl:OutPort"/>
+    <ports xsi:type="ccl:InPort"/>
+  </components>
+  <components name="">
+    <ports xsi:type="ccl:OutPort"/>
   </components>
   <connectors source="//@components.0/@ports.0" target="//@components.1/@ports.0"/>
   <connectors source="//@components.1/@ports.1" target="//@components.2/@ports.0"/>
