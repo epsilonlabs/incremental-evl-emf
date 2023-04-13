@@ -1,0 +1,51 @@
+var nComponents = 250;  // 30, 100, 250 , 500 ~2 seconds
+var nConnectors = nComponents;
+
+var minPort = 0;
+var maxPort = 4;
+
+var sys = new ccl::System;
+
+var rnd = new Native('java.util.Random');
+
+for (i in 1.to(nComponents)) {
+  var c = new ccl::Component;
+  
+  if (random(0,100)> 10) {
+  	c.name = 'Component' + i;}
+  else {
+  	c.name = 'component' + i;}
+  
+  
+  sys.components.add(c);
+
+  for (iIn in 1.to(random(minPort, maxPort))) {
+    var inP = new ccl::InPort;
+    //inP.name = 'c' + i + '_in' + iIn;
+    inP.name = 'I' + iIn;    
+    c.ports.add(inP);
+  }
+  for (iOut in 1.to(random(minPort, maxPort))) {
+    var outP = new ccl::OutPort;
+    //outP.name = 'c' + i + '_out' + iOut;
+    outP.name = 'O' + iOut;
+    c.ports.add(outP);
+  }
+}
+
+var allInPorts = InPort.all;
+var allOutPorts = OutPort.all;
+
+for (i in 1.to(nConnectors)) {
+  var inPort = allInPorts.at(rnd.nextInt(allInPorts.size));
+  var outPort = allOutPorts.at(rnd.nextInt(allOutPorts.size));
+
+  var conn = new ccl::Connector;
+  conn.source = outPort;
+  conn.target = inPort;
+  sys.connectors.add(conn);
+}
+
+operation random(min: Integer, max: Integer): Integer {
+  return min + rnd.nextInt(max - min);
+}
