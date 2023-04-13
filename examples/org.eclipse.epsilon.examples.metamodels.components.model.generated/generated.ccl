@@ -39,7 +39,7 @@
     <ports xsi:type="ccl:OutPort" name="O2" connector="//@connectors.65"/>
     <ports xsi:type="ccl:OutPort" name="O3" connector="//@connectors.181"/>
   </components>
-  <components name="">
+  <components name="Component700">
     <ports xsi:type="ccl:InPort" name="I1" connector="//@connectors.250"/>
     <ports xsi:type="ccl:OutPort" name="O1" connector="//@connectors.251"/>
   </components>
@@ -74,7 +74,7 @@
     <ports xsi:type="ccl:OutPort" name="O2"/>
     <ports xsi:type="ccl:OutPort" name="O3"/>
   </components>
-  <components name="component13">
+  <components name="component1300">
     <ports xsi:type="ccl:InPort" name="I1" connector="//@connectors.251"/>
     <ports xsi:type="ccl:InPort" name="I2"/>
     <ports xsi:type="ccl:InPort" name="I3"/>
