@@ -16,14 +16,31 @@ context ccl::Connector {
     message: "Connectors must link different components"    
   }
   
-  constraint ConnectorMustHaveSource{
-  	check {	(self.source.name + " source " + self.source.isDefined()).println("ConnectorMustHaveSource: " );
+  constraint ConnectorMustHaveSource{    
+  	check {	self.id.print("ConnectorMustHaveSource: ");
+  			if(self.source.isDefined()) 
+  			{
+  				(self.source.component.name + "-" + self.source.name ).println(" > ");
+  			}
+  			else {
+  				"no source".println(" > ");
+  			}
 			return self.source.isDefined(); }
   	message: "Connector must have a Source port"
   }
   
     constraint ConnectorMustHaveTarget{
-  	check {	(self.target.name + " target " + self.target.isDefined()).println("ConnectorMustHaveTarget: " );
+  	check {	//(self.target.name + " target " + self.target.isDefined()).println("ConnectorMustHaveTarget: " );
+			self.id.print("ConnectorMustHaveTarget: ");
+			if(self.target.isDefined())
+			{
+				(self.target.component.name + "-" + self.target.name ).println(" > ");
+			}
+			else
+			{
+				"no target".println(" > ");
+			}
+			
 			return self.target.isDefined();} 
   	message: "Connector must have a Target port"
   }
@@ -31,11 +48,18 @@ context ccl::Connector {
 
 context ccl::Component {
 
+	constraint ComponentNameExists {
+		check { (self.name.isDefined + " " + self.id).println("ComponentNameExists: " );
+				return self.name.isDefined();}
+		message: "Component with no name: " + self.id
+	}
+
 
 	critique ComponentHasValidName {
-	check {	(self.name).println("ComponentHasValidName: " );
-			return self.name = self.name.firstToUpperCase();}
-	message: self.name + " should start with an upper-case letter"
+		guard: self.name.isDefined()
+		check {	(self.name).println("ComponentHasValidName: " );
+				return self.name = self.name.firstToUpperCase();}
+		message: self.name + " should start with an upper-case letter"
 	}
 	
 	constraint ComponentHasPorts {
@@ -45,30 +69,37 @@ context ccl::Component {
     }
     
     constraint ComponentLoops {
-    check {var list = self.closure(i|i.ports);
-    	list.println(" ComponentLoops List: ");
-    	return list.contains(self);
-     }
-    message: "Loop found"
+    check { self.name.print("ComponentLoops: ");
+    		var list = self.closure(c : Component | c.ports.select(p|p.isKindOf(InPort)
+    			and p.connector.isDefined() 
+    			and p.connector.source.isDefined()).connector.source.component);
+    		if(list.contains(self)) {
+    			list.println(" loop: ");
+    		}
+    		else {
+    			"none".println(" loop: ");
+    		}
+    		return not list.contains(self);}
+    message: "Loop found: " + list
     }
     
-    /*
-    constraint ComponentHasUniqueName {
-        check {	(self.name).println("ComponentHasUniqueName: ");
-				return Component.all.select(x|x.name = self.name).size() < 2;}
-        message: "Duplicate component name " + self.name
-    }
+    /* Component names must be globally unique */
+    constraint UniqueName {        
+        check	: getComponentsByName().get(self.name).size() == 1
+        message : "Duplicate component name " + self.name
+    }  
     
     critique ComponentIsConnected {
-        check {	(self.name).println("ComponentIsConnected: ");
-				return Connector.all.exists(x|self.ports.includes(x.source)
-            		or self.ports.includes(x.target));}
-        message: "Component " + self.name + " is disconnected"
-    } 
-	*/
-	   
+	    check	{	//(self.name).println("ComponentIsConnected: ");
+	    			return self.ports.exists(p | p.connector.isDefined());}
+	    message: "Component " + self.name + " is disconnected"
+    }
 }
 
+@cached
+operation getComponentsByName() {
+    return Component.all.mapBy(c|c.name);
+}
 
 
 
