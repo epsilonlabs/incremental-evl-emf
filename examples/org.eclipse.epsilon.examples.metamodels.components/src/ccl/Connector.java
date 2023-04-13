@@ -24,12 +24,14 @@ import org.eclipse.emf.ecore.EObject;
 public interface Connector extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Source</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link ccl.OutPort#getConnector <em>Connector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source</em>' reference.
 	 * @see #setSource(OutPort)
 	 * @see ccl.CclPackage#getConnector_Source()
-	 * @model
+	 * @see ccl.OutPort#getConnector
+	 * @model opposite="connector"
 	 * @generated
 	 */
 	OutPort getSource();
@@ -46,12 +48,14 @@ public interface Connector extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Target</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link ccl.InPort#getConnector <em>Connector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' reference.
 	 * @see #setTarget(InPort)
 	 * @see ccl.CclPackage#getConnector_Target()
-	 * @model
+	 * @see ccl.InPort#getConnector
+	 * @model opposite="connector"
 	 * @generated
 	 */
 	InPort getTarget();

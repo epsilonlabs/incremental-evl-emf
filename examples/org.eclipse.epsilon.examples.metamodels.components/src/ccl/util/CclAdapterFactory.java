@@ -8,8 +8,6 @@ import ccl.Connector;
 import ccl.InPort;
 import ccl.OutPort;
 import ccl.Port;
-import ccl.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 

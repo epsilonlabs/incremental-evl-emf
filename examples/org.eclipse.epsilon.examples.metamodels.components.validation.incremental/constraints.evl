@@ -44,6 +44,14 @@ context ccl::Component {
     	message: self.name + "has no Ports"
     }
     
+    constraint ComponentLoops {
+    check {var list = self.closure(i|i.ports);
+    	list.println(" ComponentLoops List: ");
+    	return list.contains(self);
+     }
+    message: "Loop found"
+    }
+    
     /*
     constraint ComponentHasUniqueName {
         check {	(self.name).println("ComponentHasUniqueName: ");

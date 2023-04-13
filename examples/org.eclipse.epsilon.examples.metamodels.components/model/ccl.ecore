@@ -13,11 +13,19 @@
         eType="#//Port" containment="true" eOpposite="#//Port/component"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Connector">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//OutPort"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//InPort"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//OutPort"
+        eOpposite="#//OutPort/connector"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//InPort"
+        eOpposite="#//InPort/connector"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InPort" eSuperTypes="#//Port"/>
-  <eClassifiers xsi:type="ecore:EClass" name="OutPort" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InPort" eSuperTypes="#//Port">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connector" eType="#//Connector"
+        eOpposite="#//Connector/target"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutPort" eSuperTypes="#//Port">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connector" eType="#//Connector"
+        eOpposite="#//Connector/source"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Port" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"

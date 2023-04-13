@@ -18,8 +18,12 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ccl.ecore#//Connector/source"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ccl.ecore#//Connector/target"/>
     </genClasses>
-    <genClasses ecoreClass="ccl.ecore#//InPort"/>
-    <genClasses ecoreClass="ccl.ecore#//OutPort"/>
+    <genClasses ecoreClass="ccl.ecore#//InPort">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ccl.ecore#//InPort/connector"/>
+    </genClasses>
+    <genClasses ecoreClass="ccl.ecore#//OutPort">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ccl.ecore#//OutPort/connector"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="ccl.ecore#//Port">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ccl.ecore#//Port/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ccl.ecore#//Port/type"/>

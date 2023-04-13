@@ -287,13 +287,22 @@ public interface CclPackage extends EPackage {
 	int IN_PORT__COMPONENT = PORT__COMPONENT;
 
 	/**
+	 * The feature id for the '<em><b>Connector</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_PORT__CONNECTOR = PORT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>In Port</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IN_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 0;
+	int IN_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>In Port</em>' class.
@@ -342,13 +351,22 @@ public interface CclPackage extends EPackage {
 	int OUT_PORT__COMPONENT = PORT__COMPONENT;
 
 	/**
+	 * The feature id for the '<em><b>Connector</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OUT_PORT__CONNECTOR = PORT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Out Port</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OUT_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 0;
+	int OUT_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Out Port</em>' class.
@@ -467,6 +485,17 @@ public interface CclPackage extends EPackage {
 	EClass getInPort();
 
 	/**
+	 * Returns the meta object for the reference '{@link ccl.InPort#getConnector <em>Connector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Connector</em>'.
+	 * @see ccl.InPort#getConnector()
+	 * @see #getInPort()
+	 * @generated
+	 */
+	EReference getInPort_Connector();
+
+	/**
 	 * Returns the meta object for class '{@link ccl.OutPort <em>Out Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -475,6 +504,17 @@ public interface CclPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getOutPort();
+
+	/**
+	 * Returns the meta object for the reference '{@link ccl.OutPort#getConnector <em>Connector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Connector</em>'.
+	 * @see ccl.OutPort#getConnector()
+	 * @see #getOutPort()
+	 * @generated
+	 */
+	EReference getOutPort_Connector();
 
 	/**
 	 * Returns the meta object for class '{@link ccl.Port <em>Port</em>}'.
@@ -631,6 +671,14 @@ public interface CclPackage extends EPackage {
 		EClass IN_PORT = eINSTANCE.getInPort();
 
 		/**
+		 * The meta object literal for the '<em><b>Connector</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference IN_PORT__CONNECTOR = eINSTANCE.getInPort_Connector();
+
+		/**
 		 * The meta object literal for the '{@link ccl.impl.OutPortImpl <em>Out Port</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -639,6 +687,14 @@ public interface CclPackage extends EPackage {
 		 * @generated
 		 */
 		EClass OUT_PORT = eINSTANCE.getOutPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Connector</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference OUT_PORT__CONNECTOR = eINSTANCE.getOutPort_Connector();
 
 		/**
 		 * The meta object literal for the '{@link ccl.impl.PortImpl <em>Port</em>}' class.

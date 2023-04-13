@@ -8,8 +8,6 @@ import ccl.Component;
 import ccl.Connector;
 import ccl.InPort;
 import ccl.OutPort;
-import ccl.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;

@@ -43,6 +43,42 @@ context ccl::Component {
 				return self.ports.notEmpty();}
     	message: self.name + "has no Ports"
     }
+    /*
+    constraint ComponentLoops {
+    check { 
+    	for (p : Port  in self.ports) {
+    		var list = p.closure(c | p.component.ports);
+    		list.print();
+    		p.name.println("Port: ");
+    		}
+    	//list.println(" ComponentLoops List: ");
+    	return false;}
+
+    message: "Loop found"
+    }*/
+    
+    constraint ComponentLoops {
+    check { 
+    		//var c = StepNext(self.ports[0]);
+    		var list = self.closure(c : Component | c.ports.connector.source.component);
+    		list.contains(self).println("Loop: ");
+    		self.name.print("Component: ");
+    		list.println(" list: ");
+    		//var list = self.ports[0].closure(c | StepNext(c.ports[0]);
+    		//self.name.print("1, ");
+    		//c.name.println(" 2, ");
+    		//self.name.print();
+    		//var list = self.ports.closure(c : OutPort | c.connector.target);
+    		//list.println(" : ");    		
+    		//list.println(" ComponentLoops List: ");
+    		return false;}
+
+    message: "Loop found"
+    }
+    
+    
+    
+
     
     /*
     constraint ComponentHasUniqueName {
@@ -59,6 +95,13 @@ context ccl::Component {
     } 
 	*/ 
 }
+
+operation StepNext (p : Port) : ccl::Component {
+	p.connector.source.name.print("source port: ");
+	p.connector.source.component.name.println(" on component: ");
+	return p.connector.source.component;
+}
+
 
 
 
