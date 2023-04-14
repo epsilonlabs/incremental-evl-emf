@@ -123,6 +123,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         // Constructor extracts = (Constraint)PropertyAccess & ContraintTrace & UnsatisfiedConstraints
         LOGGER.finer("\n [i] Adapter constraintExecutionCache created");
         constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module));
+        System.out.println(constraintExecutionCache.get().toString());
 
         // Console output
         LOGGER.finest(() -> modelStateToString());

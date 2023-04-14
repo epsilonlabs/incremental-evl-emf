@@ -226,9 +226,10 @@ public class ConstraintExecutionCache {
     	sj.add("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size());
 
     	// TODO: pass sj into these functions to keep building up the string
-        sj.add(constraintTraceToString(constraintTraceItems));
-        sj.add(unsatisfiedConstraintsToString(unsatisfiedConstraints));
-        sj.add(constraintPropertyAccessToString(constraintPropertyAccess));
+    	// Commenting out the details for demo
+        //sj.add(constraintTraceToString(constraintTraceItems));
+        //sj.add(unsatisfiedConstraintsToString(unsatisfiedConstraints));
+        //sj.add(constraintPropertyAccessToString(constraintPropertyAccess));
         sj.add(" =========================== ");
 
         return sj.toString();
