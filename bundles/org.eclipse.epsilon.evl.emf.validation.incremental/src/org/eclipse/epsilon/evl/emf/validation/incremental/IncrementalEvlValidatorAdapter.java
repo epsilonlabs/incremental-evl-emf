@@ -47,14 +47,14 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void revalidate(ResourceSet resourceSet) throws Exception {  
-    	LOGGER.entering(getClass().getName(),"revalidating: " + resourceSet.toString());
+    	//LOGGER.entering(getClass().getName(),"revalidating: " + resourceSet.toString());
     	
     	LOGGER.finer("\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
         //MYLOGGER.log(MyLog.FLOW, "\n [!] IncrementalEvlValidatorAdapter.revalidate() called: " + resourceSet + "\n");
         validate(resourceSet);
         notifications.clear();
         
-        LOGGER.exiting(getClass().getName(), "revalidate complete " + resourceSet.toString());
+        //LOGGER.exiting(getClass().getName(), "revalidate complete " + resourceSet.toString());
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {

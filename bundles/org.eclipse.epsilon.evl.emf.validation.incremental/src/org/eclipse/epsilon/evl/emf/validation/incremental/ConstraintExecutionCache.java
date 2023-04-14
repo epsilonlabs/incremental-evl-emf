@@ -37,7 +37,7 @@ public class ConstraintExecutionCache {
         this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
 
         if (LOGGER.isLoggable(Level.FINE)) {
-        	LOGGER.finer("Setting up Execution Cache" + toString());
+        	LOGGER.finer(() -> "Setting up Execution Cache" + toString());
         }
     }
 
@@ -58,25 +58,25 @@ public class ConstraintExecutionCache {
 
     	for (ConstraintTraceItem item : constraintTraceItems) {
             if (item.getInstance().equals(model) && item.getConstraint().equals(constraint)) {
-                LOGGER.finer("Execution cache - MATCHED model & constraint - " + item.hashCode() + " " + constraint.getName());
+                LOGGER.finer(() -> "Execution cache - MATCHED model & constraint - " + item.hashCode() + " " + constraint.getName());
                 return item;
             }
         }
 
-    	LOGGER.finer("Execution cache - NO MATCHES");
+    	LOGGER.finer(() -> "Execution cache - NO MATCHES");
         return null;
     }
 
     public UnsatisfiedConstraint getCachedUnsatisfiedConstraint (Object model, Constraint constraint) {
-    	LOGGER.finer("Execution cache - getCachedUnsatisfiedConstraint - " + model.hashCode() + " " + constraint.getName());
-    	LOGGER.finest(unsatisfiedConstraintsToString(unsatisfiedConstraints));
+    	LOGGER.finer(() -> "Execution cache - getCachedUnsatisfiedConstraint - " + model.hashCode() + " " + constraint.getName());
+    	LOGGER.finest(() -> unsatisfiedConstraintsToString(unsatisfiedConstraints));
         for (UnsatisfiedConstraint unsatisfiedConstraint : unsatisfiedConstraints) {
             if ( unsatisfiedConstraint.getInstance().equals(model) && unsatisfiedConstraint.getConstraint().equals(constraint)  ) {
-            	LOGGER.finer("Execution cache - MATCHED UC -  UC Result: " + unsatisfiedConstraint.getConstraint().getName());
+            	LOGGER.finer(() -> "Execution cache - MATCHED UC -  UC Result: " + unsatisfiedConstraint.getConstraint().getName());
                 return unsatisfiedConstraint;
             }        
         }
-		LOGGER.finer("Execution cache - NO MATCHES");   
+		LOGGER.finer(() -> "Execution cache - NO MATCHES");   
         return null; // This should not happen if there is an entry on the trace.
     }
 
@@ -94,14 +94,14 @@ public class ConstraintExecutionCache {
         case Notification.ADD:
         case Notification.ADD_MANY:
         case Notification.MOVE:
-        	LOGGER.fine("Request remove from cache (not Adapter)\n ModelElement: " 
+        	LOGGER.fine(() -> "Request remove from cache (not Adapter)\n ModelElement: " 
         			+ modelElement + "\n ModelFeature: " + modelFeature);
         	removeFromCache(modelElement, modelFeature);
         	break;
         case Notification.REMOVING_ADAPTER:
         	if (notification.getOldValue() instanceof IncrementalEvlValidatorAdapter) {
         		removeFromCache(modelElement);
-        		LOGGER.fine("Request remove from cache (Adapter)\n ModelElement: " 
+        		LOGGER.fine(() -> "Request remove from cache (Adapter)\n ModelElement: " 
         				+ modelElement + "\n ModelFeature: " + modelFeature);
         	}
         	break;
@@ -109,7 +109,7 @@ public class ConstraintExecutionCache {
     }
 
     private void removeFromCache(EObject modelElement, EStructuralFeature modelFeature ) {
-    	LOGGER.finer("Try and remove model element " + modelElement.hashCode() + " with feature " + modelFeature.getName() + " from execution cache");
+    	LOGGER.finer(() -> "Try and remove model element " + modelElement.hashCode() + " with feature " + modelFeature.getName() + " from execution cache");
     	
     	// Make a method which makes a list of constraints related to the model element and feature
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
@@ -119,7 +119,7 @@ public class ConstraintExecutionCache {
             if( ( cpa.getModelElement() == modelElement )
                     && 
                 ( cpa.getPropertyName().equals(modelFeature.getName()) ) ){
-            	LOGGER.finer("marked for clearing and removed " + cpa.toString());
+            	LOGGER.finer(() -> "marked for clearing and removed " + cpa.toString());
                 constraintsToInvalidate.add(cpa);
                 itr.remove();
             }
@@ -130,7 +130,7 @@ public class ConstraintExecutionCache {
 
     private void removeFromCache(EObject modelElement) {
         //System.out.println("\nremoveFromCache: " + modelElement.hashCode() + " " + modelElement);
-    	LOGGER.finer("Try and remove model element " + modelElement.hashCode() + " with ANY feature from execution cache");
+    	LOGGER.finer(() -> "Try and remove model element " + modelElement.hashCode() + " with ANY feature from execution cache");
 
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
 
@@ -138,7 +138,7 @@ public class ConstraintExecutionCache {
         for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
             ConstraintPropertyAccess cpa = itr.next();
             if( cpa.getModelElement() == modelElement ) {
-            	LOGGER.finer("marked for clearing and removed " + cpa.toString());
+            	LOGGER.finer(() -> "marked for clearing and removed " + cpa.toString());
             	constraintsToInvalidate.add(cpa);
             	itr.remove();
             }
@@ -148,7 +148,7 @@ public class ConstraintExecutionCache {
     }
     
     private void clearConstraintTracesAndUnsatisfiedConstraints(List <ConstraintPropertyAccess> constraintsToInvalidate) {
-    	LOGGER.finest("List of constraintsToInvalidate: " + constraintsToInvalidate);    
+    	LOGGER.finest(() -> "List of constraintsToInvalidate: " + constraintsToInvalidate);    
         
         // Using the list of constraints to invalidate, remove constraint trace/unsatisfied based on model & constraint matches       
         for (ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
@@ -158,7 +158,7 @@ public class ConstraintExecutionCache {
                 ConstraintTraceItem ctitem = itr.next();
                 if (ctitem.getInstance() == invalidcpa.getModelElement()
                         && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint()) { // need to resolve "feature" for each result
-                	LOGGER.finer("Removed constraintTraceItem model hash " + ctitem.getInstance().hashCode() + " constraint " + ctitem.getConstraint().getName() );               
+                	LOGGER.finer(() -> "Removed constraintTraceItem model hash " + ctitem.getInstance().hashCode() + " constraint " + ctitem.getConstraint().getName() );               
                     itr.remove();
                 }
             }
@@ -168,7 +168,7 @@ public class ConstraintExecutionCache {
                 UnsatisfiedConstraint uc = itr.next();
                 if (uc.getInstance() == invalidcpa.getModelElement()
                         && uc.getConstraint() == invalidcpa.getExecution().getConstraint() ) {
-                	LOGGER.finer("Removed unsatisfiedConstraint model hash " + uc.getInstance().hashCode() + " constraint " + uc.getConstraint().getName() );
+                	LOGGER.finer(() -> "Removed unsatisfiedConstraint model hash " + uc.getInstance().hashCode() + " constraint " + uc.getConstraint().getName() );
                     itr.remove();
                 }
 

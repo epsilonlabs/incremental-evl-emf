@@ -29,11 +29,11 @@ public class IncrementalEvlModule extends EvlModule {
     protected IncrementalEvlTrace trace = new IncrementalEvlTrace();
 
     public IncrementalEvlModule() {
-        LOGGER.finer("IncrementalEVLModule started without constraintExecutionCache");
+        LOGGER.finer(() -> "IncrementalEVLModule started without constraintExecutionCache");
     }
 
     public IncrementalEvlModule(Optional <ConstraintExecutionCache> constraintExecutionCache) {        
-        LOGGER.finer("IncrementalEVLModule started with constraintExecutionCache");
+        LOGGER.finer(() -> "IncrementalEVLModule started with constraintExecutionCache");
         this.constraintExecutionCache = constraintExecutionCache;
 
         // Transfer prior propertyAccesses from the constraintExecutionCache into this modules trace.
@@ -63,30 +63,30 @@ public class IncrementalEvlModule extends EvlModule {
 
                     if(constraintExecutionCache.isPresent()) {
                     	
-                        LOGGER.finer("Searching constraintExecutionCache ConstraintTrace: " + self.hashCode() + " & " + this.getName());
+                        LOGGER.finer(() -> "Searching constraintExecutionCache ConstraintTrace: " + self.hashCode() + " & " + this.getName());
                         
                         ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCachedConstraintTrace(self,this );
                         if (null != ctitem) {
                             getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(), ctitem.getResult()); // Back-fill for bypass
                             if(ctitem.getResult()) {
-                            	LOGGER.finest("Cached Result = PASS (TRUE) - [EMPTY] ");
+                            	LOGGER.finest(() -> "Cached Result = PASS (TRUE) - [EMPTY] ");
                                 return Optional.empty();
                             } else {
                             	UnsatisfiedConstraint uc = constraintExecutionCache.get().getCachedUnsatisfiedConstraint(self,this);
-                            	LOGGER.finest("Cached Result = FAIL (FALSE) - " + uc.getMessage());                                
+                            	LOGGER.finest(() -> "Cached Result = FAIL (FALSE) - " + uc.getMessage());                                
                                 getContext().getUnsatisfiedConstraints().add(uc);  // Back-fill for the bypass
                                 return Optional.of(uc);
                             }
                         }
                     }
                     // else { if(REPORTstate) {logger.log(Level.INFO,"No constraintExecutionCache "); } }
-                    LOGGER.finer("Need for Validation: " + self.hashCode() + " & " + this.getName());
+                    LOGGER.finer(() -> "Need for Validation: " + self.hashCode() + " & " + this.getName());
 
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
                     Result = super.execute(context_, self);
 
-                    LOGGER.finest("Validation test Result - " + Result);
+                    LOGGER.finest(() -> "Validation test Result - " + Result);
                     return Result;
                 }
 

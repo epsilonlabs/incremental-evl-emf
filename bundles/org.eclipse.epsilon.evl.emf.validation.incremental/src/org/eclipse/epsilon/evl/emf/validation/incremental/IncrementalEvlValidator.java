@@ -41,7 +41,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 				sb.append(context);
 				sb.append("\n---\n");
 
-				LOGGER.finest(sb.toString());
+				LOGGER.finest(() -> sb.toString());
 			}
 
 			return validateImpl(eClass, eObject, diagnostics, context);
@@ -53,7 +53,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 	}
 	
 	private boolean validateImpl(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) throws Exception {
-		LOGGER.finer("\n [!] IncrementalEvlValidator.validateImpl() called\n");
+		LOGGER.finer(() -> "\n [!] IncrementalEvlValidator.validateImpl() called\n");
 
 		// Get hold of the resource set of the eObject
 		// We only want to validate each resource set once in batch mode
@@ -80,7 +80,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 			resourceSet.eAdapters().add(adapter);
 			adapter.validate(resourceSet);
 
-			LOGGER.finer("Added adapter : hashCode" + adapter.hashCode());
+			LOGGER.finer( "Added adapter : hashCode" + adapter.hashCode());
 			return adapter.getModule().getContext().getUnsatisfiedConstraints().isEmpty();
 		}
 		
