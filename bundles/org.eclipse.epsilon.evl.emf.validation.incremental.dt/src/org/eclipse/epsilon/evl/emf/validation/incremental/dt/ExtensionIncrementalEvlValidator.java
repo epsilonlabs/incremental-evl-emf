@@ -4,11 +4,15 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.epsilon.eol.dt.launching.EclipseContextManager;
+import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.evl.emf.validation.EvlMarkerResolutionGenerator;
 import org.eclipse.epsilon.evl.emf.validation.EvlValidator;
 import org.eclipse.epsilon.evl.emf.validation.incremental.IncrementalEvlValidator;
@@ -18,13 +22,9 @@ import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 /**
  * <p>
  * Incremental version of the regular EvlValidator, which is usable from
- * <a href=
- * "https://www.eclipse.org/epsilon/doc/articles/evl-emf-integration/#via-the-extension-point">the
+ * <a href="https://www.eclipse.org/epsilon/doc/articles/evl-emf-integration/#via-the-extension-point">the
  * regular extension point</a>.
  * </p>
- * 
- * TODO decide whether to move this into a .dt plugin, or to fold this
- * functionality into the regular IncrementalEvlValidator.
  */
 public class ExtensionIncrementalEvlValidator extends EvlValidator {
 
@@ -38,6 +38,11 @@ public class ExtensionIncrementalEvlValidator extends EvlValidator {
 			@Override
 			public URI getConstraintsURI() {
 				return source;
+			}
+
+			@Override
+			public Optional<Consumer<IEolContext>> getContextSetup() {
+				return Optional.of(EclipseContextManager::setup);
 			}
 		};
 	}

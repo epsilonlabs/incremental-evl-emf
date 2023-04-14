@@ -1,11 +1,10 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +15,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
+import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
@@ -36,14 +36,14 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     	return module;
     }
     
-    protected int validationCount;
-
+	protected final Optional<Consumer<IEolContext>> contextSetup;
     protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
     protected IncrementalEvlValidator validator = null;
     protected List<Notification> notifications = new ArrayList<>();
 
-    public IncrementalEvlValidatorAdapter(IncrementalEvlValidator validator) {
+    public IncrementalEvlValidatorAdapter(IncrementalEvlValidator validator, Optional<Consumer<IEolContext>> contextSetup) {
         this.validator = validator;
+        this.contextSetup = contextSetup;
     }
 
     public void revalidate(ResourceSet resourceSet) throws Exception {  
@@ -58,8 +58,6 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public void validate(ResourceSet resourceSet) throws Exception {
-    	validationCount++;
-    	
         LOGGER.finer("\n [!] IncrementalEvlValidatorAdapter.validate() called\n");
 
         // Make an in memory version of the Model (root element) for testing
@@ -96,6 +94,11 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         // Load the model to be checked -- Always needs to be "fresh" for testing
         module.getContext().getModelRepository().addModel(model);
 
+        // Do any other necessary setup
+        if (contextSetup.isPresent()) {
+            contextSetup.get().accept(module.getContext());
+        }
+
         // Console output
         if(LOGGER.isLoggable(Level.FINEST)) {
         	String log = "\nConstraints to Execute: ";
@@ -108,14 +111,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             LOGGER.finest(log);
         }
 
-        
-
-
         // -------- EXECUTION --------
-        //Set<UnsatisfiedConstraint> unsatisfiedConstraints = module.execute();
-        
         LOGGER.finer("\n [!] ...Executing validation...\n");
-        
         module.execute();
 
         // -------- PROCESS RESULTS --------
@@ -128,7 +125,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module));
 
         // Console output
-        LOGGER.finest (modelStateToString());
+        LOGGER.finest(() -> modelStateToString());
     }
 
     @Override

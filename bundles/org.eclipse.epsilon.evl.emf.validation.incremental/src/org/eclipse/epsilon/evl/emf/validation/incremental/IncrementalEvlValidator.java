@@ -2,6 +2,8 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,25 +13,35 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.epsilon.eol.execute.context.IEolContext;
 
 public abstract class IncrementalEvlValidator implements EValidator {
 
 	private static final Logger LOGGER = Logger.getLogger(IncrementalEcoreValidator.class.getName());
 	
 	public abstract URI getConstraintsURI();
-	
+
+	public Optional<Consumer<IEolContext>> getContextSetup() {
+		return Optional.empty();
+	}
+
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 
 		try {
 			if (LOGGER.isLoggable(Level.FINEST)) {
-				String log = "\n [!] IncrementalEvlValidator.validate() called";
-				log = log.concat("\neClass: " + eClass);
-				log = log.concat("\neObject: " + eObject);		
-				log = log.concat("\ndiagnostic: "+ diagnostics); // return for the constraint check
-				log = log.concat("\nContext (Map): "+ context);
-				log = log.concat("\n---\n");
-				LOGGER.finest(log);
+				StringBuilder sb = new StringBuilder("\n [!] IncrementalEvlValidator.validate() called");
+				sb.append("\neClass: ");
+				sb.append(eClass);
+				sb.append("\neObject: ");
+				sb.append(eObject);		
+				sb.append("\ndiagnostic: ");
+				sb.append(diagnostics); // return for the constraint check
+				sb.append("\nContext (Map): ");
+				sb.append(context);
+				sb.append("\n---\n");
+
+				LOGGER.finest(sb.toString());
 			}
 
 			return validateImpl(eClass, eObject, diagnostics, context);
@@ -64,7 +76,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 		}
 		// otherwise, we need to add the adapter and trigger batch validation
 		else {
-			adapter = new IncrementalEvlValidatorAdapter(this);
+			adapter = new IncrementalEvlValidatorAdapter(this, getContextSetup());
 			resourceSet.eAdapters().add(adapter);
 			adapter.validate(resourceSet);
 
