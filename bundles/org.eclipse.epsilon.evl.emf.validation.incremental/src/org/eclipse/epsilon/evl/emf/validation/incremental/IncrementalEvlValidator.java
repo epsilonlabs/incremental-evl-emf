@@ -2,6 +2,8 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,13 +13,18 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.epsilon.eol.execute.context.IEolContext;
 
 public abstract class IncrementalEvlValidator implements EValidator {
 
 	private static final Logger LOGGER = Logger.getLogger(IncrementalEcoreValidator.class.getName());
 	
 	public abstract URI getConstraintsURI();
-	
+
+	public Optional<Consumer<IEolContext>> getContextSetup() {
+		return Optional.empty();
+	}
+
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 
@@ -64,7 +71,7 @@ public abstract class IncrementalEvlValidator implements EValidator {
 		}
 		// otherwise, we need to add the adapter and trigger batch validation
 		else {
-			adapter = new IncrementalEvlValidatorAdapter(this);
+			adapter = new IncrementalEvlValidatorAdapter(this, getContextSetup());
 			resourceSet.eAdapters().add(adapter);
 			adapter.validate(resourceSet);
 
