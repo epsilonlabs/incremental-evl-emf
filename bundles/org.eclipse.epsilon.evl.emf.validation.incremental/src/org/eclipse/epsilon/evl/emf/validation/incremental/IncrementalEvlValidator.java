@@ -30,13 +30,18 @@ public abstract class IncrementalEvlValidator implements EValidator {
 
 		try {
 			if (LOGGER.isLoggable(Level.FINEST)) {
-				String log = "\n [!] IncrementalEvlValidator.validate() called";
-				log = log.concat("\neClass: " + eClass);
-				log = log.concat("\neObject: " + eObject);		
-				log = log.concat("\ndiagnostic: "+ diagnostics); // return for the constraint check
-				log = log.concat("\nContext (Map): "+ context);
-				log = log.concat("\n---\n");
-				LOGGER.finest(log);
+				StringBuilder sb = new StringBuilder("\n [!] IncrementalEvlValidator.validate() called");
+				sb.append("\neClass: ");
+				sb.append(eClass);
+				sb.append("\neObject: ");
+				sb.append(eObject);		
+				sb.append("\ndiagnostic: ");
+				sb.append(diagnostics); // return for the constraint check
+				sb.append("\nContext (Map): ");
+				sb.append(context);
+				sb.append("\n---\n");
+
+				LOGGER.finest(sb.toString());
 			}
 
 			return validateImpl(eClass, eObject, diagnostics, context);
