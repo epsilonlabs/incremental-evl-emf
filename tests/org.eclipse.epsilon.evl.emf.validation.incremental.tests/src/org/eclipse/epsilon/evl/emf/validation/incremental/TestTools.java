@@ -3,6 +3,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -64,6 +65,15 @@ public class TestTools {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
         String output = adapter.constraintExecutionCache.get().toString();
         System.out.println(output);
+    }
+
+    public static List<ConstraintPropertyAccess> accessesOf(EObject modelElement, String featureName) {
+    	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(modelElement);
+    	Collection <ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
+
+    	return propertyAccesses.stream()
+    		.filter(pa -> pa.getModelElement() == modelElement && featureName.equals(pa.getPropertyName()))
+    		.collect(Collectors.toList());
     }
 
     public static List<Object> getModelObjectsFromExecutionCacheConstraintPropertyAccess (EPackage ePackage) {    	

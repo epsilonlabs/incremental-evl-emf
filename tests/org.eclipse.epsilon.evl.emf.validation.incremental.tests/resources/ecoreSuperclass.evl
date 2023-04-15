@@ -1,0 +1,7 @@
+context EClass {
+  constraint NameMustEndWithSuperclassName {
+    guard: not self.eSuperTypes.isEmpty()
+    check: self.name.endsWith(self.eSuperTypes.first.name)
+    message: 'Name should end with the name of the supertype'
+  }
+}
