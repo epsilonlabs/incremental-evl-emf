@@ -80,13 +80,13 @@ public class TestTools {
     	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
     	Collection <ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
     	List <Object> modelObjects =  new ArrayList<>();
-    	for(ConstraintPropertyAccess propertyAccess : propertyAccesses) {
+    	for (ConstraintPropertyAccess propertyAccess : propertyAccesses) {
     		modelObjects.add(propertyAccess.getModelElement());
     	}    	
     	return modelObjects;
     }
-    
-    public static List<Object> getModelObjectsFromExecutionCacheConstraintTrace(EPackage ePackage) {
+
+    public static List<Object> modelObjectsFromExecutionCacheConstraintTrace(EPackage ePackage) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
         Collection <ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;
         List<Object> modelObjects = new ArrayList<>();
@@ -96,7 +96,7 @@ public class TestTools {
         return modelObjects;
     }
         
-    public static List<Object> getModelObjectsFromExecutionCacheUnsatisfiedConstraints(EPackage ePackage) {
+    public static List<Object> modelObjectsFromExecutionCacheUnsatisfiedConstraints(EPackage ePackage) {
     	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
     	Collection <UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache.get().unsatisfiedConstraints; 
     	List<Object> modelObjects = new ArrayList<>();
