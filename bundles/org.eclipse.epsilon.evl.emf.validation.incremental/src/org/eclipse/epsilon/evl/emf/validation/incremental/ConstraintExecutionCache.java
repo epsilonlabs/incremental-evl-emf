@@ -202,19 +202,6 @@ public class ConstraintExecutionCache {
         }
         return ucString;
     }
-    
-    private String constraintPropertyAccessToString(List<ConstraintPropertyAccess> constraintPropertyAccess) {
-    	int i = 0;
-        String cpaString = "\n[Trace] (Constraint)PropertyAccess list: ";
-
-        for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
-            i++;
-            cpaString = cpaString.concat("\n  " + i 
-            		+ ", Constraint: " + cpa.execution.constraint.getName()
-            		+ " | Model hashcode: " + cpa.getModelElement().hashCode());
-        }
-        return cpaString;
-    }
 
     @Override
     public String toString () {

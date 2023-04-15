@@ -1,6 +1,11 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.eclipse.epsilon.evl.emf.validation.incremental.TestTools.modelObjectsFromConstraintPropertyAccess;
+import static org.eclipse.epsilon.evl.emf.validation.incremental.TestTools.modelObjectsFromConstraintTrace;
+import static org.eclipse.epsilon.evl.emf.validation.incremental.TestTools.modelObjectsFromUnsatisfiedConstraints;
+import static org.eclipse.epsilon.evl.emf.validation.incremental.TestTools.showAdapterNotifications;
+import static org.eclipse.epsilon.evl.emf.validation.incremental.TestTools.showExecutionCache;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,8 +27,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.junit.Before;
-import org.junit.Test;
-//import static org.assertj.core.api.Assertions.*;
+import org.junit.Test;;
 
 public class IncrementalEvlTests {
 
@@ -88,13 +92,13 @@ public class IncrementalEvlTests {
 
         // VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.contains(modelElement1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
     }
 
     @Test
@@ -107,35 +111,35 @@ public class IncrementalEvlTests {
     	
     	// VALIDATE
         diagnostician.validate(ePackage1);        
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.containsExactlyInAnyOrder(modelElement1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
 
         // CHANGE
         modelElement1.setName("C2");
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.isEmpty();        
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
     	// RE-VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.containsExactlyInAnyOrder(modelElement1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
         
     }
@@ -150,41 +154,41 @@ public class IncrementalEvlTests {
 
         // VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
         			modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
         			modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.containsExactlyInAnyOrder(modelElement1, modelElement2);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
         // CHANGE
         modelElement2.setName("C3");
-        //TestTools.showExecutionCache(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        //showExecutionCache(ePackage1);
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.containsExactlyInAnyOrder(modelElement1);
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
 
         // RE VALIDATE
         diagnostician.validate(ePackage1);      
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
     				modelElement2,modelElement2,modelElement2);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
 	    			modelElement2,modelElement2,modelElement2);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement1, modelElement2);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
     }
 
     // TODO Add test for unsetting a feature
@@ -205,19 +209,19 @@ public class IncrementalEvlTests {
         diagnostician.validate(eob);
         
         /*
-        assertThat(TestTools.getPackageNamesInConstraintTrace(eob)).contains("C1", "C1", "C1", "C3", "C3", "C3");
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(eob)).contains("C1", "C1", "C1", "C3", "C3", "C3");
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(eob)).contains("C1","C3");  
+        assertThat(getPackageNamesInConstraintTrace(eob)).contains("C1", "C1", "C1", "C3", "C3", "C3");
+        assertThat(getPackageNamesInPropertyAccesses(eob)).contains("C1", "C1", "C1", "C3", "C3", "C3");
+        assertThat(getPackageNamesInUnsatisfiedConstraints(eob)).contains("C1","C3");
         */
         
         // CHANGE MODEL
         eob.unsetEditDirectory();        
-        TestTools.showExecutionCache(eob);
+        showExecutionCache(eob);
         
         /*
-        assertThat(TestTools.getPackageNamesInConstraintTrace(ePackage1)).contains("C1", "C1", "C1", "C3", "C3", "C3");
-        assertThat(TestTools.getPackageNamesInPropertyAccesses(ePackage1)).contains("C1", "C1", "C1", "C3", "C3", "C3");
-        assertThat(TestTools.getPackageNamesInUnsatisfiedConstraints(ePackage1)).contains("C1","C3");
+        assertThat(getPackageNamesInConstraintTrace(ePackage1)).contains("C1", "C1", "C1", "C3", "C3", "C3");
+        assertThat(getPackageNamesInPropertyAccesses(ePackage1)).contains("C1", "C1", "C1", "C3", "C3", "C3");
+        assertThat(getPackageNamesInUnsatisfiedConstraints(ePackage1)).contains("C1","C3");
         */
         
         // RE-VALIDATE MODEL
@@ -238,35 +242,35 @@ public class IncrementalEvlTests {
         
         // VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.contains(modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
     		.contains(modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
     		.contains(modelElement1, modelElement2);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
         // CHANGE
         ePackage1.getEClassifiers().remove(modelElement1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.contains(modelElement2,modelElement2,modelElement2);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.contains(modelElement2,modelElement2,modelElement2);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.contains(modelElement2);
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
 	    
 	    // RE-VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.contains(modelElement2,modelElement2,modelElement2);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.contains(modelElement2,modelElement2,modelElement2);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.contains(modelElement2);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
     }
 
     @Test
@@ -280,38 +284,38 @@ public class IncrementalEvlTests {
         
         // VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
     				modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
     		.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
     				modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1, modelElement2);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
 
         // CHANGE
         ePackage1.getEClassifiers().clear();
-        //TestTools.showExecutionCache(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        //showExecutionCache(ePackage1);
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.isEmpty();
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
         	.isEmpty();
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.isEmpty();
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
         // RE-VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
     }
 
 
@@ -326,44 +330,44 @@ public class IncrementalEvlTests {
         
         // VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
     				modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
     		.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
     				modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1, modelElement2);
-        TestTools.showExecutionCache(ePackage1);
+        showExecutionCache(ePackage1);
 
         // CHANGE
         // Move model elements about (swap C1 and C2 round) -- cache should clear C1 & C2
         ePackage1.getEClassifiers().move(0, 1);
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1, 
     				modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1, 
     				modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1, modelElement2);
 
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
         //RE-VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1,
     				modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
     		.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1,
     				modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
     		.containsExactlyInAnyOrder(modelElement1, modelElement2);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
     }
 
     @Test
@@ -383,69 +387,69 @@ public class IncrementalEvlTests {
         // VALIDATE -- 2 MODELS
         diagnostician.validate(ePackage1);
         diagnostician.validate(ePackage2);        
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.contains(modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
     		.contains(modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
     		.contains(modelElement1, modelElement2);
 
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage2))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage2))
     		.contains(modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage2))
+        assertThat(modelObjectsFromConstraintTrace(ePackage2))
     		.contains(modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage2))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage2))
     		.isEmpty();
 
-        //TestTools.showExecutionCache(ePackage1);
-        //TestTools.showExecutionCache(ePackage2);
+        //showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage2);
         
         // CHANGE -- 2 MODELS
         BuildTestModel.addModelElementToePackage(modelElement1, ePackage2);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.contains(modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
     		.contains(modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
     		.contains(modelElement2);
         
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage2))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage2))
     		.contains(modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage2))
+        assertThat(modelObjectsFromConstraintTrace(ePackage2))
     		.contains(modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage2))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage2))
     		.isEmpty();
         
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
-        TestTools.showAdapterNotifications(ePackage2);
+        showAdapterNotifications(ePackage2);
         //BuildTestModel.showEPackage(ePackage2);
-        //TestTools.showExecutionCache(ePackage2);
+        //showExecutionCache(ePackage2);
 
         
         // RE-VALIDATE -- 2 MODELS
         diagnostician.validate(ePackage1);
         diagnostician.validate(ePackage2);  
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.contains(modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
     		.contains(modelElement2,modelElement2,modelElement2);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
     		.contains(modelElement2);
 
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage2))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage2))
     		.contains(modelElement1,modelElement1,modelElement1, modelElement3,modelElement3,modelElement3,
     				modelElement4,modelElement4,modelElement4);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage2))
+        assertThat(modelObjectsFromConstraintTrace(ePackage2))
     		.contains(modelElement1,modelElement1,modelElement1, modelElement3,modelElement3,modelElement3,
     				modelElement4,modelElement4,modelElement4);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage2))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage2))
     		.contains(modelElement1);
         
-        //TestTools.showExecutionCache(ePackage1);
-        //TestTools.showExecutionCache(ePackage2);
+        //showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage2);
         
     }
 
@@ -460,13 +464,13 @@ public class IncrementalEvlTests {
 
         // VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.isEmpty();
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
 
 	    // CHANGE
         List<EClass> listOfModelElements = new ArrayList<EClass>();
@@ -477,27 +481,27 @@ public class IncrementalEvlTests {
         modelElement3 = listOfModelElements.get(1);
         modelElement4 = listOfModelElements.get(2);
         ePackage1.getEClassifiers().addAll(listOfModelElements);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.isEmpty();
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
 
 	    // RE-VALIDATE
         diagnostician.validate(ePackage1); 
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2,
 	    			modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2,
 	    			modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement2, modelElement3, modelElement4);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
 
     }
 
@@ -511,13 +515,13 @@ public class IncrementalEvlTests {
         
         // VALIDATE        
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.isEmpty();
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
 
         // CHANGE 1 -- ADD_MANY
         List<EClass> listOfModelElements = new ArrayList<>();
@@ -528,49 +532,49 @@ public class IncrementalEvlTests {
         modelElement3 = listOfModelElements.get(1);
         modelElement4 = listOfModelElements.get(2);
         ePackage1.getEClassifiers().addAll(listOfModelElements);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.isEmpty();
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
         // RE-VALIDATE
         diagnostician.validate(ePackage1);        
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2,
         			modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
-        assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+        assertThat(modelObjectsFromConstraintTrace(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, modelElement2,modelElement2,modelElement2,
         			modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
-        assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+        assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.containsExactlyInAnyOrder(modelElement2, modelElement3, modelElement4);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
         
         // CHANGE 2 -- REMOVE_MANY
         ePackage1.getEClassifiers().removeAll(listOfModelElements);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.isEmpty();
-        TestTools.showAdapterNotifications(ePackage1);
+        showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //TestTools.showExecutionCache(ePackage1);
+        //showExecutionCache(ePackage1);
 
         // RE-VALIDATE
         diagnostician.validate(ePackage1);
-        assertThat(TestTools.getModelObjectsFromExecutionCacheConstraintPropertyAccess(ePackage1))
+        assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheConstraintTrace(ePackage1))
+	    assertThat(modelObjectsFromConstraintTrace(ePackage1))
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
-	    assertThat(TestTools.modelObjectsFromExecutionCacheUnsatisfiedConstraints(ePackage1))
+	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.isEmpty();
-	    //TestTools.showExecutionCache(ePackage1);
+	    //showExecutionCache(ePackage1);
     }
 
 

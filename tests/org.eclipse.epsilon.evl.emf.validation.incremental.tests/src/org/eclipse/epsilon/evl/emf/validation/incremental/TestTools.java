@@ -67,130 +67,45 @@ public class TestTools {
         System.out.println(output);
     }
 
+    public static List<ConstraintPropertyAccess> allAccesses(EObject modelElement) {
+    	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(modelElement);
+    	return adapter.constraintExecutionCache.get().constraintPropertyAccess;
+    }
+
     public static List<ConstraintPropertyAccess> accessesOf(EObject modelElement, String featureName) {
     	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(modelElement);
-    	Collection <ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
+    	Collection<ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
 
     	return propertyAccesses.stream()
     		.filter(pa -> pa.getModelElement() == modelElement && featureName.equals(pa.getPropertyName()))
     		.collect(Collectors.toList());
     }
 
-    public static List<Object> getModelObjectsFromExecutionCacheConstraintPropertyAccess (EPackage ePackage) {    	
+    public static List<Object> modelObjectsFromConstraintPropertyAccess (EPackage ePackage) {
     	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-    	Collection <ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
-    	List <Object> modelObjects =  new ArrayList<>();
-    	for (ConstraintPropertyAccess propertyAccess : propertyAccesses) {
-    		modelObjects.add(propertyAccess.getModelElement());
-    	}    	
-    	return modelObjects;
+    	Collection<ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
+
+    	return propertyAccesses.stream()
+    		.map(pa -> pa.getModelElement())
+    		.collect(Collectors.toList());
     }
 
-    public static List<Object> modelObjectsFromExecutionCacheConstraintTrace(EPackage ePackage) {
+    public static List<Object> modelObjectsFromConstraintTrace(EPackage ePackage) {
         IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        Collection <ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;
-        List<Object> modelObjects = new ArrayList<>();
-        for(ConstraintTraceItem item : traceItems) {
-            modelObjects.add(item.getInstance());
-        }
-        return modelObjects;
+        Collection<ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;
+
+        return traceItems.stream()
+        	.map(pa -> pa.getInstance())
+        	.collect(Collectors.toList());
     }
         
-    public static List<Object> modelObjectsFromExecutionCacheUnsatisfiedConstraints(EPackage ePackage) {
+    public static List<Object> modelObjectsFromUnsatisfiedConstraints(EPackage ePackage) {
     	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-    	Collection <UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache.get().unsatisfiedConstraints; 
-    	List<Object> modelObjects = new ArrayList<>();
-    	for(UnsatisfiedConstraint unsatisfiedConstraint : unsatisfiedConstraints) {    		
-    		modelObjects.add(unsatisfiedConstraint.getInstance());
-    	}    	
-    	return modelObjects;
+    	Collection<UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache.get().unsatisfiedConstraints; 
+
+    	return unsatisfiedConstraints.stream()
+    		.map(pa -> pa.getInstance())
+    		.collect(Collectors.toList());
     }
     
-    
-    /*
-    public static int getExecutionCacheConstrainPropertyAccessSize(EPackage ePackage) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        return adapter.constraintExecutionCache.get().constraintPropertyAccess.size();
-    }
-
-    public static int getExecutionCacheConstraintTraceItemSize (EPackage ePackage) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        return adapter.constraintExecutionCache.get().constraintTraceItems.size();
-    }
-
-    public static int getExecutionCacheUnsatisfiedConstraintsSize (EPackage ePackage) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        return adapter.constraintExecutionCache.get().unsatisfiedConstraints.size();
-    }
-
-    public static List<String> getPackageNamesInPropertyAccesses(EPackage ePackage) {
-    	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-    	Collection <ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache.get().constraintPropertyAccess; 
-    	List<String> names = new ArrayList<>();
-    	for(ConstraintPropertyAccess propertyAccess : propertyAccesses) {
-    		EClass modelElement = (EClass) propertyAccess.getModelElement();
-    		names.add(modelElement.getName());
-    	}    	
-    	return names;
-    }
-    
-    public static List<String> getPackageNamesInConstraintTrace(EPackage ePackage) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        Collection <ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;
-        List<String> names = new ArrayList<>();
-        for(ConstraintTraceItem item : traceItems) {
-            EClass modelElement = (EClass) item.getInstance();
-            names.add(modelElement.getName());
-        }
-        return names;
-    }  
-    
-    public static List<String> getPackageNamesInUnsatisfiedConstraints(EPackage ePackage) {
-    	IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-    	Collection <UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache.get().unsatisfiedConstraints; 
-    	List<String> names = new ArrayList<>();
-    	for(UnsatisfiedConstraint unsatisfiedConstraint : unsatisfiedConstraints) {
-    		EClass modelElement = (EClass) unsatisfiedConstraint.getInstance();
-    		names.add(modelElement.getName());
-    	}    	
-    	return names;
-    }
-    
-
-    public static boolean checkExecutionCacheConstraintTraceItemsForModelElementName (EPackage ePackage, String name) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        Collection <ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;
-        for(ConstraintTraceItem item : traceItems) {
-            EClass modelElement = (EClass) item.getInstance();
-            if(modelElement.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean checkExecutionCacheConstraintPropertyAccessForModelElementName (EPackage ePackage, String name) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        Collection <ConstraintPropertyAccess> constraintPropertyAccess = adapter.constraintExecutionCache.get().constraintPropertyAccess;
-        for(ConstraintPropertyAccess CPA : constraintPropertyAccess) {
-            EClass modelElement = (EClass) CPA.getModelElement();
-            if(modelElement.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean checkConstraintExecutionCacheUnsatisfiedConstraintForModelElementName (EPackage ePackage, String name) {
-        IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-        Collection <UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache.get().unsatisfiedConstraints;
-        for(UnsatisfiedConstraint UC : unsatisfiedConstraints) {
-            EClass modelElement = (EClass) UC.getInstance();
-            if(modelElement.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-     */
 }
