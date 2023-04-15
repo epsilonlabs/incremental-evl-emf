@@ -14,5 +14,13 @@ public class ConstraintPropertyAccess extends PropertyAccess {
 	public ConstraintExecution getExecution() {
 		return execution;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("PropertyAccess in constraint '%s' of '%s' on model element: '%s'",
+			execution.getConstraint().getName(),
+			this.propertyName,
+			this.modelElement);
+	}
 	
 }

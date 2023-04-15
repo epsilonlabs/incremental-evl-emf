@@ -29,6 +29,10 @@ public class ConstraintExecution {
 	public Constraint getConstraint() {
 		return constraint;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ConstraintExecution [constraint=" + constraint + ", self=" + self + "]";
+	}
 	
 }
