@@ -27,6 +27,9 @@
     <setAttribute key="selected_target_bundles">
         <setEntry value="bcpg@default:default"/>
         <setEntry value="bcprov@default:default"/>
+        <setEntry value="ch.qos.logback.classic@default:default"/>
+        <setEntry value="ch.qos.logback.core@default:default"/>
+        <setEntry value="ch.qos.logback.slf4j@default:default"/>
         <setEntry value="com.google.gdata@default:default"/>
         <setEntry value="com.google.guava@default:default"/>
         <setEntry value="com.google.inject@default:default"/>
@@ -202,6 +205,11 @@
         <setEntry value="org.eclipse.egit.doc@default:default"/>
         <setEntry value="org.eclipse.egit.ui@default:default"/>
         <setEntry value="org.eclipse.egit@default:default"/>
+        <setEntry value="org.eclipse.elk.alg.common@default:default"/>
+        <setEntry value="org.eclipse.elk.alg.layered@default:default"/>
+        <setEntry value="org.eclipse.elk.core.service@default:default"/>
+        <setEntry value="org.eclipse.elk.core@default:default"/>
+        <setEntry value="org.eclipse.elk.graph@default:default"/>
         <setEntry value="org.eclipse.emf.ant@default:default"/>
         <setEntry value="org.eclipse.emf.cheatsheets@default:default"/>
         <setEntry value="org.eclipse.emf.codegen.ecore.ui@default:default"/>
@@ -543,6 +551,7 @@
         <setEntry value="org.eclipse.sirius.common.ui.ext@default:default"/>
         <setEntry value="org.eclipse.sirius.common.ui@default:default"/>
         <setEntry value="org.eclipse.sirius.common@default:default"/>
+        <setEntry value="org.eclipse.sirius.diagram.elk@default:default"/>
         <setEntry value="org.eclipse.sirius.diagram.formatdata@default:default"/>
         <setEntry value="org.eclipse.sirius.diagram.model@default:default"/>
         <setEntry value="org.eclipse.sirius.diagram.sequence.edit@default:default"/>
@@ -650,6 +659,7 @@
         <setEntry value="org.eclipse.xsd.mapping.editor@default:default"/>
         <setEntry value="org.eclipse.xsd.mapping@default:default"/>
         <setEntry value="org.eclipse.xsd@default:default"/>
+        <setEntry value="org.eclipse.xtext.xbase.lib@default:default"/>
         <setEntry value="org.hamcrest.core@default:default"/>
         <setEntry value="org.jdom@default:default"/>
         <setEntry value="org.junit@default:default"/>
