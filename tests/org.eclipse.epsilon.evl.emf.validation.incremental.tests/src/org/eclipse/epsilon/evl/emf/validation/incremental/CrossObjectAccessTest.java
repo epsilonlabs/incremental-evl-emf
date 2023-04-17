@@ -51,7 +51,7 @@ public class CrossObjectAccessTest {
     }
 	
 	@Test
-	public void changingSuperNameIsDetected() {
+	public void changingFromValidToInvalidSuperNameIsDetected() {
 		// INITIAL RUN
 		EClass baseClass = BuildTestModel.createAndAddModelElementToePackage("Manager", ePackage);
 		EClass subClass = BuildTestModel.createAndAddModelElementToePackage("ConcreteManager", ePackage);
@@ -71,7 +71,7 @@ public class CrossObjectAccessTest {
 
 		// Only the subclass rule gets executed, and passes
 		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
-			.containsExactlyInAnyOrder(subClass);
+			.containsExactly(subClass);
 		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage))
 			.isEmpty();
 
@@ -88,8 +88,41 @@ public class CrossObjectAccessTest {
 
 		// Now the subclass shouldn't pass validation
 		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
-			.containsExactlyInAnyOrder(subClass);
+			.containsExactly(subClass);
 		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage))
 			.containsExactly(subClass);
 	}
+
+	@Test
+	public void changingFromInvalidToValidSuperNameIsDetected() {
+		// INITIAL RUN
+		EClass baseClass = BuildTestModel.createAndAddModelElementToePackage("SomethingElse", ePackage);
+		EClass subClass = BuildTestModel.createAndAddModelElementToePackage("ConcreteManager", ePackage);
+		subClass.getESuperTypes().add(baseClass);
+		diagnostician.validate(ePackage);
+
+		// Only the subclass rule gets executed, and fails
+		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
+			.containsExactly(subClass);
+		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage))
+			.containsExactly(subClass);
+
+		// CHANGE
+		baseClass.setName("Manager");
+
+		// Should have invalidated the subclass rule execution
+		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage)).isEmpty();
+		// Should have also invalidated the unsatisfied constraint
+		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage)).isEmpty();
+
+		// REVALIDATION
+		diagnostician.validate(ePackage);
+
+		// Now the subclass should pass validation
+		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
+			.containsExactly(subClass);
+		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage))
+			.isEmpty();
+	}
+	
 }
