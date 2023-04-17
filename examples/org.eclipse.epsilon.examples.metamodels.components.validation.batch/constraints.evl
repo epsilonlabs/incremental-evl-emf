@@ -69,20 +69,19 @@ context ccl::Component {
     }
     
     constraint ComponentLoops {
-    check { self.name.print("ComponentLoops: ");
-    		var list = self.closure(c : Component | c.ports.select(p|p.isKindOf(InPort)
-    			and p.connector.isDefined() 
-    			and p.connector.source.isDefined()).connector.source.component);
-    		if(list.contains(self)) {
-    			list.println(" loop: ");
-    		}
-    		else {
-    			"none".println(" loop: ");
-    		}
-    		return not list.contains(self);}
-    message: "Loop found: " + list
+      check {
+        'ComponentLoops: '.print();
+        var list = self.closure(c | c.ports
+           .select(p | p.isKindOf(OutPort) and p.connector?.target.isDefined())
+           .collect(p|p.connector.target.component));
+
+        var result = not list.contains(self);
+        list.println('loop: ');
+        return result;
+      }
+      message: "Loop found: " + list
     }
-    
+
     /* Component names must be globally unique */
     constraint UniqueName {        
         check	: getComponentsByName().get(self.name).size() == 1
