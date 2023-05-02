@@ -5,18 +5,18 @@ import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessRec
 
 public class ConstraintPropertyAccessRecorder extends PropertyAccessRecorder {
 	
-	protected ConstraintExecution execution = null;
+	protected Execution execution = null;
 	
 	@Override
 	protected PropertyAccess createPropertyAccess(Object modelElement, String propertyName) {
 		return new ConstraintPropertyAccess(modelElement, propertyName, execution);
 	}
 	
-	public void setExecution(ConstraintExecution execution) {
+	public void setExecution(Execution execution) {
 		this.execution = execution;
 	}
 	
-	public ConstraintExecution getExecution() {
+	public Execution getExecution() {
 		return execution;
 	}
 	

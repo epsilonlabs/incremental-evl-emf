@@ -73,10 +73,16 @@ context ccl::Component {
     
     /* Component names must be globally unique */
     /*
-    constraint UniqueName {        
+    constraint CachedUniqueName {        
         check	: getComponentsByName().get(self.name).size() == 1
         message : "Duplicate component name " + self.name
     } 
+
+    constraint UniqueName {
+        check	: Component.all.mapBy(c|c.name).get(self.name).size() == 1
+        message : "Duplicate component name " + self.name
+    } 
+
 	*/ 
 }
 

@@ -6,10 +6,12 @@ import java.util.logging.Logger;
 
 import org.eclipse.epsilon.common.module.ModuleElement;
 import org.eclipse.epsilon.common.parse.AST;
+import org.eclipse.epsilon.eol.dom.Operation;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.eol.execute.introspection.recording.IPropertyAccess;
 import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessExecutionListener;
+import org.eclipse.epsilon.eol.parse.EolParser;
 import org.eclipse.epsilon.evl.EvlModule;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
@@ -44,9 +46,13 @@ public class IncrementalEvlModule extends EvlModule {
 
     @Override
     public ModuleElement adapt(AST cst, ModuleElement parentAst) {
-        ModuleElement moduleElement = super.adapt(cst, parentAst);
+    	ModuleElement moduleElement = super.adapt(cst, parentAst);
 
-        if (moduleElement instanceof Constraint) {
+    	if (moduleElement instanceof Operation) {
+    		if (((Operation) moduleElement).hasAnnotation("cached")) {
+    			return new CachedOperation();
+    		}
+    	} else if (moduleElement instanceof Constraint) {
             return new Constraint() {
                 public Optional<UnsatisfiedConstraint> execute(IEolContext context_, Object self) throws EolRuntimeException {
                     // this -- is the constraint
@@ -83,17 +89,16 @@ public class IncrementalEvlModule extends EvlModule {
                     LOGGER.finer(() -> "Need for Validation: " + self.hashCode() + " & " + this.getName());
 
                     // Set up the recorder and execute the constraint test to get a result
-                    propertyAccessRecorder.setExecution(new ConstraintExecution(this, self));
+                    propertyAccessRecorder.setExecution(new Execution(this, self));
                     Result = super.execute(context_, self);
 
                     LOGGER.finest(() -> "Validation test Result - " + Result);
                     return Result;
                 }
-
-
             };
         }
-        return moduleElement;
+
+    	return moduleElement;
     }
 
     @Override

@@ -4,21 +4,21 @@ import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccess;
 
 public class ConstraintPropertyAccess extends PropertyAccess {
 	
-	protected ConstraintExecution execution = null;
+	protected Execution execution = null;
 	
-	public ConstraintPropertyAccess(Object modelElement, String propertyName, ConstraintExecution execution) {
+	public ConstraintPropertyAccess(Object modelElement, String propertyName, Execution execution) {
 		super(modelElement, propertyName);
 		this.execution = execution;
 	}
 	
-	public ConstraintExecution getExecution() {
+	public Execution getExecution() {
 		return execution;
 	}
 
 	@Override
 	public String toString() {
 		return String.format("PropertyAccess in constraint '%s' of '%s' on model element: '%s'",
-			execution.getConstraint().getName(),
+			execution.getUnit(),
 			this.propertyName,
 			this.modelElement);
 	}

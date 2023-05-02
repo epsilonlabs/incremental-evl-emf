@@ -185,7 +185,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         for (ConstraintPropertyAccess cpa : module.getTrace().propertyAccesses) {
             i++;
             stateString = stateString.concat("\n" + i 
-            		+ ", Constraint: " + cpa.execution.constraint.getName() + " " + cpa.execution.constraint.hashCode()
+            		+ ", Constraint: " + cpa.execution.unit + " " + cpa.execution.unit.hashCode()
             		+ " | Model hashcode: " + cpa.getModelElement().hashCode() );            
         }
 

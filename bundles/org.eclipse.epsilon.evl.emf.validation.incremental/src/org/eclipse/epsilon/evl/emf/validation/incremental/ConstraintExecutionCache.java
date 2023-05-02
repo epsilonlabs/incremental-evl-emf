@@ -28,7 +28,9 @@ public class ConstraintExecutionCache {
     
     protected Set<ConstraintTraceItem> constraintTraceItems;
     protected Collection<UnsatisfiedConstraint> unsatisfiedConstraints;
-    protected List <ConstraintPropertyAccess> constraintPropertyAccess;
+
+    // TODO move into ConstraintExecution class, and replace with a List<Execution>
+    protected List<ConstraintPropertyAccess> constraintPropertyAccess;
 
     public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
         // Change these to "defensive copies"?
@@ -110,9 +112,12 @@ public class ConstraintExecutionCache {
 
     private void removeFromCache(EObject modelElement, EStructuralFeature modelFeature ) {
     	LOGGER.finer(() -> "Try and remove model element " + modelElement.hashCode() + " with feature " + modelFeature.getName() + " from execution cache");
-    	
+
+    	// TODO remove property accesses from cached operations
+
     	// Make a method which makes a list of constraints related to the model element and feature
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
+
         // find any properyAccesses (make a list of constraints) and delete them
         for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
             ConstraintPropertyAccess cpa = (ConstraintPropertyAccess) itr.next();
@@ -125,12 +130,12 @@ public class ConstraintExecutionCache {
             }
         }
         clearConstraintTracesAndUnsatisfiedConstraints(constraintsToInvalidate);
-        
     }
 
     private void removeFromCache(EObject modelElement) {
-        //System.out.println("\nremoveFromCache: " + modelElement.hashCode() + " " + modelElement);
     	LOGGER.finer(() -> "Try and remove model element " + modelElement.hashCode() + " with ANY feature from execution cache");
+
+    	// TODO remove property accesses from cached operations
 
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
 
@@ -157,7 +162,7 @@ public class ConstraintExecutionCache {
         	for (Iterator<ConstraintTraceItem> itr = constraintTraceItems.iterator(); itr.hasNext(); ) {
                 ConstraintTraceItem ctitem = itr.next();
                 if (ctitem.getInstance() == invalidcpa.getExecution().getSelf()
-                        && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint()) { // need to resolve "feature" for each result
+                        && ctitem.getConstraint() == invalidcpa.getExecution().getUnit()) { // need to resolve "feature" for each result
                 	LOGGER.finer(() -> "Removed constraintTraceItem model hash " + ctitem.getInstance().hashCode() + " constraint " + ctitem.getConstraint().getName() );               
                     itr.remove();
                 }
@@ -167,7 +172,7 @@ public class ConstraintExecutionCache {
             for (Iterator<UnsatisfiedConstraint> itr = unsatisfiedConstraints.iterator(); itr.hasNext(); ) {
                 UnsatisfiedConstraint uc = itr.next();
                 if (uc.getInstance() == invalidcpa.getExecution().getSelf()
-                        && uc.getConstraint() == invalidcpa.getExecution().getConstraint() ) {
+                        && uc.getConstraint() == invalidcpa.getExecution().getUnit() ) {
                 	LOGGER.finer(() -> "Removed unsatisfiedConstraint model hash " + uc.getInstance().hashCode() + " constraint " + uc.getConstraint().getName() );
                     itr.remove();
                 }

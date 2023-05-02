@@ -13,9 +13,9 @@ public class IncrementalEvlTrace {
         propertyAccesses.add(propertyAccess);
     }
 
-    protected Set<ConstraintExecution> propertyModified(Object modelElement, String propertyName) {
+    protected Set<Execution> propertyModified(Object modelElement, String propertyName) {
 
-        Set<ConstraintExecution> invalidatedExecutions = propertyAccesses.stream().
+        Set<Execution> invalidatedExecutions = propertyAccesses.stream().
                 filter(propertyAccess -> propertyAccess.getModelElement() == modelElement && propertyName.equals(propertyAccess.getPropertyName())).
                 map(propertyAccess -> propertyAccess.getExecution()).collect(Collectors.toSet());
 
@@ -24,11 +24,11 @@ public class IncrementalEvlTrace {
         return invalidatedExecutions;
     }
 
-    protected List<ConstraintExecution> elementAdded(Object modelElement) {
+    protected List<Execution> elementAdded(Object modelElement) {
         return null;
     }
 
-    protected List<ConstraintExecution> elementDeleted(Object modelElement) {
+    protected List<Execution> elementDeleted(Object modelElement) {
         return null;
     }
 }
