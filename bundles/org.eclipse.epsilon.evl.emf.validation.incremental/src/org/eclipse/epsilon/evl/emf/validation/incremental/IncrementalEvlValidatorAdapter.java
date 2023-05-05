@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.validation.internal.util.Trace;
 import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
 import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.evl.dom.Constraint;
@@ -127,6 +128,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // Console output
         LOGGER.finest(() -> modelStateToString());
+        System.out.println(modelStateToString());
     }
 
     @Override
@@ -184,7 +186,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         stateString = stateString.concat("\nConstrainPropertyAccess list: ");
         for (ConstraintPropertyAccess cpa : module.getTrace().propertyAccesses) {
             i++;
-            stateString = stateString.concat("\n" + i 
+            stateString = stateString.concat("\n " + i 
             		+ ", Constraint: " + cpa.execution.unit + " " + cpa.execution.unit.hashCode()
             		+ " | Model hashcode: " + cpa.getModelElement().hashCode() );            
         }
@@ -193,7 +195,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         stateString = stateString.concat("\nConstraintTrace list: ");
         for (ConstraintTraceItem item : module.getContext().getConstraintTrace()) {
             i++;
-            stateString = stateString.concat("\n" + i 
+            stateString = stateString.concat("\n " + i 
             		+ ", Constraint: " + item.getConstraint().getName() + " " + item.getConstraint().hashCode()
                     + " | Model hashcode: " + item.getInstance().hashCode()
                     + " | Result : " + item.getResult()
@@ -204,13 +206,19 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         stateString = stateString.concat("\nUnsatisfiedConstraint list: ");
         for (UnsatisfiedConstraint uc : module.getContext().getUnsatisfiedConstraints()) {
             i++;
-            stateString = stateString.concat("\n" + i 
+            stateString = stateString.concat("\n " + i 
             		+ ", Constraint: " + uc.getConstraint().getName() + " " + uc.getConstraint().hashCode() 
             		+ " | Model hashcode: " + uc.getInstance().hashCode()
             );
         }
 
+        stateString = stateString.concat("\nExecutions list: ");
+        
+        stateString = stateString.concat(module.trace.toString());
+        
         stateString = stateString.concat("\n ====================\n");
+        
+        
         
         return stateString;
     }

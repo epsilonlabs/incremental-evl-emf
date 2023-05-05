@@ -2,6 +2,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import org.eclipse.epsilon.common.module.ModuleElement;
 
@@ -54,7 +55,21 @@ public class Execution {
 
 	@Override
 	public String toString() {
-		return "ConstraintExecution [constraint=" + unit + ", self=" + self + "]";
+		StringJoiner sj = new StringJoiner("");
+		sj.add("ConstraintExecution [constraint=" + unit + ", self=" + self + "]");
+		
+		if(accesses.size()>1) {
+			sj.add("\n > Property Accesses: ");		
+			int i =0;
+			for(Access a : accesses) {
+				sj.add("\n  > " + String.valueOf(i) + ",");
+				sj.add(String.valueOf(a.getModelElement()));
+				sj.add(" " + a.getPropertyName());
+				i++;
+			}
+			sj.add("\n");
+		}
+		return sj.toString();
 	}
 	
 }

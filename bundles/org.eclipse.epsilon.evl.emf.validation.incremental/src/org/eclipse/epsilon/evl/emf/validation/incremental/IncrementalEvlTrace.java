@@ -3,6 +3,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class IncrementalEvlTrace {
@@ -35,5 +36,18 @@ public class IncrementalEvlTrace {
 
     protected List<Execution> elementDeleted(Object modelElement) {
         return null;
+    }
+    
+    public String toString() {
+    	StringJoiner sj = new StringJoiner("");
+    	int i = 0;
+    	for (Execution e : executions) {
+    		sj.add("\n" + String.valueOf(i) + ", ");
+    		sj.add(e.toString());
+    		i++;
+    	}
+    	
+		return sj.toString();
+    	
     }
 }
