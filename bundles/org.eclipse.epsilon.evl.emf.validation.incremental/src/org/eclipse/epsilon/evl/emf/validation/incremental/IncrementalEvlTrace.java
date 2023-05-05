@@ -7,8 +7,13 @@ import java.util.stream.Collectors;
 
 public class IncrementalEvlTrace {
 
-    protected List<ConstraintPropertyAccess> propertyAccesses = new ArrayList<>();
-
+	protected List<Execution> executions = new ArrayList<>();
+	public void addExecution (Execution execution) {
+		System.out.println("  IncrementalEvlTrace.addExecution() : " + execution);
+		executions.add(execution);
+	}
+	
+	protected List<ConstraintPropertyAccess> propertyAccesses = new ArrayList<>();
     public void addPropertyAccess(ConstraintPropertyAccess propertyAccess) {
         propertyAccesses.add(propertyAccess);
     }
@@ -19,7 +24,7 @@ public class IncrementalEvlTrace {
                 filter(propertyAccess -> propertyAccess.getModelElement() == modelElement && propertyName.equals(propertyAccess.getPropertyName())).
                 map(propertyAccess -> propertyAccess.getExecution()).collect(Collectors.toSet());
 
-        propertyAccesses.removeIf(propertyAccess -> invalidatedExecutions.contains(propertyAccess.getExecution()));
+        propertyAccesses.removeIf(propertyAccesses -> invalidatedExecutions.contains(propertyAccesses.getExecution()));
 
         return invalidatedExecutions;
     }

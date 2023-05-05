@@ -26,22 +26,35 @@ public class ConstraintExecutionCache {
 	
     // The Module.getContext() grants access to contraintTrace and UnsatisfiedConstraint, but you can't delete items from them; so we make our own lists in here to delete items from
     
+	
+	
+	
     protected Set<ConstraintTraceItem> constraintTraceItems;
     protected Collection<UnsatisfiedConstraint> unsatisfiedConstraints;
 
     // TODO move into ConstraintExecution class, and replace with a List<Execution>
     protected List<ConstraintPropertyAccess> constraintPropertyAccess;
 
+    // New cache based on Execution
+    protected List<Execution> executions = new ArrayList<>();;
+    
     public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
         // Change these to "defensive copies"?
         this.constraintTraceItems = lastModule.getContext().getConstraintTrace().getItems();
         this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
         this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
 
+        this.executions = lastModule.trace.executions;
+        
         if (LOGGER.isLoggable(Level.FINE)) {
         	LOGGER.finer(() -> "Setting up Execution Cache" + toString());
         }
     }
+    
+    public void addExecution(Execution execution) {
+    	executions.add(execution);
+    }
+    
 
     public List <ConstraintPropertyAccess> getConstraintsPropertyAccessFor (EObject modelElement, EStructuralFeature modelFeature) {
         // Given a model Element and Feature, find all constraints as constraint property access for the model element & feature

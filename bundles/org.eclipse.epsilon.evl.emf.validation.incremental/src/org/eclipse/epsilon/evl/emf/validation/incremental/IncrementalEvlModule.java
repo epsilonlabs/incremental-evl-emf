@@ -10,6 +10,7 @@ import org.eclipse.epsilon.eol.dom.Operation;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.eol.execute.introspection.recording.IPropertyAccess;
+import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccess;
 import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessExecutionListener;
 import org.eclipse.epsilon.eol.parse.EolParser;
 import org.eclipse.epsilon.evl.EvlModule;
@@ -90,7 +91,10 @@ public class IncrementalEvlModule extends EvlModule {
 
                     // Set up the recorder and execute the constraint test to get a result
                     propertyAccessRecorder.setExecution(new Execution(this, self));
+                    // Add the "new" execution accesses to the trace, this execution will be updates with accesses during execution ( ConstraintProperyAccessRecorder.createConstraintPropertyAccess() )
+                    trace.addExecution(propertyAccessRecorder.getExecution());                   
                     Result = super.execute(context_, self);
+                    System.out.println("  Execution Accesses Captured : " + propertyAccessRecorder.getExecution().accesses.size()+ " - " + propertyAccessRecorder.getExecution().getAccesses() + "\n");
 
                     LOGGER.finest(() -> "Validation test Result - " + Result);
                     return Result;

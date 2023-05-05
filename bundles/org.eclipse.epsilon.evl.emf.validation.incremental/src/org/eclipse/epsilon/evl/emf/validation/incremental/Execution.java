@@ -9,9 +9,23 @@ public class Execution {
 		
 	protected ModuleElement unit;
 	protected Object self;
+	
+	// context: EJavaObject ?
 
 	protected final List<Execution> dependencies = new ArrayList<>();
-	// TODO property accesses to go here
+	
+	// TODO property accesses to go here	
+	protected List<Access> accesses = new ArrayList<>();
+	
+	public void addAccess (Access access) {
+		this.accesses.add(access);
+		System.out.println("   Execution.addAccess() " + accesses.size() + " Execution:" + unit + " accesses:"  + accesses);
+	}
+	
+	public List<Access> getAccesses () {
+		return accesses;
+	}
+	
 	
 	public Execution(ModuleElement constraint, Object self) {
 		this.unit = constraint;
