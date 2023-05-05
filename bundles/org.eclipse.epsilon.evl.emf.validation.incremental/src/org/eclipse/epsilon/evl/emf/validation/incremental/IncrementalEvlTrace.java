@@ -42,9 +42,9 @@ public class IncrementalEvlTrace {
     	StringJoiner sj = new StringJoiner("");
     	int i = 0;
     	for (Execution e : executions) {
+    		i++;
     		sj.add("\n" + String.valueOf(i) + ", ");
     		sj.add(e.toString());
-    		i++;
     	}
     	
 		return sj.toString();
