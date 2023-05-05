@@ -9,7 +9,8 @@ public class ConstraintPropertyAccess extends PropertyAccess {
 	public ConstraintPropertyAccess(Object modelElement, String propertyName, Execution execution) {
 		super(modelElement, propertyName);		
 		this.execution = execution;	
-		execution.addAccess(new Access(new PropertyAccess(modelElement,propertyName) ));		
+		execution.addAccess(new Access(new PropertyAccess(modelElement,propertyName) ));	
+		
 	}
 	
 	public Execution getExecution() {
@@ -18,22 +19,30 @@ public class ConstraintPropertyAccess extends PropertyAccess {
 		
 	
 	public Object getModelElement() {		
-		return execution.getAccesses().get(0).getModelElement();
+		//return execution.getAccesses().get(0).getModelElement();
+		return super.modelElement;
 	}
 	
 	
 	public String getPropertyName() {
-		return execution.getAccesses().get(0).getPropertyName();
+		//return execution.getAccesses().get(0).getPropertyName();
+		return super.propertyName;
+		
 	}
 
 	
 	public String toString() {
+		/*
+		return String.format("PropertyAccess in constraint '%s' of '%s' on model element: '%s'",
+				execution.getUnit(),
+				execution.getAccesses().get(0).getPropertyName(),
+				execution.getAccesses().get(0).getModelElement()
+				);
+		*/
 		return String.format("PropertyAccess in constraint '%s' of '%s' on model element: '%s'",
 			execution.getUnit(),
-			execution.getAccesses().get(0).getPropertyName(),
-			execution.getAccesses().get(0).getModelElement()
-			//this.propertyName,
-			//this.modelElement
+			this.propertyName,
+			this.modelElement
 			);
 	}
 	
