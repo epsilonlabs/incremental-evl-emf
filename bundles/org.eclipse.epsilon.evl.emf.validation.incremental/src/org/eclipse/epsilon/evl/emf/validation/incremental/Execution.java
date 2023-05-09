@@ -1,7 +1,9 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringJoiner;
 
 import org.eclipse.epsilon.common.module.ModuleElement;
@@ -16,14 +18,14 @@ public class Execution {
 	protected final List<Execution> dependencies = new ArrayList<>();
 	
 	// TODO property accesses to go here	
-	protected List<Access> accesses = new ArrayList<>();
+	protected Set<Access> accesses = new HashSet<>();
 	
 	public void addAccess (Access access) {
 		this.accesses.add(access);
 		System.out.println("   Execution.addAccess() " + accesses.size() + " Execution:" + unit + " accesses:"  + accesses);
 	}
 	
-	public List<Access> getAccesses () {
+	public Set<Access> getAccesses () {
 		return accesses;
 	}
 	
@@ -70,6 +72,16 @@ public class Execution {
 			sj.add("\n");
 		}
 		return sj.toString();
+	}
+		
+	public boolean inValidate(Access access) {
+		
+		if(accesses.contains(access)) {
+			// invalidate this execution
+			System.out.println("Execution delete self: " + this);
+			return true;		
+		}		
+		return false;
 	}
 	
 }
