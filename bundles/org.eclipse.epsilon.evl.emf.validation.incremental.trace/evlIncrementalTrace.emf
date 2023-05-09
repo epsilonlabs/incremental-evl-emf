@@ -1,0 +1,43 @@
+@namespace(uri="trace", prefix="")
+package trace;
+
+class Trace {
+    val Execution[*] executions;
+    val Access[*] accesses;
+}
+
+abstract class Execution {
+    attr Object context;
+    ref Access[*]#executions accesses;
+    ref Execution[*] dependencies;
+}
+
+class ConstraintExecution extends Execution {
+    @diagram(direction="down")
+    ref Constraint constraint;
+    attr boolean result;
+    attr String message;
+}
+
+class Constraint {}
+
+class CachedOperationExecution extends Execution {
+    @diagram(direction="down")
+    ref Operation operation;
+}
+
+class Operation {}
+
+abstract class Access {
+    ref Execution[*]#accesses executions;
+}
+
+class PropertyAccess extends Access {
+    attr Object element;
+    attr String property;
+}
+
+class AllAccess extends Access {
+    attr String type;
+    attr boolean allOfKind;
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.epsilon.evl.emf.validation.incremental.trace/src"
+    modelPluginID="org.eclipse.epsilon.evl.emf.validation.incremental.trace" modelName="EvlIncrementalTrace"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>evlIncrementalTrace.ecore</foreignModel>
+  <genPackages prefix="Trace" basePackage="org.eclipse.epsilon.evl.emf.validation.incremental"
+      disposableProviderFactory="true" ecorePackage="evlIncrementalTrace.ecore#/">
+    <genClasses ecoreClass="evlIncrementalTrace.ecore#//Trace">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Trace/executions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Trace/accesses"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="evlIncrementalTrace.ecore#//Execution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//Execution/context"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Execution/accesses"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Execution/dependencies"/>
+    </genClasses>
+    <genClasses ecoreClass="evlIncrementalTrace.ecore#//ConstraintExecution">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//ConstraintExecution/constraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//ConstraintExecution/result"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//ConstraintExecution/message"/>
+    </genClasses>
+    <genClasses ecoreClass="evlIncrementalTrace.ecore#//Constraint"/>
+    <genClasses ecoreClass="evlIncrementalTrace.ecore#//CachedOperationExecution">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//CachedOperationExecution/operation"/>
+    </genClasses>
+    <genClasses ecoreClass="evlIncrementalTrace.ecore#//Operation"/>
+    <genClasses image="false" ecoreClass="evlIncrementalTrace.ecore#//Access">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Access/executions"/>
+    </genClasses>
+    <genClasses ecoreClass="evlIncrementalTrace.ecore#//PropertyAccess">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//PropertyAccess/element"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//PropertyAccess/property"/>
+    </genClasses>
+    <genClasses ecoreClass="evlIncrementalTrace.ecore#//AllAccess">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//AllAccess/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//AllAccess/allOfKind"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
