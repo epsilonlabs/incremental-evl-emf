@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.*;
+import trace.*;
 
 /**
  * <!-- begin-user-doc -->

@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import java.util.Collection;
 
@@ -14,15 +14,14 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Access;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.Access;
+import trace.Execution;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,9 +31,9 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ExecutionImpl#getContext <em>Context</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ExecutionImpl#getAccesses <em>Accesses</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ExecutionImpl#getDependencies <em>Dependencies</em>}</li>
+ *   <li>{@link trace.impl.ExecutionImpl#getContext <em>Context</em>}</li>
+ *   <li>{@link trace.impl.ExecutionImpl#getAccesses <em>Accesses</em>}</li>
+ *   <li>{@link trace.impl.ExecutionImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  *
  * @generated

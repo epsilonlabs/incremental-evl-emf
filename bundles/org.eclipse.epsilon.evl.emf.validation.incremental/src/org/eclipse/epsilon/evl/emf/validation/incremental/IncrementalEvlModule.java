@@ -10,11 +10,12 @@ import org.eclipse.epsilon.eol.dom.Operation;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.eol.execute.introspection.recording.IPropertyAccess;
-import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccess;
 import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessExecutionListener;
-import org.eclipse.epsilon.eol.parse.EolParser;
 import org.eclipse.epsilon.evl.EvlModule;
 import org.eclipse.epsilon.evl.dom.Constraint;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TraceFactory;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
@@ -25,24 +26,28 @@ public class IncrementalEvlModule extends EvlModule {
 	 * 	- System activities finer
 	 *  - System states finest
 	 */
-
+	
+	private final boolean CACHEACTIVE = true;
+	
+	protected TraceFactory traceFactory =  TraceFactory.eINSTANCE;
+	
     protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
 
     protected ConstraintPropertyAccessRecorder propertyAccessRecorder = new ConstraintPropertyAccessRecorder();
-    protected IncrementalEvlTrace trace = new IncrementalEvlTrace();
-
+    
+    protected IncrementalEvlTrace evlTrace;
+    
     public IncrementalEvlModule() {
-        LOGGER.finer(() -> "IncrementalEVLModule started without constraintExecutionCache");
+        LOGGER.finest(() -> "IncrementalEVLModule started without constraintExecutionCache");
+        evlTrace = new IncrementalEvlTrace();
     }
 
     public IncrementalEvlModule(Optional <ConstraintExecutionCache> constraintExecutionCache) {        
-        LOGGER.finer(() -> "IncrementalEVLModule started with constraintExecutionCache");
+        LOGGER.finest(() -> "IncrementalEVLModule started with constraintExecutionCache");
         this.constraintExecutionCache = constraintExecutionCache;
-
-        // Transfer prior propertyAccesses from the constraintExecutionCache into this modules trace.
-        for (IPropertyAccess propertyAccess : constraintExecutionCache.get().constraintPropertyAccess) {
-            trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);
-        }
+        
+        // Now we setup the evlTrace with a Trace model from the execution cache to this module for recording to
+        evlTrace = new IncrementalEvlTrace(this.constraintExecutionCache.get().traceModel);
     }
 
     @Override
@@ -51,24 +56,30 @@ public class IncrementalEvlModule extends EvlModule {
 
     	if (moduleElement instanceof Operation) {
     		if (((Operation) moduleElement).hasAnnotation("cached")) {
-    			return new CachedOperation();
+    			//return new CachedOperation();
+    			System.out.println("Cached Operation not supported yet...");
+    			return null;
     		}
     	} else if (moduleElement instanceof Constraint) {
             return new Constraint() {
                 public Optional<UnsatisfiedConstraint> execute(IEolContext context_, Object self) throws EolRuntimeException {
                     // this -- is the constraint
                     // self -- is the model element under test
-                    // lastTrace -- is the last execution trace of the constraints
-                    Optional<UnsatisfiedConstraint> Result; // The Result of executing the Constraint.
+                    // evlTrace.traceModel -- is the last execution trace of the constraints                    
 
-                    // We could check here if the last execution -- return the result of the last execution instead of executing the constraint test
-                    // Notifications REMOVE PropertyAccesses from the LastTrace. (Elements with no property accesses get tested)
+                    // We ask the execution cache for known results for the validation being requested -- return the of the last execution instead of executing the constraint validation
+                    // Notifications REMOVE Executions/Accesses from the trace model in the Execution Cache. (Elements with no property accesses get tested)
 
-                    // The ExecutionCache is searched for any useable results from a prior execution
-                    // This should backfill the module "propertyAccess (trace) with the pa in the Execution Cache
+                    // The ExecutionCache is searched for any usable results from a prior execution
+                    // This should back fill the module "propertyAccess (trace) with the pa in the Execution Cache
                     // Then if nothing is found in the ExecutionCache a validation test is performed
 
-                    if(constraintExecutionCache.isPresent()) {
+                	//
+                	//  CHECK CACHE FOR KNOWN VALIDATION RESULTS
+                	//
+                	
+                    if(constraintExecutionCache.isPresent() && CACHEACTIVE) {
+                    	// TODO the constraint execution cache needs to be updated to return results from the trace model not the cache lists.
                     	
                         LOGGER.finer(() -> "Searching constraintExecutionCache ConstraintTrace: " + self.hashCode() + " & " + this.getName());
                         
@@ -86,15 +97,36 @@ public class IncrementalEvlModule extends EvlModule {
                             }
                         }
                     }
-                    // else { if(REPORTstate) {logger.log(Level.INFO,"No constraintExecutionCache "); } }
+                    
+                    //
+                    // EXECUTE VALIDATION
+                    //
+                    
                     LOGGER.finer(() -> "Need for Validation: " + self.hashCode() + " & " + this.getName());
 
                     // Set up the recorder and execute the constraint test to get a result
-                    propertyAccessRecorder.setExecution(new Execution(this, self));
-                    // Add the "new" execution accesses to the trace, this execution will be updates with accesses during execution ( ConstraintProperyAccessRecorder.createConstraintPropertyAccess() )
-                    trace.addExecution(propertyAccessRecorder.getExecution());                   
-                    Result = super.execute(context_, self);
-                    System.out.println("  Execution Accesses Captured : " + propertyAccessRecorder.getExecution().accesses.size()+ " - " + propertyAccessRecorder.getExecution().getAccesses() + "\n");
+                    // propertyAccessRecorder.setExecution(new ConstraintExecutionOld(this, self));
+                    
+                    // Add a "new" execution accesses to the trace, this execution will be updates with accesses during execution ( ConstraintProperyAccessRecorder.createConstraintPropertyAccess() )
+                    ConstraintExecution mExecution = traceFactory.createConstraintExecution();  
+                    evlTrace.addExecution(mExecution);
+                    mExecution.setContext(self);                    
+                    
+                    //var mConstraint = traceFactory.createConstraint();                    
+                    org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint mConstraint = traceFactory.createConstraint();
+                    
+                    //var constraint = this;
+                    Constraint constraint = this;  //org.eclipse.epsilon.evl.dom.Constraint
+                    
+                    mConstraint.setRaw(constraint);
+                    mExecution.setConstraint(mConstraint);
+                    
+                    propertyAccessRecorder.setExecution(mExecution);    
+                    
+                    // Do not unload the propertyAccessRecorder propertyAccesses to the trace here, the propertyAccess list doesn't clear until after this method returns.
+                                      
+                    // EXECUTE the Constraint and collect the resulting unsatisfied constraint, if one occurs                    
+                    Optional<UnsatisfiedConstraint> Result = super.execute(context_, self);                                        
 
                     LOGGER.finest(() -> "Validation test Result - " + Result);
                     return Result;
@@ -107,17 +139,39 @@ public class IncrementalEvlModule extends EvlModule {
 
     @Override
     public Set<UnsatisfiedConstraint> execute() throws EolRuntimeException {
-        propertyAccessRecorder.startRecording();
+
         getContext().getExecutorFactory().addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
 
-        // Jumps to >> public ModuleElement adapt(AST cst, ModuleElement parentAst)
+        propertyAccessRecorder.startRecording(); // Moved this closer to the actual execution call
+        // Jumps to >> public ModuleElement adapt(AST cst, ModuleElement parentAst)        
         Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();  // The returning Unsatisfied Constraints come in here.
-
+        propertyAccessRecorder.stopRecording();
+        
+        // PROCESS THE RECORDED PROPERY ACCESSES HERE       
+        for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
+    		PropertyAccess tPropertyAccess = traceFactory.createPropertyAccess();
+    		((ConstraintPropertyAccess) propertyAccess).getExecution();
+    		
+    		tPropertyAccess.setElement(propertyAccess.getModelElement());
+    		
+    		tPropertyAccess.setProperty(propertyAccess.getPropertyName());
+    		
+    		//tPropertyAccess.getExecutions().add(propertyAccessRecorder.getExecution());    // no just NO
+    		tPropertyAccess.getExecutions().add(((ConstraintPropertyAccess) propertyAccess).getExecution());    // no just NO
+    		
+    		evlTrace.addPropertyAccess(tPropertyAccess);                        
+        }                
+        
         // Transfer captured propertyAccesses from the Recorder to the ConstrainPropertyAccess (trace).
         for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
-            trace.addPropertyAccess((ConstraintPropertyAccess) propertyAccess);
+            evlTrace.addConstraintPropertyAccess((ConstraintPropertyAccess) propertyAccess);
         }
-
+        
+        System.out.println("  evlTrace Contains : "  
+        + evlTrace.traceModel.getExecutions().size() + " executions" 
+        + " - " + evlTrace.traceModel.getAccesses().size() + " accesses\n"
+        + "ConstraintPropertyAccessRecorder : " + propertyAccessRecorder.getPropertyAccesses().all().size());
+        
         return unsatisfiedConstraints;
     }
 
@@ -125,8 +179,8 @@ public class IncrementalEvlModule extends EvlModule {
         return propertyAccessRecorder;
     }
 
-    public IncrementalEvlTrace getTrace() {
-        return trace;
+    public IncrementalEvlTrace getEvlTrace() {
+        return evlTrace;
     }
 
 }

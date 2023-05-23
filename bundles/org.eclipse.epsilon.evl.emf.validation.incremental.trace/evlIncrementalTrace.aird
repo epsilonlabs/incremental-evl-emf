@@ -2,10 +2,9 @@
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
   <viewpoint:DAnalysis uid="_1ltg0O5fEe2HBvMRoo8wxQ" selectedViews="_2By_4O5fEe2HBvMRoo8wxQ _2CKzUO5fEe2HBvMRoo8wxQ _2CMBcO5fEe2HBvMRoo8wxQ _2CRhAO5fEe2HBvMRoo8wxQ" version="15.0.0.202209061200">
     <semanticResources>evlIncrementalTrace.ecore</semanticResources>
-    <semanticResources>evlIncrementalTrace.genmodel</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_2By_4O5fEe2HBvMRoo8wxQ">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_2wJToO5fEe2HBvMRoo8wxQ" name="trace class diagram" repPath="#_2vKcMO5fEe2HBvMRoo8wxQ" changeId="952ecfcb-29fd-4130-aca2-fc355b2a8c99">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_2wJToO5fEe2HBvMRoo8wxQ" name="trace class diagram" repPath="#_2vKcMO5fEe2HBvMRoo8wxQ" changeId="65843b93-fe81-439b-bfa5-4fe87450ced3">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="evlIncrementalTrace.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -65,6 +64,10 @@
         <children xmi:type="notation:Node" xmi:id="_3oIrk-5fEe2HBvMRoo8wxQ" type="2003" element="_3mDn8O5fEe2HBvMRoo8wxQ">
           <children xmi:type="notation:Node" xmi:id="_3oJSoO5fEe2HBvMRoo8wxQ" type="5007"/>
           <children xmi:type="notation:Node" xmi:id="_3oJ5sO5fEe2HBvMRoo8wxQ" type="7004">
+            <children xmi:type="notation:Node" xmi:id="_rqsaQPMiEe2u9cnQXBVLqQ" type="3010" element="_rqKOwPMiEe2u9cnQXBVLqQ">
+              <styles xmi:type="notation:FontStyle" xmi:id="_rqwrsPMiEe2u9cnQXBVLqQ" fontName="Noto Sans" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_rqxSwPMiEe2u9cnQXBVLqQ"/>
+            </children>
             <styles xmi:type="notation:SortingStyle" xmi:id="_3oJ5se5fEe2HBvMRoo8wxQ"/>
             <styles xmi:type="notation:FilteringStyle" xmi:id="_3oJ5su5fEe2HBvMRoo8wxQ"/>
           </children>
@@ -376,6 +379,14 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_rqKOwPMiEe2u9cnQXBVLqQ" name="raw : EJavaObject" tooltipText="">
+        <target xmi:type="ecore:EAttribute" href="evlIncrementalTrace.ecore#//Constraint/raw"/>
+        <semanticElements xmi:type="ecore:EAttribute" href="evlIncrementalTrace.ecore#//Constraint/raw"/>
+        <ownedStyle xmi:type="diagram:BundledImage" uid="_rqMrAPMiEe2u9cnQXBVLqQ" labelAlignment="LEFT">
+          <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
+      </ownedElements>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_3mGEMO5fEe2HBvMRoo8wxQ" name="CachedOperationExecution" tooltipText="" outgoingEdges="_3nzUYO5fEe2HBvMRoo8wxQ _3n3l0-5fEe2HBvMRoo8wxQ" width="12" height="10">
       <target xmi:type="ecore:EClass" href="evlIncrementalTrace.ecore#//CachedOperationExecution"/>

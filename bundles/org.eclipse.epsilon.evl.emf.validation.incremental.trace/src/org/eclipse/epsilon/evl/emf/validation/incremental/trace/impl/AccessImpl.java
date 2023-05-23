@@ -11,6 +11,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
@@ -33,7 +34,7 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  *
  * @generated
  */
-public abstract class AccessImpl extends MinimalEObjectImpl.Container implements Access {
+public abstract class AccessImpl extends EObjectImpl implements Access {
 	/**
 	 * The cached value of the '{@link #getExecutions() <em>Executions</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -68,6 +69,7 @@ public abstract class AccessImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Execution> getExecutions() {
 		if (executions == null) {
 			executions = new EObjectWithInverseResolvingEList.ManyInverse<Execution>(Execution.class, this, TracePackage.ACCESS__EXECUTIONS, TracePackage.EXECUTION__ACCESSES);

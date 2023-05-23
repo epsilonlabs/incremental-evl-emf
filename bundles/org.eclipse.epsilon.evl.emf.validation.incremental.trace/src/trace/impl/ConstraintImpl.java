@@ -1,16 +1,16 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.Constraint;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,7 +20,7 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintImpl#getRaw <em>Raw</em>}</li>
+ *   <li>{@link trace.impl.ConstraintImpl#getRaw <em>Raw</em>}</li>
  * </ul>
  *
  * @generated
@@ -35,6 +35,7 @@ public class ConstraintImpl extends EObjectImpl implements Constraint {
 	 * @ordered
 	 */
 	protected static final Object RAW_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getRaw() <em>Raw</em>}' attribute.
 	 * <!-- begin-user-doc -->

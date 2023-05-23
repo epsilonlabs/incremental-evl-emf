@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -8,8 +8,8 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.AllAccess;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.AllAccess;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,8 +19,8 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.AllAccessImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.AllAccessImpl#isAllOfKind <em>All Of Kind</em>}</li>
+ *   <li>{@link trace.impl.AllAccessImpl#getType <em>Type</em>}</li>
+ *   <li>{@link trace.impl.AllAccessImpl#isAllOfKind <em>All Of Kind</em>}</li>
  * </ul>
  *
  * @generated

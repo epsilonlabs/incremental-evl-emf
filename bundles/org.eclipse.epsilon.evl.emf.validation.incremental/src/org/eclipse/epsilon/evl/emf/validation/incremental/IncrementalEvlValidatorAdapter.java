@@ -124,7 +124,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         // Constructor extracts = (Constraint)PropertyAccess & ContraintTrace & UnsatisfiedConstraints
         LOGGER.finer("\n [i] Adapter constraintExecutionCache created");
         constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module));
-        System.out.println(constraintExecutionCache.get().toString());
+        System.out.println("NEW ConstraintExecutionCache: "+constraintExecutionCache.get().toString());
 
         // Console output
         LOGGER.finest(() -> modelStateToString());
@@ -178,18 +178,21 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     }
 
     public String modelStateToString () {
-    	String stateString = "\n == Module results ==";
+    	int i = 0;
     	
+    	String stateString = "\n == Module results ==";    	
     	stateString = stateString.concat("\nUnsatisfiedConstraints: " + module.getContext().getUnsatisfiedConstraints().size()) ;
 
-        int i = 0;
+    	/*  Don't have one any more...
+        
         stateString = stateString.concat("\nConstrainPropertyAccess list: ");
-        for (ConstraintPropertyAccess cpa : module.getTrace().propertyAccesses) {
+        for (ConstraintPropertyAccess cpa : module.getEvlTrace().propertyAccesses) {
             i++;
             stateString = stateString.concat("\n " + i 
-            		+ ", Constraint: " + cpa.execution.unit + " " + cpa.execution.unit.hashCode()
+            		+ ", Constraint: " + cpa.execution.getConstraint() + " " + cpa.execution.getConstraint().hashCode()
             		+ " | Model hashcode: " + cpa.getModelElement().hashCode() );            
         }
+        */
 
         i = 0;
         stateString = stateString.concat("\nConstraintTrace list: ");
@@ -214,7 +217,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         stateString = stateString.concat("\nExecutions list: ");
         
-        stateString = stateString.concat(module.trace.toString());
+        stateString = stateString.concat(module.evlTrace.toString());
         
         stateString = stateString.concat("\n ====================\n");
         

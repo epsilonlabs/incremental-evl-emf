@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -9,9 +9,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.CachedOperationExecution;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Operation;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.CachedOperationExecution;
+import trace.Operation;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +21,7 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.CachedOperationExecutionImpl#getOperation <em>Operation</em>}</li>
+ *   <li>{@link trace.impl.CachedOperationExecutionImpl#getOperation <em>Operation</em>}</li>
  * </ul>
  *
  * @generated

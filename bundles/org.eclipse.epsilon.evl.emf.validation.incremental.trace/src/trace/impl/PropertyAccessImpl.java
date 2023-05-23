@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -8,8 +8,8 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.PropertyAccess;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,8 +19,8 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.PropertyAccessImpl#getElement <em>Element</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.PropertyAccessImpl#getProperty <em>Property</em>}</li>
+ *   <li>{@link trace.impl.PropertyAccessImpl#getElement <em>Element</em>}</li>
+ *   <li>{@link trace.impl.PropertyAccessImpl#getProperty <em>Property</em>}</li>
  * </ul>
  *
  * @generated

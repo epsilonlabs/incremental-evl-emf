@@ -4,21 +4,62 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class IncrementalEvlTrace {
+import org.eclipse.epsilon.eol.execute.introspection.recording.IPropertyAccess;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TraceFactory;
 
-	protected List<Execution> executions = new ArrayList<>();
-	public void addExecution (Execution execution) {
-		System.out.println("  IncrementalEvlTrace.addExecution() : " + execution);
-		executions.add(execution);
+public class IncrementalEvlTrace {
+	private static final Logger LOGGER = Logger.getLogger(IncrementalEvlTrace.class.getName());
+	
+	/*
+	 * Contains a trace model that can be used for capturing the execution of an EVL.
+	 * 
+	 * The methods only permit adding to the trace, you can't and should not be removing anything from a trace model in this context!
+	 * 
+	 */
+    
+	protected List<ConstraintPropertyAccess> originalCPA = new ArrayList<>();
+    public void addConstraintPropertyAccess(ConstraintPropertyAccess propertyAccess) {
+    	originalCPA.add(propertyAccess);
+    }
+	
+    protected TraceFactory traceFactory =  TraceFactory.eINSTANCE;
+	
+	protected Trace traceModel; // The trace model representing the state for an "IncrementalEvlTrace"
+	
+	public IncrementalEvlTrace() {
+		traceModel = TraceFactory.eINSTANCE.createTrace();
 	}
 	
-	protected List<ConstraintPropertyAccess> propertyAccesses = new ArrayList<>();
-    public void addPropertyAccess(ConstraintPropertyAccess propertyAccess) {
-        propertyAccesses.add(propertyAccess);
-    }
+	public IncrementalEvlTrace(Trace traceModel) {
+		this.traceModel = traceModel;
+	}
 
+	public void addExecution (Execution execution) {
+		LOGGER.finer("  IncrementalEvlTrace.addExecution() : " + execution);
+		traceModel.getExecutions().add(execution);		
+	}
+	
+    public void addPropertyAccess(PropertyAccess propertyAccess) {
+    	LOGGER.finer("  IncrementalEvlTrace.addProperyAccess() : " + propertyAccess);
+        traceModel.getAccesses().add(propertyAccess);
+    }
+    
+    
+
+
+    
+    
+    
+    /*
+    
+     Invalidates Executions?  -- this should move to Execution Cache?
+     
     protected Set<Execution> propertyModified(Object modelElement, String propertyName) {
 
         Set<Execution> invalidatedExecutions = propertyAccesses.stream().
@@ -29,19 +70,13 @@ public class IncrementalEvlTrace {
 
         return invalidatedExecutions;
     }
-
-    protected List<Execution> elementAdded(Object modelElement) {
-        return null;
-    }
-
-    protected List<Execution> elementDeleted(Object modelElement) {
-        return null;
-    }
+	*/
+    
     
     public String toString() {
     	StringJoiner sj = new StringJoiner("");
     	int i = 0;
-    	for (Execution e : executions) {
+    	for (Execution e : traceModel.getExecutions()) {
     		i++;
     		sj.add("\n" + String.valueOf(i) + ", ");
     		sj.add(e.toString());

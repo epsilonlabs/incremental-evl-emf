@@ -19,7 +19,9 @@ class ConstraintExecution extends Execution {
     attr String message;
 }
 
-class Constraint {}
+class Constraint {
+	attr Object raw;	
+}
 
 class CachedOperationExecution extends Execution {
     @diagram(direction="down")

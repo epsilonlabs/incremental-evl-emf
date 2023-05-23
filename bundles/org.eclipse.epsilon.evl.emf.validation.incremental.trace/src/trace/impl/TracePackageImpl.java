@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -9,17 +9,17 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Access;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.AllAccess;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.CachedOperationExecution;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Operation;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TraceFactory;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.Access;
+import trace.AllAccess;
+import trace.CachedOperationExecution;
+import trace.Constraint;
+import trace.ConstraintExecution;
+import trace.Execution;
+import trace.Operation;
+import trace.PropertyAccess;
+import trace.Trace;
+import trace.TraceFactory;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -102,7 +102,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage#eNS_URI
+	 * @see trace.TracePackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

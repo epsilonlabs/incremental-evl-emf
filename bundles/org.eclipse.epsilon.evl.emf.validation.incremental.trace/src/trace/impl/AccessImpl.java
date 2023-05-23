@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import java.util.Collection;
 
@@ -12,33 +12,30 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Access;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.Access;
+import trace.Execution;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Trace</b></em>'.
+ * An implementation of the model object '<em><b>Access</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.TraceImpl#getExecutions <em>Executions</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.TraceImpl#getAccesses <em>Accesses</em>}</li>
+ *   <li>{@link trace.impl.AccessImpl#getExecutions <em>Executions</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class TraceImpl extends EObjectImpl implements Trace {
+public abstract class AccessImpl extends EObjectImpl implements Access {
 	/**
-	 * The cached value of the '{@link #getExecutions() <em>Executions</em>}' containment reference list.
+	 * The cached value of the '{@link #getExecutions() <em>Executions</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getExecutions()
@@ -48,21 +45,11 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	protected EList<Execution> executions;
 
 	/**
-	 * The cached value of the '{@link #getAccesses() <em>Accesses</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAccesses()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Access> accesses;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TraceImpl() {
+	protected AccessImpl() {
 		super();
 	}
 
@@ -73,7 +60,7 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return TracePackage.Literals.TRACE;
+		return TracePackage.Literals.ACCESS;
 	}
 
 	/**
@@ -84,7 +71,7 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	@Override
 	public EList<Execution> getExecutions() {
 		if (executions == null) {
-			executions = new EObjectContainmentEList<Execution>(Execution.class, this, TracePackage.TRACE__EXECUTIONS);
+			executions = new EObjectWithInverseResolvingEList.ManyInverse<Execution>(Execution.class, this, TracePackage.ACCESS__EXECUTIONS, TracePackage.EXECUTION__ACCESSES);
 		}
 		return executions;
 	}
@@ -94,12 +81,14 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public EList<Access> getAccesses() {
-		if (accesses == null) {
-			accesses = new EObjectContainmentEList<Access>(Access.class, this, TracePackage.TRACE__ACCESSES);
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case TracePackage.ACCESS__EXECUTIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExecutions()).basicAdd(otherEnd, msgs);
 		}
-		return accesses;
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -110,10 +99,8 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TracePackage.TRACE__EXECUTIONS:
+			case TracePackage.ACCESS__EXECUTIONS:
 				return ((InternalEList<?>)getExecutions()).basicRemove(otherEnd, msgs);
-			case TracePackage.TRACE__ACCESSES:
-				return ((InternalEList<?>)getAccesses()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -126,10 +113,8 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TracePackage.TRACE__EXECUTIONS:
+			case TracePackage.ACCESS__EXECUTIONS:
 				return getExecutions();
-			case TracePackage.TRACE__ACCESSES:
-				return getAccesses();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -143,13 +128,9 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TracePackage.TRACE__EXECUTIONS:
+			case TracePackage.ACCESS__EXECUTIONS:
 				getExecutions().clear();
 				getExecutions().addAll((Collection<? extends Execution>)newValue);
-				return;
-			case TracePackage.TRACE__ACCESSES:
-				getAccesses().clear();
-				getAccesses().addAll((Collection<? extends Access>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -163,11 +144,8 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TracePackage.TRACE__EXECUTIONS:
+			case TracePackage.ACCESS__EXECUTIONS:
 				getExecutions().clear();
-				return;
-			case TracePackage.TRACE__ACCESSES:
-				getAccesses().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -181,12 +159,10 @@ public class TraceImpl extends EObjectImpl implements Trace {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TracePackage.TRACE__EXECUTIONS:
+			case TracePackage.ACCESS__EXECUTIONS:
 				return executions != null && !executions.isEmpty();
-			case TracePackage.TRACE__ACCESSES:
-				return accesses != null && !accesses.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //TraceImpl
+} //AccessImpl

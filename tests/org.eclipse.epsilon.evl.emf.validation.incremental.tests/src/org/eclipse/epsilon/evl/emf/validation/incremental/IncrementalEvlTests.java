@@ -296,7 +296,7 @@ public class IncrementalEvlTests {
 
         // CHANGE
         ePackage1.getEClassifiers().clear();
-        //showExecutionCache(ePackage1);
+        showExecutionCache(ePackage1);
         assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.isEmpty();
         assertThat(modelObjectsFromConstraintTrace(ePackage1))

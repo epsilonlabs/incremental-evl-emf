@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import java.util.Collection;
 
@@ -12,15 +12,14 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Access;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.Access;
+import trace.Execution;
+import trace.Trace;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,8 +29,8 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.TraceImpl#getExecutions <em>Executions</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.TraceImpl#getAccesses <em>Accesses</em>}</li>
+ *   <li>{@link trace.impl.TraceImpl#getExecutions <em>Executions</em>}</li>
+ *   <li>{@link trace.impl.TraceImpl#getAccesses <em>Accesses</em>}</li>
  * </ul>
  *
  * @generated

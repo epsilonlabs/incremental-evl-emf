@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Operation;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TraceFactory;
 
 public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 
@@ -35,6 +37,10 @@ public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 	public static final IncrementalEcoreValidator INSTANCE = new IncrementalEcoreValidator();
 
 	public static void main(String[] args) {
+		
+		
+		
+		
 		LOGGER.log(Level.FINEST, "working");
 		System.out.print("GO!!!\n\n\n");
 

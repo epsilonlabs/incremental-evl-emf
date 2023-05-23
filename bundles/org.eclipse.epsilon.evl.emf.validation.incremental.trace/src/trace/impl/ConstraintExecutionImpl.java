@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
+package trace.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -9,9 +9,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
+import trace.Constraint;
+import trace.ConstraintExecution;
+import trace.TracePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,9 +21,9 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl#getConstraint <em>Constraint</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl#isResult <em>Result</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl#getMessage <em>Message</em>}</li>
+ *   <li>{@link trace.impl.ConstraintExecutionImpl#getConstraint <em>Constraint</em>}</li>
+ *   <li>{@link trace.impl.ConstraintExecutionImpl#isResult <em>Result</em>}</li>
+ *   <li>{@link trace.impl.ConstraintExecutionImpl#getMessage <em>Message</em>}</li>
  * </ul>
  *
  * @generated

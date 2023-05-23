@@ -81,9 +81,10 @@ public class TestTools {
 
 	public static List<Object> modelObjectsFromConstraintPropertyAccess(EPackage ePackage) {
 		IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
+		
 		Collection<ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache
 				.get().constraintPropertyAccess;
-
+		
 		return propertyAccesses.stream().map(pa -> pa.getModelElement()).collect(Collectors.toList());
 	}
 
