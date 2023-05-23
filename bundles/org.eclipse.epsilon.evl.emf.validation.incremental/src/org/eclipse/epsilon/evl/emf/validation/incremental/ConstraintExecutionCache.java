@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epsilon.evl.dom.Constraint;
@@ -47,36 +46,30 @@ public class ConstraintExecutionCache {
 	protected Trace traceModel;
 
 	// These would be replaced with indexes in an optimal solutions, for now we will used traceModel directly
-	protected Set<ConstraintTraceItem> constraintTraceItems; // All executions of type ConstraintExecution
-    protected Collection<UnsatisfiedConstraint> unsatisfiedConstraints; // Subset of Executions of ConstraintExecution type with a result of false
-    protected List<ConstraintPropertyAccess> constraintPropertyAccess;  // An execution refers to the PropertyAccess it made    
-    
-    protected Set<ConstraintTraceItem> modulesConstraintTraceItems;
-    protected List <ConstraintPropertyAccess> originalConstraintPropertyAccess;
+	protected final Set<ConstraintTraceItem> constraintTraceItems = new HashSet<>(); // All executions of type ConstraintExecution
+    protected final List<UnsatisfiedConstraint> unsatisfiedConstraints = new ArrayList<>(); // Subset of Executions of ConstraintExecution type with a result of false
+    protected final List<ConstraintPropertyAccess> constraintPropertyAccess = new ArrayList<>();  // An execution refers to the PropertyAccess it made
+
+    // These are only for debugging during the transition - delete them after the transition
+    @Deprecated
+    protected final Set<ConstraintTraceItem> modulesConstraintTraceItems;
+    @Deprecated
+    protected final List <ConstraintPropertyAccess> originalConstraintPropertyAccess;
     
     public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
         // Legacy lists to be removed next
-    	
     	
     	//
     	// ConstraintTraceItem
     	
         //this.constraintTraceItems = lastModule.getContext().getConstraintTrace().getItems();
-    	this.constraintTraceItems = new HashSet<ConstraintTraceItem>();
     	this.modulesConstraintTraceItems = lastModule.getContext().getConstraintTrace().getItems();
-        
-    	//
-    	// UnsatisfiedConstraint
-    	
-    	//this.unsatisfiedConstraints = new ArrayList<UnsatisfiedConstraint>();
-    	this.unsatisfiedConstraints = lastModule.getContext().getUnsatisfiedConstraints();
 
     	//
     	// ConstraintPropertyAccess
     	
     	//this.constraintPropertyAccess = lastModule.trace.propertyAccesses;
     	this.originalConstraintPropertyAccess = lastModule.evlTrace.originalCPA;
-    	this.constraintPropertyAccess = new ArrayList<ConstraintPropertyAccess>();
 
         // Pull in the traceModel from the last execution 
         traceModel = lastModule.evlTrace.traceModel;
@@ -96,19 +89,14 @@ public class ConstraintExecutionCache {
         
         
         // Temporary patch for compatibility walk through the executions in the trace model and populate the constrain property accesses 
-        for( Execution mExecution : traceModel.getExecutions()) {
+        for (Execution mExecution : traceModel.getExecutions()) {
         	ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
-        	Object context = mConstraintExecution.getContext();
         	Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
         	Boolean result = mConstraintExecution.isResult();
-
-        	
         	System.out.println("[mEXECUTION] " + mExecution.hashCode() + " accesses: " + mExecution.getAccesses().size()
         			+ " context: " + mExecution.getContext().hashCode() + " constraint: " + rawConstraint.hashCode());
-        	
+
         	for (Access mAccess : mExecution.getAccesses()) {
-        		
-        		
         		PropertyAccess mPA = (PropertyAccess) mAccess;
         		
         		System.out.println("<mExc:mPA> " + mPA.hashCode() +" & " +mExecution.hashCode());
@@ -122,16 +110,15 @@ public class ConstraintExecutionCache {
         		ConstraintTraceItem cti = new ConstraintTraceItem(modelElement,rawConstraint,result);
         		constraintTraceItems.add(cti);
         		System.out.println("CTI: "+rawConstraint.hashCode() + " " + cti);
-        		
-        		if(!result) {
-        			UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
-        			uC.setConstraint(rawConstraint);
-        			uC.setMessage(execution.getMessage());
-        			uC.setInstance(execution);
-        			unsatisfiedConstraints.add(uC);
-        		}
-        		
         	}
+
+    		if (!result) {
+    			UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
+    			uC.setConstraint(rawConstraint);
+    			uC.setInstance(mExecution.getContext());
+    			unsatisfiedConstraints.add(uC);
+    		}
+        	
         }
         
         if (LOGGER.isLoggable(Level.FINE)) {

@@ -126,7 +126,8 @@ public class IncrementalEvlModule extends EvlModule {
                     // Do not unload the propertyAccessRecorder propertyAccesses to the trace here, the propertyAccess list doesn't clear until after this method returns.
                                       
                     // EXECUTE the Constraint and collect the resulting unsatisfied constraint, if one occurs                    
-                    Optional<UnsatisfiedConstraint> Result = super.execute(context_, self);                                        
+                    Optional<UnsatisfiedConstraint> Result = super.execute(context_, self);
+                    mExecution.setResult(Result.isEmpty());
 
                     LOGGER.finest(() -> "Validation test Result - " + Result);
                     return Result;
