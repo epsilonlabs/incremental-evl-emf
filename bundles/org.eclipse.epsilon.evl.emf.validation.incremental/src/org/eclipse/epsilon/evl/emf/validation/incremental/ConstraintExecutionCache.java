@@ -205,8 +205,10 @@ public class ConstraintExecutionCache {
 
         // find any properyAccesses (make a list of constraints) and delete them
 
-        for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
+        for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {    	
             ConstraintPropertyAccess cpa = (ConstraintPropertyAccess) itr.next();
+            System.out.println("<itr CPA> " + cpa);
+            
             if( ( cpa.getModelElement() == modelElement )
                     && 
                 ( cpa.getPropertyName().equals(modelFeature.getName()) ) ){
@@ -236,9 +238,6 @@ public class ConstraintExecutionCache {
             	itr.remove();
             }
         }
-
-        
-
         clearConstraintTracesAndUnsatisfiedConstraints(constraintsToInvalidate);
     }
     
@@ -247,12 +246,14 @@ public class ConstraintExecutionCache {
         
         // Using the list of constraints to invalidate, remove constraint trace/unsatisfied based on model & constraint matches       
         for (ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
-            
+        	System.out.println("<invalidcpa> " + invalidcpa);
+        	
         	// find any constraintTraceItems and delete them
         	for (Iterator<ConstraintTraceItem> itr = constraintTraceItems.iterator(); itr.hasNext(); ) {
-                ConstraintTraceItem ctitem = itr.next();
+                ConstraintTraceItem ctitem = itr.next();               
                 if (ctitem.getInstance() == invalidcpa.getExecution().getContext()
-                        && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint()) { // need to resolve "feature" for each result
+                		
+                        && ctitem.getConstraint() == invalidcpa.getExecution().getConstraint().getRaw()) { // need to resolve "feature" for each result
                 	LOGGER.finer(() -> "Removed constraintTraceItem model hash " + ctitem.getInstance().hashCode() + " constraint " + ctitem.getConstraint().getName() );               
                     itr.remove();
                 }
@@ -262,7 +263,7 @@ public class ConstraintExecutionCache {
             for (Iterator<UnsatisfiedConstraint> itr = unsatisfiedConstraints.iterator(); itr.hasNext(); ) {
                 UnsatisfiedConstraint uc = itr.next();
                 if (uc.getInstance() == invalidcpa.getExecution().getContext()
-                        && uc.getConstraint() == invalidcpa.getExecution().getConstraint() ) {
+                        && uc.getConstraint() == invalidcpa.getExecution().getConstraint().getRaw() ) {
                 	LOGGER.finer(() -> "Removed unsatisfiedConstraint model hash " + uc.getInstance().hashCode() + " constraint " + uc.getConstraint().getName() );
                     itr.remove();
                 }
