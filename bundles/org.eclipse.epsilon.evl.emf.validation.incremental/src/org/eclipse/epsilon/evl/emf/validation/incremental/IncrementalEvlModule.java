@@ -109,7 +109,7 @@ public class IncrementalEvlModule extends EvlModule {
                     
                     // Add a "new" execution accesses to the trace, this execution will be updates with accesses during execution ( ConstraintProperyAccessRecorder.createConstraintPropertyAccess() )
                     ConstraintExecution mExecution = traceFactory.createConstraintExecution();  
-                    evlTrace.addExecution(mExecution);
+                    evlTrace.addExecutionToTraceModel(mExecution);
                     mExecution.setContext(self);                    
                     
                     //var mConstraint = traceFactory.createConstraint();                    
@@ -158,14 +158,14 @@ public class IncrementalEvlModule extends EvlModule {
     		tPropertyAccess.setProperty(propertyAccess.getPropertyName());
     		
     		//tPropertyAccess.getExecutions().add(propertyAccessRecorder.getExecution());    // no just NO
-    		tPropertyAccess.getExecutions().add(((ConstraintPropertyAccess) propertyAccess).getExecution());    // no just NO
+    		tPropertyAccess.getExecutions().add(((ConstraintPropertyAccess) propertyAccess).getExecution());    // This is how you should do it.
     		
-    		evlTrace.addPropertyAccess(tPropertyAccess);                        
+    		evlTrace.addPropertyAccessToTraceModel(tPropertyAccess);                        
         }                
         
         // Transfer captured propertyAccesses from the Recorder to the ConstrainPropertyAccess (trace).
         for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
-            evlTrace.addConstraintPropertyAccess((ConstraintPropertyAccess) propertyAccess);
+            evlTrace.addConstraintPropertyAccessToList((ConstraintPropertyAccess) propertyAccess);
         }
         
         System.out.println("  evlTrace Contains : "  
