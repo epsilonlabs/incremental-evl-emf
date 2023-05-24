@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epsilon.evl.dom.Constraint;
@@ -20,6 +21,7 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.PropertyAccessImpl;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
@@ -57,7 +59,9 @@ public class ConstraintExecutionCache {
     protected final List <ConstraintPropertyAccess> originalConstraintPropertyAccess;
     
     public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
-        // Legacy lists to be removed next
+        
+    	
+    	// Legacy lists to be removed next
     	
     	//
     	// ConstraintTraceItem
@@ -75,7 +79,11 @@ public class ConstraintExecutionCache {
         traceModel = lastModule.evlTrace.traceModel;
         
         
+        System.out.println("\n !!!! NEW CACHE !!!!! \n" + toString());
+        
         System.out.println("mExecutions:" + traceModel.getExecutions().size()); 
+        System.out.println("mAccesses:" + traceModel.getAccesses().size());
+        
         if(lastModule.constraintExecutionCache.isPresent()) {
         	System.out.println("last constraintPropertyAccess:" + lastModule.constraintExecutionCache.get().constraintPropertyAccess.size());	
         }
@@ -112,17 +120,25 @@ public class ConstraintExecutionCache {
         		System.out.println("CTI: "+rawConstraint.hashCode() + " " + cti);
         	}
 
+        	// Create UnsatisfiedConstraint list
     		if (!result) {
     			UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
     			uC.setConstraint(rawConstraint);
     			uC.setInstance(mExecution.getContext());
     			unsatisfiedConstraints.add(uC);
+    			
+    			System.out.println("Result: " + result + " Added uC: "+uC.getConstraint().getName());
     		}
         	
         }
         
+        System.out.println("\n !!!! NEW CACHE BUILT !!!!! \n" + toString());
+        
+        System.out.println("mExecutions:" + traceModel.getExecutions().size()); 
+        System.out.println("mAccesses:" + traceModel.getAccesses().size());
+        
         if (LOGGER.isLoggable(Level.FINE)) {
-        	LOGGER.finer(() -> "Setting up Execution Cache" + toString());
+        	LOGGER.info(() -> "Setting up Execution Cache" + toString());
         }
     }   
     
@@ -195,11 +211,60 @@ public class ConstraintExecutionCache {
         }
     }
 
+    private void removeFromCache(EObject modelElement) {
+    	LOGGER.info(() -> "Try and remove model element " + modelElement.hashCode() + " with ANY feature from execution cache");
+
+    	System.out.println("\n\nYOU MISSED THIS\n\n");
+    	
+    	// TODO remove property accesses from cached operations
+
+        List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
+
+        // find any properyAccesses (make a list of contraints) and delete them
+
+        for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
+            ConstraintPropertyAccess cpa = itr.next();
+            if( cpa.getModelElement() == modelElement ) {
+            	LOGGER.info(() -> "marked for clearing and removed " + cpa.toString());
+            	constraintsToInvalidate.add(cpa);
+            	itr.remove();
+            }
+        }
+        clearConstraintTracesAndUnsatisfiedConstraints(constraintsToInvalidate);
+    }
+    
     private void removeFromCache(EObject modelElement, EStructuralFeature modelFeature ) {
     	LOGGER.info(() -> "Try and remove model element " + modelElement.hashCode() + " with feature " + modelFeature.getName() + " from execution cache");
 
     	// TODO remove property accesses from cached operations
+    	System.out.println("removeFromCache() traceModel before");
+    	System.out.println("traceModel Accesses: " + traceModel.getAccesses().size());
+    	System.out.println("traceModel Executions: " + traceModel.getExecutions().size());
+    	
+    	
+    	// Delete from the the traceModel
+    	EList<Access> accessList = traceModel.getAccesses();
+    	for(Iterator<Access> itr = accessList.iterator(); itr.hasNext();)
+    	{
+    		PropertyAccess propertyAccess = (PropertyAccess) itr.next(); 
+    		System.out.print(">>> propertyAccess: " + propertyAccess.hashCode());
+    		if(propertyAccess.getElement() == modelElement) {
+    			System.out.print(" delete? " + propertyAccess.getProperty() + "==" + modelFeature.getName());
+    			if(propertyAccess.getProperty().contentEquals(modelFeature.getName())) {
+    				System.out.print (" yes");
+    				removeOrphenedExecutionsFromTraceModel(propertyAccess);
+    				itr.remove();
+    			}
+    			
+    		}
+    		System.out.println();
 
+    	}  	
+    	System.out.println("removeFromCache() traceModel after");
+    	System.out.println("traceModel Accesses: " + traceModel.getAccesses().size());
+    	System.out.println("traceModel Executions: " + traceModel.getExecutions().size());
+    	
+    	
     	// Make a method which makes a list of constraints related to the model element and feature
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
 
@@ -221,25 +286,34 @@ public class ConstraintExecutionCache {
         clearConstraintTracesAndUnsatisfiedConstraints(constraintsToInvalidate);
     }
 
-    private void removeFromCache(EObject modelElement) {
-    	LOGGER.info(() -> "Try and remove model element " + modelElement.hashCode() + " with ANY feature from execution cache");
-
-    	// TODO remove property accesses from cached operations
-
-        List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
-
-        // find any properyAccesses (make a list of contraints) and delete them
-
-        for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
-            ConstraintPropertyAccess cpa = itr.next();
-            if( cpa.getModelElement() == modelElement ) {
-            	LOGGER.info(() -> "marked for clearing and removed " + cpa.toString());
-            	constraintsToInvalidate.add(cpa);
-            	itr.remove();
-            }
-        }
-        clearConstraintTracesAndUnsatisfiedConstraints(constraintsToInvalidate);
+    private void removeOrphenedExecutionsFromTraceModel(Access access) {
+    	System.out.println("removeOrphenedExecutions: ");
+    	for (Iterator<Execution> itr = access.getExecutions().iterator(); itr.hasNext();) {
+    		ConstraintExecution execution = (ConstraintExecution) itr.next();
+    		
+    		System.out.println("exec: " + execution.hashCode() + " has accesses: " + execution.getAccesses().size() + " Constraint: " + execution.getConstraint());    		
+    		removeExecutionsWithConstraintFromTraceModel(execution.getConstraint());
+    		if(execution.getAccesses().size()<2) {
+    			System.out.println("\n [!] Execution with no accesses deleted");
+    			itr.remove();
+    		}
+    	}
     }
+    
+    private void removeExecutionsWithConstraintFromTraceModel(org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint constraint) {
+    	System.out.println("removeExecutionsWithConstraint: "+ constraint);
+    	for (Iterator<Execution> itr = traceModel.getExecutions().iterator(); itr.hasNext();) {
+    		ConstraintExecution execution = (ConstraintExecution) itr.next();
+    		
+    		System.out.println("exec: " + execution.hashCode() + " has Constraint: " + execution.getConstraint());    		
+    		
+    		if(execution.getConstraint() == constraint) {
+    			System.out.println("\n [!] Execution with constraint deleted: " + execution.hashCode() + ":"+constraint);
+    			itr.remove();
+    		}
+    	}
+    }
+    
     
     private void clearConstraintTracesAndUnsatisfiedConstraints(List <ConstraintPropertyAccess> constraintsToInvalidate) {
     	LOGGER.info(() -> "List of constraintsToInvalidate: " + constraintsToInvalidate);    
