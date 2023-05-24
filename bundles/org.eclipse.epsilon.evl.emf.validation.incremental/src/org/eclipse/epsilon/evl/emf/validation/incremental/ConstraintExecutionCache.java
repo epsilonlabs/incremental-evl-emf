@@ -246,7 +246,6 @@ public class ConstraintExecutionCache {
         
         // Using the list of constraints to invalidate, remove constraint trace/unsatisfied based on model & constraint matches       
         for (ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
-        	System.out.println("<invalidcpa> " + invalidcpa);
         	
         	// find any constraintTraceItems and delete them
         	for (Iterator<ConstraintTraceItem> itr = constraintTraceItems.iterator(); itr.hasNext(); ) {
