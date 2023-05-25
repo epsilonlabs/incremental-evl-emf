@@ -213,10 +213,34 @@ public class ConstraintExecutionCache {
 
     private void removeFromCache(EObject modelElement) {
     	LOGGER.info(() -> "Try and remove model element " + modelElement.hashCode() + " with ANY feature from execution cache");
-
-    	System.out.println("\n\nYOU MISSED THIS\n\n");
     	
     	// TODO remove property accesses from cached operations
+    	
+    	System.out.println("removeFromCache(modelElement) traceModel before");
+    	System.out.println("traceModel Accesses: " + traceModel.getAccesses().size());
+    	System.out.println("traceModel Executions: " + traceModel.getExecutions().size());
+    	
+    	// Delete from the the traceModel
+    	EList<Access> accessList = traceModel.getAccesses();
+    	for(Iterator<Access> itr = accessList.iterator(); itr.hasNext();)
+    	{
+    		PropertyAccess propertyAccess = (PropertyAccess) itr.next(); 
+    		System.out.print(">>> propertyAccess: " + propertyAccess.hashCode());
+    		
+    		// Is the property access for the Model element notification?
+    		if(propertyAccess.getElement() == modelElement) {
+	    			System.out.print(" modelElement matches access, delete " + propertyAccess.getProperty());    			
+	    			removeOrphenedExecutionsFromTraceModel(propertyAccess);
+	    			itr.remove();
+    			}
+    		System.out.println();
+    	}  	
+    	System.out.println("removeFromCache(modelElement) traceModel after");
+    	System.out.println("traceModel Accesses: " + traceModel.getAccesses().size());
+    	System.out.println("traceModel Executions: " + traceModel.getExecutions().size());
+    	
+    	
+    	
 
         List <ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); // List of constraintpropertyaccesses for model/feature to be invalidated
 
@@ -237,10 +261,9 @@ public class ConstraintExecutionCache {
     	LOGGER.info(() -> "Try and remove model element " + modelElement.hashCode() + " with feature " + modelFeature.getName() + " from execution cache");
 
     	// TODO remove property accesses from cached operations
-    	System.out.println("removeFromCache() traceModel before");
+    	System.out.println("removeFromCache(modelElement, modelFeature) traceModel before");
     	System.out.println("traceModel Accesses: " + traceModel.getAccesses().size());
     	System.out.println("traceModel Executions: " + traceModel.getExecutions().size());
-    	
     	
     	// Delete from the the traceModel
     	EList<Access> accessList = traceModel.getAccesses();
@@ -250,6 +273,8 @@ public class ConstraintExecutionCache {
     		System.out.print(">>> propertyAccess: " + propertyAccess.hashCode());
     		if(propertyAccess.getElement() == modelElement) {
     			System.out.print(" delete? " + propertyAccess.getProperty() + "==" + modelFeature.getName());
+    			
+    			
     			if(propertyAccess.getProperty().contentEquals(modelFeature.getName())) {
     				System.out.print (" yes");
     				removeOrphenedExecutionsFromTraceModel(propertyAccess);
@@ -260,7 +285,7 @@ public class ConstraintExecutionCache {
     		System.out.println();
 
     	}  	
-    	System.out.println("removeFromCache() traceModel after");
+    	System.out.println("removeFromCache(modelElement, modelFeature) traceModel after");
     	System.out.println("traceModel Accesses: " + traceModel.getAccesses().size());
     	System.out.println("traceModel Executions: " + traceModel.getExecutions().size());
     	
