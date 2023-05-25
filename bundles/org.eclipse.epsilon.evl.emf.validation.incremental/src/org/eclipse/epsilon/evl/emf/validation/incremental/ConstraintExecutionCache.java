@@ -68,7 +68,7 @@ public class ConstraintExecutionCache {
         	for (Access mAccess : mExecution.getAccesses()) {
         		PropertyAccess mPA = (PropertyAccess) mAccess;
         		
-        		System.out.println("<mExc:mPA> " + mPA.hashCode() +" & " +mExecution.hashCode());
+        		//System.out.println("<mExc:mPA> " + mPA.hashCode() +" & " +mExecution.hashCode());
         		
         		Object modelElement = mPA.getElement();
         		String propertyName = mPA.getProperty();
@@ -78,7 +78,7 @@ public class ConstraintExecutionCache {
         		
         		ConstraintTraceItem cti = new ConstraintTraceItem(modelElement,rawConstraint,result);
         		constraintTraceItems.add(cti);
-        		System.out.println("CTI: "+rawConstraint.hashCode() + " " + cti);
+        		//System.out.println("CTI: "+rawConstraint.hashCode() + " " + cti);
         	}
 
         	// Create UnsatisfiedConstraint list
@@ -88,7 +88,7 @@ public class ConstraintExecutionCache {
     			uC.setInstance(mExecution.getContext());
     			unsatisfiedConstraints.add(uC);
     			
-    			System.out.println("Result: " + result + " Added uC: "+uC.getConstraint().getName());
+    			//System.out.println("Result: " + result + " Added uC: "+uC.getConstraint().getName());
     		}
         	
         }

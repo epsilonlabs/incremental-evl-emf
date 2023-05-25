@@ -124,11 +124,10 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         // Constructor extracts = (Constraint)PropertyAccess & ContraintTrace & UnsatisfiedConstraints
         LOGGER.finer("\n [i] Adapter constraintExecutionCache created");
         constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module));
-        System.out.println("NEW ConstraintExecutionCache: "+constraintExecutionCache.get().toString());
+        
 
         // Console output
         LOGGER.finest(() -> modelStateToString());
-        System.out.println(modelStateToString());
     }
 
     @Override
@@ -181,7 +180,8 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
     	int i = 0;
     	
     	String stateString = "\n == Module results ==";    	
-    	stateString = stateString.concat("\nUnsatisfiedConstraints: " + module.getContext().getUnsatisfiedConstraints().size()) ;
+    	stateString = stateString.concat("\nUnsatisfiedConstraints: " 
+    	+ module.getContext().getUnsatisfiedConstraints().size()) ;
 
     	/*  Don't have one any more...
         
@@ -220,8 +220,6 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         stateString = stateString.concat(module.evlTrace.toString());
         
         stateString = stateString.concat("\n ====================\n");
-        
-        
         
         return stateString;
     }

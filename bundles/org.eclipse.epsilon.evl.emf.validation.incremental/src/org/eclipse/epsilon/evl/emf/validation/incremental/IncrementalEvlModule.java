@@ -151,15 +151,11 @@ public class IncrementalEvlModule extends EvlModule {
         // PROCESS THE RECORDED PROPERY ACCESSES HERE       
         for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
     		PropertyAccess tPropertyAccess = traceFactory.createPropertyAccess();
-    		((ConstraintPropertyAccess) propertyAccess).getExecution();
-    		
-    		tPropertyAccess.setElement(propertyAccess.getModelElement());
-    		
+    		((ConstraintPropertyAccess) propertyAccess).getExecution();		
+    		tPropertyAccess.setElement(propertyAccess.getModelElement());  		
     		tPropertyAccess.setProperty(propertyAccess.getPropertyName());
-    		
-    		//tPropertyAccess.getExecutions().add(propertyAccessRecorder.getExecution());    // no just NO
-    		tPropertyAccess.getExecutions().add(((ConstraintPropertyAccess) propertyAccess).getExecution());    // This is how you should do it.
-    		
+        	// The property accesses in the recorder can have different executions
+    		tPropertyAccess.getExecutions().add(((ConstraintPropertyAccess) propertyAccess).getExecution());       		
     		evlTrace.addPropertyAccessToTraceModel(tPropertyAccess);                        
         }                
         
