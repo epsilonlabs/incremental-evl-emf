@@ -25,7 +25,7 @@ public class IncrementalEvlTrace {
     
 	protected List<ConstraintPropertyAccess> originalCPA = new ArrayList<>();
     public void addConstraintPropertyAccessToList(ConstraintPropertyAccess propertyAccess) {
-    	LOGGER.info("  IncrementalEvlTrace.addConstraintPropertyAccess() : " + propertyAccess);
+    	LOGGER.finest("  IncrementalEvlTrace.addConstraintPropertyAccess() : " + propertyAccess);
     	originalCPA.add(propertyAccess);
     }
 	
@@ -42,12 +42,12 @@ public class IncrementalEvlTrace {
 	}
 
 	public void addExecutionToTraceModel (Execution execution) {
-		LOGGER.info("  IncrementalEvlTrace.addExecution() : " + execution);
+		LOGGER.finest("  IncrementalEvlTrace.addExecution() : " + execution);
 		traceModel.getExecutions().add(execution);		
 	}
 	
     public void addPropertyAccessToTraceModel(PropertyAccess propertyAccess) {
-    	LOGGER.info("  IncrementalEvlTrace.addProperyAccess() : " + propertyAccess);
+    	LOGGER.finest("  IncrementalEvlTrace.addProperyAccess() : " + propertyAccess);
         traceModel.getAccesses().add(propertyAccess);
     }
     
