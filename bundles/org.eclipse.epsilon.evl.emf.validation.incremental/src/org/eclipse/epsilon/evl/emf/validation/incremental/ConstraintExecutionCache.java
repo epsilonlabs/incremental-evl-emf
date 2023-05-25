@@ -95,7 +95,7 @@ public class ConstraintExecutionCache {
         
 
         if (LOGGER.isLoggable(Level.FINE)) {
-        	LOGGER.info(() -> "Setting up Execution Cache" + toString());
+        	LOGGER.fine(() -> "Setting up Execution Cache" + toString());
         }
     }   
     
@@ -154,7 +154,7 @@ public class ConstraintExecutionCache {
         case Notification.ADD:
         case Notification.ADD_MANY:
         case Notification.MOVE:
-        	LOGGER.info(() -> "Request remove from cache (not Adapter)\n ModelElement: " 
+        	LOGGER.fine(() -> "Request remove from cache (not Adapter)\n ModelElement: " 
         			+ modelElement + "\n ModelFeature: " + modelFeature);
         	removeFromCache(modelElement, modelFeature);
         	break;
@@ -193,7 +193,7 @@ public class ConstraintExecutionCache {
         for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext(); ) {
             ConstraintPropertyAccess cpa = itr.next();
             if( cpa.getModelElement() == modelElement ) {
-            	LOGGER.info(() -> "marked for clearing and removed " + cpa.toString());
+            	LOGGER.fine(() -> "marked for clearing and removed " + cpa.toString());
             	constraintsToInvalidate.add(cpa);
             	itr.remove();
             }
