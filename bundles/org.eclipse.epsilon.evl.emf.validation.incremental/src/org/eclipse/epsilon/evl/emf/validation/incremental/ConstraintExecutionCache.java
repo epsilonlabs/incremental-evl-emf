@@ -100,6 +100,7 @@ public class ConstraintExecutionCache {
     }   
     
 
+    // TODO should return a constraintpropertyaccess from the TraceModel
     public List <ConstraintPropertyAccess> getConstraintsPropertyAccessFor (EObject modelElement, EStructuralFeature modelFeature) {
         // Given a model Element and Feature, find all constraints as constraint property access for the model element & feature
         List <ConstraintPropertyAccess> matchedcpa = new ArrayList<>();
@@ -111,7 +112,7 @@ public class ConstraintExecutionCache {
         return matchedcpa;
     }
 
-    
+    // TODO ConstraintTraceItem searching should look at the TraceModel
     public ConstraintTraceItem checkCachedConstraintTrace (Object model, Constraint constraint) {
     	LOGGER.finer(() -> "Execution cache - checkCachedConstraintTrace - " + model.hashCode() + " " + constraint.getName());
     	LOGGER.finest(() -> constraintTraceToString(constraintTraceItems));
@@ -127,6 +128,7 @@ public class ConstraintExecutionCache {
         return null;
     }
 
+    // TODO UnsatisfiedConstraints should be resolved from the TraceModel
     public UnsatisfiedConstraint getCachedUnsatisfiedConstraint (Object model, Constraint constraint) {
     	LOGGER.finer(() -> "Execution cache - getCachedUnsatisfiedConstraint - " + model.hashCode() + " " + constraint.getName());
     	LOGGER.finest(() -> unsatisfiedConstraintsToString(unsatisfiedConstraints));
@@ -257,12 +259,13 @@ public class ConstraintExecutionCache {
     		ConstraintExecution execution = (ConstraintExecution) itr.next();   		
     		if(execution.getConstraint() == constraint) {
     			LOGGER.finer("\n [!] Execution with constraint deleted: " + execution.hashCode() + ":"+constraint);
+    			// TODO Check the Accesses connected to this execution, if the accesses have not other executions, they will be orphaned therefore need removing
     			itr.remove();
     		}
     	}
     }
     
-    
+    // LEGACY
     private void clearConstraintTracesAndUnsatisfiedConstraints(List <ConstraintPropertyAccess> constraintsToInvalidate) {
     	LOGGER.finer(() -> "List of constraintsToInvalidate: " + constraintsToInvalidate);    
         
