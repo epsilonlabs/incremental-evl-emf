@@ -69,9 +69,9 @@ public class CrossObjectAccessTest {
 		// 1 through the subclass guard + 1 through the subclass check
 		assertThat(accessesOf(subClass, "eSuperTypes")).size().isEqualTo(2);
 
-		// Only the subclass rule gets executed, and passes
+		// Constraint gets run twice: guard of baseClass, and full rule for subClass
 		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
-			.containsExactly(subClass);
+			.containsExactly(baseClass, subClass);
 		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage))
 			.isEmpty();
 
@@ -81,14 +81,15 @@ public class CrossObjectAccessTest {
 		// Should have invalidated the base class name accesses
 		assertThat(accessesOf(baseClass, "name")).isEmpty();
 		// Should have invalidated the subclass rule execution
-		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage)).isEmpty();
+		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
+			.containsExactly(baseClass);
 
 		// REVALIDATION
 		diagnostician.validate(ePackage);
 
 		// Now the subclass shouldn't pass validation
 		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
-			.containsExactly(subClass);
+			.containsExactly(baseClass, subClass);
 		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage))
 			.containsExactly(subClass);
 	}
@@ -101,9 +102,9 @@ public class CrossObjectAccessTest {
 		subClass.getESuperTypes().add(baseClass);
 		diagnostician.validate(ePackage);
 
-		// Only the subclass rule gets executed, and fails
+		// Rule gets executed for both base and subclass, and fails for subclass
 		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
-			.containsExactly(subClass);
+			.containsExactly(baseClass, subClass);
 		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage))
 			.containsExactly(subClass);
 
@@ -111,7 +112,7 @@ public class CrossObjectAccessTest {
 		baseClass.setName("Manager");
 
 		// Should have invalidated the subclass rule execution
-		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage)).isEmpty();
+		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage)).containsExactly(baseClass);
 		// Should have also invalidated the unsatisfied constraint
 		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage)).isEmpty();
 
@@ -120,7 +121,7 @@ public class CrossObjectAccessTest {
 
 		// Now the subclass should pass validation
 		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))
-			.containsExactly(subClass);
+			.containsExactly(baseClass, subClass);
 		assertThat(TestTools.modelObjectsFromUnsatisfiedConstraints(ePackage))
 			.isEmpty();
 	}
