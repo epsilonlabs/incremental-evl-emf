@@ -54,9 +54,21 @@ public class CrossObjectAccessTest {
 	public void changingFromValidToInvalidSuperNameIsDetected() {
 		// INITIAL RUN
 		EClass baseClass = BuildTestModel.createAndAddModelElementToePackage("Manager", ePackage);
-		EClass subClass = BuildTestModel.createAndAddModelElementToePackage("ConcreteManager", ePackage);
+		EClass subClass = BuildTestModel.createAndAddModelElementToePackage("ConcreteManager", ePackage);	
 		subClass.getESuperTypes().add(baseClass);
 		diagnostician.validate(ePackage);
+		
+		
+		// Show the model on the console
+		System.out.println("== MODEL ==");
+		System.out.println("baseClass: " + baseClass.getName() 
+		+ " hashCode: " + baseClass.hashCode()
+		+ " eSuperType isEmpty: " + baseClass.getESuperTypes().isEmpty());
+		System.out.println("subClass: " + subClass.getName() 
+		+ " hashCode: " + subClass.hashCode()
+		+ " eSuperType isEmpty: " + subClass.getESuperTypes().isEmpty());
+		System.out.println("===========\n");
+		
 
 		// We should have recorded 5 accesses in total
 		assertThat(allAccesses(ePackage)).size().isEqualTo(5);
@@ -101,6 +113,18 @@ public class CrossObjectAccessTest {
 		EClass subClass = BuildTestModel.createAndAddModelElementToePackage("ConcreteManager", ePackage);
 		subClass.getESuperTypes().add(baseClass);
 		diagnostician.validate(ePackage);
+		
+		
+		// Show the model on the console
+		System.out.println("== MODEL ==");
+		System.out.println("baseClass: " + baseClass.getName() 
+		+ " hashCode: " + baseClass.hashCode()
+		+ " eSuperType isEmpty: " + baseClass.getESuperTypes().isEmpty());
+		System.out.println("subClass: " + subClass.getName() 
+		+ " hashCode: " + subClass.hashCode()
+		+ " eSuperType isEmpty: " + subClass.getESuperTypes().isEmpty());
+		System.out.println("===========\n");
+
 
 		// Rule gets executed for both base and subclass, and fails for subclass
 		assertThat(TestTools.modelObjectsFromConstraintTrace(ePackage))

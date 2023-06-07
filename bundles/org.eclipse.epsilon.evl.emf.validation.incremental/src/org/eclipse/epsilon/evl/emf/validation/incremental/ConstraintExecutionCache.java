@@ -93,14 +93,22 @@ public class ConstraintExecutionCache {
         	
         }
         
+       
+        
 
-        if (LOGGER.isLoggable(Level.FINE)) {
-        	LOGGER.fine(() -> "Setting up Execution Cache" + toString());
+        if (LOGGER.isLoggable(Level.INFO)) {
+        	LOGGER.info(() -> "Setting up Execution Cache: \n" + toString());
         }
     }   
     
 
-    // TODO should return a constraintpropertyaccess from the TraceModel
+    public ConstraintExecutionCache() {
+		// TODO Auto-generated constructor stub
+    	// DELETE ME
+	}
+
+
+	// TODO should return a constraintpropertyaccess from the TraceModel
     public List <ConstraintPropertyAccess> getConstraintsPropertyAccessFor (EObject modelElement, EStructuralFeature modelFeature) {
         // Given a model Element and Feature, find all constraints as constraint property access for the model element & feature
         List <ConstraintPropertyAccess> matchedcpa = new ArrayList<>();
@@ -296,7 +304,7 @@ public class ConstraintExecutionCache {
         }
     }
     
-    private String constraintTraceToString (Set<ConstraintTraceItem> constraintTraceItems) {
+    public String constraintTraceToString (Set<ConstraintTraceItem> constraintTraceItems) {
     	int i = 0;
     	String ctString = "\nConstraintTrace list: ";       
         for (ConstraintTraceItem item : constraintTraceItems) {
@@ -322,6 +330,20 @@ public class ConstraintExecutionCache {
         }
         return ucString;
     }
+    
+    public String constraintPropertyAccessToString(List<ConstraintPropertyAccess> constraintPropertyAccess) {
+    	int i = 0;
+        String cpaString = "\n(Constraint)PropertyAccess list: ";
+
+        for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
+            i++;
+            cpaString = cpaString.concat("\n  " + i 
+            		+ ", Constraint: " + cpa.execution.getConstraint().getRaw()
+            		+ " | Model hashcode: " + cpa.getModelElement().hashCode()
+            		+ " | Property " + cpa.getPropertyName());
+        }
+        return cpaString;
+    }
 
     @Override
     public String toString () {
@@ -336,8 +358,8 @@ public class ConstraintExecutionCache {
     	// Commenting out the details for demo
         sj.add(constraintTraceToString(constraintTraceItems));
         sj.add(unsatisfiedConstraintsToString(unsatisfiedConstraints));
-        //sj.add(constraintPropertyAccessToString(constraintPropertyAccess));
-        sj.add(this.constraintPropertyAccess.toString());
+        sj.add(constraintPropertyAccessToString(constraintPropertyAccess));
+        //sj.add(this.constraintPropertyAccess.toString());
         sj.add(" =========================== ");
 
         return sj.toString();
