@@ -62,44 +62,48 @@ public class ConstraintExecutionCache {
         	ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
         	Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
         	int result = mConstraintExecution.getResult();
+        	
+        	Object context = mConstraintExecution.getContext();
+        	
         	LOGGER.fine("[mEXECUTION] " + mExecution.hashCode() + " accesses: " + mExecution.getAccesses().size()
         			+ " context: " + mExecution.getContext().hashCode() + " constraint: " + rawConstraint.hashCode());
 
+        	// Create the list of Constraint PropertyAccess based on the trace model
         	for (Access mAccess : mExecution.getAccesses()) {
-        		PropertyAccess mPA = (PropertyAccess) mAccess;
+				PropertyAccess mPA = (PropertyAccess) mAccess;
         		
         		//System.out.println("<mExc:mPA> " + mPA.hashCode() +" & " +mExecution.hashCode());
         		
         		Object modelElement = mPA.getElement();
         		String propertyName = mPA.getProperty();
         		ConstraintExecution execution = (ConstraintExecution) mConstraintExecution;
-
         		constraintPropertyAccess.add(new ConstraintPropertyAccess(modelElement,propertyName,execution));
-        		
-        		switch(result) {
-        		  case 0:
-        		    // FAIL
-              		 constraintTraceItems.add(new ConstraintTraceItem(modelElement,rawConstraint,false));
-              		 
-              		UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
-        			uC.setConstraint(rawConstraint);
-        			uC.setInstance(mExecution.getContext());
-        			unsatisfiedConstraints.add(uC);
-        		    break;
-        		  case 1:
-        		    // PASS        			  
-              		 constraintTraceItems.add(new ConstraintTraceItem(modelElement,rawConstraint,true));
-        		    break;
-        		  default:
-        		    // BLOCKED
-        		}
-        		
-        		
+            	
+        		// Create the ConstraintTraceItems and UnsatisfiedConstraint lists
+            	switch(result) {
+          		  case 0:
+          		    // FAIL
+                		 constraintTraceItems.add(new ConstraintTraceItem(modelElement,rawConstraint,false));
+                		 
+                		UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
+          			uC.setConstraint(rawConstraint);
+          			uC.setInstance(mExecution.getContext());
+          			unsatisfiedConstraints.add(uC);
+          		    break;
+          		  case 1:
+          		    // PASS        			  
+                		 constraintTraceItems.add(new ConstraintTraceItem(modelElement,rawConstraint,true));
+          		    break;
+          		  default:
+          		    // BLOCKED - don'r create a constraintTraceItem for it.
+          		}
+                	
+                }
+                
         		//System.out.println("CTI: "+rawConstraint.hashCode() + " " + cti);
         	}
         	
-        }
-        
+
        
         
 
