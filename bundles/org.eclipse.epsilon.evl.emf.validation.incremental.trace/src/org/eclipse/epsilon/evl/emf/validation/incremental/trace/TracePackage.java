@@ -104,13 +104,13 @@ public interface TracePackage extends EPackage {
 	int EXECUTION = 1;
 
 	/**
-	 * The feature id for the '<em><b>Context</b></em>' attribute.
+	 * The feature id for the '<em><b>Model Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXECUTION__CONTEXT = 0;
+	int EXECUTION__MODEL_ELEMENT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Accesses</b></em>' reference list.
@@ -150,13 +150,13 @@ public interface TracePackage extends EPackage {
 	int CONSTRAINT_EXECUTION = 2;
 
 	/**
-	 * The feature id for the '<em><b>Context</b></em>' attribute.
+	 * The feature id for the '<em><b>Model Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRAINT_EXECUTION__CONTEXT = EXECUTION__CONTEXT;
+	int CONSTRAINT_EXECUTION__MODEL_ELEMENT = EXECUTION__MODEL_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Accesses</b></em>' reference list.
@@ -251,13 +251,13 @@ public interface TracePackage extends EPackage {
 	int CACHED_OPERATION_EXECUTION = 4;
 
 	/**
-	 * The feature id for the '<em><b>Context</b></em>' attribute.
+	 * The feature id for the '<em><b>Model Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CACHED_OPERATION_EXECUTION__CONTEXT = EXECUTION__CONTEXT;
+	int CACHED_OPERATION_EXECUTION__MODEL_ELEMENT = EXECUTION__MODEL_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Accesses</b></em>' reference list.
@@ -477,15 +477,15 @@ public interface TracePackage extends EPackage {
 	EClass getExecution();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getContext <em>Context</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getModelElement <em>Model Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Context</em>'.
-	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getContext()
+	 * @return the meta object for the reference '<em>Model Element</em>'.
+	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getModelElement()
 	 * @see #getExecution()
 	 * @generated
 	 */
-	EAttribute getExecution_Context();
+	EReference getExecution_ModelElement();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getAccesses <em>Accesses</em>}'.
@@ -749,12 +749,12 @@ public interface TracePackage extends EPackage {
 		EClass EXECUTION = eINSTANCE.getExecution();
 
 		/**
-		 * The meta object literal for the '<em><b>Context</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Model Element</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute EXECUTION__CONTEXT = eINSTANCE.getExecution_Context();
+		EReference EXECUTION__MODEL_ELEMENT = eINSTANCE.getExecution_ModelElement();
 
 		/**
 		 * The meta object literal for the '<em><b>Accesses</b></em>' reference list feature.

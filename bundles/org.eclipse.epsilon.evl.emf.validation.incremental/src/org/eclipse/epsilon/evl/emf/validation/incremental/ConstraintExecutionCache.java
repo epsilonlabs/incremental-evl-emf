@@ -71,25 +71,25 @@ public class ConstraintExecutionCache {
 			Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
 			int result = mConstraintExecution.getResult();
 
-			Object context = mConstraintExecution.getContext();
+			Object context = mConstraintExecution.getModelElement();
 
-			LOGGER.info("[mEXECUTION] " + mExecution.hashCode() + " accesses: " + mExecution.getAccesses().size()
-					+ " context: " + mExecution.getContext().hashCode() + " constraint: " + rawConstraint.hashCode());
+			LOGGER.finer("[mEXECUTION] " + mExecution.hashCode() + " accesses: " + mExecution.getAccesses().size()
+					+ " context: " + mExecution.getModelElement().hashCode() + " constraint: " + rawConstraint.hashCode());
 
 			// Create the ConstraintTraceItems and UnsatisfiedConstraint lists
 			switch (result) {
 			case 0:
 				// FAIL
-				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getContext(), rawConstraint, false));
+				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, false));
 
 				UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
 				uC.setConstraint(rawConstraint);
-				uC.setInstance(mExecution.getContext());
+				uC.setInstance(mExecution.getModelElement());
 				unsatisfiedConstraints.add(uC);
 				break;
 			case 1:
 				// PASS
-				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getContext(), rawConstraint, true));
+				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
 				break;
 			default:
 				// BLOCKED - don'r create a constraintTraceItem for it.
@@ -304,7 +304,7 @@ public class ConstraintExecutionCache {
 			// find any constraintTraceItems and delete them
 			for (Iterator<ConstraintTraceItem> itr = constraintTraceItems.iterator(); itr.hasNext();) {
 				ConstraintTraceItem ctitem = itr.next();
-				if (ctitem.getInstance() == invalidcpa.getExecution().getContext()
+				if (ctitem.getInstance() == invalidcpa.getExecution().getModelElement()
 
 						&& ctitem.getConstraint() == invalidcpa.getExecution().getConstraint().getRaw()) { // need to
 																											// resolve
@@ -320,7 +320,7 @@ public class ConstraintExecutionCache {
 			// find any unstatisfiedConstraints and delete them
 			for (Iterator<UnsatisfiedConstraint> itr = unsatisfiedConstraints.iterator(); itr.hasNext();) {
 				UnsatisfiedConstraint uc = itr.next();
-				if (uc.getInstance() == invalidcpa.getExecution().getContext()
+				if (uc.getInstance() == invalidcpa.getExecution().getModelElement()
 						&& uc.getConstraint() == invalidcpa.getExecution().getConstraint().getRaw()) {
 					LOGGER.finer(() -> "Removed unsatisfiedConstraint model hash " + uc.getInstance().hashCode()
 							+ " constraint " + uc.getConstraint().getName());

@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getContext <em>Context</em>}</li>
+ *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getModelElement <em>Model Element</em>}</li>
  *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getAccesses <em>Accesses</em>}</li>
  *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getDependencies <em>Dependencies</em>}</li>
  * </ul>
@@ -26,26 +26,26 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Execution extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Context</b></em>' attribute.
+	 * Returns the value of the '<em><b>Model Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Context</em>' attribute.
-	 * @see #setContext(Object)
-	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage#getExecution_Context()
+	 * @return the value of the '<em>Model Element</em>' reference.
+	 * @see #setModelElement(EObject)
+	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage#getExecution_ModelElement()
 	 * @model
 	 * @generated
 	 */
-	Object getContext();
+	EObject getModelElement();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getContext <em>Context</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution#getModelElement <em>Model Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Context</em>' attribute.
-	 * @see #getContext()
+	 * @param value the new value of the '<em>Model Element</em>' reference.
+	 * @see #getModelElement()
 	 * @generated
 	 */
-	void setContext(Object value);
+	void setModelElement(EObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Accesses</b></em>' reference list.

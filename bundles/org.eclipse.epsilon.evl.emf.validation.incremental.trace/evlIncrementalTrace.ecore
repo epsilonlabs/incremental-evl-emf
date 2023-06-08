@@ -8,7 +8,7 @@
         eType="#//Access" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Execution" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="context" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modelElement" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="accesses" upperBound="-1"
         eType="#//Access" eOpposite="#//Access/executions"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"

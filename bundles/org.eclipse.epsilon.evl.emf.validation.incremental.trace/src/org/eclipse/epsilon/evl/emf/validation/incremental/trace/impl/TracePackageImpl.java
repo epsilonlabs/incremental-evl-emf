@@ -197,8 +197,8 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getExecution_Context() {
-		return (EAttribute)executionEClass.getEStructuralFeatures().get(0);
+	public EReference getExecution_ModelElement() {
+		return (EReference)executionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -425,7 +425,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		createEReference(traceEClass, TRACE__ACCESSES);
 
 		executionEClass = createEClass(EXECUTION);
-		createEAttribute(executionEClass, EXECUTION__CONTEXT);
+		createEReference(executionEClass, EXECUTION__MODEL_ELEMENT);
 		createEReference(executionEClass, EXECUTION__ACCESSES);
 		createEReference(executionEClass, EXECUTION__DEPENDENCIES);
 
@@ -493,7 +493,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		initEReference(getTrace_Accesses(), this.getAccess(), null, "accesses", null, 0, -1, Trace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(executionEClass, Execution.class, "Execution", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getExecution_Context(), ecorePackage.getEJavaObject(), "context", null, 0, 1, Execution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getExecution_ModelElement(), ecorePackage.getEObject(), null, "modelElement", null, 0, 1, Execution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExecution_Accesses(), this.getAccess(), this.getAccess_Executions(), "accesses", null, 0, -1, Execution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExecution_Dependencies(), this.getExecution(), null, "dependencies", null, 0, -1, Execution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

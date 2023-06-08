@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epsilon.common.module.ModuleElement;
 import org.eclipse.epsilon.common.parse.AST;
 import org.eclipse.epsilon.eol.dom.Operation;
@@ -124,7 +125,7 @@ public class IncrementalEvlModule extends EvlModule {
 					// ConstraintProperyAccessRecorder.createConstraintPropertyAccess() )
 					ConstraintExecution mExecution = traceFactory.createConstraintExecution();
 					evlTrace.addExecutionToTraceModel(mExecution);
-					mExecution.setContext(self);
+					mExecution.setModelElement((EObject) self);
 
 					// var mConstraint = traceFactory.createConstraint();
 					org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint mConstraint = traceFactory

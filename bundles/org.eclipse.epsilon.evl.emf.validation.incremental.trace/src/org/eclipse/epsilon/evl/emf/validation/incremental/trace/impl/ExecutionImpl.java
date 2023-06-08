@@ -10,6 +10,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -32,7 +33,7 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ExecutionImpl#getContext <em>Context</em>}</li>
+ *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ExecutionImpl#getModelElement <em>Model Element</em>}</li>
  *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ExecutionImpl#getAccesses <em>Accesses</em>}</li>
  *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ExecutionImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
@@ -41,24 +42,14 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  */
 public abstract class ExecutionImpl extends EObjectImpl implements Execution {
 	/**
-	 * The default value of the '{@link #getContext() <em>Context</em>}' attribute.
+	 * The cached value of the '{@link #getModelElement() <em>Model Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getContext()
+	 * @see #getModelElement()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Object CONTEXT_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getContext() <em>Context</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getContext()
-	 * @generated
-	 * @ordered
-	 */
-	protected Object context = CONTEXT_EDEFAULT;
+	protected EObject modelElement;
 
 	/**
 	 * The cached value of the '{@link #getAccesses() <em>Accesses</em>}' reference list.
@@ -105,8 +96,25 @@ public abstract class ExecutionImpl extends EObjectImpl implements Execution {
 	 * @generated
 	 */
 	@Override
-	public Object getContext() {
-		return context;
+	public EObject getModelElement() {
+		if (modelElement != null && modelElement.eIsProxy()) {
+			InternalEObject oldModelElement = (InternalEObject)modelElement;
+			modelElement = eResolveProxy(oldModelElement);
+			if (modelElement != oldModelElement) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TracePackage.EXECUTION__MODEL_ELEMENT, oldModelElement, modelElement));
+			}
+		}
+		return modelElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EObject basicGetModelElement() {
+		return modelElement;
 	}
 
 	/**
@@ -115,11 +123,11 @@ public abstract class ExecutionImpl extends EObjectImpl implements Execution {
 	 * @generated
 	 */
 	@Override
-	public void setContext(Object newContext) {
-		Object oldContext = context;
-		context = newContext;
+	public void setModelElement(EObject newModelElement) {
+		EObject oldModelElement = modelElement;
+		modelElement = newModelElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.EXECUTION__CONTEXT, oldContext, context));
+			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.EXECUTION__MODEL_ELEMENT, oldModelElement, modelElement));
 	}
 
 	/**
@@ -185,8 +193,9 @@ public abstract class ExecutionImpl extends EObjectImpl implements Execution {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TracePackage.EXECUTION__CONTEXT:
-				return getContext();
+			case TracePackage.EXECUTION__MODEL_ELEMENT:
+				if (resolve) return getModelElement();
+				return basicGetModelElement();
 			case TracePackage.EXECUTION__ACCESSES:
 				return getAccesses();
 			case TracePackage.EXECUTION__DEPENDENCIES:
@@ -204,8 +213,8 @@ public abstract class ExecutionImpl extends EObjectImpl implements Execution {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TracePackage.EXECUTION__CONTEXT:
-				setContext(newValue);
+			case TracePackage.EXECUTION__MODEL_ELEMENT:
+				setModelElement((EObject)newValue);
 				return;
 			case TracePackage.EXECUTION__ACCESSES:
 				getAccesses().clear();
@@ -227,8 +236,8 @@ public abstract class ExecutionImpl extends EObjectImpl implements Execution {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TracePackage.EXECUTION__CONTEXT:
-				setContext(CONTEXT_EDEFAULT);
+			case TracePackage.EXECUTION__MODEL_ELEMENT:
+				setModelElement((EObject)null);
 				return;
 			case TracePackage.EXECUTION__ACCESSES:
 				getAccesses().clear();
@@ -248,30 +257,14 @@ public abstract class ExecutionImpl extends EObjectImpl implements Execution {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TracePackage.EXECUTION__CONTEXT:
-				return CONTEXT_EDEFAULT == null ? context != null : !CONTEXT_EDEFAULT.equals(context);
+			case TracePackage.EXECUTION__MODEL_ELEMENT:
+				return modelElement != null;
 			case TracePackage.EXECUTION__ACCESSES:
 				return accesses != null && !accesses.isEmpty();
 			case TracePackage.EXECUTION__DEPENDENCIES:
 				return dependencies != null && !dependencies.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (context: ");
-		result.append(context);
-		result.append(')');
-		return result.toString();
 	}
 
 } //ExecutionImpl

@@ -7,7 +7,7 @@ class Trace {
 }
 
 abstract class Execution {
-    attr Object context;
+    ref EObject modelElement;
     ref Access[*]#executions accesses;
     ref Execution[*] dependencies;
 }

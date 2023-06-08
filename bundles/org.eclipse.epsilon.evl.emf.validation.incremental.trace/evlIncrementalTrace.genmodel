@@ -11,7 +11,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Trace/accesses"/>
     </genClasses>
     <genClasses image="false" ecoreClass="evlIncrementalTrace.ecore#//Execution">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//Execution/context"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Execution/modelElement"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Execution/accesses"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Execution/dependencies"/>
     </genClasses>
