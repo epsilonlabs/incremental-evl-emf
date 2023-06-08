@@ -229,17 +229,17 @@ public class IncrementalEvlModule extends EvlModule {
 
 		}
 
-		// LEGACY
+		// TODO Remove LEGACY code here
 		// Transfer captured propertyAccesses from the Recorder to the
 		// ConstrainPropertyAccess (trace).
 		for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
 			evlTrace.addConstraintPropertyAccessToList((ConstraintPropertyAccess) propertyAccess);
 		}
 		
-		System.out.println("\n[incEVLmodule] Constraint trace (results): " + this.getContext().getConstraintTrace().getItems().size());
 		
-		ConstraintExecutionCache tempExeCache = new ConstraintExecutionCache();// Temporary for string processing
-		System.out.println(tempExeCache.constraintTraceToString(this.getContext().getConstraintTrace().getItems()));
+		
+		System.out.println("\n[incEVLmodule] Constraint trace (results): " + this.getContext().getConstraintTrace().getItems().size());
+		System.out.println(getConstraintTraceItemAsString());
 		
 		System.out.println("\nTrace Model contains: " 
 				+ evlTrace.traceModel.getExecutions().size() + " executions" 
@@ -256,5 +256,18 @@ public class IncrementalEvlModule extends EvlModule {
 	public IncrementalEvlTrace getEvlTrace() {
 		return evlTrace;
 	}
+	
+	public String getConstraintTraceItemAsString() {
+		int i = 0;
+		String ctString = "\nConstraintTrace list: ";
+		for (ConstraintTraceItem item : this.getContext().getConstraintTrace().getItems()) {
+			i++;
+			ctString = ctString.concat("\n  " + i + ", Constraint: " + item.getConstraint().getName() + " "
+					+ item.getConstraint().hashCode() + " | Model hashcode: " + item.getInstance().hashCode()
+					+ " | Result : " + item.getResult());
+		}
+		return ctString;
+	}
+	
 
 }

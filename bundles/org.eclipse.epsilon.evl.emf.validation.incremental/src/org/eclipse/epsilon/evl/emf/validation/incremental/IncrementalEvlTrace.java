@@ -17,20 +17,21 @@ public class IncrementalEvlTrace {
 	private static final Logger LOGGER = Logger.getLogger(IncrementalEvlTrace.class.getName());
 	
 	/*
-	 * Contains a trace model that can be used for capturing the execution of an EVL.
+	 * Contains a trace model that is used to store the recorded constraint executions of an IncrementalEVLmodule.
 	 * 
-	 * The methods only permit adding to the trace, you can't and should not be removing anything from a trace model in this context!
-	 * 
+	 * The methods only permit adding to the trace, you can't and should not be removing anything from a trace model while recording!
 	 */
     
+	// TODO Remove LEGACY code here
 	protected List<ConstraintPropertyAccess> originalCPA = new ArrayList<>();
     public void addConstraintPropertyAccessToList(ConstraintPropertyAccess propertyAccess) {
     	LOGGER.finest("  IncrementalEvlTrace.addConstraintPropertyAccess() : " + propertyAccess);
     	originalCPA.add(propertyAccess);
     }
 	
-    protected TraceFactory traceFactory =  TraceFactory.eINSTANCE;
-	
+    
+    // NEW MODEL APPROACH
+    protected TraceFactory traceFactory =  TraceFactory.eINSTANCE;	
 	protected Trace traceModel; // The trace model representing the state for an "IncrementalEvlTrace"
 	
 	public IncrementalEvlTrace() {

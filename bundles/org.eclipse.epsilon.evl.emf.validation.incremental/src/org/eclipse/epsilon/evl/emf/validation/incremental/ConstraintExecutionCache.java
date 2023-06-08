@@ -114,10 +114,6 @@ public class ConstraintExecutionCache {
 		}
 	}
 
-	public ConstraintExecutionCache() {
-		// TODO DELETE this and stop using the temp constraint execution cache to produce strings
-	}
-
 	// TODO should return a constraintpropertyaccess from the TraceModel
 	public List<ConstraintPropertyAccess> getConstraintsPropertyAccessFor(EObject modelElement,
 			EStructuralFeature modelFeature) {
