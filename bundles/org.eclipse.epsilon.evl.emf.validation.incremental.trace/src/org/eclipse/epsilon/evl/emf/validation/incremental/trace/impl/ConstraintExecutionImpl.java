@@ -22,7 +22,7 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl#getConstraint <em>Constraint</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl#isResult <em>Result</em>}</li>
+ *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl#getMessage <em>Message</em>}</li>
  * </ul>
  *
@@ -40,24 +40,24 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 	protected Constraint constraint;
 
 	/**
-	 * The default value of the '{@link #isResult() <em>Result</em>}' attribute.
+	 * The default value of the '{@link #getResult() <em>Result</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isResult()
+	 * @see #getResult()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean RESULT_EDEFAULT = false;
+	protected static final int RESULT_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #isResult() <em>Result</em>}' attribute.
+	 * The cached value of the '{@link #getResult() <em>Result</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isResult()
+	 * @see #getResult()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean result = RESULT_EDEFAULT;
+	protected int result = RESULT_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getMessage() <em>Message</em>}' attribute.
@@ -144,7 +144,7 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 	 * @generated
 	 */
 	@Override
-	public boolean isResult() {
+	public int getResult() {
 		return result;
 	}
 
@@ -154,8 +154,8 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 	 * @generated
 	 */
 	@Override
-	public void setResult(boolean newResult) {
-		boolean oldResult = result;
+	public void setResult(int newResult) {
+		int oldResult = result;
 		result = newResult;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.CONSTRAINT_EXECUTION__RESULT, oldResult, result));
@@ -196,7 +196,7 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 				if (resolve) return getConstraint();
 				return basicGetConstraint();
 			case TracePackage.CONSTRAINT_EXECUTION__RESULT:
-				return isResult();
+				return getResult();
 			case TracePackage.CONSTRAINT_EXECUTION__MESSAGE:
 				return getMessage();
 		}
@@ -215,7 +215,7 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 				setConstraint((Constraint)newValue);
 				return;
 			case TracePackage.CONSTRAINT_EXECUTION__RESULT:
-				setResult((Boolean)newValue);
+				setResult((Integer)newValue);
 				return;
 			case TracePackage.CONSTRAINT_EXECUTION__MESSAGE:
 				setMessage((String)newValue);

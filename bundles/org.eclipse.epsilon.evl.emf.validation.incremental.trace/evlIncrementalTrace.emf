@@ -15,7 +15,7 @@ abstract class Execution {
 class ConstraintExecution extends Execution {
     @diagram(direction="down")
     ref Constraint constraint;
-    attr boolean result;
+    attr int result;
     attr String message;
 }
 

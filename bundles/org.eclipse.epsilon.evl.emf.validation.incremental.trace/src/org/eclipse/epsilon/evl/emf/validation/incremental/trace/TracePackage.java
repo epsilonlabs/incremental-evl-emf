@@ -531,11 +531,11 @@ public interface TracePackage extends EPackage {
 	EReference getConstraintExecution_Constraint();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#isResult <em>Result</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#getResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Result</em>'.
-	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#isResult()
+	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#getResult()
 	 * @see #getConstraintExecution()
 	 * @generated
 	 */

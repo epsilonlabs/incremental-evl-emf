@@ -61,7 +61,7 @@ public class ConstraintExecutionCache {
         for (Execution mExecution : traceModel.getExecutions()) {
         	ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
         	Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
-        	Boolean result = mConstraintExecution.isResult();
+        	int result = mConstraintExecution.getResult();
         	LOGGER.fine("[mEXECUTION] " + mExecution.hashCode() + " accesses: " + mExecution.getAccesses().size()
         			+ " context: " + mExecution.getContext().hashCode() + " constraint: " + rawConstraint.hashCode());
 
@@ -76,20 +76,27 @@ public class ConstraintExecutionCache {
 
         		constraintPropertyAccess.add(new ConstraintPropertyAccess(modelElement,propertyName,execution));
         		
-        		ConstraintTraceItem cti = new ConstraintTraceItem(modelElement,rawConstraint,result);
-        		constraintTraceItems.add(cti);
+        		switch(result) {
+        		  case 0:
+        		    // FAIL
+              		 constraintTraceItems.add(new ConstraintTraceItem(modelElement,rawConstraint,false));
+              		 
+              		UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
+        			uC.setConstraint(rawConstraint);
+        			uC.setInstance(mExecution.getContext());
+        			unsatisfiedConstraints.add(uC);
+        		    break;
+        		  case 1:
+        		    // PASS        			  
+              		 constraintTraceItems.add(new ConstraintTraceItem(modelElement,rawConstraint,true));
+        		    break;
+        		  default:
+        		    // BLOCKED
+        		}
+        		
+        		
         		//System.out.println("CTI: "+rawConstraint.hashCode() + " " + cti);
         	}
-
-        	// Create UnsatisfiedConstraint list
-    		if (!result) {
-    			UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
-    			uC.setConstraint(rawConstraint);
-    			uC.setInstance(mExecution.getContext());
-    			unsatisfiedConstraints.add(uC);
-    			
-    			//System.out.println("Result: " + result + " Added uC: "+uC.getConstraint().getName());
-    		}
         	
         }
         

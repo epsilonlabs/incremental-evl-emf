@@ -13,7 +13,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental.trace;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#getConstraint <em>Constraint</em>}</li>
- *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#isResult <em>Result</em>}</li>
+ *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#getMessage <em>Message</em>}</li>
  * </ul>
  *
@@ -49,22 +49,22 @@ public interface ConstraintExecution extends Execution {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Result</em>' attribute.
-	 * @see #setResult(boolean)
+	 * @see #setResult(int)
 	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage#getConstraintExecution_Result()
 	 * @model
 	 * @generated
 	 */
-	boolean isResult();
+	int getResult();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#isResult <em>Result</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#getResult <em>Result</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Result</em>' attribute.
-	 * @see #isResult()
+	 * @see #getResult()
 	 * @generated
 	 */
-	void setResult(boolean value);
+	void setResult(int value);
 
 	/**
 	 * Returns the value of the '<em><b>Message</b></em>' attribute.

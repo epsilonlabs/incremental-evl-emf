@@ -132,38 +132,41 @@ public class IncrementalEvlModule extends EvlModule {
                     //Optional<UnsatisfiedConstraint> unsatisfiedConstraintResult = super.execute(context_, self);
                     
                     
-                    // EXECUTE, test Guard, then Check.
+                    // EXECUTE, test Guard, then test Check.
                     Optional<UnsatisfiedConstraint> unsatisfiedConstraintResult = Optional.empty();
                     IEvlContext context = (IEvlContext) context_;
+                    // Test Guard
                     if(super.shouldBeChecked(self, context)) {
                     	System.out.println("Guard passed");
+                    	// Proceed to test Check
                     	unsatisfiedConstraintResult = super.check(self, context);
+                    	
+                    	// Process Check results
+                    	if(unsatisfiedConstraintResult.isPresent()) {
+                    		mExecution.setResult(0);
+                        	System.out.println("Execution: " + mExecution.hashCode() + " on element: " + self.hashCode()
+                        	+ "\n (fail) constraint: " + constraint.toString() 
+                        	+ "\n (fail) uConstraint: " + unsatisfiedConstraintResult.get().getConstraint()
+                        	+ "\n accesses: " + propertyAccessRecorder.getPropertyAccesses().all().size());
+                    	} else {
+                    		mExecution.setResult(1);
+                        	System.out.println("Execution: " + mExecution.hashCode() + " on element: " + self.hashCode()
+                        	+ "\n (pass) constraint: " + constraint.toString() 
+                        	+ "\n accesses: " + propertyAccessRecorder.getPropertyAccesses().all().size());
+                    	}
+                    	
                     } else {
                     	// Blocked by guard, no results produced
                     	System.out.println("Guard blocked");
-                    }
-                    
-                    
-                    // Check the results of the execution.
-                    
-                    mExecution.setResult(unsatisfiedConstraintResult.isEmpty()); // This is an incorrect assumption, there might be no unsatisfied constraint returned if a guard stops the execution.
-                    
-                    if(unsatisfiedConstraintResult.isPresent()) {
+                    	mExecution.setResult(-1);
                     	System.out.println("Execution: " + mExecution.hashCode() + " on element: " + self.hashCode()
-                    	+ "\n (fail) constraint: " + constraint.toString() 
-                    	+ "\n (fail) uConstraint: " + unsatisfiedConstraintResult.get().getConstraint()
-                    	+ "\n access: " + propertyAccessRecorder.getPropertyAccesses().all().size());
+                    	+ "\n (blocked) constraint: " + constraint.toString() 
+                    	+ "\n accesses: " + propertyAccessRecorder.getPropertyAccesses().all().size());
                     }
-                    else {
-                    	System.out.println("Execution: " + mExecution.hashCode() + " on element: " + self.hashCode()
-                    	+ "\n (pass) constraint: " + constraint.toString() 
-                    	+ "\n access: " + propertyAccessRecorder.getPropertyAccesses().all().size());
-                    }
-                    System.out.println("Constraint trace items: " 
-                    + ((EvlContext) context_).getConstraintTrace().getItems().size());
-                    
+                                        
+                    System.out.println("Total Constraint trace items: " 
+                    + ((EvlContext) context_).getConstraintTrace().getItems().size());                    
 
-                    //LOGGER.finest(() -> "Validation test Result - " + unsatisfiedConstraintResult.get().toString());
                     return unsatisfiedConstraintResult;
                 }
             };
@@ -203,11 +206,12 @@ public class IncrementalEvlModule extends EvlModule {
     		+ " Execution: " + executionForPropertyAccess.hashCode()
     		+ " Element: " + propertyAccess.getModelElement().hashCode()
     		+ " Property: " + propertyAccess.getPropertyName()
-    		+ " Result: " + executionForPropertyAccess.isResult()
+    		+ " Result: " + executionForPropertyAccess.getResult()
     		);    		
     		
         }                
         
+        // LEGACY
         // Transfer captured propertyAccesses from the Recorder to the ConstrainPropertyAccess (trace).
         for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
             evlTrace.addConstraintPropertyAccessToList((ConstraintPropertyAccess) propertyAccess);
