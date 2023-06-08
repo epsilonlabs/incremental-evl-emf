@@ -347,8 +347,8 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getPropertyAccess_Element() {
-		return (EAttribute)propertyAccessEClass.getEStructuralFeatures().get(0);
+	public EReference getPropertyAccess_Element() {
+		return (EReference)propertyAccessEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -446,7 +446,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		createEReference(accessEClass, ACCESS__EXECUTIONS);
 
 		propertyAccessEClass = createEClass(PROPERTY_ACCESS);
-		createEAttribute(propertyAccessEClass, PROPERTY_ACCESS__ELEMENT);
+		createEReference(propertyAccessEClass, PROPERTY_ACCESS__ELEMENT);
 		createEAttribute(propertyAccessEClass, PROPERTY_ACCESS__PROPERTY);
 
 		allAccessEClass = createEClass(ALL_ACCESS);
@@ -514,7 +514,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		initEReference(getAccess_Executions(), this.getExecution(), this.getExecution_Accesses(), "executions", null, 0, -1, Access.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(propertyAccessEClass, PropertyAccess.class, "PropertyAccess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPropertyAccess_Element(), ecorePackage.getEJavaObject(), "element", null, 0, 1, PropertyAccess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPropertyAccess_Element(), ecorePackage.getEObject(), null, "element", null, 0, 1, PropertyAccess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPropertyAccess_Property(), ecorePackage.getEString(), "property", null, 0, 1, PropertyAccess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(allAccessEClass, AllAccess.class, "AllAccess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

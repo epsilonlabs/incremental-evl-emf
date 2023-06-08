@@ -6,6 +6,8 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
@@ -27,24 +29,14 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
  */
 public class PropertyAccessImpl extends AccessImpl implements PropertyAccess {
 	/**
-	 * The default value of the '{@link #getElement() <em>Element</em>}' attribute.
+	 * The cached value of the '{@link #getElement() <em>Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getElement()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Object ELEMENT_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getElement() <em>Element</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getElement()
-	 * @generated
-	 * @ordered
-	 */
-	protected Object element = ELEMENT_EDEFAULT;
+	protected EObject element;
 
 	/**
 	 * The default value of the '{@link #getProperty() <em>Property</em>}' attribute.
@@ -91,7 +83,24 @@ public class PropertyAccessImpl extends AccessImpl implements PropertyAccess {
 	 * @generated
 	 */
 	@Override
-	public Object getElement() {
+	public EObject getElement() {
+		if (element != null && element.eIsProxy()) {
+			InternalEObject oldElement = (InternalEObject)element;
+			element = eResolveProxy(oldElement);
+			if (element != oldElement) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TracePackage.PROPERTY_ACCESS__ELEMENT, oldElement, element));
+			}
+		}
+		return element;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EObject basicGetElement() {
 		return element;
 	}
 
@@ -101,8 +110,8 @@ public class PropertyAccessImpl extends AccessImpl implements PropertyAccess {
 	 * @generated
 	 */
 	@Override
-	public void setElement(Object newElement) {
-		Object oldElement = element;
+	public void setElement(EObject newElement) {
+		EObject oldElement = element;
 		element = newElement;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.PROPERTY_ACCESS__ELEMENT, oldElement, element));
@@ -140,7 +149,8 @@ public class PropertyAccessImpl extends AccessImpl implements PropertyAccess {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case TracePackage.PROPERTY_ACCESS__ELEMENT:
-				return getElement();
+				if (resolve) return getElement();
+				return basicGetElement();
 			case TracePackage.PROPERTY_ACCESS__PROPERTY:
 				return getProperty();
 		}
@@ -156,7 +166,7 @@ public class PropertyAccessImpl extends AccessImpl implements PropertyAccess {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case TracePackage.PROPERTY_ACCESS__ELEMENT:
-				setElement(newValue);
+				setElement((EObject)newValue);
 				return;
 			case TracePackage.PROPERTY_ACCESS__PROPERTY:
 				setProperty((String)newValue);
@@ -174,7 +184,7 @@ public class PropertyAccessImpl extends AccessImpl implements PropertyAccess {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case TracePackage.PROPERTY_ACCESS__ELEMENT:
-				setElement(ELEMENT_EDEFAULT);
+				setElement((EObject)null);
 				return;
 			case TracePackage.PROPERTY_ACCESS__PROPERTY:
 				setProperty(PROPERTY_EDEFAULT);
@@ -192,7 +202,7 @@ public class PropertyAccessImpl extends AccessImpl implements PropertyAccess {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case TracePackage.PROPERTY_ACCESS__ELEMENT:
-				return ELEMENT_EDEFAULT == null ? element != null : !ELEMENT_EDEFAULT.equals(element);
+				return element != null;
 			case TracePackage.PROPERTY_ACCESS__PROPERTY:
 				return PROPERTY_EDEFAULT == null ? property != null : !PROPERTY_EDEFAULT.equals(property);
 		}
@@ -209,9 +219,7 @@ public class PropertyAccessImpl extends AccessImpl implements PropertyAccess {
 		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (element: ");
-		result.append(element);
-		result.append(", property: ");
+		result.append(" (property: ");
 		result.append(property);
 		result.append(')');
 		return result.toString();

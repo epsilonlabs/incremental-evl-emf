@@ -14,7 +14,7 @@ abstract class Execution {
 
 class ConstraintExecution extends Execution {
     @diagram(direction="down")
-    ref Constraint constraint;
+    ref  Constraint constraint;
     attr int result;
     attr String message;
 }
@@ -35,7 +35,7 @@ abstract class Access {
 }
 
 class PropertyAccess extends Access {
-    attr Object element;
+    ref  EObject element;
     attr String property;
 }
 

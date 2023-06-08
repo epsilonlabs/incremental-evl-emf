@@ -362,7 +362,7 @@ public interface TracePackage extends EPackage {
 	int PROPERTY_ACCESS__EXECUTIONS = ACCESS__EXECUTIONS;
 
 	/**
-	 * The feature id for the '<em><b>Element</b></em>' attribute.
+	 * The feature id for the '<em><b>Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -636,15 +636,15 @@ public interface TracePackage extends EPackage {
 	EClass getPropertyAccess();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess#getElement <em>Element</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess#getElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Element</em>'.
+	 * @return the meta object for the reference '<em>Element</em>'.
 	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess#getElement()
 	 * @see #getPropertyAccess()
 	 * @generated
 	 */
-	EAttribute getPropertyAccess_Element();
+	EReference getPropertyAccess_Element();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess#getProperty <em>Property</em>}'.
@@ -881,12 +881,12 @@ public interface TracePackage extends EPackage {
 		EClass PROPERTY_ACCESS = eINSTANCE.getPropertyAccess();
 
 		/**
-		 * The meta object literal for the '<em><b>Element</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Element</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PROPERTY_ACCESS__ELEMENT = eINSTANCE.getPropertyAccess_Element();
+		EReference PROPERTY_ACCESS__ELEMENT = eINSTANCE.getPropertyAccess_Element();
 
 		/**
 		 * The meta object literal for the '<em><b>Property</b></em>' attribute feature.

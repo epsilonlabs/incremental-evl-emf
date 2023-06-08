@@ -39,7 +39,7 @@
         eType="#//Execution" eOpposite="#//Execution/accesses"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyAccess" eSuperTypes="#//Access">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="element" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="property" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AllAccess" eSuperTypes="#//Access">

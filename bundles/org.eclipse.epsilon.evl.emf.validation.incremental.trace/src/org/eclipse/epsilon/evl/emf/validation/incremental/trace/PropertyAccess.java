@@ -2,6 +2,8 @@
  */
 package org.eclipse.epsilon.evl.emf.validation.incremental.trace;
 
+import org.eclipse.emf.ecore.EObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -22,26 +24,26 @@ package org.eclipse.epsilon.evl.emf.validation.incremental.trace;
  */
 public interface PropertyAccess extends Access {
 	/**
-	 * Returns the value of the '<em><b>Element</b></em>' attribute.
+	 * Returns the value of the '<em><b>Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Element</em>' attribute.
-	 * @see #setElement(Object)
+	 * @return the value of the '<em>Element</em>' reference.
+	 * @see #setElement(EObject)
 	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage#getPropertyAccess_Element()
 	 * @model
 	 * @generated
 	 */
-	Object getElement();
+	EObject getElement();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess#getElement <em>Element</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess#getElement <em>Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Element</em>' attribute.
+	 * @param value the new value of the '<em>Element</em>' reference.
 	 * @see #getElement()
 	 * @generated
 	 */
-	void setElement(Object value);
+	void setElement(EObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Property</b></em>' attribute.
