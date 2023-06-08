@@ -153,9 +153,7 @@ public class IncrementalEvlModule extends EvlModule {
 					+ " of Constraint (context): " + constraint.toString()
 					+ " on Element (self): " + self.hashCode());
 					
-					System.out.println("Total Constraint trace items: "
-							+ ((EvlContext) context_).getConstraintTrace().getItems().size()
-							+ "\n");
+					
 
 					// Test Guard
 					if (super.shouldBeChecked(self, context)) {
@@ -182,7 +180,7 @@ public class IncrementalEvlModule extends EvlModule {
 								+ "\nResult: blocked ");
 					}
 
-					System.out.println("Total Constraint trace items: "
+					System.out.println("Total Constraint trace items in the IncEvlModule: "
 							+ ((EvlContext) context_).getConstraintTrace().getItems().size()
 							+ "\n");
 
