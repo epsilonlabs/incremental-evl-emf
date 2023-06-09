@@ -46,6 +46,13 @@ public class ConstraintExecutionCache {
 	 */
 
 	protected Trace traceModel;
+	
+	// These lists only get populated when a validation process starts, we need only need to know what model & constraint results 
+	// Using lists reduces the search space, we parse all executions in the model once and sort them into pass and fail, omiting all the blocked
+
+	protected boolean cacheListsPrimed = false;
+	protected final List<ConstraintTraceItem> cachedConstraintTraceItems = new ArrayList<>();
+	protected final List<UnsatisfiedConstraint> cachedUnsatisfiedConstraints = new ArrayList<>();
 
 	// These would be replaced with indexes in an optimal solutions, for now we will used traceModel directly
 	protected final List<ConstraintTraceItem> constraintTraceItems = new ArrayList<>(); // All executions of type ConstraintExecution
@@ -120,16 +127,54 @@ public class ConstraintExecutionCache {
 		return matchedcpa;
 	}*/
 
-	// TODO ConstraintTraceItem searching should look at the TraceModel
-	public ConstraintTraceItem checkCachedConstraintTrace(Object model, Constraint constraint) {
-		LOGGER.finer(() -> "Execution cache - checkCachedConstraintTrace - " + model.hashCode() + " "
-				+ constraint.getName());
-		//LOGGER.finer(() -> constraintTraceToString(constraintTraceItems));
+	//
+	// CACHE LOOKUP
+	//
+	public void PrimeCacheResultLists () {
+		for (Execution mExecution : traceModel.getExecutions()) {
+			ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
+			Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
+			int executionResult = mConstraintExecution.getResult();
 
-		for (ConstraintTraceItem item : constraintTraceItems) {
+			// Execution Results <ConstraintTraceItem> & <UnsatisfiedConstraint>
+			switch (executionResult) {
+			case 0:
+				// Execution FAILED
+				cachedConstraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, false));
+
+				UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
+				uC.setConstraint(rawConstraint);
+				uC.setInstance(mExecution.getModelElement());
+				cachedUnsatisfiedConstraints.add(uC);
+				break;
+			case 1:
+				// Execution PASSED
+				cachedConstraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
+				break;
+			default:
+				// Execution BLOCKED (didn't run for other reason) - don'r create a constraintTraceItem for it.
+			}			
+		}
+		
+		LOGGER.info("CACHE List primed:\n " 
+				+ cachedConstraintTraceItems.size() + " cachedConstraintTraceItems\n " 
+				+ cachedUnsatisfiedConstraints.size() + " cachedUnsatisfiedConstraints");
+		
+	}
+	
+	// ConstraintTraceItem searching uses cache list built from the TraceModel information
+	public ConstraintTraceItem checkCachedConstraintTrace(Object model, Constraint constraint) {
+		if(cacheListsPrimed != true) {
+			PrimeCacheResultLists();
+			cacheListsPrimed = true;
+		}
+		
+		LOGGER.finer(() -> "Execution cache - checkCachedConstraintTrace - " 
+				+ model.hashCode() + " " + constraint.getName());
+
+		for (ConstraintTraceItem item : cachedConstraintTraceItems) {
 			if (item.getInstance().equals(model) && item.getConstraint().equals(constraint)) {
-				LOGGER.finer(() -> "Execution cache - MATCHED model & constraint - " + item.hashCode() + " "
-						+ constraint.getName());
+				LOGGER.finer(() -> "Execution cache - MATCHED model & constraint - " + item.hashCode() + " " + constraint.getName());
 				return item;
 			}
 		}
@@ -138,12 +183,16 @@ public class ConstraintExecutionCache {
 		return null;
 	}
 
-	// TODO UnsatisfiedConstraints should be resolved from the TraceModel
+	// UnsatisfiedConstraints searching uses cache list built from the TraceModel information
 	public UnsatisfiedConstraint getCachedUnsatisfiedConstraint(Object model, Constraint constraint) {
-		LOGGER.finer(() -> "Execution cache - getCachedUnsatisfiedConstraint - " + model.hashCode() + " "
-				+ constraint.getName());
-		LOGGER.finest(() -> unsatisfiedConstraintsToString(unsatisfiedConstraints));
-		for (UnsatisfiedConstraint unsatisfiedConstraint : unsatisfiedConstraints) {
+		if(cacheListsPrimed != true) {
+			PrimeCacheResultLists();
+		}
+		
+		LOGGER.finer(() -> "Execution cache - getCachedUnsatisfiedConstraint - "
+				+ model.hashCode() + " " + constraint.getName());
+
+		for (UnsatisfiedConstraint unsatisfiedConstraint : cachedUnsatisfiedConstraints) {
 			if (unsatisfiedConstraint.getInstance().equals(model)
 					&& unsatisfiedConstraint.getConstraint().equals(constraint)) {
 				LOGGER.finer(() -> "Execution cache - MATCHED UC -  UC Result: "
@@ -155,6 +204,9 @@ public class ConstraintExecutionCache {
 		return null; // This should not happen if there is an entry on the trace.
 	}
 
+	//
+	// NOTIFICATION PROCESSING
+	// 
 	public void processModelNotification(Notification notification) {
 		// IF a model element changes we need to remove all the cached results.
 		int notificationType = notification.getEventType();
@@ -169,7 +221,7 @@ public class ConstraintExecutionCache {
 		case Notification.ADD:
 		case Notification.ADD_MANY:
 		case Notification.MOVE:
-			LOGGER.info(() -> "Request remove from cache (not Adapter)"
+			LOGGER.finer(() -> "Request remove from cache (not Adapter)"
 					+ "\n ModelElement: " + modelElement.hashCode() + " - " + modelElement 
 					+ "\n ModelFeature: " + modelFeature
 					+ executionCacheContentSyntheticLists());
@@ -178,14 +230,13 @@ public class ConstraintExecutionCache {
 		case Notification.REMOVING_ADAPTER:
 			if (notification.getOldValue() instanceof IncrementalEvlValidatorAdapter) {
 				removeFromCache(modelElement);
-				LOGGER.info(() -> "Request remove from cache (Adapter)" 
+				LOGGER.finer(() -> "Request remove from cache (Adapter)" 
 						+ "\n ModelElement: " + modelElement.hashCode() + " - " + modelElement 
-						+ "\n ModelFeature: " + modelFeature.getName() + " - " + modelFeature
 						+ executionCacheContentSyntheticLists());
 			}
 			break;
 		}
-		LOGGER.info(() ->("UPDATED CACHE"+ executionCacheContentSyntheticLists()));
+		LOGGER.finer(() ->("UPDATED CACHE"+ executionCacheContentSyntheticLists()));
 		
 	}
 
@@ -348,7 +399,7 @@ public class ConstraintExecutionCache {
 		return sj.toString();
 	}
 
-// REPORTING THE EXECUTION CACHE STATES 	
+	// REPORTING THE EXECUTION CACHE STATE 	
 	private String executionCacheContentSyntheticLists() {
 		StringJoiner sj = new StringJoiner("\n");
 		StringJoiner executionReport = new StringJoiner("\n");
@@ -384,7 +435,7 @@ public class ConstraintExecutionCache {
 				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
 				break;
 			default:
-				// Exection BLOCKED (didn't run for other reason) - don'r create a constraintTraceItem for it.
+				// Execution BLOCKED (didn't run for other reason) - don'r create a constraintTraceItem for it.
 			}
 			
 			// Execution Accesses <ConstraintPropertyAccess> 		

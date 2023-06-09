@@ -98,15 +98,14 @@ public class IncrementalEvlModule extends EvlModule {
 						ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCachedConstraintTrace(self,
 								this);
 						if (null != ctitem) {
-							getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(),
-									ctitem.getResult()); // Back-fill for bypass
+							getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(), ctitem.getResult()); // Back-fill for bypass
 							if (ctitem.getResult()) {
-								LOGGER.finest(() -> "Cached Result = PASS (TRUE) - [EMPTY] ");
+								LOGGER.info(() -> "Cached Result = PASS (TRUE) - [EMPTY] ");
 								return Optional.empty();
 							} else {
 								UnsatisfiedConstraint uc = constraintExecutionCache.get()
 										.getCachedUnsatisfiedConstraint(self, this);
-								LOGGER.finest(() -> "Cached Result = FAIL (FALSE) - " + uc.getMessage());
+								LOGGER.info(() -> "Cached Result = FAIL (FALSE) - " + uc.getMessage());
 								getContext().getUnsatisfiedConstraints().add(uc); // Back-fill for the bypass
 								return Optional.of(uc);
 							}
@@ -117,7 +116,7 @@ public class IncrementalEvlModule extends EvlModule {
 					// EXECUTE VALIDATION
 					//
 
-					LOGGER.finer(() -> "Need for Validation: " + self.hashCode() + " & " + this.getName());
+					LOGGER.info(() -> "Need for Validation: " + self.hashCode() + " & " + this.getName());
 
 					// Set up the recorder and execute the constraint test to get a result
 					// propertyAccessRecorder.setExecution(new ConstraintExecutionOld(this, self));
