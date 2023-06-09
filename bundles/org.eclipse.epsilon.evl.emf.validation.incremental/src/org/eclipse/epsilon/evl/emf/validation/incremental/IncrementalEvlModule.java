@@ -3,6 +3,8 @@ package org.eclipse.epsilon.evl.emf.validation.incremental;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.StringJoiner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.ecore.EObject;
@@ -150,40 +152,41 @@ public class IncrementalEvlModule extends EvlModule {
 					// EXECUTE, test Guard, then test Check.
 					Optional<UnsatisfiedConstraint> unsatisfiedConstraintResult = Optional.empty();
 					IEvlContext context = (IEvlContext) context_;
-					System.out.println("Execution: " + mExecution.hashCode() 
-					+ " of Constraint (context): " + constraint.toString()
-					+ " on Element (self): " + self.hashCode());
-					
-					
 
 					// Test Guard
 					if (super.shouldBeChecked(self, context)) {
-						System.out.println("-Guard passes-");
 						// Proceed to test Check
 						unsatisfiedConstraintResult = super.check(self, context);
 
 						// Process Check results
 						if (unsatisfiedConstraintResult.isPresent()) {
 							mExecution.setResult(0);
-							System.out.println("Property accesses recorded: " + propertyAccessRecorder.getPropertyAccesses().all().size()
-									+ "\nResult: failed with uConstraint: " + unsatisfiedConstraintResult.get().getConstraint() );
 						} else {
 							mExecution.setResult(1);
-							System.out.println("Property accesses recorded: " + propertyAccessRecorder.getPropertyAccesses().all().size()
-									+ "\nResult: passed ");
 						}
-
 					} else {
 						// Blocked by guard, no results produced
-						System.out.println("-Guard blocks-");
 						mExecution.setResult(-1);
-						System.out.println("Property accesses recorded: " + propertyAccessRecorder.getPropertyAccesses().all().size()
-								+ "\nResult: blocked ");
 					}
 
-					System.out.println("Total Constraint trace items in the IncEvlModule: "
-							+ ((EvlContext) context_).getConstraintTrace().getItems().size()
-							+ "\n");
+					// Logging to report the execution
+					if (LOGGER.isLoggable(Level.FINER)) {
+						StringJoiner sj = new StringJoiner("\n");
+						// What is being executed
+						sj.add("CONSTRAINT EXECUTION\n"
+						+ "Execution hashcode " + mExecution.hashCode() 
+						+ ", of Constraint (context) " + constraint.toString()
+						+ ", on Element (self) " + self.hashCode());
+						// Results of the execution
+						sj.add("Property accesses recorded: " + propertyAccessRecorder.getPropertyAccesses().all().size());
+						sj.add("Result: " +mExecution.getResult());
+						if(unsatisfiedConstraintResult.isPresent()) {
+							sj.add("Unsatisfied Constraint Result: "+unsatisfiedConstraintResult.get().getConstraint().toString());}
+					
+						sj.add("Total Constraint trace items in the IncEvlModule: "
+								+ ((EvlContext) context_).getConstraintTrace().getItems().size());
+						LOGGER.finer(sj.toString()+"\n");
+					}
 
 					return unsatisfiedConstraintResult;
 				}
@@ -195,19 +198,17 @@ public class IncrementalEvlModule extends EvlModule {
 
 	@Override
 	public Set<UnsatisfiedConstraint> execute() throws EolRuntimeException {
-
-		getContext().getExecutorFactory()
-				.addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
+		
+		getContext().getExecutorFactory().addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
 
 		propertyAccessRecorder.startRecording(); // Moved this closer to the actual execution call
+		
 		// Jumps to >> public ModuleElement adapt(AST cst, ModuleElement parentAst)
-		Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute(); // The returning Unsatisfied Constraints
-																				// come in here.
+		Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();
+																				
 		propertyAccessRecorder.stopRecording();
 
-		// PROCESS THE RECORDED PROPERY ACCESSES HERE
-		System.out.println("Processing property access in the Recorder:");
-		int i = 0;
+		// PROCESS THE RECORDED PROPERY ACCESSES HERE				
 		for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
 			PropertyAccess traceModelPropertyAccess = traceFactory.createPropertyAccess();
 
@@ -219,16 +220,8 @@ public class IncrementalEvlModule extends EvlModule {
 			traceModelPropertyAccess.setProperty(propertyAccess.getPropertyName());
 			traceModelPropertyAccess.getExecutions().add(executionForPropertyAccess);
 			evlTrace.addPropertyAccessToTraceModel(traceModelPropertyAccess);
-
-			i++;
-			System.out.println(i + ", " 
-				+ " Execution: " + executionForPropertyAccess.hashCode() 
-				+ " Element: " + propertyAccess.getModelElement().hashCode() 
-				+ " Property: " + propertyAccess.getPropertyName()
-				+ " Result: " + executionForPropertyAccess.getResult());
-
 		}
-
+		
 		// TODO Remove LEGACY code here
 		// Transfer captured propertyAccesses from the Recorder to the
 		// ConstrainPropertyAccess (trace).
@@ -236,15 +229,31 @@ public class IncrementalEvlModule extends EvlModule {
 			evlTrace.addConstraintPropertyAccessToList((ConstraintPropertyAccess) propertyAccess);
 		}
 		
+		// Logging to report the sequence of executions and accesses recorded.
+		if (LOGGER.isLoggable(Level.FINER)) {
+			StringJoiner sj = new StringJoiner("\n ");
+			int i = 0;
+			sj.add("Processing property access in the Recorder");
+			for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
+				ConstraintExecution executionForPropertyAccess = ((ConstraintPropertyAccess) propertyAccess).getExecution();
+				
+				i++;
+				sj.add(i + ", " 
+					+ " Execution: " + executionForPropertyAccess.hashCode() 
+					+ " Element: " + propertyAccess.getModelElement().hashCode() 
+					+ " Property: " + propertyAccess.getPropertyName()
+					+ " Result: " + executionForPropertyAccess.getResult());
+			}
+			LOGGER.finer(sj.toString()+"\n ");			
+		}
 		
-		
-		System.out.println("\n[incEVLmodule] Constraint trace (results): " + this.getContext().getConstraintTrace().getItems().size());
-		System.out.println(getConstraintTraceItemAsString());
-		
-		System.out.println("\nTrace Model contains: " 
-				+ evlTrace.traceModel.getExecutions().size() + " executions" 
-				+ " & "
-				+ evlTrace.traceModel.getAccesses().size() + " property accesses\n");
+		LOGGER.finer(() -> ( "IncrementalEVLmodule contains\n" 
+				+ this.getContext().getConstraintTrace().getItems().size() +" Constraint trace items (results)"
+				+ getConstraintTraceItemAsString()+"\n"));
+
+		LOGGER.info(() -> (	"Trace Model contains\n " 
+				+ evlTrace.traceModel.getExecutions().size() + " executions\n " 
+				+ evlTrace.traceModel.getAccesses().size() + " property accesses\n"));
 
 		return unsatisfiedConstraints;
 	}
@@ -258,15 +267,16 @@ public class IncrementalEvlModule extends EvlModule {
 	}
 	
 	public String getConstraintTraceItemAsString() {
+		StringJoiner sj = new StringJoiner("\n ");
 		int i = 0;
-		String ctString = "\nConstraintTrace list: ";
+		sj.add("\nConstraintTraceItem list: ");
 		for (ConstraintTraceItem item : this.getContext().getConstraintTrace().getItems()) {
 			i++;
-			ctString = ctString.concat("\n  " + i + ", Constraint: " + item.getConstraint().getName() + " "
+			sj.add(i + ", Constraint: " + item.getConstraint().getName() + " "
 					+ item.getConstraint().hashCode() + " | Model hashcode: " + item.getInstance().hashCode()
 					+ " | Result : " + item.getResult());
 		}
-		return ctString;
+		return sj.toString();
 	}
 	
 
