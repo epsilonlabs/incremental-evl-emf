@@ -66,13 +66,13 @@ public class TestTools {
 
 	public static List<ConstraintPropertyAccess> allAccesses(EObject modelElement) {
 		IncrementalEvlValidatorAdapter adapter = getValidationAdapter(modelElement);
-		return adapter.constraintExecutionCache.get().constraintPropertyAccess;
+		return adapter.constraintExecutionCache.get().getListOfConstraintPropertyAccesses();
 	}
 
 	public static List<ConstraintPropertyAccess> accessesOf(EObject modelElement, String featureName) {
 		IncrementalEvlValidatorAdapter adapter = getValidationAdapter(modelElement);
 		Collection<ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache
-				.get().constraintPropertyAccess;
+				.get().getListOfConstraintPropertyAccesses();
 
 		return propertyAccesses.stream()
 				.filter(pa -> pa.getModelElement() == modelElement && featureName.equals(pa.getPropertyName()))
@@ -83,14 +83,14 @@ public class TestTools {
 		IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
 		
 		Collection<ConstraintPropertyAccess> propertyAccesses = adapter.constraintExecutionCache
-				.get().constraintPropertyAccess;
+				.get().getListOfConstraintPropertyAccesses();
 		
 		return propertyAccesses.stream().map(pa -> pa.getModelElement()).collect(Collectors.toList());
 	}
 
 	public static List<Object> modelObjectsFromConstraintTrace(EPackage ePackage) {
 		IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
-		Collection<ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().constraintTraceItems;
+		Collection<ConstraintTraceItem> traceItems = adapter.constraintExecutionCache.get().getListOfConstraintTraceItems();
 
 		return traceItems.stream().map(pa -> pa.getInstance()).collect(Collectors.toList());
 	}
@@ -98,7 +98,7 @@ public class TestTools {
 	public static List<Object> modelObjectsFromUnsatisfiedConstraints(EPackage ePackage) {
 		IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
 		Collection<UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache
-				.get().unsatisfiedConstraints;
+				.get().getListOfListUnsatisfiedConstraints();
 
 		return unsatisfiedConstraints.stream().map(pa -> pa.getInstance()).collect(Collectors.toList());
 	}
