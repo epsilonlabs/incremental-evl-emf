@@ -29,19 +29,14 @@ import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 public class ConstraintExecutionCache {
 	private static final Logger LOGGER = Logger.getLogger(ConstraintExecutionCache.class.getName());
-	/*
-	 * Logging levels - System activities finer - System states finest
-	 */
 
 	/*
-	 * This contains a Trace model that the last EVLtrace updated during an EVL
-	 * execution.
+	 * This contains a Trace model that the last EVLtrace updated during an EVLmodule
+	 * validation.
 	 * 
-	 * In the context of an Execution Cache, methods are provided to manipulate the
-	 * Cache content in the trace (e.g. remove executions relating to a
-	 * notification). The Cache also provides methods to recall information about a
-	 * prior executions based on some partial information (e.g. Model access or
-	 * Constraint)
+	 * In the Execution Cache provides methods to manipulate the
+	 * traceModel in response to notifications that invalidate known results.
+	 * The Execution Cache also provides methods to recall know execution results for Model Constraint pairs
 	 * 
 	 */
 
@@ -49,88 +44,21 @@ public class ConstraintExecutionCache {
 	
 	// These lists only get populated when a validation process starts, we need only need to know what model & constraint results 
 	// Using lists reduces the search space, we parse all executions in the model once and sort them into pass and fail, omiting all the blocked
-
 	private boolean cacheListsValid = false;
 	private final List<ConstraintTraceItem> cachedConstraintTraceItems = new ArrayList<>();
 	private final List<UnsatisfiedConstraint> cachedUnsatisfiedConstraints = new ArrayList<>();
 
-	// These would be replaced with indexes in an optimal solutions, for now we will used traceModel directly
-	//protected final List<ConstraintTraceItem> constraintTraceItems = new ArrayList<>(); // All executions of type ConstraintExecution
-	//protected final List<UnsatisfiedConstraint> unsatisfiedConstraints = new ArrayList<>(); // Subset of Executions of ConstraintExecution type with a result of false
-	//protected final List<ConstraintPropertyAccess> constraintPropertyAccess = new ArrayList<>(); // An execution refers to the PropertyAccess it made
 
 	public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
-
 		// Pull in the traceModel from the last execution
 		traceModel = lastModule.evlTrace.traceModel;
-
-		
-		// Temporary patch for compatibility walk through the executions in the trace
-		// model and populate the constrain property accesses
-		/*
-		for (Execution mExecution : traceModel.getExecutions()) {
-			ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
-			Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
-			int result = mConstraintExecution.getResult();
-
-			Object context = mConstraintExecution.getModelElement();
-
-			LOGGER.finer("[mEXECUTION] " + mExecution.hashCode() + " accesses: " + mExecution.getAccesses().size()
-					+ " context: " + mExecution.getModelElement().hashCode() + " constraint: " + rawConstraint.hashCode());
-
-			// Create the ConstraintTraceItems and UnsatisfiedConstraint lists
-			switch (result) {
-			case 0:	// FAIL
-				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, false));
-
-				UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
-				uC.setConstraint(rawConstraint);
-				uC.setInstance(mExecution.getModelElement());
-				unsatisfiedConstraints.add(uC);
-				break;
-			case 1:	// PASS
-				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
-				break;
-			default: // BLOCKED - don't create a constraintTraceItem for it.
-			}
-
-			// Create the list of Constraint PropertyAccess based on the trace model
-			for (Access mAccess : mExecution.getAccesses()) {
-				PropertyAccess mPA = (PropertyAccess) mAccess;
-
-				// System.out.println("<mExc:mPA> " + mPA.hashCode() +" & "
-				// +mExecution.hashCode());
-
-				Object modelElement = mPA.getElement();
-				String propertyName = mPA.getProperty();
-				ConstraintExecution execution = (ConstraintExecution) mConstraintExecution;
-				constraintPropertyAccess.add(new ConstraintPropertyAccess(modelElement, propertyName, execution));
-			}
-			
-		}
-		*/
 		
 		if (LOGGER.isLoggable(Level.FINE)) {
 			LOGGER.fine(() -> "Setting up Execution Cache: \n" + toString());
 		}
 	}
 
-	// TODO should return a constraintpropertyaccess from the TraceModel
-	// LEGACY NOT USED?
-	/*
-	public List<ConstraintPropertyAccess> getConstraintsPropertyAccessFor(EObject modelElement,
-			EStructuralFeature modelFeature) {
-		// Given a model Element and Feature, find all constraints as constraint
-		// property access for the model element & feature
-		List<ConstraintPropertyAccess> matchedcpa = new ArrayList<>();
-		for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
-			if (cpa.getModelElement() == modelElement && cpa.getPropertyName().equals(modelFeature.getName())) {
-				matchedcpa.add(cpa);
-			}
-		}
-		return matchedcpa;
-	}*/
-
+	
 	//
 	// CACHE LOOKUP
 	//
@@ -160,13 +88,13 @@ public class ConstraintExecutionCache {
 			}			
 		}
 		
-		LOGGER.info("CACHE List primed:\n " 
+		LOGGER.info("CACHE Lists built:\n " 
 				+ cachedConstraintTraceItems.size() + " cachedConstraintTraceItems\n " 
 				+ cachedUnsatisfiedConstraints.size() + " cachedUnsatisfiedConstraints");
 		
 	}
 	
-	// ConstraintTraceItem searching uses cache list built from the TraceModel information
+	// ConstraintTraceItem search uses cache list built from the TraceModel information
 	public ConstraintTraceItem checkCachedConstraintTrace(Object model, Constraint constraint) {
 		if(cacheListsValid != true) {
 			buildCachedResultLists();
@@ -187,7 +115,7 @@ public class ConstraintExecutionCache {
 		return null;
 	}
 
-	// UnsatisfiedConstraints searching uses cache list built from the TraceModel information
+	// UnsatisfiedConstraints search uses cache list built from the TraceModel information
 	public UnsatisfiedConstraint getCachedUnsatisfiedConstraint(Object model, Constraint constraint) {
 		if(cacheListsValid != true) {
 			buildCachedResultLists();
@@ -208,8 +136,6 @@ public class ConstraintExecutionCache {
 		return null; // This should not happen if there is an entry on the trace.
 	}
 
-
-	
 	
 	//
 	// NOTIFICATION PROCESSING
@@ -264,22 +190,6 @@ public class ConstraintExecutionCache {
 				itr.remove();
 			}
 		}
-		
-		// List of constraintpropertyaccesses for model/feature to be invalidated
-		//List<ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); 
-
-		// find any properyAccesses (make a list of contraints) and delete them
-		/*
-		for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext();) {
-			ConstraintPropertyAccess cpa = itr.next();
-			if (cpa.getModelElement() == modelElement) {
-				LOGGER.fine(() -> "marked for clearing and removed " + cpa.toString());
-				constraintsToInvalidate.add(cpa);
-				itr.remove();
-			}
-		}
-		*/
-		//clearConstraintTracesAndUnsatisfiedConstraints(constraintsToInvalidate);
 	}
 
 	private void removeFromCache(EObject modelElement, EStructuralFeature modelFeature) {
@@ -299,25 +209,6 @@ public class ConstraintExecutionCache {
 				}
 			}
 		}
-
-		// Make a method to makes a list of constraints related to the model element
-		// and feature
-		// List of constraintpropertyaccesses for model/feature to be invalidated
-		//List<ConstraintPropertyAccess> constraintsToInvalidate = new ArrayList<>(); 
-
-		// find any properyAccesses (make a list of constraints) and delete them
-		/*
-		for (Iterator<ConstraintPropertyAccess> itr = constraintPropertyAccess.iterator(); itr.hasNext();) {
-			ConstraintPropertyAccess cpa = (ConstraintPropertyAccess) itr.next();
-			if ((cpa.getModelElement() == modelElement) && (cpa.getPropertyName().equals(modelFeature.getName()))) {
-				LOGGER.finer(() -> "marked for clearing and removed " + cpa.toString());
-				constraintsToInvalidate.add(cpa);
-				itr.remove();
-			}
-		}
-		*/
-		
-		//clearConstraintTracesAndUnsatisfiedConstraints(constraintsToInvalidate);
 	}
 
 	private void removeOrphenedExecutionsFromTraceModel(Access access) {
@@ -346,70 +237,19 @@ public class ConstraintExecutionCache {
 		}
 	}
 
-	// LEGACY
-	/*
-	private void clearConstraintTracesAndUnsatisfiedConstraints(
-		List<ConstraintPropertyAccess> constraintsToInvalidate) {
-		LOGGER.finer(() -> "List of constraintsToInvalidate: " + constraintsToInvalidate);
 
-		// Using the list of constraints to invalidate, remove constraint
-		// trace/unsatisfied based on model & constraint matches
-		for (ConstraintPropertyAccess invalidcpa : constraintsToInvalidate) {
-
-			// find any constraintTraceItems and delete them
-			for (Iterator<ConstraintTraceItem> itr = constraintTraceItems.iterator(); itr.hasNext();) {
-				ConstraintTraceItem ctitem = itr.next();
-				if (ctitem.getInstance() == invalidcpa.getExecution().getModelElement()
-
-						&& ctitem.getConstraint() == invalidcpa.getExecution().getConstraint().getRaw()) { // need to
-																											// resolve
-																											// "feature"
-																											// for each
-																											// result
-					LOGGER.finer(() -> "Removed constraintTraceItem model hash " + ctitem.getInstance().hashCode()
-							+ " constraint " + ctitem.getConstraint().getName());
-					itr.remove();
-				}
-			}
-
-			// find any unstatisfiedConstraints and delete them
-			for (Iterator<UnsatisfiedConstraint> itr = unsatisfiedConstraints.iterator(); itr.hasNext();) {
-				UnsatisfiedConstraint uc = itr.next();
-				if (uc.getInstance() == invalidcpa.getExecution().getModelElement()
-						&& uc.getConstraint() == invalidcpa.getExecution().getConstraint().getRaw()) {
-					LOGGER.finer(() -> "Removed unsatisfiedConstraint model hash " + uc.getInstance().hashCode()
-							+ " constraint " + uc.getConstraint().getName());
-					itr.remove();
-				}
-
-			}
-		}
-	}
-*/
-
-
+	//
+	// REPORTING THE EXECUTION CACHE STATE 	
+	//
 	@Override
 	public String toString() {
 		StringJoiner sj = new StringJoiner("\n");
-		/*
-		sj.add("\n == Execution Cache state ==\n");
-		sj.add("ContraintTraceItems: " + constraintTraceItems.size());
-		sj.add("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
-		sj.add("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size());
 
-		// Commenting out the details for demo
-		sj.add(constraintTraceToString(constraintTraceItems));
-		sj.add(unsatisfiedConstraintsToString(unsatisfiedConstraints));
-		sj.add(constraintPropertyAccessToString(constraintPropertyAccess));
-		sj.add("\n =========================== \n");
-		*/
-		// This method will replace the current toString that reports the Arrays
 		sj.add(executionCacheContentSyntheticLists());
 		
 		return sj.toString();
 	}
-
-	// REPORTING THE EXECUTION CACHE STATE 	
+	
 	private String executionCacheContentSyntheticLists() {
 		StringJoiner sj = new StringJoiner("\n");
 		StringJoiner executionReport = new StringJoiner("\n");
@@ -520,10 +360,10 @@ public class ConstraintExecutionCache {
 		return sj.toString();
 	}
 	
+	
 	//
 	// Junit TEST SUPPORT, test check how many of these concepts are in the cache.
 	//
-	
 	public List<ConstraintTraceItem> getListOfConstraintTraceItems(){
 		List<ConstraintTraceItem> constraintTraceItems = new ArrayList<>();
 		for (Execution mExecution : traceModel.getExecutions()) {
@@ -531,7 +371,7 @@ public class ConstraintExecutionCache {
 			Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
 			int result = mConstraintExecution.getResult();
 
-			// Create the ConstraintTraceItems
+			// Create the ConstraintTraceItems for both PASS and FAIL!
 			if (result == 0 || result == 1) {
 				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
 			}
@@ -540,8 +380,7 @@ public class ConstraintExecutionCache {
 	}
 	
 	public List<UnsatisfiedConstraint> getListOfListUnsatisfiedConstraints() {
-		List<UnsatisfiedConstraint> unsatisfiedConstraints = new ArrayList<>();
-		
+		List<UnsatisfiedConstraint> unsatisfiedConstraints = new ArrayList<>();		
 		for (Execution mExecution : traceModel.getExecutions()) {
 			ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
 			Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
@@ -557,10 +396,8 @@ public class ConstraintExecutionCache {
 		return unsatisfiedConstraints;
 	}
 	
-	
 	public List<ConstraintPropertyAccess>  getListOfConstraintPropertyAccesses(){
 		List<ConstraintPropertyAccess> constraintPropertyAccesses = new ArrayList<>();
-		// Execution Accesses <ConstraintPropertyAccess> 
 		for (Execution mExecution : traceModel.getExecutions()) {
 			ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
 			for (Access modelAccess : mConstraintExecution.getAccesses()) {
@@ -572,8 +409,5 @@ public class ConstraintExecutionCache {
 			}			
 		}
 		return constraintPropertyAccesses;
-	}
-	
-
-	
+	}	
 }
