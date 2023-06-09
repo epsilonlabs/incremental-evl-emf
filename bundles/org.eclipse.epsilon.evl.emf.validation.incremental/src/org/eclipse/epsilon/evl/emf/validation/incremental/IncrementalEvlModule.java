@@ -95,7 +95,7 @@ public class IncrementalEvlModule extends EvlModule {
 						LOGGER.finer(() -> "Searching constraintExecutionCache ConstraintTrace: " + self.hashCode()
 								+ " & " + this.getName());
 
-						ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCachedConstraintTrace(self,
+						ConstraintTraceItem ctitem = constraintExecutionCache.get().checkCacheFor(self,
 								this);
 						if (null != ctitem) {
 							getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(), ctitem.getResult()); // Back-fill for bypass

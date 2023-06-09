@@ -98,7 +98,7 @@ public class TestTools {
 	public static List<Object> modelObjectsFromUnsatisfiedConstraints(EPackage ePackage) {
 		IncrementalEvlValidatorAdapter adapter = getValidationAdapter(ePackage);
 		Collection<UnsatisfiedConstraint> unsatisfiedConstraints = adapter.constraintExecutionCache
-				.get().getListOfListUnsatisfiedConstraints();
+				.get().getListOfUnsatisfiedConstraints();
 
 		return unsatisfiedConstraints.stream().map(pa -> pa.getInstance()).collect(Collectors.toList());
 	}
