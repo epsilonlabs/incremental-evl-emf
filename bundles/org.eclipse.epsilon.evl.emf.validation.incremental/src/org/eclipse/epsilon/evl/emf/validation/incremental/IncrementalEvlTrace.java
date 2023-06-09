@@ -22,14 +22,6 @@ public class IncrementalEvlTrace {
 	 * The methods only permit adding to the trace, you can't and should not be removing anything from a trace model while recording!
 	 */
     
-	// TODO Remove LEGACY code here
-	protected List<ConstraintPropertyAccess> originalCPA = new ArrayList<>();
-    public void addConstraintPropertyAccessToList(ConstraintPropertyAccess propertyAccess) {
-    	LOGGER.finest("  IncrementalEvlTrace.addConstraintPropertyAccess() : " + propertyAccess);
-    	originalCPA.add(propertyAccess);
-    }
-	
-    
     // NEW MODEL APPROACH
     protected TraceFactory traceFactory =  TraceFactory.eINSTANCE;	
 	protected Trace traceModel; // The trace model representing the state for an "IncrementalEvlTrace"
@@ -51,30 +43,7 @@ public class IncrementalEvlTrace {
     	LOGGER.finest("  IncrementalEvlTrace.addProperyAccess() : " + propertyAccess);
         traceModel.getAccesses().add(propertyAccess);
     }
-    
-    
 
-
-    
-    
-    
-    /*
-    
-     Invalidates Executions?  -- this should move to Execution Cache?
-     
-    protected Set<Execution> propertyModified(Object modelElement, String propertyName) {
-
-        Set<Execution> invalidatedExecutions = propertyAccesses.stream().
-                filter(propertyAccess -> propertyAccess.getModelElement() == modelElement && propertyName.equals(propertyAccess.getPropertyName())).
-                map(propertyAccess -> propertyAccess.getExecution()).collect(Collectors.toSet());
-
-        propertyAccesses.removeIf(propertyAccesses -> invalidatedExecutions.contains(propertyAccesses.getExecution()));
-
-        return invalidatedExecutions;
-    }
-	*/
-    
-    
     public String toString() {
     	StringJoiner sj = new StringJoiner("");
     	int i = 0;

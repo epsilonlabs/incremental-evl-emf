@@ -221,13 +221,6 @@ public class IncrementalEvlModule extends EvlModule {
 			evlTrace.addPropertyAccessToTraceModel(traceModelPropertyAccess);
 		}
 		
-		// TODO Remove LEGACY code here
-		// Transfer captured propertyAccesses from the Recorder to the
-		// ConstrainPropertyAccess (trace).
-		for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
-			evlTrace.addConstraintPropertyAccessToList((ConstraintPropertyAccess) propertyAccess);
-		}
-		
 		// Logging to report the sequence of executions and accesses recorded.
 		if (LOGGER.isLoggable(Level.FINER)) {
 			StringJoiner sj = new StringJoiner("\n ");

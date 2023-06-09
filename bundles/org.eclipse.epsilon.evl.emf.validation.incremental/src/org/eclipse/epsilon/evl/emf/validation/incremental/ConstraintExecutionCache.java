@@ -352,3 +352,19 @@ public class ConstraintExecutionCache {
 		return constraintPropertyAccesses;
 	}	
 }
+
+/*
+
+Draft code from Antonio, found in EVLTrace.
+
+protected Set<Execution> propertyModified(Object modelElement, String propertyName) {
+
+   Set<Execution> invalidatedExecutions = propertyAccesses.stream().
+           filter(propertyAccess -> propertyAccess.getModelElement() == modelElement && propertyName.equals(propertyAccess.getPropertyName())).
+           map(propertyAccess -> propertyAccess.getExecution()).collect(Collectors.toSet());
+
+   propertyAccesses.removeIf(propertyAccesses -> invalidatedExecutions.contains(propertyAccesses.getExecution()));
+
+   return invalidatedExecutions;
+}
+*/
