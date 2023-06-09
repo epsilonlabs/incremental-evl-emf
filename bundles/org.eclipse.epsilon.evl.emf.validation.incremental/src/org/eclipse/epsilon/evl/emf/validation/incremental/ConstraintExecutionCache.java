@@ -49,7 +49,7 @@ public class ConstraintExecutionCache {
 
 	// These would be replaced with indexes in an optimal solutions, for now we will
 	// used traceModel directly
-	protected final Set<ConstraintTraceItem> constraintTraceItems = new HashSet<>(); // All executions of type
+	protected final List<ConstraintTraceItem> constraintTraceItems = new ArrayList<>(); // All executions of type
 																						// ConstraintExecution
 	protected final List<UnsatisfiedConstraint> unsatisfiedConstraints = new ArrayList<>(); // Subset of Executions of
 																							// ConstraintExecution type
@@ -132,7 +132,7 @@ public class ConstraintExecutionCache {
 	public ConstraintTraceItem checkCachedConstraintTrace(Object model, Constraint constraint) {
 		LOGGER.finer(() -> "Execution cache - checkCachedConstraintTrace - " + model.hashCode() + " "
 				+ constraint.getName());
-		LOGGER.finest(() -> constraintTraceToString(constraintTraceItems));
+		//LOGGER.finer(() -> constraintTraceToString(constraintTraceItems));
 
 		for (ConstraintTraceItem item : constraintTraceItems) {
 			if (item.getInstance().equals(model) && item.getConstraint().equals(constraint)) {
@@ -327,60 +327,138 @@ public class ConstraintExecutionCache {
 		}
 	}
 
-	public String constraintTraceToString(Set<ConstraintTraceItem> constraintTraceItems) {
-		int i = 0;
-		String ctString = "\nConstraintTrace list: ";
-		for (ConstraintTraceItem item : constraintTraceItems) {
-			i++;
-			ctString = ctString.concat("\n  " + i + ", Constraint: " + item.getConstraint().getName() + " "
-					+ item.getConstraint().hashCode() + " | Model hashcode: " + item.getInstance().hashCode()
-					+ " | Result : " + item.getResult());
-		}
-		return ctString;
-	}
 
-	private String unsatisfiedConstraintsToString(Collection<UnsatisfiedConstraint> unsatisfiedConstraints) {
-		int i = 0;
-		String ucString = "\nUnsatisfiedConstraint list: ";
-		for (UnsatisfiedConstraint uc : unsatisfiedConstraints) {
-			i++;
-			ucString = ucString.concat("\n  " + i + ", Constraint: " + uc.getConstraint().getName() + " "
-					+ uc.getConstraint().hashCode() + " | Model hashcode: " + uc.getInstance().hashCode());
-		}
-		return ucString;
-	}
-
-	public String constraintPropertyAccessToString(List<ConstraintPropertyAccess> constraintPropertyAccess) {
-		int i = 0;
-		String cpaString = "\n(Constraint)PropertyAccess list: ";
-
-		for (ConstraintPropertyAccess cpa : constraintPropertyAccess) {
-			i++;
-			cpaString = cpaString.concat(
-					"\n  " + i + ", Constraint: " + cpa.execution.getConstraint().getRaw() + " | Model hashcode: "
-							+ cpa.getModelElement().hashCode() + " | Property " + cpa.getPropertyName());
-		}
-		return cpaString;
-	}
 
 	@Override
 	public String toString() {
 		StringJoiner sj = new StringJoiner("\n");
 
-		sj.add(" == Execution Cache state ==");
+		sj.add("\n == Execution Cache state ==\n");
 		sj.add("ContraintTraceItems: " + constraintTraceItems.size());
 		sj.add("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
 		sj.add("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size());
 
-		// TODO: pass sj into these functions to keep building up the string
 		// Commenting out the details for demo
 		sj.add(constraintTraceToString(constraintTraceItems));
 		sj.add(unsatisfiedConstraintsToString(unsatisfiedConstraints));
 		sj.add(constraintPropertyAccessToString(constraintPropertyAccess));
-		// sj.add(this.constraintPropertyAccess.toString());
-		sj.add(" =========================== ");
+		sj.add("\n =========================== \n");
+		
+		// This method will replace the current toString that reports the Arrays
+		sj.add(executionCacheContentSyntheticLists());
+		
+		return sj.toString();
+	}
+
+// REPORTING THE EXECUTION CACHE STATES 	
+	private String executionCacheContentSyntheticLists() {
+		StringJoiner sj = new StringJoiner("\n");
+		StringJoiner executionReport = new StringJoiner("\n");
+		executionReport.add("\nExecutions represented in trace model");
+		
+		List<ConstraintTraceItem> constraintTraceItems = new ArrayList<>(); // ALL RESULTS
+		List<UnsatisfiedConstraint> unsatisfiedConstraints = new ArrayList<>(); // FAILED RESULTS
+		List<ConstraintPropertyAccess> constraintPropertyAccess = new ArrayList<>(); // ALL ACCESSES
+
+		
+		for (Execution mExecution : traceModel.getExecutions()) {
+			ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
+			Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
+			int executionResult = mConstraintExecution.getResult();
+
+			
+			executionReport.add("Execution hash: " + mExecution.hashCode() + " accesses: " + mExecution.getAccesses().size()
+					+ " context: " + mExecution.getModelElement().hashCode() + " constraint: " + rawConstraint.hashCode());
+
+			// Execution Results <ConstraintTraceItem> & <UnsatisfiedConstraint>
+			switch (executionResult) {
+			case 0:
+				// Execution FAILED
+				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, false));
+
+				UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
+				uC.setConstraint(rawConstraint);
+				uC.setInstance(mExecution.getModelElement());
+				unsatisfiedConstraints.add(uC);
+				break;
+			case 1:
+				// Execution PASSED
+				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
+				break;
+			default:
+				// Exection BLOCKED (didn't run for other reason) - don'r create a constraintTraceItem for it.
+			}
+			
+			// Execution Accesses <ConstraintPropertyAccess> 		
+			for (Access modelAccess : mConstraintExecution.getAccesses()) {
+				PropertyAccess propertyAccess = (PropertyAccess) modelAccess;
+				Object modelElement = propertyAccess.getElement();
+				String propertyName = propertyAccess.getProperty();
+				ConstraintExecution execution = (ConstraintExecution) mConstraintExecution;
+				constraintPropertyAccess.add(new ConstraintPropertyAccess(modelElement, propertyName, execution));
+			}
+			
+		}
+		
+		
+		// Compile list to report
+		sj.add("\n == Execution Cache state ==\n");
+		sj.add("Trace Model size: " 
+				+ traceModel.getExecutions().size() + " Executions, "
+				+traceModel.getAccesses().size() + " Accesses");
+		
+		sj.add(executionReport.toString());
+		
+		sj.add("\nSynthetic lists of cached execution knowledge\n");
+		sj.add("ContraintTraceItems: " + constraintTraceItems.size());
+		sj.add("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
+		sj.add("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size());
+
+		// Commenting out the details for demo
+		sj.add(constraintTraceToString(constraintTraceItems));
+		sj.add(unsatisfiedConstraintsToString(unsatisfiedConstraints));
+		sj.add(constraintPropertyAccessToString(constraintPropertyAccess));
+		sj.add("\n =========================== \n");
 
 		return sj.toString();
 	}
 
+	private String constraintTraceToString(List<ConstraintTraceItem> constraintTraceItems2) {
+		int i = 0;
+		StringJoiner sj = new StringJoiner("\n");
+		sj.add("\nConstraintTrace list: ");
+		for (ConstraintTraceItem item : constraintTraceItems2) {
+			i++;
+			sj.add(" " + i + ", Constraint: " + item.getConstraint().getName() + " "
+					+ item.getConstraint().hashCode() + " | Model hashcode: " + item.getInstance().hashCode()
+					+ " | Result : " + item.getResult());
+		}
+		return sj.toString();
+	}
+
+	private String unsatisfiedConstraintsToString(List<UnsatisfiedConstraint> unsatisfiedConstraints) {
+		int i = 0;
+		StringJoiner sj = new StringJoiner("\n");
+		sj.add("\nUnsatisfiedConstraint list: ");
+		for (UnsatisfiedConstraint uc : unsatisfiedConstraints) {
+			i++;
+			sj.add(" " + i + ", Constraint: " + uc.getConstraint().getName() + " "
+					+ uc.getConstraint().hashCode() + " | Model hashcode: " + uc.getInstance().hashCode());
+		}
+		return sj.toString();
+	}
+
+	private String constraintPropertyAccessToString(List<ConstraintPropertyAccess> constraintPropertyAccess2) {
+		int i = 0;
+		StringJoiner sj = new StringJoiner("\n");
+				sj.add("\n(Constraint)PropertyAccess list: ");
+
+		for (ConstraintPropertyAccess cpa : constraintPropertyAccess2) {
+			i++;
+			sj.add(" " + i + ", Constraint: " + cpa.execution.getConstraint().getRaw() + " | Model hashcode: "
+							+ cpa.getModelElement().hashCode() + " | Property " + cpa.getPropertyName());
+		}
+		return sj.toString();
+	}
+	
 }
