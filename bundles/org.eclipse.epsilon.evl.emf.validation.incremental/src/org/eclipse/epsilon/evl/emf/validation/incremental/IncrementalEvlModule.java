@@ -251,7 +251,7 @@ public class IncrementalEvlModule extends EvlModule {
 				+ this.getContext().getConstraintTrace().getItems().size() +" Constraint trace items (results)"
 				+ getConstraintTraceItemAsString()+"\n"));
 
-		LOGGER.info(() -> (	"Trace Model contains\n " 
+		LOGGER.fine(() -> (	"Trace Model contains\n " 
 				+ evlTrace.traceModel.getExecutions().size() + " executions\n " 
 				+ evlTrace.traceModel.getAccesses().size() + " property accesses\n"));
 

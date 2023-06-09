@@ -47,17 +47,10 @@ public class ConstraintExecutionCache {
 
 	protected Trace traceModel;
 
-	// These would be replaced with indexes in an optimal solutions, for now we will
-	// used traceModel directly
-	protected final List<ConstraintTraceItem> constraintTraceItems = new ArrayList<>(); // All executions of type
-																						// ConstraintExecution
-	protected final List<UnsatisfiedConstraint> unsatisfiedConstraints = new ArrayList<>(); // Subset of Executions of
-																							// ConstraintExecution type
-																							// with a result of false
-	protected final List<ConstraintPropertyAccess> constraintPropertyAccess = new ArrayList<>(); // An execution refers
-																									// to the
-																									// PropertyAccess it
-																									// made
+	// These would be replaced with indexes in an optimal solutions, for now we will used traceModel directly
+	protected final List<ConstraintTraceItem> constraintTraceItems = new ArrayList<>(); // All executions of type ConstraintExecution
+	protected final List<UnsatisfiedConstraint> unsatisfiedConstraints = new ArrayList<>(); // Subset of Executions of ConstraintExecution type with a result of false
+	protected final List<ConstraintPropertyAccess> constraintPropertyAccess = new ArrayList<>(); // An execution refers to the PropertyAccess it made
 
 	public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
 
@@ -78,8 +71,7 @@ public class ConstraintExecutionCache {
 
 			// Create the ConstraintTraceItems and UnsatisfiedConstraint lists
 			switch (result) {
-			case 0:
-				// FAIL
+			case 0:	// FAIL
 				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, false));
 
 				UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
@@ -87,12 +79,10 @@ public class ConstraintExecutionCache {
 				uC.setInstance(mExecution.getModelElement());
 				unsatisfiedConstraints.add(uC);
 				break;
-			case 1:
-				// PASS
+			case 1:	// PASS
 				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
 				break;
-			default:
-				// BLOCKED - don'r create a constraintTraceItem for it.
+			default: // BLOCKED - don't create a constraintTraceItem for it.
 			}
 
 			// Create the list of Constraint PropertyAccess based on the trace model
@@ -109,12 +99,14 @@ public class ConstraintExecutionCache {
 			}
 		}
 
-		if (LOGGER.isLoggable(Level.INFO)) {
-			LOGGER.info(() -> "Setting up Execution Cache: \n" + toString());
+		if (LOGGER.isLoggable(Level.FINE)) {
+			LOGGER.fine(() -> "Setting up Execution Cache: \n" + toString());
 		}
 	}
 
 	// TODO should return a constraintpropertyaccess from the TraceModel
+	// LEGACY NOT USED?
+	/*
 	public List<ConstraintPropertyAccess> getConstraintsPropertyAccessFor(EObject modelElement,
 			EStructuralFeature modelFeature) {
 		// Given a model Element and Feature, find all constraints as constraint
@@ -126,7 +118,7 @@ public class ConstraintExecutionCache {
 			}
 		}
 		return matchedcpa;
-	}
+	}*/
 
 	// TODO ConstraintTraceItem searching should look at the TraceModel
 	public ConstraintTraceItem checkCachedConstraintTrace(Object model, Constraint constraint) {
@@ -168,7 +160,7 @@ public class ConstraintExecutionCache {
 		int notificationType = notification.getEventType();
 		EObject modelElement = (EObject) notification.getNotifier();
 		EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
-
+		
 		switch (notificationType) {
 		case Notification.UNSET:
 		case Notification.SET:
@@ -177,18 +169,24 @@ public class ConstraintExecutionCache {
 		case Notification.ADD:
 		case Notification.ADD_MANY:
 		case Notification.MOVE:
-			LOGGER.fine(() -> "Request remove from cache (not Adapter)\n ModelElement: " + modelElement
-					+ "\n ModelFeature: " + modelFeature);
+			LOGGER.info(() -> "Request remove from cache (not Adapter)"
+					+ "\n ModelElement: " + modelElement.hashCode() + " - " + modelElement 
+					+ "\n ModelFeature: " + modelFeature
+					+ executionCacheContentSyntheticLists());
 			removeFromCache(modelElement, modelFeature);
 			break;
 		case Notification.REMOVING_ADAPTER:
 			if (notification.getOldValue() instanceof IncrementalEvlValidatorAdapter) {
 				removeFromCache(modelElement);
-				LOGGER.fine(() -> "Request remove from cache (Adapter)\n ModelElement: " + modelElement
-						+ "\n ModelFeature: " + modelFeature);
+				LOGGER.info(() -> "Request remove from cache (Adapter)" 
+						+ "\n ModelElement: " + modelElement.hashCode() + " - " + modelElement 
+						+ "\n ModelFeature: " + modelFeature.getName() + " - " + modelFeature
+						+ executionCacheContentSyntheticLists());
 			}
 			break;
 		}
+		LOGGER.info(() ->("UPDATED CACHE"+ executionCacheContentSyntheticLists()));
+		
 	}
 
 	private void removeFromCache(EObject modelElement) {
@@ -290,7 +288,7 @@ public class ConstraintExecutionCache {
 
 	// LEGACY
 	private void clearConstraintTracesAndUnsatisfiedConstraints(
-			List<ConstraintPropertyAccess> constraintsToInvalidate) {
+		List<ConstraintPropertyAccess> constraintsToInvalidate) {
 		LOGGER.finer(() -> "List of constraintsToInvalidate: " + constraintsToInvalidate);
 
 		// Using the list of constraints to invalidate, remove constraint
@@ -412,7 +410,7 @@ public class ConstraintExecutionCache {
 		sj.add("\nSynthetic lists of cached execution knowledge\n");
 		sj.add("ContraintTraceItems: " + constraintTraceItems.size());
 		sj.add("UnsatisfiedConstraints: " + unsatisfiedConstraints.size());
-		sj.add("ConstraintPropertyAccesses: " + this.constraintPropertyAccess.size());
+		sj.add("ConstraintPropertyAccesses: " + constraintPropertyAccess.size());
 
 		// Commenting out the details for demo
 		sj.add(constraintTraceToString(constraintTraceItems));
