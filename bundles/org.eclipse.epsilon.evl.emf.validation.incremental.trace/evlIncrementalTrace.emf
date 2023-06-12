@@ -12,10 +12,16 @@ abstract class Execution {
     ref Execution[*] dependencies;
 }
 
+enum ExecutionResult {	
+	BLOCK;
+	FAIL;
+	PASS;
+}
+
 class ConstraintExecution extends Execution {
     @diagram(direction="down")
     ref  Constraint constraint;
-    attr int result;
+    attr ExecutionResult result;
     attr String message;
 }
 

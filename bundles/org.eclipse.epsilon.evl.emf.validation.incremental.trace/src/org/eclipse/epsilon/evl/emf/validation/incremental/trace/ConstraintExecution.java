@@ -46,25 +46,28 @@ public interface ConstraintExecution extends Execution {
 
 	/**
 	 * Returns the value of the '<em><b>Result</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Result</em>' attribute.
-	 * @see #setResult(int)
+	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult
+	 * @see #setResult(ExecutionResult)
 	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage#getConstraintExecution_Result()
 	 * @model
 	 * @generated
 	 */
-	int getResult();
+	ExecutionResult getResult();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution#getResult <em>Result</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Result</em>' attribute.
+	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult
 	 * @see #getResult()
 	 * @generated
 	 */
-	void setResult(int value);
+	void setResult(ExecutionResult value);
 
 	/**
 	 * Returns the value of the '<em><b>Message</b></em>' attribute.

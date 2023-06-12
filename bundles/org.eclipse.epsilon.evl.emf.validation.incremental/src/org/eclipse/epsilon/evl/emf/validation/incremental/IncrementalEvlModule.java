@@ -18,6 +18,7 @@ import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessExe
 import org.eclipse.epsilon.evl.EvlModule;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TraceFactory;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
@@ -159,13 +160,13 @@ public class IncrementalEvlModule extends EvlModule {
 
 						// Process Check results
 						if (unsatisfiedConstraintResult.isPresent()) {
-							mExecution.setResult(0);
+							mExecution.setResult(ExecutionResult.FAIL);
 						} else {
-							mExecution.setResult(1);
+							mExecution.setResult(ExecutionResult.PASS);
 						}
 					} else {
 						// Blocked by guard, no results produced
-						mExecution.setResult(-1);
+						mExecution.setResult(ExecutionResult.BLOCK);
 					}
 
 					// Logging to report the execution

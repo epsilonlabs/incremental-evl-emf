@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TracePackage;
 
 /**
@@ -47,7 +48,7 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int RESULT_EDEFAULT = 0;
+	protected static final ExecutionResult RESULT_EDEFAULT = ExecutionResult.BLOCK;
 
 	/**
 	 * The cached value of the '{@link #getResult() <em>Result</em>}' attribute.
@@ -57,7 +58,7 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 	 * @generated
 	 * @ordered
 	 */
-	protected int result = RESULT_EDEFAULT;
+	protected ExecutionResult result = RESULT_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getMessage() <em>Message</em>}' attribute.
@@ -144,7 +145,7 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 	 * @generated
 	 */
 	@Override
-	public int getResult() {
+	public ExecutionResult getResult() {
 		return result;
 	}
 
@@ -154,9 +155,9 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 	 * @generated
 	 */
 	@Override
-	public void setResult(int newResult) {
-		int oldResult = result;
-		result = newResult;
+	public void setResult(ExecutionResult newResult) {
+		ExecutionResult oldResult = result;
+		result = newResult == null ? RESULT_EDEFAULT : newResult;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.CONSTRAINT_EXECUTION__RESULT, oldResult, result));
 	}
@@ -215,7 +216,7 @@ public class ConstraintExecutionImpl extends ExecutionImpl implements Constraint
 				setConstraint((Constraint)newValue);
 				return;
 			case TracePackage.CONSTRAINT_EXECUTION__RESULT:
-				setResult((Integer)newValue);
+				setResult((ExecutionResult)newValue);
 				return;
 			case TracePackage.CONSTRAINT_EXECUTION__MESSAGE:
 				setMessage((String)newValue);

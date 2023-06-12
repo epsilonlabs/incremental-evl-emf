@@ -18,6 +18,7 @@ import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Access;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl;
@@ -310,10 +311,10 @@ public class ConstraintExecutionCache {
 		for (Execution mExecution : traceModel.getExecutions()) {
 			ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
 			Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
-			int result = mConstraintExecution.getResult();
+			ExecutionResult result = mConstraintExecution.getResult();
 
 			// Create the ConstraintTraceItems for both PASS and FAIL!
-			if (result == 0 || result == 1) {
+			if (result == ExecutionResult.PASS || result == ExecutionResult.FAIL) {
 				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
 			}
 		}
@@ -325,9 +326,9 @@ public class ConstraintExecutionCache {
 		for (Execution mExecution : traceModel.getExecutions()) {
 			ConstraintExecutionImpl mConstraintExecution = (ConstraintExecutionImpl) mExecution;
 			Constraint rawConstraint = (Constraint) mConstraintExecution.getConstraint().getRaw();
-			int result = mConstraintExecution.getResult();
+			ExecutionResult result = mConstraintExecution.getResult();
 
-			if (result == 0) {
+			if (result == ExecutionResult.FAIL) {
 				UnsatisfiedConstraint uC = new UnsatisfiedConstraint();
 				uC.setConstraint(rawConstraint);
 				uC.setInstance(mExecution.getModelElement());

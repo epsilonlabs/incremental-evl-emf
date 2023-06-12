@@ -4,6 +4,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental.trace;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -435,6 +436,16 @@ public interface TracePackage extends EPackage {
 	int ALL_ACCESS_FEATURE_COUNT = ACCESS_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult <em>Execution Result</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult
+	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.TracePackageImpl#getExecutionResult()
+	 * @generated
+	 */
+	int EXECUTION_RESULT = 9;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace <em>Trace</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -690,6 +701,16 @@ public interface TracePackage extends EPackage {
 	EAttribute getAllAccess_AllOfKind();
 
 	/**
+	 * Returns the meta object for enum '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult <em>Execution Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Execution Result</em>'.
+	 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult
+	 * @generated
+	 */
+	EEnum getExecutionResult();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -921,6 +942,16 @@ public interface TracePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ALL_ACCESS__ALL_OF_KIND = eINSTANCE.getAllAccess_AllOfKind();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult <em>Execution Result</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult
+		 * @see org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.TracePackageImpl#getExecutionResult()
+		 * @generated
+		 */
+		EEnum EXECUTION_RESULT = eINSTANCE.getExecutionResult();
 
 	}
 

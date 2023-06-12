@@ -4,6 +4,7 @@ package org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -15,6 +16,7 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.CachedOperationE
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Operation;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace;
@@ -90,6 +92,13 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	private EClass allAccessEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum executionResultEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -397,6 +406,16 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
+	public EEnum getExecutionResult() {
+		return executionResultEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public TraceFactory getTraceFactory() {
 		return (TraceFactory)getEFactoryInstance();
 	}
@@ -452,6 +471,9 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		allAccessEClass = createEClass(ALL_ACCESS);
 		createEAttribute(allAccessEClass, ALL_ACCESS__TYPE);
 		createEAttribute(allAccessEClass, ALL_ACCESS__ALL_OF_KIND);
+
+		// Create enums
+		executionResultEEnum = createEEnum(EXECUTION_RESULT);
 	}
 
 	/**
@@ -499,7 +521,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 
 		initEClass(constraintExecutionEClass, ConstraintExecution.class, "ConstraintExecution", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConstraintExecution_Constraint(), this.getConstraint(), null, "constraint", null, 0, 1, ConstraintExecution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getConstraintExecution_Result(), ecorePackage.getEInt(), "result", null, 0, 1, ConstraintExecution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConstraintExecution_Result(), this.getExecutionResult(), "result", null, 0, 1, ConstraintExecution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getConstraintExecution_Message(), ecorePackage.getEString(), "message", null, 0, 1, ConstraintExecution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(constraintEClass, Constraint.class, "Constraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -520,6 +542,12 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		initEClass(allAccessEClass, AllAccess.class, "AllAccess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAllAccess_Type(), ecorePackage.getEString(), "type", null, 0, 1, AllAccess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAllAccess_AllOfKind(), ecorePackage.getEBoolean(), "allOfKind", null, 0, 1, AllAccess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(executionResultEEnum, ExecutionResult.class, "ExecutionResult");
+		addEEnumLiteral(executionResultEEnum, ExecutionResult.BLOCK);
+		addEEnumLiteral(executionResultEEnum, ExecutionResult.FAIL);
+		addEEnumLiteral(executionResultEEnum, ExecutionResult.PASS);
 
 		// Create resource
 		createResource(eNS_URI);

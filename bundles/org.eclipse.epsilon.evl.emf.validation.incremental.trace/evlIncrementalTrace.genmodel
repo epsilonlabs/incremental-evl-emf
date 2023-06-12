@@ -6,6 +6,11 @@
   <foreignModel>evlIncrementalTrace.ecore</foreignModel>
   <genPackages prefix="Trace" basePackage="org.eclipse.epsilon.evl.emf.validation.incremental"
       disposableProviderFactory="true" ecorePackage="evlIncrementalTrace.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="evlIncrementalTrace.ecore#//ExecutionResult">
+      <genEnumLiterals ecoreEnumLiteral="evlIncrementalTrace.ecore#//ExecutionResult/BLOCK"/>
+      <genEnumLiterals ecoreEnumLiteral="evlIncrementalTrace.ecore#//ExecutionResult/FAIL"/>
+      <genEnumLiterals ecoreEnumLiteral="evlIncrementalTrace.ecore#//ExecutionResult/PASS"/>
+    </genEnums>
     <genClasses ecoreClass="evlIncrementalTrace.ecore#//Trace">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Trace/executions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Trace/accesses"/>
@@ -31,7 +36,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//Access/executions"/>
     </genClasses>
     <genClasses ecoreClass="evlIncrementalTrace.ecore#//PropertyAccess">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//PropertyAccess/element"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference evlIncrementalTrace.ecore#//PropertyAccess/element"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evlIncrementalTrace.ecore#//PropertyAccess/property"/>
     </genClasses>
     <genClasses ecoreClass="evlIncrementalTrace.ecore#//AllAccess">
