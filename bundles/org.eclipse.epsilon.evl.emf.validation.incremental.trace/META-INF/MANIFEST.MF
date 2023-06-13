@@ -10,10 +10,7 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.epsilon.evl.emf.validation.incremental.trace,
  org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl,
- org.eclipse.epsilon.evl.emf.validation.incremental.trace.util,
- trace,
- trace.impl,
- trace.util
+ org.eclipse.epsilon.evl.emf.validation.incremental.trace.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
