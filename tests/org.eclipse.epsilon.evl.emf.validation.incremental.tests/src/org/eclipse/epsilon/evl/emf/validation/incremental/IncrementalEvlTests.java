@@ -191,7 +191,8 @@ public class IncrementalEvlTests {
         //showExecutionCache(ePackage1);
     }
 
-    // TODO Add test for unsetting a feature
+    // TODO Move into its own test class, with an .evl on the GenModel metamodel
+    // that checks that all GenModelFactory objects have an edit directory.
     @Test
     public void addOneModelElementAndUnsetOne() {
     	System.out.println("\n\naddOneModelElementAndUnsetOne");
@@ -381,9 +382,6 @@ public class IncrementalEvlTests {
         modelElement3 = BuildTestModel.createAndAddModelElementToePackage("D1", ePackage2);
         modelElement4 = BuildTestModel.createAndAddModelElementToePackage("D2", ePackage2);
         
-        //BuildTestModel.showEPackage(ePackage1);
-        //BuildTestModel.showEPackage(ePackage2);
-        
         // VALIDATE -- 2 MODELS
         diagnostician.validate(ePackage1);
         diagnostician.validate(ePackage2);        
@@ -400,9 +398,6 @@ public class IncrementalEvlTests {
     		.contains(modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
         assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage2))
     		.isEmpty();
-
-        //showExecutionCache(ePackage1);
-        //showExecutionCache(ePackage2);
         
         // CHANGE -- 2 MODELS
         BuildTestModel.addModelElementToePackage(modelElement1, ePackage2);
@@ -419,15 +414,6 @@ public class IncrementalEvlTests {
     		.contains(modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
         assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage2))
     		.isEmpty();
-        
-        showAdapterNotifications(ePackage1);
-        //BuildTestModel.showEPackage(ePackage1);
-        //showExecutionCache(ePackage1);
-        
-        showAdapterNotifications(ePackage2);
-        //BuildTestModel.showEPackage(ePackage2);
-        //showExecutionCache(ePackage2);
-
         
         // RE-VALIDATE -- 2 MODELS
         diagnostician.validate(ePackage1);
@@ -447,10 +433,6 @@ public class IncrementalEvlTests {
     				modelElement4,modelElement4,modelElement4);
         assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage2))
     		.contains(modelElement1);
-        
-        //showExecutionCache(ePackage1);
-        //showExecutionCache(ePackage2);
-        
     }
 
     @Test
@@ -460,7 +442,6 @@ public class IncrementalEvlTests {
     	
     	// BUILD
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C0",ePackage1);
-        //BuildTestModel.showEPackage(ePackage1);
 
         // VALIDATE
         diagnostician.validate(ePackage1);
@@ -470,7 +451,6 @@ public class IncrementalEvlTests {
 	    	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
 	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.isEmpty();
-        //showExecutionCache(ePackage1);
 
 	    // CHANGE
         List<EClass> listOfModelElements = new ArrayList<EClass>();
@@ -488,8 +468,6 @@ public class IncrementalEvlTests {
 	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.isEmpty();
         showAdapterNotifications(ePackage1);
-        //BuildTestModel.showEPackage(ePackage1);
-        //showExecutionCache(ePackage1);
 
 	    // RE-VALIDATE
         diagnostician.validate(ePackage1); 
@@ -501,8 +479,6 @@ public class IncrementalEvlTests {
 	    			modelElement3,modelElement3,modelElement3, modelElement4,modelElement4,modelElement4);
 	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement2, modelElement3, modelElement4);
-        //showExecutionCache(ePackage1);
-
     }
 
     @Test

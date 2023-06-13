@@ -27,33 +27,31 @@ import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 public class ConstraintExecutionCache {
 	private static final Logger LOGGER = Logger.getLogger(ConstraintExecutionCache.class.getName());
 
-	/*
-	 * This contains a Trace model that the last EVLtrace updated during an EVLmodule
-	 * validation.
+	/**
+	 * This contains a model that the last {@code IncrementalEvlTrace} updated
+	 * during an EVL validation.
 	 * 
-	 * In the Execution Cache provides methods to manipulate the
-	 * traceModel in response to notifications that invalidate known results.
-	 * The Execution Cache also provides methods to recall know execution results for Model Constraint pairs
-	 * 
+	 * The {@code ConstraintExecutionCache} provides methods to manipulate the model
+	 * in response to notifications that invalidate known results. The cache also
+	 * provides methods to recall known execution results for model-constraint pairs.
 	 */
-
 	protected Trace traceModel;
 	
 	// These lists only get populated when a validation process starts, we need only need to know what model & constraint results 
 	// Using lists reduces the search space, we parse all executions in the model once and sort them into pass and fail, omitting all the blocked
-	private boolean cacheListsValid = false;
+
+	// TODO remove these and replace with direct model checks
 	private List<ConstraintTraceItem> cachedConstraintTraceItems;
 	private List<UnsatisfiedConstraint> cachedUnsatisfiedConstraints;
 
 	public ConstraintExecutionCache(IncrementalEvlTrace evlTrace) {
 		// Extract the traceModel representing the last Validation process
 		traceModel = evlTrace.getTraceModel();
-		
+
 		if (LOGGER.isLoggable(Level.FINE)) {
 			LOGGER.fine(() -> "Setting up Execution Cache: \n" + toString());
 		}
 	}
-
 	
 	//
 	// CACHE LOOKUP
@@ -61,7 +59,7 @@ public class ConstraintExecutionCache {
 	public void buildCachedResultLists () {
 		cachedConstraintTraceItems = this.getListOfConstraintTraceItems();
 		cachedUnsatisfiedConstraints = this.getListOfUnsatisfiedConstraints();
-	
+
 		LOGGER.info("CACHE Lists built:\n " 
 				+ cachedConstraintTraceItems.size() + " cachedConstraintTraceItems\n " 
 				+ cachedUnsatisfiedConstraints.size() + " cachedUnsatisfiedConstraints");
@@ -69,9 +67,8 @@ public class ConstraintExecutionCache {
 	
 	// ConstraintTraceItem search uses cache list built from the TraceModel information
 	public ConstraintTraceItem checkCacheFor(Object model, Constraint constraint) {
-		if(cacheListsValid != true) {
+		if(cachedConstraintTraceItems == null) {
 			buildCachedResultLists();
-			cacheListsValid = true;
 		}
 		
 		LOGGER.finer(() -> "Execution cache - checkCachedConstraintTrace - " 
@@ -90,7 +87,7 @@ public class ConstraintExecutionCache {
 
 	// UnsatisfiedConstraints search uses cache list built from the TraceModel information
 	public UnsatisfiedConstraint getCachedUnsatisfiedConstraint(Object model, Constraint constraint) {
-		if(cacheListsValid != true) {
+		if(cachedConstraintTraceItems == null) {
 			buildCachedResultLists();
 		}
 		
@@ -142,7 +139,7 @@ public class ConstraintExecutionCache {
 			}
 			break;
 		}
-		LOGGER.finer(() ->("UPDATED CACHE"+ executionCacheContentSyntheticLists()));
+		LOGGER.finer(() ->("UPDATED CACHE" + executionCacheContentSyntheticLists()));
 		
 	}
 
@@ -159,7 +156,7 @@ public class ConstraintExecutionCache {
 			// Is the property access for the Model element notification?
 			if (propertyAccess.getElement() == modelElement) {
 				LOGGER.finest(" modelElement matches access, delete " + propertyAccess.getProperty());
-				removeOrphenedExecutionsFromTraceModel(propertyAccess);
+				removeOrphanedExecutionsFromTraceModel(propertyAccess);
 				itr.remove();
 			}
 		}
@@ -177,19 +174,19 @@ public class ConstraintExecutionCache {
 			if (propertyAccess.getElement() == modelElement) {
 				LOGGER.finest("Check feature, delete? " + propertyAccess.getProperty() + "==" + modelFeature.getName());
 				if (propertyAccess.getProperty().contentEquals(modelFeature.getName())) {
-					removeOrphenedExecutionsFromTraceModel(propertyAccess);
+					removeOrphanedExecutionsFromTraceModel(propertyAccess);
 					itr.remove();
 				}
 			}
 		}
 	}
 
-	private void removeOrphenedExecutionsFromTraceModel(Access access) {
+	private void removeOrphanedExecutionsFromTraceModel(Access access) {
 		LOGGER.finer("removeOrphenedExecutions: ");
 		for (Iterator<Execution> itr = access.getExecutions().iterator(); itr.hasNext();) {
 			ConstraintExecution execution = (ConstraintExecution) itr.next();
 			removeExecutionsWithConstraintFromTraceModel(execution.getConstraint());
-			if (execution.getAccesses().size() < 2) {
+			if (execution.getAccesses().isEmpty()) {
 				LOGGER.finer("\n [!] Execution with no accesses deleted");
 				itr.remove();
 			}

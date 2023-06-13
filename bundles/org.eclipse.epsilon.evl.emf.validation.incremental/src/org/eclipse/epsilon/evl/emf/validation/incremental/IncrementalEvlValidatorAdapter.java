@@ -105,8 +105,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
 
         // Extract the EVLtrace containing the traceModel and pass to a new ExecutionCache to manage notification updates.
         LOGGER.finer("\n [i] Adapter constraintExecutionCache created");
-        constraintExecutionCache = Optional.of (new ConstraintExecutionCache(module.getEvlTrace()));
-        
+        constraintExecutionCache = Optional.of(new ConstraintExecutionCache(module.getEvlTrace()));
 
         // Console output
         LOGGER.finest(() -> modelStateToString());
@@ -127,10 +126,9 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             			+ " Type:" + notification.getEventType()
                         + "\n " + notification);
                         
-                
-                if(notification.getEventType() != 8){
+                if(notification.getEventType() != Notification.REMOVING_ADAPTER){
                     // Type 8 removes the adapter and produces NULL conditions
-                        notificationText = notificationText.concat(
+                    notificationText = notificationText.concat(
                         " element: " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
                         + "\n feature: " + modelFeature.getName()
                         + "\n was: " + notification.getOldValue()
@@ -158,6 +156,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         return !notifications.isEmpty();
     }
 
+    // TODO move to utility class for debugging?
     public String modelStateToString () {
     	int i = 0;
     	
@@ -195,6 +194,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
         return stateString;
     }
 
+    // TODO move to utility class for debugging?
     public String getStringOfNotifications() {
     	String stringOfNotifications = "\nAdapter has recieved " + notifications.size() + " notification(s): ";
     	int i = 0;

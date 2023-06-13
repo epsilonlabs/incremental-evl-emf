@@ -22,7 +22,6 @@ public class IncrementalEvlTrace {
 	 */
     
     // NEW MODEL APPROACH
-    protected TraceFactory traceFactory =  TraceFactory.eINSTANCE;	
     protected Trace traceModel; // The trace model representing the state for an "IncrementalEvlTrace"
 	
 	public IncrementalEvlTrace() {
@@ -31,14 +30,14 @@ public class IncrementalEvlTrace {
 	
 	public IncrementalEvlTrace(Trace traceModel) {
 		this.traceModel = traceModel;
-	}	
+	}
 	
 	public void processPropertyAccessRecorder(ConstraintPropertyAccessRecorder propertyAccessRecorder) {
 		// The property accesses in the recorder can have different executions to the
 		// one currently in the property Access recorder
 		
 		for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
-			PropertyAccess traceModelPropertyAccess = traceFactory.createPropertyAccess();
+			PropertyAccess traceModelPropertyAccess = TraceFactory.eINSTANCE.createPropertyAccess();
 
 			ConstraintExecution executionForPropertyAccess = ((ConstraintPropertyAccess) propertyAccess).getExecution();
 
@@ -52,10 +51,10 @@ public class IncrementalEvlTrace {
 	
 	public ConstraintExecution createExecutionTraceModel(Object modelElement, Object constraint) {
 
-		ConstraintExecution mExecution = traceFactory.createConstraintExecution();
+		ConstraintExecution mExecution = TraceFactory.eINSTANCE.createConstraintExecution();
 		mExecution.setModelElement((EObject) modelElement);
 
-		Constraint mConstraint = traceFactory.createConstraint();			
+		Constraint mConstraint = TraceFactory.eINSTANCE.createConstraint();			
 		mConstraint.setRaw(constraint);
 		mExecution.setConstraint(mConstraint);
 		
@@ -75,7 +74,7 @@ public class IncrementalEvlTrace {
 	}
 	
     public void addPropertyAccessToTraceModel(PropertyAccess propertyAccess) {
-    	
+
 		//
 		// Do we need to filter/check before adding to the model?
 		//
