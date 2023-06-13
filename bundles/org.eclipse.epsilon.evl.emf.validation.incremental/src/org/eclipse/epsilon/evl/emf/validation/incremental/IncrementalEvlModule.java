@@ -46,8 +46,8 @@ public class IncrementalEvlModule extends EvlModule {
 		LOGGER.finest(() -> "IncrementalEVLModule started with constraintExecutionCache");
 		this.constraintExecutionCache = constraintExecutionCache;
 
-		// Now we setup the evlTrace with a Trace model from the execution cache to this
-		// module for recording to
+		// Now we setup the evlTrace with a copy of the Trace model from the execution cache
+		// evlTrace will add the recorded executions/property accesses to the traceModel
 		evlTrace = new IncrementalEvlTrace(this.constraintExecutionCache.get().traceModel);
 	}
 
