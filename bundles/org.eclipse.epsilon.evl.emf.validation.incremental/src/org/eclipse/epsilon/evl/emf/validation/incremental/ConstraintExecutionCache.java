@@ -313,8 +313,11 @@ public class ConstraintExecutionCache {
 			ExecutionResult result = mConstraintExecution.getResult();
 
 			// Create the ConstraintTraceItems for both PASS and FAIL!
-			if (result == ExecutionResult.PASS || result == ExecutionResult.FAIL) {
+			if (result == ExecutionResult.PASS) {
 				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, true));
+			}
+			if (result == ExecutionResult.FAIL) {
+				constraintTraceItems.add(new ConstraintTraceItem(mExecution.getModelElement(), rawConstraint, false));
 			}
 		}
 		return constraintTraceItems;
