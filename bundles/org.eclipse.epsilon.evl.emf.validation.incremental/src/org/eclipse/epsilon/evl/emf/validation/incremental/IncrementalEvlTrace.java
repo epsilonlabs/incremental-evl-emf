@@ -33,7 +33,7 @@ public class IncrementalEvlTrace {
 		this.traceModel = traceModel;
 	}	
 	
-	public void processPropertyAccessRecorder(ConstraintPropertyAccessRecorder propertyAccessRecorder) {
+	public void processPropertyAccessRecorder(ConstraintPropertyAccessRecorder propertyAccessRecorder, TypeAccessExecutionListener typeAccessListener) {
 		// The property accesses in the recorder can have different executions to the
 		// one currently in the property Access recorder
 		
@@ -48,6 +48,8 @@ public class IncrementalEvlTrace {
 
 			this.addPropertyAccessToTraceModel(traceModelPropertyAccess);
 		}
+
+		// TODO loop through the type accesses
 	}
 	
 	public ConstraintExecution createExecutionTraceModel(Object modelElement, Object constraint) {

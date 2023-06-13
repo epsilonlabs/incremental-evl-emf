@@ -170,7 +170,9 @@ public class IncrementalEvlModule extends EvlModule {
 	@Override
 	public Set<UnsatisfiedConstraint> execute() throws EolRuntimeException {
 		
+		TypeAccessExecutionListener typeAccessListener = new TypeAccessExecutionListener();
 		getContext().getExecutorFactory().addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
+		getContext().getExecutorFactory().addExecutionListener(new TypeAccessExecutionListener());
 
 		propertyAccessRecorder.startRecording();
 		
@@ -180,7 +182,7 @@ public class IncrementalEvlModule extends EvlModule {
 		propertyAccessRecorder.stopRecording();
 
 		// PROCESS THE RECORDED PROPERY ACCESSES HERE
-		evlTrace.processPropertyAccessRecorder(propertyAccessRecorder);		
+		evlTrace.processPropertyAccessRecorder(propertyAccessRecorder, typeAccessListener);		
 		
 		// Logging to report the sequence of executions and accesses recorded.
 		if (LOGGER.isLoggable(Level.FINER)) {
