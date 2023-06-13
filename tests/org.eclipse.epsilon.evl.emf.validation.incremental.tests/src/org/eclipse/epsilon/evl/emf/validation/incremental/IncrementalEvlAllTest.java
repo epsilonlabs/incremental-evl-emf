@@ -136,5 +136,18 @@ public class IncrementalEvlAllTest {
         
     }
 	
+	public void addModelElementEmptyToOne() {}
+	
+	public void addModelElementOneToTwo() {}
+	
+	public void removeModelElementTwoToOne() {}
+	
+	public void removeModelElementOneToEmpty() {}
+	
+	
+	// move within model (tree with A as root, B and C as children of A, and then you move C to become a child of B)
+	public void moveModelElementBetweenModels() {}
+	
+	
 	
 }
