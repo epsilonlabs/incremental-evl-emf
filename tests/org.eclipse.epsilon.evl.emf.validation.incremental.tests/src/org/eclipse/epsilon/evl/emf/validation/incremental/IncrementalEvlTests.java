@@ -175,7 +175,7 @@ public class IncrementalEvlTests {
         	.containsExactlyInAnyOrder(modelElement1);
         showAdapterNotifications(ePackage1);
         //BuildTestModel.showEPackage(ePackage1);
-        //showExecutionCache(ePackage1);
+        showExecutionCache(ePackage1);
         
 
         // RE VALIDATE
