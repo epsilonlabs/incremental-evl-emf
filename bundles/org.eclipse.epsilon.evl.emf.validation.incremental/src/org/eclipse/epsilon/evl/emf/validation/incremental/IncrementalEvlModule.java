@@ -176,7 +176,7 @@ public class IncrementalEvlModule extends EvlModule {
 		
 		getContext().getExecutorFactory().addExecutionListener(new PropertyAccessExecutionListener(propertyAccessRecorder));
 
-		propertyAccessRecorder.startRecording(); // Moved this closer to the actual execution call
+		propertyAccessRecorder.startRecording();
 		
 		// Jumps to >> public ModuleElement adapt(AST cst, ModuleElement parentAst)
 		Set<UnsatisfiedConstraint> unsatisfiedConstraints = super.execute();

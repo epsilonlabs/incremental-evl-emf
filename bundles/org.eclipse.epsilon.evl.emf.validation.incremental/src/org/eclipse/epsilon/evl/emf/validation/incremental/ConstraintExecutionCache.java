@@ -49,7 +49,6 @@ public class ConstraintExecutionCache {
 	private List<ConstraintTraceItem> cachedConstraintTraceItems;
 	private List<UnsatisfiedConstraint> cachedUnsatisfiedConstraints;
 
-
 	public ConstraintExecutionCache(IncrementalEvlTrace evlTrace) {
 		// Extract the traceModel representing the last Validation process
 		traceModel = evlTrace.getTraceModel();
