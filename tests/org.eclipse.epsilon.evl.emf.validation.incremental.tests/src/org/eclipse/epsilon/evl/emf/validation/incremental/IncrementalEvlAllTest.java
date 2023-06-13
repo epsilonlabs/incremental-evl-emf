@@ -82,11 +82,13 @@ public class IncrementalEvlAllTest {
     	
     	// BUILD
         modelElement1 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
-        modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C1", ePackage1);
+        modelElement2 = BuildTestModel.createAndAddModelElementToePackage("C2", ePackage1);
         BuildTestModel.showEPackage(ePackage1);
 
         // VALIDATE
+        System.out.println("VALIDATE the Model");
         diagnostician.validate(ePackage1);
+        showExecutionCache(ePackage1);
         /*
         assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
@@ -97,11 +99,12 @@ public class IncrementalEvlAllTest {
         assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
         	.containsExactlyInAnyOrder(modelElement1, modelElement2);
         */
-        showExecutionCache(ePackage1);
+        
         
         // CHANGE
-        modelElement2.setName("C3");
-        //showExecutionCache(ePackage1);
+        System.out.println("CHANGE modelElement2 name C1");
+        modelElement2.setName("C1");
+        showExecutionCache(ePackage1);
         /*
         assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
         	.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1);
@@ -117,7 +120,9 @@ public class IncrementalEvlAllTest {
         
 
         // RE VALIDATE
+        System.out.println("REVALIDATE the Model");
         diagnostician.validate(ePackage1); 
+        showExecutionCache(ePackage1);
         /*
         assertThat(modelObjectsFromConstraintPropertyAccess(ePackage1))
     		.containsExactlyInAnyOrder(ePackage1, modelElement1,modelElement1,modelElement1, 
@@ -128,7 +133,7 @@ public class IncrementalEvlAllTest {
 	    assertThat(modelObjectsFromUnsatisfiedConstraints(ePackage1))
 	    	.containsExactlyInAnyOrder(modelElement1, modelElement2);
 	    */
-        //showExecutionCache(ePackage1);
+        
     }
 	
 	
