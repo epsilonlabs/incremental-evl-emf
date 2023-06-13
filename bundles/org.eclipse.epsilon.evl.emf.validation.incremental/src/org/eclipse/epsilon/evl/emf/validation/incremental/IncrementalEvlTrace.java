@@ -29,8 +29,6 @@ public class IncrementalEvlTrace {
     protected TraceFactory traceFactory =  TraceFactory.eINSTANCE;	
     protected Trace traceModel; // The trace model representing the state for an "IncrementalEvlTrace"
 	
-
-
 	public IncrementalEvlTrace() {
 		traceModel = TraceFactory.eINSTANCE.createTrace();
 	}
@@ -70,7 +68,6 @@ public class IncrementalEvlTrace {
 		
 	}
 	
-
 	public void addExecutionToTraceModel (Execution execution) {
 		
 		//

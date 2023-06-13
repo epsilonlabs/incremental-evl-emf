@@ -44,15 +44,15 @@ public class ConstraintExecutionCache {
 	protected Trace traceModel;
 	
 	// These lists only get populated when a validation process starts, we need only need to know what model & constraint results 
-	// Using lists reduces the search space, we parse all executions in the model once and sort them into pass and fail, omiting all the blocked
+	// Using lists reduces the search space, we parse all executions in the model once and sort them into pass and fail, omitting all the blocked
 	private boolean cacheListsValid = false;
 	private List<ConstraintTraceItem> cachedConstraintTraceItems;
 	private List<UnsatisfiedConstraint> cachedUnsatisfiedConstraints;
 
 
-	public ConstraintExecutionCache(IncrementalEvlModule lastModule) {
-		// Pull in the traceModel from the last execution
-		traceModel = lastModule.evlTrace.traceModel;
+	public ConstraintExecutionCache(IncrementalEvlTrace evlTrace) {
+		// Extract the traceModel representing the last Validation process
+		traceModel = evlTrace.getTraceModel();
 		
 		if (LOGGER.isLoggable(Level.FINE)) {
 			LOGGER.fine(() -> "Setting up Execution Cache: \n" + toString());
