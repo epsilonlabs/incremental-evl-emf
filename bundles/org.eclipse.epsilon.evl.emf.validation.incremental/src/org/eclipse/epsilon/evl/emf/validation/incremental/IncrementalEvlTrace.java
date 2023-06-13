@@ -1,11 +1,7 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import java.util.StringJoiner;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epsilon.eol.execute.introspection.recording.IPropertyAccess;
