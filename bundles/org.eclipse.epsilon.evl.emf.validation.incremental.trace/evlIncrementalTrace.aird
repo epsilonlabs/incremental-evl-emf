@@ -4,7 +4,7 @@
     <semanticResources>evlIncrementalTrace.ecore</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_2By_4O5fEe2HBvMRoo8wxQ">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_2wJToO5fEe2HBvMRoo8wxQ" name="trace class diagram" repPath="#_2vKcMO5fEe2HBvMRoo8wxQ" changeId="16bd0721-391f-418e-b2f6-2adcbd36b258">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_2wJToO5fEe2HBvMRoo8wxQ" name="trace class diagram" repPath="#_2vKcMO5fEe2HBvMRoo8wxQ" changeId="3def5f0d-61ea-41d6-887c-237775572d70">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="evlIncrementalTrace.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -59,7 +59,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_3oIrku5fEe2HBvMRoo8wxQ"/>
           </children>
           <styles xmi:type="notation:ShapeStyle" xmi:id="_3oHddO5fEe2HBvMRoo8wxQ" fontName="Noto Sans" fontHeight="8"/>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oHdde5fEe2HBvMRoo8wxQ" x="365" y="310"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oHdde5fEe2HBvMRoo8wxQ" x="337" y="310"/>
         </children>
         <children xmi:type="notation:Node" xmi:id="_3oIrk-5fEe2HBvMRoo8wxQ" type="2003" element="_3mDn8O5fEe2HBvMRoo8wxQ">
           <children xmi:type="notation:Node" xmi:id="_3oJSoO5fEe2HBvMRoo8wxQ" type="5007"/>
@@ -72,7 +72,7 @@
             <styles xmi:type="notation:FilteringStyle" xmi:id="_3oJ5su5fEe2HBvMRoo8wxQ"/>
           </children>
           <styles xmi:type="notation:ShapeStyle" xmi:id="_3oIrlO5fEe2HBvMRoo8wxQ" fontName="Noto Sans" fontHeight="8"/>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oIrle5fEe2HBvMRoo8wxQ" x="368" y="455"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oIrle5fEe2HBvMRoo8wxQ" x="375" y="460"/>
         </children>
         <children xmi:type="notation:Node" xmi:id="_3oJ5s-5fEe2HBvMRoo8wxQ" type="2003" element="_3mGEMO5fEe2HBvMRoo8wxQ">
           <children xmi:type="notation:Node" xmi:id="_3oKgwO5fEe2HBvMRoo8wxQ" type="5007"/>
@@ -186,17 +186,17 @@
         </edges>
         <edges xmi:type="notation:Edge" xmi:id="_3oqQAO5fEe2HBvMRoo8wxQ" type="4001" element="_3nwRE-5fEe2HBvMRoo8wxQ" source="_3oHdc-5fEe2HBvMRoo8wxQ" target="_3oIrk-5fEe2HBvMRoo8wxQ">
           <children xmi:type="notation:Node" xmi:id="_3oqQBO5fEe2HBvMRoo8wxQ" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oqQBe5fEe2HBvMRoo8wxQ" x="1" y="-48"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oqQBe5fEe2HBvMRoo8wxQ" x="3" y="-46"/>
           </children>
           <children xmi:type="notation:Node" xmi:id="_3oqQBu5fEe2HBvMRoo8wxQ" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oqQB-5fEe2HBvMRoo8wxQ" x="39" y="3"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oqQB-5fEe2HBvMRoo8wxQ" x="40" y="-4"/>
           </children>
           <children xmi:type="notation:Node" xmi:id="_3oq3EO5fEe2HBvMRoo8wxQ" type="6003">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oq3Ee5fEe2HBvMRoo8wxQ" x="10"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3oq3Ee5fEe2HBvMRoo8wxQ" x="4"/>
           </children>
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_3oqQAe5fEe2HBvMRoo8wxQ" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_3oqQAu5fEe2HBvMRoo8wxQ" fontColor="7490599" fontName="Noto Sans" fontHeight="8"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3oqQA-5fEe2HBvMRoo8wxQ" points="[-5, 98, -6, -145]$[-5, 145, -6, -98]"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3oqQA-5fEe2HBvMRoo8wxQ" points="[-2, 98, -2, -150]$[-2, 150, -2, -98]"/>
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_3oq3Eu5fEe2HBvMRoo8wxQ" id="(0.5066666666666667,0.0)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_3oq3E-5fEe2HBvMRoo8wxQ" id="(0.5084745762711864,1.0)"/>
         </edges>
@@ -352,7 +352,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_3nJ0IO5fEe2HBvMRoo8wxQ" name="result : EInt" tooltipText="">
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_3nJ0IO5fEe2HBvMRoo8wxQ" name="result : ExecutionResult = BLOCK" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="evlIncrementalTrace.ecore#//ConstraintExecution/result"/>
         <semanticElements xmi:type="ecore:EAttribute" href="evlIncrementalTrace.ecore#//ConstraintExecution/result"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_3nKbMO5fEe2HBvMRoo8wxQ" labelAlignment="LEFT">
