@@ -16,8 +16,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Operation;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TraceFactory;
 
 public class IncrementalEcoreValidator extends IncrementalEvlValidator {
 

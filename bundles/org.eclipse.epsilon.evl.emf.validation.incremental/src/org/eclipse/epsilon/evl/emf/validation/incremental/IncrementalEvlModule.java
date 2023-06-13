@@ -1,13 +1,11 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epsilon.common.module.ModuleElement;
 import org.eclipse.epsilon.common.parse.AST;
 import org.eclipse.epsilon.eol.dom.Operation;
@@ -19,8 +17,6 @@ import org.eclipse.epsilon.evl.EvlModule;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TraceFactory;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.execute.context.EvlContext;
 import org.eclipse.epsilon.evl.execute.context.IEvlContext;

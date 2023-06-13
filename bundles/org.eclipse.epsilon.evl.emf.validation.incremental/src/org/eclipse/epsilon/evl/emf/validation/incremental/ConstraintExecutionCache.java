@@ -1,11 +1,8 @@
 package org.eclipse.epsilon.evl.emf.validation.incremental;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.StringJoiner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +19,6 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.PropertyAccess;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Trace;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.ConstraintExecutionImpl;
-import org.eclipse.epsilon.evl.emf.validation.incremental.trace.impl.PropertyAccessImpl;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
 import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
