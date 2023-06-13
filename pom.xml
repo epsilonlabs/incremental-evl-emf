@@ -23,12 +23,15 @@
     </pluginRepositories>
 
     <modules>
-        <module>tests/org.eclipse.epsilon.evl.emf.validation.incremental.tests</module>
-        <module>examples/org.eclipse.epsilon.examples.metamodels.flowchart</module>
-        <module>examples/org.eclipse.epsilon.examples.metamodels.flowchart.validation</module>
-        <module>releng/org.eclipse.epsilon.evl.emf.validation.incremental.targetplatform</module>
-        <module>bundles/org.eclipse.epsilon.evl.emf.validation.incremental</module>
         <module>bundles/org.eclipse.epsilon.evl.emf.validation.incremental.dt</module>
+        <module>bundles/org.eclipse.epsilon.evl.emf.validation.incremental.trace</module>
+        <module>bundles/org.eclipse.epsilon.evl.emf.validation.incremental</module>
+
+        <module>examples/org.eclipse.epsilon.examples.metamodels.flowchart.validation</module>
+        <module>examples/org.eclipse.epsilon.examples.metamodels.flowchart</module>
+
+        <module>releng/org.eclipse.epsilon.evl.emf.validation.incremental.targetplatform</module>
+        <module>tests/org.eclipse.epsilon.evl.emf.validation.incremental.tests</module>
     </modules>
 
     <build>
