@@ -28,13 +28,8 @@ import org.eclipse.epsilon.evl.trace.ConstraintTraceItem;
 
 public class IncrementalEvlModule extends EvlModule {
 	private static final Logger LOGGER = Logger.getLogger(IncrementalEvlModule.class.getName());
-	/*
-	 * Logging levels - System activities finer - System states finest
-	 */
 
 	private final boolean CACHEACTIVE = true;
-
-	protected TraceFactory traceFactory = TraceFactory.eINSTANCE;
 
 	protected Optional<ConstraintExecutionCache> constraintExecutionCache = Optional.empty();
 
@@ -59,6 +54,7 @@ public class IncrementalEvlModule extends EvlModule {
 	@Override
 	public ModuleElement adapt(AST cst, ModuleElement parentAst) {
 		ModuleElement moduleElement = super.adapt(cst, parentAst);
+		
 
 		if (moduleElement instanceof Operation) {
 			if (((Operation) moduleElement).hasAnnotation("cached")) {
@@ -72,7 +68,12 @@ public class IncrementalEvlModule extends EvlModule {
 						throws EolRuntimeException {
 					// this -- is the constraint
 					// self -- is the model element under test
-					// evlTrace.traceModel -- is the last execution trace of the constraints
+
+					Constraint constraint = this; // org.eclipse.epsilon.evl.dom.Constraint
+					Object modelElement = self;
+					Optional<UnsatisfiedConstraint> unsatisfiedConstraintResult = Optional.empty();
+					IEvlContext context = (IEvlContext) context_;
+					
 
 					// We ask the execution cache for known results for the validation being
 					// requested -- return the of the last execution instead of executing the
@@ -80,10 +81,9 @@ public class IncrementalEvlModule extends EvlModule {
 					// Notifications REMOVE Executions/Accesses from the trace model in the
 					// Execution Cache. (Elements with no property accesses get tested)
 
-					// The ExecutionCache is searched for any usable results from a prior execution
-					// This should back fill the module "propertyAccess (trace) with the pa in the
-					// Execution Cache
-					// Then if nothing is found in the ExecutionCache a validation test is performed
+					// When the ExecutionCache is searched for prior executions.
+					// Any items found are used to back fill the module constraintTraceItems
+					// (trace) with the item in the Execution Cache (and unsatisfiedConstraints)
 
 					//
 					// CHECK CACHE FOR KNOWN VALIDATION RESULTS
@@ -114,44 +114,16 @@ public class IncrementalEvlModule extends EvlModule {
 					}
 
 					//
-					// EXECUTE VALIDATION
+					// EXECUTE VALIDATION NO CACHED RESULTS AVAILABLE 
 					//
 
 					LOGGER.info(() -> "Need for Validation: " + self.hashCode() + " & " + this.getName());
 
-					// Set up the recorder and execute the constraint test to get a result
-					// propertyAccessRecorder.setExecution(new ConstraintExecutionOld(this, self));
-
-					// Add a "new" execution accesses to the trace, this execution will be updates
-					// with accesses during execution (
-					// ConstraintProperyAccessRecorder.createConstraintPropertyAccess() )
-					ConstraintExecution mExecution = traceFactory.createConstraintExecution();
-					evlTrace.addExecutionToTraceModel(mExecution);
-					mExecution.setModelElement((EObject) self);
-
-					// var mConstraint = traceFactory.createConstraint();
-					org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint mConstraint = traceFactory
-							.createConstraint();
-
-					// var constraint = this;
-					Constraint constraint = this; // org.eclipse.epsilon.evl.dom.Constraint
-
-					mConstraint.setRaw(constraint);
-					mExecution.setConstraint(mConstraint);
-
+					// Create an TraceModel Execution object, propertyAccessRecorder will capture accesses against this Execution.					
+					ConstraintExecution mExecution = evlTrace.createExecutionTraceModel(modelElement, constraint);
 					propertyAccessRecorder.setExecution(mExecution);
 
-					// Do not unload the propertyAccessRecorder propertyAccesses to the trace here,
-					// the propertyAccess list doesn't clear until after this method returns.
-
-					// EXECUTE the Constraint and collect the resulting unsatisfied constraint, if
-					// one occurs
-					// Optional<UnsatisfiedConstraint> unsatisfiedConstraintResult =
-					// super.execute(context_, self);
-
-					// EXECUTE, test Guard, then test Check.
-					Optional<UnsatisfiedConstraint> unsatisfiedConstraintResult = Optional.empty();
-					IEvlContext context = (IEvlContext) context_;
+					// EXECUTION, test constraint Guard, then test constraint Check.					
 
 					// Test Guard
 					if (super.shouldBeChecked(self, context)) {
@@ -187,6 +159,9 @@ public class IncrementalEvlModule extends EvlModule {
 								+ ((EvlContext) context_).getConstraintTrace().getItems().size());
 						LOGGER.finer(sj.toString()+"\n");
 					}
+					
+					// Do not unload the propertyAccessRecorder propertyAccesses to the trace here,
+					// the propertyAccess list doesn't clear until after this method returns.
 
 					return unsatisfiedConstraintResult;
 				}
@@ -208,19 +183,8 @@ public class IncrementalEvlModule extends EvlModule {
 																				
 		propertyAccessRecorder.stopRecording();
 
-		// PROCESS THE RECORDED PROPERY ACCESSES HERE				
-		for (IPropertyAccess propertyAccess : propertyAccessRecorder.getPropertyAccesses().all()) {
-			PropertyAccess traceModelPropertyAccess = traceFactory.createPropertyAccess();
-
-			// The property accesses in the recorder can have different executions to the
-			// one currently in the property Access recorder
-			ConstraintExecution executionForPropertyAccess = ((ConstraintPropertyAccess) propertyAccess).getExecution();
-
-			traceModelPropertyAccess.setElement((EObject) propertyAccess.getModelElement());
-			traceModelPropertyAccess.setProperty(propertyAccess.getPropertyName());
-			traceModelPropertyAccess.getExecutions().add(executionForPropertyAccess);
-			evlTrace.addPropertyAccessToTraceModel(traceModelPropertyAccess);
-		}
+		// PROCESS THE RECORDED PROPERY ACCESSES HERE
+		evlTrace.processPropertyAccessRecorder(propertyAccessRecorder);		
 		
 		// Logging to report the sequence of executions and accesses recorded.
 		if (LOGGER.isLoggable(Level.FINER)) {
