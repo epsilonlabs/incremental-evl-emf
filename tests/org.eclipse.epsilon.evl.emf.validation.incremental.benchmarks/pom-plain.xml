@@ -29,7 +29,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.eclipse.epsilon.evl.emf.validation.incremental</artifactId>
-	    <version>${project.version}</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.eclipse.epsilon.examples.metamodels.components</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

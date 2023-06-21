@@ -1,0 +1,56 @@
+context ccl::Connector {
+	
+  constraint ConnectorSourceTargetNotSameComponent {      	  	
+    guard: self.source.isDefined() and self.target.isDefined()
+    check {	return self.source.eContainer <> self.target.eContainer;}
+    message: "Connectors must link different components"    
+  }
+  
+  constraint ConnectorMustHaveSource{    
+  	check {	return self.source.isDefined(); }
+  	message: "Connector must have a Source port"
+  }
+  
+    constraint ConnectorMustHaveTarget{
+  	check {	return self.target.isDefined();} 
+  	message: "Connector must have a Target port"
+  }
+}
+
+context ccl::Component {
+
+	constraint ComponentNameExists {
+		check { return self.name.isDefined();}
+		message: "Component with no name: " + self.id
+	}
+
+
+	critique ComponentHasValidName {
+		guard: self.name.isDefined()
+		check {	return self.name = self.name.firstToUpperCase();}
+		message: self.name + " should start with an upper-case letter"
+	}
+	
+	constraint ComponentHasPorts {
+    	check {	return self.ports.notEmpty();}
+    	message: self.name + "has no Ports"
+    }
+    
+    constraint ComponentLoops {
+      check {
+        var list = self.closure(c | c.ports
+           .select(p | p.isKindOf(OutPort) and p.connector?.target.isDefined())
+           .collect(p|p.connector.target.component));
+
+        var result = not list.contains(self);
+        return result;
+      }
+      message: "Loop found: " + list
+    }
+
+    critique ComponentIsConnected {
+	    check	{ return self.ports.exists(p | p.connector.isDefined());}
+	    message: "Component " + self.name + " is disconnected"
+    }
+
+}
