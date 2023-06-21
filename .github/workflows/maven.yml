@@ -17,5 +17,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - name: Build with Tycho
       run: mvn -B verify
+    - name: Build with plain Maven
+      run: mvn -f pom-plain.xml clean verify
