@@ -28,7 +28,13 @@
         <module>bundles/org.eclipse.epsilon.evl.emf.validation.incremental</module>
 
         <module>examples/org.eclipse.epsilon.examples.metamodels.flowchart.validation</module>
+        <module>examples/org.eclipse.epsilon.examples.metamodels.flowchart.design</module>
         <module>examples/org.eclipse.epsilon.examples.metamodels.flowchart</module>
+
+        <module>examples/org.eclipse.epsilon.examples.metamodels.components</module>
+        <module>examples/org.eclipse.epsilon.examples.metamodels.components.design</module>
+        <module>examples/org.eclipse.epsilon.examples.metamodels.components.validation.batch</module>
+        <module>examples/org.eclipse.epsilon.examples.metamodels.components.validation.incremental</module>
 
         <module>releng/org.eclipse.epsilon.evl.emf.validation.incremental.targetplatform</module>
         <module>tests/org.eclipse.epsilon.evl.emf.validation.incremental.tests</module>
