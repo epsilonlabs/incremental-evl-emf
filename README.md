@@ -21,7 +21,7 @@ To try out the incremental validation from the nested workbench:
 * Open the `MyFlowcharts.flowcharts` model with the sample reflective Ecore model editor. Right-click on the root of the model, and enable "Live Validation". Try editing the name of an action to the empty string or a single letter.
 * Open the diagram in the `representations.aird` file, right-click on the background, and select "Validate diagram". Repeat this as needed to re-validate.
 
-___More help for accessing the flowchart model with the tree-editor___
+### Accessing the flowchart model with the tree-editor
 
 Live validation uses the Sample Reflective Ecore Model Editor tree-based editor, which may not open the flowchart model by default. 
 
