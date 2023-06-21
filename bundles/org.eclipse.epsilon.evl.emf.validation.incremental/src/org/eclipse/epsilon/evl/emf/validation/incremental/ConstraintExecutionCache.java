@@ -60,7 +60,7 @@ public class ConstraintExecutionCache {
 		cachedConstraintTraceItems = this.getListOfConstraintTraceItems();
 		cachedUnsatisfiedConstraints = this.getListOfUnsatisfiedConstraints();
 
-		LOGGER.info("CACHE Lists built:\n " 
+		LOGGER.fine(() -> "CACHE Lists built:\n "
 				+ cachedConstraintTraceItems.size() + " cachedConstraintTraceItems\n " 
 				+ cachedUnsatisfiedConstraints.size() + " cachedUnsatisfiedConstraints");
 	}

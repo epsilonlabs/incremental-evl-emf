@@ -97,12 +97,12 @@ public class IncrementalEvlModule extends EvlModule {
 						if (null != ctitem) {
 							getContext().getConstraintTrace().addChecked(ctitem.getConstraint(), ctitem.getInstance(), ctitem.getResult()); // Back-fill for bypass
 							if (ctitem.getResult()) {
-								LOGGER.info(() -> "Cached Result = PASS (TRUE) - [EMPTY] ");
+								LOGGER.fine(() -> "Cached Result = PASS (TRUE) - [EMPTY] ");
 								return Optional.empty();
 							} else {
 								UnsatisfiedConstraint uc = constraintExecutionCache.get()
 										.getCachedUnsatisfiedConstraint(self, this);
-								LOGGER.info(() -> "Cached Result = FAIL (FALSE) - " + uc.getMessage());
+								LOGGER.fine(() -> "Cached Result = FAIL (FALSE) - " + uc.getMessage());
 								getContext().getUnsatisfiedConstraints().add(uc); // Back-fill for the bypass
 								return Optional.of(uc);
 							}
