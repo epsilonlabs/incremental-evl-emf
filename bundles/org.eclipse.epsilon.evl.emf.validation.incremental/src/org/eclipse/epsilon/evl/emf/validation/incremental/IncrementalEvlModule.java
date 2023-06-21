@@ -113,7 +113,7 @@ public class IncrementalEvlModule extends EvlModule {
 					// EXECUTE VALIDATION NO CACHED RESULTS AVAILABLE 
 					//
 
-					LOGGER.info(() -> "Need for Validation: " + self.hashCode() + " & " + this.getName());
+					LOGGER.fine(() -> "Need for Validation: " + self.hashCode() + " & " + this.getName());
 
 					// Create an TraceModel Execution object, propertyAccessRecorder will capture accesses against this Execution.					
 					ConstraintExecution mExecution = evlTrace.createExecutionTraceModel(modelElement, constraint);
