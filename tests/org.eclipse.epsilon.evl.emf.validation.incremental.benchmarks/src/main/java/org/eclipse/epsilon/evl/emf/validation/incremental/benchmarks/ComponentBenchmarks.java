@@ -48,7 +48,7 @@ public class ComponentBenchmarks {
 
 	private Random rnd = new Random(1234);
 
-	//@Benchmark
+	@Benchmark
 	public void once() throws Exception {
 		Resource r = loadModel();
 		createValidator().validate(r);
