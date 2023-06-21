@@ -37,7 +37,6 @@ public class SingleValidation {
 	private void runValidation(EvlModule module) throws Exception {
 		module.parse(new File(constraintsPath));
 
-    	CclPackage.eINSTANCE.getName();
     	EmfModel model = new EmfModel();
     	model.setMetamodelUri(CclPackage.eINSTANCE.getNsURI());
     	model.setModelFile(modelPath);

@@ -42,3 +42,7 @@ mvn install
 ## Logging configuration
 
 To change the level of detail for the logging, edit the `logging.properties` file in the `org.eclipse.epsilon.evl.emf.validation.incremental` project.
+
+## Running benchmarks
+
+To run the performance benchmarks comparing batch and incremental validation, run the [`run-benchmarks.sh`](./run-benchmarks.sh) shell script.
