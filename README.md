@@ -52,6 +52,8 @@ To run the performance benchmarks comparing batch and incremental validation, ru
 
 The benchmarks are written using the [OpenJDK JMH](https://github.com/openjdk/jmh) microbenchmarking framework.
 They are located within the [benchmarks](tests/org.eclipse.epsilon.evl.emf.validation.incremental.benchmarks) project.
+
 To work on this project, import the project into your main Eclipse instance: it is best edited from Eclipse, but it has to be run from the above shell script.
+You will need to [install IvyDE](https://ant.apache.org/ivy/ivyde/download.html), right-click on the project in the "Package Explorer" Eclipse view, and select "Ivy - Retrieve dependencies...".
 
 For further details on how to develop JMH microbenchmarks, check the [official samples](https://github.com/openjdk/jmh/tree/master/jmh-samples/src/main/java/org/openjdk/jmh/samples).
