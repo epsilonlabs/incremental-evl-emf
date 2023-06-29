@@ -8,11 +8,14 @@ import java.util.logging.Logger;
 
 import org.eclipse.epsilon.common.module.ModuleElement;
 import org.eclipse.epsilon.common.parse.AST;
+import org.eclipse.epsilon.eol.dom.NameExpression;
 import org.eclipse.epsilon.eol.dom.Operation;
+import org.eclipse.epsilon.eol.dom.PropertyCallExpression;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.eol.execute.introspection.recording.IPropertyAccess;
 import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessExecutionListener;
+import org.eclipse.epsilon.eol.types.EolModelElementType;
 import org.eclipse.epsilon.evl.EvlModule;
 import org.eclipse.epsilon.evl.dom.Constraint;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
@@ -160,6 +163,20 @@ public class IncrementalEvlModule extends EvlModule {
 					// the propertyAccess list doesn't clear until after this method returns.
 
 					return unsatisfiedConstraintResult;
+				}
+			};
+		} else if (moduleElement instanceof PropertyCallExpression) {
+			return new PropertyCallExpression() {
+				@Override
+				public Object execute(Object source, NameExpression propertyNameExpression, IEolContext context) throws EolRuntimeException {
+					if (getTargetExpression() instanceof NameExpression && "all".equals(getName())) {
+						Object targetResult = getTargetExpression().execute(context);
+						if (targetResult instanceof EolModelElementType) {
+							System.out.println("Type.all access");
+						}
+					}
+					
+					return super.execute(source, propertyNameExpression, context);
 				}
 			};
 		}
