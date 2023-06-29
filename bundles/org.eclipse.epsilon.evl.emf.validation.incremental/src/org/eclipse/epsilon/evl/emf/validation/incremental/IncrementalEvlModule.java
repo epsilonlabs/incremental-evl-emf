@@ -166,6 +166,9 @@ public class IncrementalEvlModule extends EvlModule {
 				}
 			};
 		} else if (moduleElement instanceof PropertyCallExpression) {
+			// We could perhaps check the second child of the AST objects and only produce instrumented property accesses if it's all.
+			// This is an optimisation to be tested later: let's get this to work first.
+			
 			return new PropertyCallExpression() {
 				@Override
 				public Object execute(Object source, NameExpression propertyNameExpression, IEolContext context) throws EolRuntimeException {
