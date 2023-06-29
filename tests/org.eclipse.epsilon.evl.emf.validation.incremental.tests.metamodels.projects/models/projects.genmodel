@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.epsilon.evl.emf.validation.incremental.tests.metamodels.projects/src"
+    modelPluginID="org.eclipse.epsilon.evl.emf.validation.incremental.tests.metamodels.projects"
+    modelName="Projects" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>projects.ecore</foreignModel>
+  <genPackages prefix="Psl" basePackage="org.eclipse.epsilon.evl.emf.validation.incremental.tests.metamodels"
+      disposableProviderFactory="true" ecorePackage="projects.ecore#/">
+    <genClasses ecoreClass="projects.ecore#//Project">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projects.ecore#//Project/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projects.ecore#//Project/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projects.ecore#//Project/tasks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projects.ecore#//Project/people"/>
+    </genClasses>
+    <genClasses ecoreClass="projects.ecore#//Task">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projects.ecore#//Task/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projects.ecore#//Task/start"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projects.ecore#//Task/duration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projects.ecore#//Task/effort"/>
+    </genClasses>
+    <genClasses ecoreClass="projects.ecore#//Person">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projects.ecore#//Person/name"/>
+    </genClasses>
+    <genClasses ecoreClass="projects.ecore#//Effort">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projects.ecore#//Effort/person"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projects.ecore#//Effort/percentage"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

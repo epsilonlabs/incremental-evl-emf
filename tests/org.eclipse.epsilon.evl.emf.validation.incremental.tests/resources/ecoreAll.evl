@@ -1,6 +1,0 @@
-context EClass {    
-    constraint UniqueName {
-        check	: EClass.all.mapBy(c|c.name).get(self.name).size() == 1
-        message : "Duplicate component name " + self.name
-    } 
-}

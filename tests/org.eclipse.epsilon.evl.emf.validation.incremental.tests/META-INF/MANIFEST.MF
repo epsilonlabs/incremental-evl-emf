@@ -7,6 +7,7 @@ Bundle-Vendor: University of York
 Fragment-Host: org.eclipse.epsilon.evl.emf.validation.incremental;bundle-version="1.0.0"
 Require-Bundle: org.junit;bundle-version="4.0.0",
  org.eclipse.emf.codegen.ecore;bundle-version="2.0.0",
- org.assertj;bundle-version="3.0.0"
+ org.assertj;bundle-version="3.0.0",
+ org.eclipse.epsilon.evl.emf.validation.incremental.tests.metamodels.projects;bundle-version="1.0.0"
 Automatic-Module-Name: org.eclipse.epsilon.evl.emf.validation.incremental.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-11

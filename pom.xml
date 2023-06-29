@@ -38,6 +38,7 @@
 
         <module>releng/org.eclipse.epsilon.evl.emf.validation.incremental.targetplatform</module>
         <module>tests/org.eclipse.epsilon.evl.emf.validation.incremental.tests</module>
+        <module>tests/org.eclipse.epsilon.evl.emf.validation.incremental.tests.metamodels.projects</module>
     </modules>
 
     <build>
