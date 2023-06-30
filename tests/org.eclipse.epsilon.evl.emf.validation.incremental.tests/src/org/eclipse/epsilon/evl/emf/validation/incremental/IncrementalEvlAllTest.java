@@ -38,8 +38,6 @@ public class IncrementalEvlAllTest {
 
     @Test
 	public void addEffortToProject() {
-		
-
 		// An empty Project should be valid
 		Project project = factory.createProject();
 		resource.getContents().add(project);
@@ -50,8 +48,6 @@ public class IncrementalEvlAllTest {
 
 		// Initially, should NOT be valid (not assigned to anything)
 		assertFalse(validator.validate(person.eClass(), person, null, null));
-		
-		
 		
 		// Now we add a task and assign it to this person
 		Task task = factory.createTask();
@@ -66,7 +62,7 @@ public class IncrementalEvlAllTest {
 	}
 
     @Test
-    public void removeEffortToProject() {    	
+    public void removeEffortFromProject() {
 		// An empty Project should be valid
 		Project project = factory.createProject();
 		resource.getContents().add(project);
@@ -81,7 +77,6 @@ public class IncrementalEvlAllTest {
 		Effort effort = factory.createEffort();
 		effort.setPerson(person);
 		task.getEffort().add(effort);
-		
 
 		// Validate: Person should become valid now
 		assertTrue(validator.validate(person.eClass(), person, null, null));

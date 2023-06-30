@@ -27,7 +27,6 @@ public abstract class IncrementalEvlValidator implements EValidator {
 
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-
 		try {
 			if (LOGGER.isLoggable(Level.FINEST)) {
 				StringBuilder sb = new StringBuilder("\n [!] IncrementalEvlValidator.validate() called");
