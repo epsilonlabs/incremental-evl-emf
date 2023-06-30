@@ -23,6 +23,8 @@ public class IncrementalEvlAllTest {
 	protected Resource resource;
     protected ResourceSet resourceSet;
 	private IncrementalEcoreValidator validator;
+	
+	private final PslFactory factory = PslFactory.eINSTANCE;
 
     @Before
     public void setup() {
@@ -36,7 +38,7 @@ public class IncrementalEvlAllTest {
 
     @Test
 	public void addEffortToProject() {
-		final PslFactory factory = PslFactory.eINSTANCE;
+		
 
 		// An empty Project should be valid
 		Project project = factory.createProject();
@@ -48,7 +50,9 @@ public class IncrementalEvlAllTest {
 
 		// Initially, should NOT be valid (not assigned to anything)
 		assertFalse(validator.validate(person.eClass(), person, null, null));
-
+		
+		
+		
 		// Now we add a task and assign it to this person
 		Task task = factory.createTask();
 		project.getTasks().add(task);
@@ -61,11 +65,35 @@ public class IncrementalEvlAllTest {
 		assertTrue(validator.validate(person.eClass(), person, null, null));
 	}
 
-	public void addModelElementOneToTwo() {}
-	
-	public void removeModelElementTwoToOne() {}
-	
-	public void removeModelElementOneToEmpty() {}
+    @Test
+    public void removeEffortToProject() {    	
+		// An empty Project should be valid
+		Project project = factory.createProject();
+		resource.getContents().add(project);
+
+		// Create a task with an effort assigned to a person
+		Person person = factory.createPerson();
+		project.getPeople().add(person);
+
+		Task task = factory.createTask();
+		project.getTasks().add(task);
+
+		Effort effort = factory.createEffort();
+		effort.setPerson(person);
+		task.getEffort().add(effort);
+		
+
+		// Validate: Person should become valid now
+		assertTrue(validator.validate(person.eClass(), person, null, null));
+		
+		
+		//System.out.println(validator.validate(project, null, null));
+		//effort.setPerson(null);
+		
+		// Initially, should NOT be valid (not assigned to anything)
+		//assertFalse(validator.validate(person.eClass(), person, null, null));
+    	
+    }
 	
 	
 	// move within model (tree with A as root, B and C as children of A, and then you move C to become a child of B)
