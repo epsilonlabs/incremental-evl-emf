@@ -38,6 +38,8 @@ public class IncrementalEvlAllTest {
 
     @Test
 	public void addEffortToProject() {
+    	System.out.println("\n\naddEffortToProject()\n");
+    	boolean validationResult;
 		// An empty Project should be valid
 		Project project = factory.createProject();
 		resource.getContents().add(project);
@@ -51,11 +53,11 @@ public class IncrementalEvlAllTest {
 		
 		// Now we add a task and assign it to this person
 		Task task = factory.createTask();
-		project.getTasks().add(task);
+		project.getTasks().add(task);  // Notification feature tasks on model root
 
 		Effort effort = factory.createEffort();
 		effort.setPerson(person);
-		task.getEffort().add(effort);
+		task.getEffort().add(effort);  // Notification Feature effort on element Task
 
 		// Revalidate: Person should become valid now
 		assertTrue(validator.validate(person.eClass(), person, null, null));
@@ -63,6 +65,8 @@ public class IncrementalEvlAllTest {
 
     @Test
     public void removeEffortFromProject() {
+    	System.out.println("\n\nremoveEffortFromProject()\n");
+    	
 		// An empty Project should be valid
 		Project project = factory.createProject();
 		resource.getContents().add(project);
@@ -80,13 +84,13 @@ public class IncrementalEvlAllTest {
 
 		// Validate: Person should become valid now
 		assertTrue(validator.validate(person.eClass(), person, null, null));
-		
-		
-		//System.out.println(validator.validate(project, null, null));
-		//effort.setPerson(null);
+				
+		// Remove the person from the effort
+		effort.setPerson(null); // Notification on Feature person on element tasks/effort 
+								// Causes a notification for the person that removes result from Cache, does not trigger notification for "effort"
 		
 		// Initially, should NOT be valid (not assigned to anything)
-		//assertFalse(validator.validate(person.eClass(), person, null, null));
+		assertFalse(validator.validate(person.eClass(), person, null, null));
     	
     }
 	

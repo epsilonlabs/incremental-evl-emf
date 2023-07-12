@@ -175,7 +175,19 @@ public class IncrementalEvlModule extends EvlModule {
 					if (getTargetExpression() instanceof NameExpression && "all".equals(getName())) {
 						Object targetResult = getTargetExpression().execute(context);
 						if (targetResult instanceof EolModelElementType) {
-							System.out.println("Type.all access");
+							//System.out.println("Type.all access");
+							
+							if (LOGGER.isLoggable(Level.INFO)) {
+								StringJoiner sj = new StringJoiner("\n ");
+								
+								sj.add("Detected a Type.all access");
+								sj.add(" source: " + source);
+								sj.add(" propertyNameExpression: " + propertyNameExpression);
+								sj.add(" context: "+context);
+								LOGGER.info(sj.toString()+"\n ");			
+							}
+							
+							
 						}
 					}
 					
@@ -203,7 +215,7 @@ public class IncrementalEvlModule extends EvlModule {
 		evlTrace.processPropertyAccessRecorder(propertyAccessRecorder);		
 		
 		// Logging to report the sequence of executions and accesses recorded.
-		if (LOGGER.isLoggable(Level.FINER)) {
+		if (LOGGER.isLoggable(Level.INFO)) {
 			StringJoiner sj = new StringJoiner("\n ");
 			int i = 0;
 			sj.add("Processing property access in the Recorder");
@@ -217,7 +229,7 @@ public class IncrementalEvlModule extends EvlModule {
 					+ " Property: " + propertyAccess.getPropertyName()
 					+ " Result: " + executionForPropertyAccess.getResult());
 			}
-			LOGGER.finer(sj.toString()+"\n ");			
+			LOGGER.info(sj.toString()+"\n ");			
 		}
 		
 		LOGGER.finer(() -> ( "IncrementalEVLmodule contains\n" 

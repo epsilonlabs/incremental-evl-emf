@@ -121,7 +121,7 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
             EObject modelElement = (EObject) notification.getNotifier();
             EStructuralFeature modelFeature = (EStructuralFeature) notification.getFeature();
             
-            if(LOGGER.isLoggable(Level.FINEST)) {
+            if(LOGGER.isLoggable(Level.INFO)) {
             	String notificationText = ("\n[MODEL CHANGE NOTIFICATION]  " 
             			+ " Type:" + notification.getEventType()
                         + "\n " + notification);
@@ -129,13 +129,13 @@ public class IncrementalEvlValidatorAdapter extends EContentAdapter {
                 if(notification.getEventType() != Notification.REMOVING_ADAPTER){
                     // Type 8 removes the adapter and produces NULL conditions
                     notificationText = notificationText.concat(
-                        " element: " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
+                        "\n element: " + modelElement.hashCode() + " " + EcoreUtil.getURI(modelElement)
                         + "\n feature: " + modelFeature.getName()
                         + "\n was: " + notification.getOldValue()
                         + "\n now: " + notification.getNewValue()
                         + "\n");
                 }
-                LOGGER.finest(notificationText);
+                LOGGER.info(notificationText);
             }
 
             // IF there is an constraintExecutionCache, then we need update ConstraintTrace and UnsatisfiedConstraints lists
