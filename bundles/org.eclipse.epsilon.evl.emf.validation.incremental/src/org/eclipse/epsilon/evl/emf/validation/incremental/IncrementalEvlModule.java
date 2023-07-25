@@ -18,6 +18,7 @@ import org.eclipse.epsilon.eol.execute.introspection.recording.PropertyAccessExe
 import org.eclipse.epsilon.eol.types.EolModelElementType;
 import org.eclipse.epsilon.evl.EvlModule;
 import org.eclipse.epsilon.evl.dom.Constraint;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.AllAccess;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ExecutionResult;
 import org.eclipse.epsilon.evl.execute.UnsatisfiedConstraint;
@@ -65,6 +66,8 @@ public class IncrementalEvlModule extends EvlModule {
 			return new Constraint() {
 				public Optional<UnsatisfiedConstraint> execute(IEolContext context_, Object self)
 						throws EolRuntimeException {
+					
+					//System.out.println("**instanceof Constraint**");
 					// this -- is the constraint
 					// self -- is the model element under test
 
@@ -72,7 +75,6 @@ public class IncrementalEvlModule extends EvlModule {
 					Object modelElement = self;
 					Optional<UnsatisfiedConstraint> unsatisfiedConstraintResult = Optional.empty();
 					IEvlContext context = (IEvlContext) context_;
-					
 
 					// We ask the execution cache for known results for the validation being
 					// requested -- return the of the last execution instead of executing the
@@ -169,33 +171,45 @@ public class IncrementalEvlModule extends EvlModule {
 			// We could perhaps check the second child of the AST objects and only produce instrumented property accesses if it's all.
 			// This is an optimisation to be tested later: let's get this to work first.
 			
+			//
+			// CHECKING FOR TYPE.ALL
+			
+			
 			return new PropertyCallExpression() {
 				@Override
 				public Object execute(Object source, NameExpression propertyNameExpression, IEolContext context) throws EolRuntimeException {
 					if (getTargetExpression() instanceof NameExpression && "all".equals(getName())) {
 						Object targetResult = getTargetExpression().execute(context);
 						if (targetResult instanceof EolModelElementType) {
+							//System.out.println("**instanceof PropertyCallExpression**" + propertyAccessRecorder.getExecution());
+							//
+							// TYPE.ALL CONFIRMED
+							
+							EolModelElementType mSource = (EolModelElementType) source;
+							AllAccess allAccess = evlTrace.createAllAccess(mSource.getName(), true, propertyAccessRecorder.getExecution());
+							propertyAccessRecorder.recordAllAccess(allAccess);							
+							
+							System.out.println("-PropertyCallExpression()-" + propertyAccessRecorder.getExecution().hashCode() + " > .all " + mSource.getName()  );
+							
 							//System.out.println("Type.all access");
 							
 							if (LOGGER.isLoggable(Level.INFO)) {
 								StringJoiner sj = new StringJoiner("\n ");
 								
-								sj.add("Detected a Type.all access");
+								sj.add("\nDetected a Type.all access");
 								sj.add(" source: " + source);
 								sj.add(" propertyNameExpression: " + propertyNameExpression);
 								sj.add(" context: "+context);
 								LOGGER.info(sj.toString()+"\n ");			
 							}
-							
-							
 						}
-					}
-					
+					}					
 					return super.execute(source, propertyNameExpression, context);
 				}
 			};
 		}
-
+		
+		//System.out.println("return moduleElement: " + moduleElement.getClass());
 		return moduleElement;
 	}
 
@@ -229,6 +243,7 @@ public class IncrementalEvlModule extends EvlModule {
 					+ " Property: " + propertyAccess.getPropertyName()
 					+ " Result: " + executionForPropertyAccess.getResult());
 			}
+			sj.add(" AllAccesses: " + propertyAccessRecorder.getListOfAllAccesses());
 			LOGGER.info(sj.toString()+"\n ");			
 		}
 		
@@ -250,6 +265,7 @@ public class IncrementalEvlModule extends EvlModule {
 	public IncrementalEvlTrace getEvlTrace() {
 		return evlTrace;
 	}
+	
 	
 	public String getConstraintTraceItemAsString() {
 		StringJoiner sj = new StringJoiner("\n ");

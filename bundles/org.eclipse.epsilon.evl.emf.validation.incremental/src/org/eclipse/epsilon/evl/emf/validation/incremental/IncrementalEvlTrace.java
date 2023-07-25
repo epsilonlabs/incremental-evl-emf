@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epsilon.eol.execute.introspection.recording.IPropertyAccess;
+import org.eclipse.epsilon.evl.emf.validation.incremental.trace.AllAccess;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Constraint;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.ConstraintExecution;
 import org.eclipse.epsilon.evl.emf.validation.incremental.trace.Execution;
@@ -14,7 +15,7 @@ import org.eclipse.epsilon.evl.emf.validation.incremental.trace.TraceFactory;
 
 public class IncrementalEvlTrace {
 	private static final Logger LOGGER = Logger.getLogger(IncrementalEvlTrace.class.getName());
-	
+	private static final TraceFactory factory = TraceFactory.eINSTANCE;
 	/*
 	 * Contains a trace model that is used to store the recorded constraint executions of an IncrementalEVLmodule.
 	 * 
@@ -47,6 +48,18 @@ public class IncrementalEvlTrace {
 
 			this.addPropertyAccessToTraceModel(traceModelPropertyAccess);
 		}
+				
+		// AllAccesses are added to the model as we go, these are in the recorder to show what was added during the life time of this recorder.
+		if(propertyAccessRecorder.getListOfAllAccesses().size()>0) 
+		{
+			System.out.println("allAccess seen by this propertyAccessRecorder: ");
+			int i=0;
+			for(AllAccess allAccess : propertyAccessRecorder.getListOfAllAccesses())
+			{
+				System.out.println(i+ ", " + allAccess.getType() + " -> execution: " + allAccess.getExecutions().toString() );
+			}
+		}
+		
 	}
 	
 	public ConstraintExecution createExecutionTraceModel(Object modelElement, Object constraint) {
@@ -83,7 +96,17 @@ public class IncrementalEvlTrace {
         traceModel.getAccesses().add(propertyAccess);
     }
     
-	public Trace getTraceModel() {
+    public AllAccess createAllAccess (String type, Boolean allOfKind, Execution execution) {
+    	// create an All access on the model and associate the execution (execution is read from the property access recorder)
+    	// the returned allAccess is passed in back to put in the property access recorder so we can see what we collect in the life time of a recorder.
+    	AllAccess allAccess = factory.createAllAccess();
+    	allAccess.setType(type);
+    	allAccess.setAllOfKind(allOfKind);
+    	allAccess.getExecutions().add(execution);
+    	return allAccess;
+    }
+    
+    public Trace getTraceModel() {
 		return traceModel;
 	}
 
